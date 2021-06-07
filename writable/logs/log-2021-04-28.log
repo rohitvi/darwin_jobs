@@ -1,0 +1,52 @@
+ERROR - 2021-04-28 15:05:14 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2021-04-28 15:05:14 --> Unable to connect to the database.
+#0 C:\xampp\htdocs\dcloud\system\Database\BaseConnection.php(618): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\dcloud\system\Database\BaseBuilder.php(2035): CodeIgniter\Database\BaseConnection->query('SELECT `api_key...', Array, false)
+#2 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(87): CodeIgniter\Database\BaseBuilder->getWhere(Array)
+#3 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(51): validateToken()
+#4 C:\xampp\htdocs\dcloud\app\Controllers\Api.php(58): auth(Array)
+#5 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(936): App\Controllers\Api->deleteFile()
+#6 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+#7 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\dcloud\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\dcloud\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+ERROR - 2021-04-28 15:05:46 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2021-04-28 15:05:46 --> Unable to connect to the database.
+#0 C:\xampp\htdocs\dcloud\system\Database\BaseConnection.php(618): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\dcloud\system\Database\BaseBuilder.php(2035): CodeIgniter\Database\BaseConnection->query('SELECT `api_key...', Array, false)
+#2 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(87): CodeIgniter\Database\BaseBuilder->getWhere(Array)
+#3 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(51): validateToken()
+#4 C:\xampp\htdocs\dcloud\app\Controllers\Api.php(58): auth(Array)
+#5 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(936): App\Controllers\Api->deleteFile()
+#6 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+#7 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\dcloud\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\dcloud\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+ERROR - 2021-04-28 15:06:26 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2021-04-28 15:06:26 --> Unable to connect to the database.
+#0 C:\xampp\htdocs\dcloud\system\Database\BaseConnection.php(618): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\dcloud\system\Database\BaseBuilder.php(2035): CodeIgniter\Database\BaseConnection->query('SELECT `api_key...', Array, false)
+#2 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(87): CodeIgniter\Database\BaseBuilder->getWhere(Array)
+#3 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(51): validateToken()
+#4 C:\xampp\htdocs\dcloud\app\Controllers\Api.php(58): auth(Array)
+#5 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(936): App\Controllers\Api->deleteFile()
+#6 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+#7 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\dcloud\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\dcloud\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+ERROR - 2021-04-28 18:06:49 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2021-04-28 18:06:49 --> Unable to connect to the database.
+#0 C:\xampp\htdocs\dcloud\system\Database\BaseConnection.php(618): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\dcloud\system\Database\BaseBuilder.php(2035): CodeIgniter\Database\BaseConnection->query('SELECT `api_key...', Array, false)
+#2 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(87): CodeIgniter\Database\BaseBuilder->getWhere(Array)
+#3 C:\xampp\htdocs\dcloud\app\Helpers\api_helper.php(51): validateToken()
+#4 C:\xampp\htdocs\dcloud\app\Controllers\Api.php(58): auth(Array)
+#5 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(936): App\Controllers\Api->deleteFile()
+#6 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Api))
+#7 C:\xampp\htdocs\dcloud\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\dcloud\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\dcloud\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
