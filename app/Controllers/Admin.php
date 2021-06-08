@@ -12,6 +12,6 @@ class Admin extends BaseController
 
     public function index()
     {
-        pre($this->am->test());
+        return view('admin/dashboard');
     }
 }
