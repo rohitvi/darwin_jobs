@@ -32,9 +32,9 @@ class AdminModel extends Model
 
     public function get_all_industry()
     {
-      return $this->db->table('industries')->get()->getResultArray();
+      // return $this->db->table('industries')->get()->getResultArray();
       //$builder = $this->db->table('industries');
-      //return $builder->get()->getResultArray();
+      return $builder->get()->getResultArray();
 
     }
 
