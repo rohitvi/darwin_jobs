@@ -12,6 +12,8 @@ class Admin extends BaseController
     public function index()
     {
         return view('admin/dashboard');
+        echo 'shree vyas';
+        
     }
 
     public function list_category()
