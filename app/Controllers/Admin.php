@@ -9,7 +9,6 @@ class Admin extends BaseController
         $this->am = new AdminModel();
     }
 
-
     public function index()
     {
         return view('admin/dashboard');
