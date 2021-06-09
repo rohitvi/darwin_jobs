@@ -30,18 +30,15 @@
             <div class="card card-info">
               
               <!-- /.card-header -->
-              <!-- form start -->
-              <form action="<?php echo base_url('admin/category/add_category')?>" method="post">
+              <!-- form start action="<?php echo base_url('admin/category/add_category')?>"-->
+              <form  name="addcategory" id="addcategory" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
                     <input type="text" name="category" class="form-control" id="category" placeholder="Category Name">
-                  </div>
-                  <div class="form-group mb-0">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
-                      <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
-                    </div>
+                    <?php
+                      if(isset($validation))
+                    ?>
                   </div>
                 </div>
                 <!-- /.card-body -->
