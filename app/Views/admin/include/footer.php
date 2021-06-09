@@ -13,7 +13,7 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<script src="<?= base_url('public/admin/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <!-- jQuery -->
 <script src="<?= base_url('public/admin/plugins/jquery/jquery.min.js')?>"></script>
 <!-- jQuery UI 1.11.4 -->
