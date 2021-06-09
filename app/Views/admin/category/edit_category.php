@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add New Category</h1>
+            <h1>Edit Category</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -30,11 +30,12 @@
             <div class="card card-info">
               
               <!-- /.card-header -->
-              <form  name="addcategory" id="addcategory" method="post">
+              <!-- form start-->
+              <form action="<?php echo base_url('admin/edit_category/'.$category_row['id'])?>"  name="addcategory" id="addcategory" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
-                    <input type="text" name="category" class="form-control <?php echo (isset($validation) && $validation->hasError('category')) ? 'is-invalid' : '';?>" id="category" value="<?php echo set_value('category');?>" placeholder="Category Name">
+                    <input type="text" name="category" class="form-control" id="category" value="<?php echo set_value('category', $category_row['name']);?>" placeholder="Category Name">
                     <?php
                    // print_r($validation);
                       if(isset($validation) && $validation->hasError('category')){
@@ -45,7 +46,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <input type="submit" name="submit" value="Add Category" class="btn btn-info">
+                  <input type="submit" name="submit" value="Update Category" class="btn btn-info">
                 </div>
                 </form>
             </div>

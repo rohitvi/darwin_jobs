@@ -35,6 +35,8 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Admin::index');
 $routes->get('/', 'Admin::add_category');
 $routes->post('/', 'Admin::add_category');
+$routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
+$routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 
 
 /*
