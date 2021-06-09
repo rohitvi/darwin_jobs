@@ -476,10 +476,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
+            <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
-                Gallery
+              Category
               </p>
             </a>
           </li>
