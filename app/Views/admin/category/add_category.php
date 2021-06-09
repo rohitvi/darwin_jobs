@@ -37,7 +37,9 @@
                     <label for="exampleInputEmail1">Category Name</label>
                     <input type="text" name="category" class="form-control" id="category" placeholder="Category Name">
                     <?php
-                      if(isset($validation))
+                      if(isset($validation) && $validation->hasError){
+
+                      }
                     ?>
                   </div>
                 </div>
