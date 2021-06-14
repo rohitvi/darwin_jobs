@@ -1,0 +1,59 @@
+<<<<<<< HEAD
+CRITICAL - 2021-06-12 08:33:39 --> The framework needs the following extension(s) installed and loaded: {0}.
+#0 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(224): CodeIgniter\Exceptions\FrameworkException::forMissingExtension('intl')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(172): CodeIgniter\CodeIgniter->resolvePlatformExtensions()
+#2 C:\xampp\htdocs\darwin_jobs\system\bootstrap.php(159): CodeIgniter\CodeIgniter->initialize()
+#3 C:\xampp\htdocs\darwin_jobs\public\index.php(35): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2021-06-12 08:33:45 --> The framework needs the following extension(s) installed and loaded: {0}.
+#0 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(224): CodeIgniter\Exceptions\FrameworkException::forMissingExtension('intl')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(172): CodeIgniter\CodeIgniter->resolvePlatformExtensions()
+#2 C:\xampp\htdocs\darwin_jobs\system\bootstrap.php(159): CodeIgniter\CodeIgniter->initialize()
+#3 C:\xampp\htdocs\darwin_jobs\public\index.php(35): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2021-06-12 08:41:52 --> The framework needs the following extension(s) installed and loaded: {0}.
+#0 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(224): CodeIgniter\Exceptions\FrameworkException::forMissingExtension('intl')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(172): CodeIgniter\CodeIgniter->resolvePlatformExtensions()
+#2 C:\xampp\htdocs\darwin_jobs\system\bootstrap.php(159): CodeIgniter\CodeIgniter->initialize()
+#3 C:\xampp\htdocs\darwin_jobs\public\index.php(35): require('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2021-06-12 12:30:08 --> Undefined property: CodeIgniter\View\View::$session
+#0 C:\xampp\htdocs\darwin_jobs\app\Views\admin\job_attributes\job_type.php(6): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined prope...', 'C:\\xampp\\htdocs...', 6)
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/job_attri...', Array, true)
+#4 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(231): view('admin/job_attri...')
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->job_type()
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2021-06-12 12:30:32 --> Undefined variable $types
+#0 C:\xampp\htdocs\darwin_jobs\app\Views\admin\job_attributes\job_type.php(30): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 30)
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/job_attri...', Array, true)
+#4 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(231): view('admin/job_attri...')
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->job_type()
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2021-06-12 14:22:34 --> Call to undefined function set_value()
+#0 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include()
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/job_attri...', Array, true)
+#3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(233): view('admin/job_attri...', Array)
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->job_type()
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+=======
+>>>>>>> 17ac85537b2b37d4d0cae6f9cb1bb1e1d7cc7930

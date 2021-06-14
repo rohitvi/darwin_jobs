@@ -10,8 +10,8 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url('/'); ?>">Home</a></li>
-              <li class="breadcrumb-item active"><a href="<?= base_url('admin/account'); ?>" >Account</a></li>
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Simple Tables</li>
             </ol>
           </div>
         </div>
@@ -50,7 +50,6 @@
                       <th>Firstname</th>
                       <th>Email</th>
                       <th>Mobile No</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -70,10 +69,6 @@
                       </td>
                       <td>
                         <?= $row['mobile_no']; ?>
-                      </td>
-                      <td>
-                        <a href="<?= base_url('admin/showadmin/'.$row['id']); ?>" class="btn btn-dark" type="button">Edit</a>
-                        <a href="<?= base_url('admin/deleteadmin/'.$row['id']); ?>" class="btn btn-danger" type="button">Delete</a>
                       </td>
                     </tr>
                     <?php endforeach; ?>

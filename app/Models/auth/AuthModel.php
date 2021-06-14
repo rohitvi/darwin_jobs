@@ -51,44 +51,4 @@ class AuthModel extends Model
         $query = $builder->get()->getResultArray();
         return $query;
     }
-
-    public function registeradmin($userdata)
-    {
-        $builder = $this->db->table('admin');
-        $query = $builder->insert($userdata);
-        return $query;
-    } 
-
-    public function editadmin($id)
-    {
-        $builder = $this->db->table('admin');
-        $query = $builder->where('id',$id)->get()->getResultArray();
-        return $query;
-    }
-
-    public function updateadmin($id,$data)
-    {
-        $builder = $this->db->table('admin');
-        $update_row = [
-            'username'=>$data['username'],
-            'email' => $data['email'],
-            'firstname'=>$data['firstname'],
-            'lastname'=>$data['lastname'],
-            'mobile_no'=>$data['mobile_no']
-        ];
-        $builder->where('id', $id );
-        
-        if ($query = $builder->update($update_row) == 1)
-        {
-            return $query;
-        }
-    }
-
-    public function deleteadmin($id)
-    {
-        $builder = $this->db->table('admin');
-        $builder->where('id',$id);
-        $query = $builder->delete();
-        return $query;
-    }
 }

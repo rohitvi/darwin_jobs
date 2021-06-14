@@ -29,6 +29,10 @@
   <link rel="stylesheet" href="<?= base_url('public/admin/custom/style.css')?>">
   <!-- sweet alert -->
   <link rel="stylesheet" href="<?= base_url('public/admin/plugins/sweetalert2/sweetalert2.min.css')?>">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js')?>"></script>
 </head>
@@ -196,31 +200,66 @@
               </li>
             </ul>
           </li>
-          <!-- separator -->
-          <li class="nav-item menu">
+
+           <li class="nav-item menu">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Employers/Company
+                Job Attributes
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('admin/employer'); ?>" class="nav-link">
+                <a href="<?= base_url('admin/showadmin'); ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Employers List</p>
+                  <p>Job Type</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('admin/addemployer'); ?>" class="nav-link">
+                <a href="<?= base_url('admin/account'); ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Employer</p>
+                  <p>Education</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/changepassword'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employement type</p>
                 </a>
               </li>
             </ul>
           </li>
-          <!-- separator -->
+          <!-- dashboard -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./index.html" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./index2.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v2</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v3</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -447,6 +486,16 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-item">
+            <a href="pages/calendar.html" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Calendar
+                <span class="badge badge-info right">2</span>
+              </p>
+            </a>
           </li>
           <li class="nav-item">
             <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">

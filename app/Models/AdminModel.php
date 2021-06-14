@@ -38,6 +38,11 @@ class AdminModel extends Model
 
     }
 
+    public function get_job_type($id = ''){
+        return $this->db->table( 'job_type' )->get()->getResultArray();
+    }
+
+
     public function get_countries_list() 
     {
         return $this->db->table( 'countries' )->get()->getResultArray();
@@ -111,4 +116,5 @@ class AdminModel extends Model
     {
         return $id;
     }
+
 }

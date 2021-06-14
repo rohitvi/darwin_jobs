@@ -15,13 +15,10 @@ class Admin extends BaseController
     public function index()
     {
         // return view('admin/dashboard');
-        if (session('admin_logged_in')) {
+        if (session('admin_logged_in'))
           return redirect()->to('admin/dashboard');
-        }
         else
-        {
           return redirect()->to('admin/login');
-        }
     }
 
     public function dashboard()
@@ -84,36 +81,6 @@ class Admin extends BaseController
 
     public function registeradmin()
     {
-      if ($this->request->getMethod() == 'post') {
-        $rules = [
-          'username' => ['label'=>'username','rules'=> 'required'],
-          'firstname' => ['label'=>'firstname','rules'=> 'required'],
-          'lastname' => ['label'=>'lastname','rules'=> 'required'],
-          'email' => ['label'=>'email','rules'=> 'required'],
-          'password' => ['label'=>'password','rules'=> 'required'],
-          'mobile_no' => ['label'=>'mobile_no','rules'=> 'required']
-        ];
-        if ($this->validate($rules) == FALSE) {
-          echo '0~'.$this->validation->listErrors();exit;
-        }
-        $userdata = [
-          'username' => $this->request->getPost('username'),
-          'firstname' => $this->request->getPost('firstname'),
-          'lastname' => $this->request->getPost('lastname'),
-          'email' => $this->request->getPost('email'),
-          'password' => $this->request->getPost('password'),
-          'mobile_no' => $this->request->getPost('mobile_no'),
-        ];
-        $regAdmin = $this->adminAuthModel->registeradmin($userdata);
-        if($regAdmin->resultID == 1)
-        {
-          $this->session->setFlashdata('success', 'Admin successfully registered');
-          echo '1~successfully registered';
-        }else
-        {
-          echo '0~Something went wrong, please try again!';
-        }
-      }
       return view('admin/auth/register');
     }
 
@@ -145,43 +112,6 @@ class Admin extends BaseController
     {
       $result['admin'] = $this->adminAuthModel->showadmin();
       return view('admin/showadmin.php', $result);
-    }
-
-    public function editadmin($id)
-    {
-      $query['data'] = $this->adminAuthModel->editadmin($id);
-      return view('admin/auth/editadmin',$query);
-    }
-
-    public function updateadmin($id)
-    {
-      if ($this->request->getMethod() == 'put') {
-        $data = [
-          'username' => $this->request->getPost('username'),
-          'firstname' => $this->request->getPost('firstname'),
-          'lastname' => $this->request->getPost('lastname'),
-          'email' => $this->request->getPost('email'),
-          'password' => $this->request->getPost('password'),
-          'mobile_no' => $this->request->getPost('mobile_no')
-        ];
-        if ($query = $this->adminAuthModel->updateadmin($id,$data) == 'done') {
-          $this->session->setFlashdata('success', 'Admin updated successfully');
-          return redirect()->to(base_url('admin/showadmin'));
-        }
-      }
-    }
-
-    public function deleteadmin($id)
-    {
-      $delete = $this->adminAuthModel->deleteadmin($id);
-      if($delete->resultID == 1)
-        {
-          $this->session->setFlashdata('success', 'Admin successfully deleted');
-          return redirect()->to(base_url('admin/showadmin'));
-        }else
-        {
-          echo '0~Something went wrong, please try again!';
-        }
     }
 
     public function logout(){
@@ -292,13 +222,17 @@ class Admin extends BaseController
         $input = $this->validate([  
           'category' => 'required|min_length[5]',
         ]);
-
-
-
       }
       return view('admin/industry/add_industry');
     }
 
+    // Job type
+
+    public function job_type(){
+      $data['types'] = $this->adminModel->get_job_type();
+      // pre($data['types']);
+      return view('admin/job_attributes/job_type',$data);
+}
     public function employer()
     {
       $employer['data'] = $this->adminModel->getemployer();
