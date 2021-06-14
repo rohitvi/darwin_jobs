@@ -104,12 +104,71 @@ function BgColor(){
     return $color[0];
 }
 
-function generateKey($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
+function UploadFile($FILE){
+    $url        = get_direct_value('general_settings', 'dcloud_api', 'id', 1);
+    $X_Key      = get_direct_value('general_settings', 'x-key', 'id', 1);
+    $X_Secret   = get_direct_value('general_settings', 'x-secret', 'id', 1);
+    $ch = curl_init();
+    $RealTitle = $FILE['name'];
+
+    $postfields['file'] = new CurlFile($FILE['tmp_name'], $FILE['type'], $RealTitle);
+    curl_setopt_array($ch, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $postfields,
+        CURLOPT_HTTPHEADER => array(
+            'X-Key: ' . $X_Key,
+            'X-Secret: ' . $X_Secret
+        ),
+    ));
+
+    $response = curl_exec($ch);
+    if (!curl_errno($ch)) {
+        curl_close($ch);
+        return json_decode($response, true);
+    } else {
+        curl_close($ch);
+        $errmsg = curl_error($ch);
+        return $errmsg;
     }
-    return $randomString;
+}
+
+function DeleteDcloudFile($FILES)
+{
+    $url        = get_direct_value('general_settings', 'dcloud_api', 'id', 1);
+    $X_Key      = get_direct_value('general_settings', 'x-key', 'id', 1);
+    $X_Secret   = get_direct_value('general_settings', 'x-secret', 'id', 1);
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_POSTFIELDS => json_encode($FILES),
+        CURLOPT_HTTPHEADER => array(
+            'X-Key: ' . $X_Key,
+            'X-Secret: ' . $X_Secret
+        ),
+    ));
+
+    $response = curl_exec($ch);
+    if (!curl_errno($ch)) {
+        curl_close($ch);
+        return json_decode($response, true);
+    } else {
+        curl_close($ch);
+        // $errmsg = curl_error($ch);
+        // return $errmsg;
+        return array('status'=>false,'message'=>'Failed To upload');
+    }
 }

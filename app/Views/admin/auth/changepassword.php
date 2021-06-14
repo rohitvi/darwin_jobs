@@ -1,63 +1,33 @@
 <?php include(VIEWPATH.'admin/include/header.php'); ?>
-
-    <<!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Change Password</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url('admin/account'); ?>">Account</a></li>
-              <li class="breadcrumb-item active"><a href="<?= base_url('admin/registeradmin'); ?>">Register Admin</a></li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-12">
+    <div class="container">
+        <div class="col-12 my-5">
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Change Password</h3>
-                <?php include(VIEWPATH.'admin/include/flash_message.php'); ?>
+                <h3 class="card-title"Change Password</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
+              <?php include(VIEWPATH.'admin/include/flash_message.php'); ?>
+
               <form action="<?= base_url('admin/changepassword'); ?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name='password' placeholder="Enter email">
+                    <label for="exampleInputEmail1">Password</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
                   </div>
                   <div class="form-group">
-                    <label for="cpassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Password">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input type="password" name="cpassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
                   </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Change</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
+    </div>
 <?php include(VIEWPATH.'admin/include/footer.php'); ?>

@@ -38,4 +38,8 @@ class AdminModel extends Model
 
     }
 
+    public function get_job_type($id = ''){
+        return $this->db->table( 'job_type' )->get()->getResultArray();
+    }
+
 }
