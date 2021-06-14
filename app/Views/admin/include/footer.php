@@ -15,7 +15,6 @@
 <!-- ./wrapper -->
 <script src="<?= base_url('public/admin/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
 <!-- jQuery -->
-<script src="<?= base_url('public/admin/plugins/jquery/jquery.min.js')?>"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="<?= base_url('public/admin/plugins/jquery-ui/jquery-ui.min.js')?>"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -23,9 +22,9 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
+<script src="<?= base_url('public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
 <!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js')?>"></script>
+<script src="<?= base_url('public/admin/plugins/chart.js/Chart.min.js')?>"></script>
 <!-- Sparkline -->
 <script src="<?= base_url('public/admin/plugins/sparklines/sparkline.js')?>"></script>
 <!-- JQVMap -->

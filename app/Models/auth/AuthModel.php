@@ -47,6 +47,7 @@ class AuthModel extends Model
     public function showadmin()
     {
         $builder = $this->db->table('admin');
+        $builder->orderBy( 'id', 'asc' );
         $query = $builder->get()->getResultArray();
         return $query;
     }
