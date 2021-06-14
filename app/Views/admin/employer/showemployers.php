@@ -54,14 +54,29 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <?php foreach ($data as $row) : ?>
                     <tr>
-                      <td>aaa</td>
-                      <td>aaa</td>
-                      <td>aaa</td>
-                      <td>aaa</td>
-                      <td>aaa</td>
-                      <td>aaa</td>
+                      <td>
+                        <?= $row['id']; ?>
+                      </td>
+                      <td>
+                        <?= $row['company_name']; ?>
+                      </td>
+                      <td>
+                        <?= $row['email']; ?>
+                      </td>
+                      <td>
+                        <?= $row['mobile_no']; ?>
+                      </td>
+                      <td>
+                        <?= $row['firstname']; ?>
+                      </td>
+                      <td>
+                        <a href="<?= base_url('admin/employer/'.$row['id']); ?>" class="btn btn-dark" type="button">Edit</a>
+                        <a href="<?= base_url('admin/employer/del/'.$row['id']); ?>" class="btn btn-danger" type="button">Delete</a>
+                      </td>
                     </tr>
+                    <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
