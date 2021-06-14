@@ -35,14 +35,12 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Admin::index');
 $routes->get('/', 'Admin::add_category');
 $routes->post('/', 'Admin::add_category');
-<<<<<<< HEAD
-=======
+
 $routes->add('admin/showadmin/(:num)','Admin::editadmin/$1');
 $routes->add('admin/updateadmin/(:num)','Admin::updateadmin/$1');
 $routes->add('admin/deleteadmin/(:num)','Admin::deleteadmin/$1');
 $routes->add('admin/employer/(:num)','Admin::editemployer/$1');
 $routes->add('admin/updateemployer/(:num)','Admin::updateemployer/$1');
->>>>>>> 17ac85537b2b37d4d0cae6f9cb1bb1e1d7cc7930
 $routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 $routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 
