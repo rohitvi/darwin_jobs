@@ -427,4 +427,54 @@ class Admin extends BaseController
         }
       }
     }
+
+    public function updatecompany($id)
+    {
+      if ($this->request->isAJAX()) {
+        $cmpny = [
+          'company_logo' => $this->request->getPost('company_logo'),
+          'company_name' => $this->request->getPost('company_name'),
+          'company_email' => $this->request->getPost('company_email'),
+          'phone_no' => $this->request->getPost('phone_no'),
+          'website' => $this->request->getPost('website'),
+          'category' => $this->request->getPost('category'),
+          'founded_date' => $this->request->getPost('founded_date'),
+          'org_type' => $this->request->getPost('org_type'),
+          'no_of_employers' => $this->request->getPost('no_of_employers'),
+          'description' => $this->request->getPost('description'),
+          'country' => $this->request->getPost('country'),
+          'state' => $this->request->getPost('state'),
+          'city' => $this->request->getPost('city'),
+          'postcode' => $this->request->getPost('postcode'),
+          'full_address' => $this->request->getPost('full_address'),
+          'facebook_link' => $this->request->getPost('facebook_link'),
+          'twitter_link' => $this->request->getPost('twitter_link'),
+          'youtube_link' => $this->request->getPost('youtube_link'),
+          'linkedin_link' => $this->request->getPost('linkedin_link')
+        ];
+        return json_encode($cmpny);
+        exit();
+        // $rules = [
+        //   'company_logo' => ['label'=>'company_logo','rules'=>'required'],
+        //   'company_name' => ['label'=>'company_name','rules'=>'required'],
+        //   'company_email' => ['label'=>'company_email','rules'=>'required'],
+        //   'phone_no' => ['label'=>'phone_no','rules'=>'required'],
+        //   'category' => ['label'=>'category','rules'=>'required'],
+        //   'org_type' => ['label'=>'org_type','rules'=>'required'],
+        //   'no_of_employers' => ['label'=>'no_of_employers','rules'=>'required'],
+        //   'description' => ['label'=>'description','rules'=>'required'],
+        //   'country' => ['label'=>'country','rules'=>'required'],
+        //   'state' => ['label'=>'state','rules'=>'required'],
+        //   'city' => ['label'=>'city','rules'=>'required'],
+        //   'postcode' => ['label'=>'postcode','rules'=>'required'],
+        //   'full_address' => ['label'=>'full_address','rules'=>'required'],
+        // ];
+        // if ($this->validate($rules) == FALSE) {
+        //   echo '0~'.$this->validation->listErrors();exit;
+        // }
+        // $query = $this->adminModel->updatecompany($id);
+        // print_r($query);
+        // exit();
+      }
+    }
 }

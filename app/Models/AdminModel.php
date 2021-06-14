@@ -87,7 +87,8 @@ class AdminModel extends Model
         return $builder->where('employers.id',$id)->get()->getResultArray();
     }
 
-    public function updateemployer($userdata,$id){
+    public function updateemployer($userdata,$id)
+    {
         $builder = $this->db->table('employers');
         $update_row = [
             'firstname'=> $userdata['firstname'],
@@ -104,5 +105,10 @@ class AdminModel extends Model
         if ($query = $builder->update($update_row) == 1) {
             return $query;
         }
+    }
+
+    public function updatecompany($id)
+    {
+        return $id;
     }
 }
