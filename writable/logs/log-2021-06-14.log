@@ -1,3 +1,4 @@
+
 CRITICAL - 2021-06-14 12:34:47 --> Undefined variable: url
 #0 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(373): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\xampp\\htdocs...', 373, Array)
 #1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->updatecompany('4')

@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-4">
-            <h1>Job Industry</h1>
+            <h1>Packages</h1>
           </div>
           <div class="col-sm-4">
           
@@ -15,7 +15,7 @@
           <div class="col-sm-4">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Industry</li>
+              <li class="breadcrumb-item active">Packages</li>
             </ol>
           </div>
         </div>
@@ -28,7 +28,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"><a href="<?= base_url('admin/add_industry'); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add New Industry</a></h3>
+                <h3 class="card-title"><a href="<?= base_url('admin/add_packages'); ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add New Packages</a></h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -44,27 +44,32 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Industry Name</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                    <th>#ID</th>
+                    <th>Package Title</th>
+                    <th>Price</th>
+                    <th>No. of Days</th>
+                    <th>No. of Posts</th>
+                    <th>Package For</th>
+                    <th>Status</th>
+                    <th style="width: 150px;" class="text-right">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <?php $count=0; foreach($industry as $row): ?>
-                    <tr>
-                      <td><?= ++$count; ?></td>
-                      <td><?= $row['name']; ?></td>
-                      <td><?= ($row['status'] == 1)? '<span class="btn btn-success btn-xs">Active</span>': '<span class="btn btn-danger btn-xs">Inactive</span>'; ?></td>
-
-                      <td><a title="Delete" onclick="return confirm('Are you Sure to Delete ?')" class="btn-delete btn btn-sm btn-danger pull-right" href="<?= base_url('admin/del_industry/'.$row['id']); ?>"> <i class="nav-icon fas fa-trash"></i>Delete</a>
-            <a title="Edit" class="update btn btn-sm btn-primary pull-right" href="<?= base_url('admin/edit_industry/'.$row['id'])?>"> <i class="nav-icon fas fa-edit"></i>Edit</a>
-          </td>
-                    </tr>
-                    <?php endforeach; ?>
+                  <?php foreach($packages as $package): ?>
+            <tr>
+              <td><?= $package['id']; ?></td>
+              <td><?= $package['title']; ?></td>
+              <td><?= $package['price']; ?></td>
+              <td><?= $package['no_of_days']; ?></td>
+              <td><?= $package['no_of_posts']; ?></td>
+              <td><?= ($package['package_for'] == 0)? '<span class="btn btn-primary btn-xs">JobSeeker</span>' : '<span class="btn btn-primary btn-xs">Employer</span>' ?></td>
+              <td><?= ($package['is_active'] == 1)? '<span class="btn btn-success btn-xs">Active</span>' : '<span class="btn btn-warning btn-xs">Inactive'; ?></td>
+              <td class="text-right"><a class="btn btn-info btn-xs" href="<?= base_url('admin/edit_packages/'.$package['id']); ?>">Edit</a></td>
+            </tr>
+          <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>

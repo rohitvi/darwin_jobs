@@ -30,15 +30,15 @@
             <div class="card card-info">
               
               <!-- /.card-header -->
-              <form  name="addcategory" id="addcategory" method="post">
+              <form  name="addindustry" id="addindustry" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Industry Name</label>
-                    <input type="text" name="industry" class="form-control" id="category" value="" placeholder="Industry Name">
+                    <input type="text" name="industry" class="form-control <?php echo (isset($validation) && $validation->hasError('industry')) ? 'is-invalid' : '';?>" id="industry" value="" placeholder="Industry Name">
                     <?php
                    // print_r($validation);
-                      if(isset($validation) && $validation->hasError('category')){
-                        echo '<p class="invalid-feedback">'.$validation->getError('category').'</p>';
+                      if(isset($validation) && $validation->hasError('industry')){
+                        echo '<p class="invalid-feedback">'.$validation->getError('industry').'</p>';
                       }
                     ?>
                   </div>
