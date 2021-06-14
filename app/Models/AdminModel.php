@@ -38,11 +38,18 @@ class AdminModel extends Model
 
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1
     public function get_job_type($id = ''){
         return $this->db->table( 'job_type' )->get()->getResultArray();
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1
     public function get_countries_list() 
     {
         return $this->db->table( 'countries' )->get()->getResultArray();
@@ -92,7 +99,8 @@ class AdminModel extends Model
         return $builder->where('employers.id',$id)->get()->getResultArray();
     }
 
-    public function updateemployer($userdata,$id){
+    public function updateemployer($userdata,$id)
+    {
         $builder = $this->db->table('employers');
         $update_row = [
             'firstname'=> $userdata['firstname'],
@@ -110,4 +118,13 @@ class AdminModel extends Model
             return $query;
         }
     }
+<<<<<<< HEAD
+=======
+
+    public function updatecompany($id)
+    {
+        return $id;
+    }
+
+>>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1
 }

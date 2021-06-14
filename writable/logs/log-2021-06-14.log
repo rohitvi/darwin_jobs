@@ -1,4 +1,13 @@
 <<<<<<< HEAD
+CRITICAL - 2021-06-14 11:48:54 --> syntax error, unexpected ''country'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'
+#0 C:\xampp\htdocs\darwin_jobs\system\Autoloader\Autoloader.php(265): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\darwin_jobs\system\Autoloader\Autoloader.php(228): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers...')
+#2 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers...')
+#3 [internal function]: spl_autoload_call('App\\Controllers...')
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(893): class_exists('\\App\\Controller...', true)
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(417): CodeIgniter\CodeIgniter->startController()
+=======
+<<<<<<< HEAD
 ERROR - 2021-06-14 10:54:28 --> Error connecting to the database: Host '103.212.140.216' is not allowed to connect to this MySQL server
 CRITICAL - 2021-06-14 10:54:28 --> Unable to connect to the database.
 #0 C:\xampp\htdocs\darwin_jobs\system\Database\BaseConnection.php(618): CodeIgniter\Database\BaseConnection->initialize()
@@ -7,10 +16,37 @@ CRITICAL - 2021-06-14 10:54:28 --> Unable to connect to the database.
 #3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(41): App\Models\auth\AuthModel->login_validate('admin', '123456')
 #4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->login()
 #5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+>>>>>>> 2b8b5f54fa20dac35a54fd86ccfaa2b007fa322f
 #6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
 #7 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
 #8 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
 #9 {main}
+<<<<<<< HEAD
+CRITICAL - 2021-06-14 11:49:17 --> syntax error, unexpected ''country'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'
+#0 C:\xampp\htdocs\darwin_jobs\system\Router\Router.php(170): CodeIgniter\Router\Router->autoRoute('admin/employer')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(816): CodeIgniter\Router\Router->handle('admin/employer')
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(385): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2021-06-14 11:49:18 --> syntax error, unexpected ''country'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'
+#0 C:\xampp\htdocs\darwin_jobs\system\Router\Router.php(170): CodeIgniter\Router\Router->autoRoute('admin/employer')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(816): CodeIgniter\Router\Router->handle('admin/employer')
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(385): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2021-06-14 11:49:20 --> syntax error, unexpected ''country'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'
+#0 C:\xampp\htdocs\darwin_jobs\system\Router\Router.php(170): CodeIgniter\Router\Router->autoRoute('admin')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(816): CodeIgniter\Router\Router->handle('admin')
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(385): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+=======
 =======
 CRITICAL - 2021-06-14 00:00:22 --> Undefined index: email
 #0 C:\xampp\htdocs\darwin_jobs\app\Models\AdminModel.php(95): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\xampp\\htdocs...', 95, Array)
@@ -40,6 +76,7 @@ CRITICAL - 2021-06-14 00:01:24 --> Undefined index: email
 #6 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
 #7 {main}
 >>>>>>> 17ac85537b2b37d4d0cae6f9cb1bb1e1d7cc7930
+<<<<<<< HEAD
 CRITICAL - 2021-06-14 11:04:05 --> syntax error, unexpected token "<<", expecting end of file
 #0 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(385): CodeIgniter\CodeIgniter->tryToRouteIt(NULL)
 #1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
@@ -56,3 +93,6 @@ CRITICAL - 2021-06-14 11:04:29 --> syntax error, unexpected token "<<", expectin
 #6 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
 #7 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
 #8 {main}
+=======
+>>>>>>> 2b8b5f54fa20dac35a54fd86ccfaa2b007fa322f
+>>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1

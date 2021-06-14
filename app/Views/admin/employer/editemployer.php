@@ -49,7 +49,7 @@
                   </div>
                   <div class="form-group">
                    <label for="designation">Designation *</label>
-                   <input type="text" class="form-control" id="designation" name="designation" placeholder="Designation" value="<?= set_value('email', $data[0]['designation']) ?>">
+                   <input type="text" class="form-control" id="designation" name="designation" placeholder="Designation" value="<?= set_value('designation', $data[0]['designation']) ?>">
                   </div>
                   <div class="form-group">
                    <label for="mobile_no">Mobile Number *</label>
@@ -107,8 +107,7 @@
                 <h3 class="card-title">Company Information</h3>
               </div>
               <!-- /.card-header -->
-              <form action="<?= base_url('admin/updateemployer'); ?>" method="post">
-                <input type="hidden" name="_method" value="PUT" />
+              <form id="companyForm" action="" method="post" enctype="multipart/form-data" >
                 <div class="card-body">
                   <div class="form-group">
                     <label for="company_logo">Company Logo *</label>
@@ -120,7 +119,7 @@
                   </div>
                   <div class="form-group">
                     <label for="company_email">Company Email *</label>
-                    <input type="text" class="form-control" id="company_email" name='company_email' placeholder="Enter Company Email">
+                    <input type="email" class="form-control" id="company_email" name='company_email' placeholder="Enter Company Email">
                   </div>
                   <div class="form-group">
                     <label for="phone_no">Phone No. *</label>
@@ -170,8 +169,8 @@
                     <textarea class="form-control" id="description" name='description'></textarea>
                   </div>
                   <div class="form-group">
-                    <label for="country">Country *</label>
-                    <select class="form-control" id="country" name="country">
+                    <label for="ccountry">Country *</label>
+                    <select class="form-control" id="ccountry" name="country">
                       <option selected="selected">Select Country</option>
                       <?php
                         foreach($countries as $key => $value) { ?>
@@ -181,14 +180,14 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="state">State *</label>
-                    <select class="form-control" id="state" name="state">
+                    <label for="cstate">State *</label>
+                    <select class="form-control" id="cstate" name="state">
                       <option selected="selected">Select State</option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="city">City *</label>
-                    <select class="form-control" id="city" name="city">
+                    <label for="ccity">City *</label>
+                    <select class="form-control" id="ccity" name="city">
                       <option selected="selected">Select City</option>
                     </select>
                   </div>
@@ -269,6 +268,59 @@
             for (var i = 0; i < json.length; i++) {
               $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
             }
+          }
+        });
+      });
+      $('#ccountry').on('change',function(){
+        var country_id = this.value;
+        $.ajax({
+          url: '<?= base_url('admin/addemployer'); ?>',
+          type: 'POST',
+          data: {
+            country_id: country_id
+          },
+          cached: false,
+          success: function(result){
+            var json = JSON.parse(result);
+            var $state = $('#cstate');
+            for (var i = 0; i < json.length; i++) {
+              $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
+            }
+            // $('#state').html(result);
+            // $('#city').html('<option value="">Select State First!</option>');
+          }
+        });
+      });
+      $('#cstate').on('change',function(){
+        var state_id = this.value;
+        $.ajax({
+          url: '<?= base_url('admin/getcities'); ?>',
+          type: 'POST',
+          data: {state_id:state_id},
+          cached: false,
+          success: function(result){
+            var json = JSON.parse(result);
+            var $cities = $('#ccity');
+            for (var i = 0; i < json.length; i++) {
+              $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
+            }
+          }
+        });
+      });
+      $('#companyForm').on('submit',function(){
+        event.preventDefault();
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+          url: '<?= base_url("admin/updatecompany/".$data[0]['id']); ?>',
+          method: 'POST',
+          data: formData,
+          mimeType: "multipart/form-data",
+          contentType: false,
+          cache: false,
+          dataType: false,
+          processData: false,
+          success: function(response){
+            console.log(response);
           }
         });
       });
