@@ -366,7 +366,7 @@ class Admin extends BaseController
     {
       if ($this->request->isAJAX()) {
         $cmpny = [
-          'company_logo' => $this->request->getPost('company_logo'),
+          // 'company_logo' => $this->request->getPost('company_logo'),
           'company_name' => $this->request->getPost('company_name'),
           'company_email' => $this->request->getPost('company_email'),
           'phone_no' => $this->request->getPost('phone_no'),
@@ -386,6 +386,10 @@ class Admin extends BaseController
           'youtube_link' => $this->request->getPost('youtube_link'),
           'linkedin_link' => $this->request->getPost('linkedin_link')
         ];
+      $result = UploadFile($_FILES['company_logo']);
+      if($result['status'] == true){
+          $url = $result['result']['file_url'];
+      }
         return json_encode($cmpny);
         exit();
         // $rules = [
