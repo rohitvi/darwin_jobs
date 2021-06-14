@@ -320,7 +320,7 @@
           dataType: false,
           processData: false,
           success: function(response){
-            console.log(response);
+            alert(response);
           }
         });
       });

@@ -196,9 +196,50 @@ class AdminModel extends Model
         }
     }
     
-    public function updatecompany($id)
+    public function updatecompany($id,$data)
     {
-        return $id;
+        $builder = $this->db->table('companies');
+        $update_row = [
+            'company_logo'=> $data['company_logo'],
+            'company_name'=> $data['company_name'],
+            'email'=> $data['company_email'],
+            'phone_no'=> $data['phone_no'],
+            'website'=> $data['website'],
+            'category'=> $data['category'],
+            'founded_date'=> $data['founded_date'],
+            'no_of_employers'=> $data['no_of_employers'],
+            'description'=> $data['description'],
+            'country'=> $data['country'],
+            'state'=> $data['state'],
+            'city'=> $data['city'],
+            'postcode'=> $data['postcode'],
+            'address'=> $data['full_address'],
+            'facebook_link'=> $data['facebook_link'],
+            'twitter_link'=> $data['twitter_link'],
+            'youtube_link'=> $data['youtube_link'],
+            'linkedin_link'=> $data['linkedin_link'],
+        ];
+        $builder->where('id',$id);
+        if ($query = $builder->update($update_row) == 1) {
+            return $query;
+        }
     }
 
+    public function payment()
+    {
+        $builder = $this->db->table('payments');
+        $builder->select('*');
+        return $builder->join('packages','packages.id = purchased_plan')->get()->getResultArray();
+    }
+
+    public function deleteemployer($id)
+    {
+        $builder = $this->db->table('employers');
+        $builder->where('id',$id);
+        if($builder->delete()){
+            $builder = $this->db->table('companies');
+            $builder->where('employer_id',$id);
+            return $builder->delete();
+        }
+    }
 }

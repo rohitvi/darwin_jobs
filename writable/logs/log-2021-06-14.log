@@ -1,23 +1,79 @@
-ERROR - 2021-06-14 13:09:44 --> Error connecting to the database: Unknown database 'darwinde_jobs'
-CRITICAL - 2021-06-14 13:09:44 --> Unable to connect to the database.
-#0 C:\xampp\htdocs\darwin_jobs\system\Database\BaseConnection.php(618): CodeIgniter\Database\BaseConnection->initialize()
-#1 C:\xampp\htdocs\darwin_jobs\system\Database\BaseBuilder.php(1866): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
-#2 C:\xampp\htdocs\darwin_jobs\app\Models\AdminModel.php(151): CodeIgniter\Database\BaseBuilder->get()
-#3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(328): App\Models\AdminModel->getemployer()
-#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->employer()
+CRITICAL - 2021-06-14 16:13:34 --> Too few arguments to function CodeIgniter\Database\BaseBuilder::join(), 1 passed in C:\xampp\htdocs\darwin_jobs\app\Models\AdminModel.php on line 231 and at least 2 expected
+#0 C:\xampp\htdocs\darwin_jobs\app\Models\AdminModel.php(231): CodeIgniter\Database\BaseBuilder->join('packages')
+#1 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(134): App\Models\AdminModel->payment()
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#6 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#7 {main}
+CRITICAL - 2021-06-14 16:15:16 --> Undefined variable: builer
+#0 C:\xampp\htdocs\darwin_jobs\app\Models\AdminModel.php(231): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\xampp\\htdocs...', 231, Array)
+#1 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(134): App\Models\AdminModel->payment()
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#6 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#7 {main}
+CRITICAL - 2021-06-14 16:15:24 --> Undefined property: CodeIgniter\Database\MySQLi\Builder::$get
+#0 C:\xampp\htdocs\darwin_jobs\app\Models\AdminModel.php(232): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\xampp\\htdocs...', 232, Array)
+#1 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(134): App\Models\AdminModel->payment()
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#6 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#7 {main}
+CRITICAL - 2021-06-14 16:18:26 --> Call to undefined function date_time()
+#0 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include()
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/payment/s...', Array, true)
+#3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(135): view('admin/payment/s...', Array)
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
 #5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
 #6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
 #7 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
 #8 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
 #9 {main}
-CRITICAL - 2021-06-14 13:09:44 --> Uncaught ErrorException: print_r(): Property access is not allowed yet in C:\xampp\htdocs\darwin_jobs\app\Views\errors\html\error_exception.php:100
-Stack trace:
-#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'print_r(): Prop...', 'C:\\xampp\\htdocs...', 100, Array)
-#1 C:\xampp\htdocs\darwin_jobs\app\Views\errors\html\error_exception.php(100): print_r(Object(App\Controllers\Admin), true)
-#2 C:\xampp\htdocs\darwin_jobs\system\Debug\Exceptions.php(281): include('C:\\xampp\\htdocs...')
-#3 C:\xampp\htdocs\darwin_jobs\system\Debug\Exceptions.php(147): CodeIgniter\Debug\Exceptions->render(Object(CodeIgniter\Database\Exceptions\DatabaseException), 500)
-#4 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(CodeIgniter\Database\Exceptions\DatabaseException))
-#5 {main}
-  thrown
-#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
-#1 {main}
+CRITICAL - 2021-06-14 16:18:37 --> Call to undefined function date_time()
+#0 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include()
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/payment/s...', Array, true)
+#3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(135): view('admin/payment/s...', Array)
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2021-06-14 16:19:13 --> Call to undefined function date_time()
+#0 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include()
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/payment/s...', Array, true)
+#3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(135): view('admin/payment/s...', Array)
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2021-06-14 16:19:14 --> Call to undefined function date_time()
+#0 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include()
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/payment/s...', Array, true)
+#3 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(135): view('admin/payment/s...', Array)
+#4 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->payments()
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2021-06-14 16:31:07 --> Call to undefined method CodeIgniter\Database\MySQLi\Builder::table()
+#0 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(134): App\Models\AdminModel->deleteemployer('4')
+#1 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->deleteemployer('4')
+#2 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#3 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#6 {main}

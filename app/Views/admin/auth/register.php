@@ -32,7 +32,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="<?= base_url(); ?>" method="post">
+              <form action="<?= base_url('admin/registeradmin'); ?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="username">Username</label>
