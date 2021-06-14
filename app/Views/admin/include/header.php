@@ -191,6 +191,23 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item <?=($ap==='payments')? 'menu-open':''?>">
+            <a href="#" class="nav-link <?=($ap==='payments')? 'active':''?>">
+              <i class="nav-icon fa fa-bars"></i>
+              <p>
+                Payments
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/payments'); ?>" class="nav-link  <?=($ap==='payments')? 'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Payments</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
