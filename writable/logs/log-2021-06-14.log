@@ -1085,3 +1085,51 @@ CRITICAL - 2021-06-14 11:50:42 --> Undefined offset: 0
 #8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
 #9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
 #10 {main}
+CRITICAL - 2021-06-14 12:31:31 --> Undefined offset: 0
+#0 C:\xampp\htdocs\darwin_jobs\app\Views\admin\packages\edit_packages.php(37): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offse...', 'C:\\xampp\\htdocs...', 37, Array)
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/packages/...', Array, true)
+#4 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(385): view('admin/packages/...', Array)
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->edit_packages('plugins', 'bootstrap', 'js', 'bootstrap.bundl...')
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2021-06-14 12:31:31 --> Undefined offset: 0
+#0 C:\xampp\htdocs\darwin_jobs\app\Views\admin\packages\edit_packages.php(37): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offse...', 'C:\\xampp\\htdocs...', 37, Array)
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/packages/...', Array, true)
+#4 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(385): view('admin/packages/...', Array)
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->edit_packages('plugins', 'chart.js', 'Chart.min.js')')
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2021-06-14 12:31:31 --> Undefined offset: 0
+#0 C:\xampp\htdocs\darwin_jobs\app\Views\admin\packages\edit_packages.php(37): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offse...', 'C:\\xampp\\htdocs...', 37, Array)
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/packages/...', Array, true)
+#4 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(385): view('admin/packages/...', Array)
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->edit_packages('dist', 'img', 'AdminLTELogo.pn...')
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2021-06-14 12:31:31 --> Undefined offset: 0
+#0 C:\xampp\htdocs\darwin_jobs\app\Views\admin\packages\edit_packages.php(37): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offse...', 'C:\\xampp\\htdocs...', 37, Array)
+#1 C:\xampp\htdocs\darwin_jobs\system\View\View.php(220): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\darwin_jobs\system\View\View.php(222): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\darwin_jobs\system\Common.php(1217): CodeIgniter\View\View->render('admin/packages/...', Array, true)
+#4 C:\xampp\htdocs\darwin_jobs\app\Controllers\Admin.php(385): view('admin/packages/...', Array)
+#5 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(936): App\Controllers\Admin->edit_packages('dist', 'img', 'user2-160x160.j...')
+#6 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(432): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#7 C:\xampp\htdocs\darwin_jobs\system\CodeIgniter.php(333): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\darwin_jobs\public\index.php(84): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\darwin_jobs\index.php(2): require_once('C:\\xampp\\htdocs...')
+#10 {main}
