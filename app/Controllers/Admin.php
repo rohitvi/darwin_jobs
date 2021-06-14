@@ -365,32 +365,33 @@ class Admin extends BaseController
     public function updatecompany($id)
     {
       if ($this->request->isAJAX()) {
-        $cmpny = [
-          // 'company_logo' => $this->request->getPost('company_logo'),
-          'company_name' => $this->request->getPost('company_name'),
-          'company_email' => $this->request->getPost('company_email'),
-          'phone_no' => $this->request->getPost('phone_no'),
-          'website' => $this->request->getPost('website'),
-          'category' => $this->request->getPost('category'),
-          'founded_date' => $this->request->getPost('founded_date'),
-          'org_type' => $this->request->getPost('org_type'),
-          'no_of_employers' => $this->request->getPost('no_of_employers'),
-          'description' => $this->request->getPost('description'),
-          'country' => $this->request->getPost('country'),
-          'state' => $this->request->getPost('state'),
-          'city' => $this->request->getPost('city'),
-          'postcode' => $this->request->getPost('postcode'),
-          'full_address' => $this->request->getPost('full_address'),
-          'facebook_link' => $this->request->getPost('facebook_link'),
-          'twitter_link' => $this->request->getPost('twitter_link'),
-          'youtube_link' => $this->request->getPost('youtube_link'),
-          'linkedin_link' => $this->request->getPost('linkedin_link')
-        ];
-      $result = UploadFile($_FILES['company_logo']);
-      if($result['status'] == true){
-          $url = $result['result']['file_url'];
-      }
-        return json_encode($cmpny);
+        $result = UploadFile($_FILES['company_logo']);
+          if($result['status'] == true){
+              $url = $result['result']['file_url'];
+          }
+        // $cmpny = [
+        //   'company_logo' => $url,
+        //   'company_name' => $this->request->getPost('company_name'),
+        //   'company_email' => $this->request->getPost('company_email'),
+        //   'phone_no' => $this->request->getPost('phone_no'),
+        //   'website' => $this->request->getPost('website'),
+        //   'category' => $this->request->getPost('category'),
+        //   'founded_date' => $this->request->getPost('founded_date'),
+        //   'org_type' => $this->request->getPost('org_type'),
+        //   'no_of_employers' => $this->request->getPost('no_of_employers'),
+        //   'description' => $this->request->getPost('description'),
+        //   'country' => $this->request->getPost('country'),
+        //   'state' => $this->request->getPost('state'),
+        //   'city' => $this->request->getPost('city'),
+        //   'postcode' => $this->request->getPost('postcode'),
+        //   'full_address' => $this->request->getPost('full_address'),
+        //   'facebook_link' => $this->request->getPost('facebook_link'),
+        //   'twitter_link' => $this->request->getPost('twitter_link'),
+        //   'youtube_link' => $this->request->getPost('youtube_link'),
+        //   'linkedin_link' => $this->request->getPost('linkedin_link')
+        // ];
+      
+        return json_encode($url);
         exit();
         // $rules = [
         //   'company_logo' => ['label'=>'company_logo','rules'=>'required'],
