@@ -196,105 +196,193 @@ class Admin extends BaseController
 
     public function add_category()
     {
-        $session = \Config\Services::session();
-        helper( 'form' );
         $data = [];
-
         if ( $this->request->getMethod() == 'post' ) {
             $input = $this->validate( [
                 'category' => 'required|min_length[5]',
             ] );
 
-            if ( $input == true ) {
-                //form validated successfully, so we can save values to database
-                $model = new AdminModel();
-                $model->save( [
-                    'name' => $this->request->getPost( 'category' ),
-                    'slug' => $this->request->getPost( 'category' )
-                ] );
-
-                $session->setFlashdata( 'success', 'Category Added successfully' );
+              if ($input == true) {
+                $addcategorydata=[
+                  'name' => $this->request->getPost( 'category' ),
+                  'slug' => $this->request->getPost( 'category' ),
+              ];
+                $addcategory = $this->adminModel->add_category($addcategorydata);
+                //$session->setFlashdata( 'success', 'Category Added successfully' );
                 return redirect()->to( '/admin/list_category' );
-                //redirect( base_url( 'admin/category' ) );
-
-            } else {
+              } else {
                 //form not validated successfully
                 $data['validation'] = $this->validator;
-            }
-
+              }
         }
-
         return view( 'admin/category/add_category', $data );
     }
 
-    public function edit_category( $id ) {
-
-        $session = \Config\Services::session();
-        helper( 'form' );
-
-        $model = new AdminModel();
-        $category_row = $model->get_row_category( $id );
-
-        if ( empty( $category_row ) ) {
-            $session->setFlashdata( 'error', 'Record Not Found.' );
-            return redirect()->to( '/admin/list_category' );
-        }
-
-        $data = [];
+    public function edit_category($id) 
+    {
+        //$session = \Config\Services::session();
+        $category_row = $this->adminModel->get_category_by_id( $id );
         $data['category_row'] = $category_row;
 
         if ( $this->request->getMethod() == 'post' ) {
             $input = $this->validate( [
                 'category' => 'required|min_length[5]',
             ] );
-
             if ( $input == true ) {
-                //form validated successfully, so we can save values to database
-                $model = new AdminModel();
-                $model->update( $id, [
-                    'name' => $this->request->getPost( 'category' ),
-                    'slug' => $this->request->getPost( 'category' )
-                ] );
-
-                $session->setFlashdata( 'success', 'Category Update successfully' );
+              $editcategory=[
+                'name' => $this->request->getPost( 'category' ),
+                'slug' => $this->request->getPost( 'category' ),
+            ];
+                $editcategorydata = $this->adminModel->edit_category($editcategory,$id);
+                //$session->setFlashdata( 'success', 'Category Update successfully' );
                 return redirect()->to( '/admin/list_category' );
-                //redirect( base_url( 'admin/category' ) );
-
             } else {
                 //form not validated successfully
                 $data['validation'] = $this->validator;
-            }
-
+                }
         }
-        // pre( $data );
         return view( 'admin/category/edit_category', $data );
     }
 
-    public function del_category( $id = null ) {
-        $model = new AdminModel();
-        $data['user'] = $model->where( 'id', $id )->delete();
+    public function del_category($id) {
+        $this->adminModel->del_category($id);
         return redirect()->to( base_url( 'admin/list_category' ) );
     }
 
 
     public function list_industry()
     {
-      //echo 'hello';    $data['categories'] = $this->am->get_all_categories();
-     $data['industry'] = $this->am->get_all_industry();
-     return view('admin/industry/list_industry',$data);
+      $data['industry'] = $this->adminModel->get_all_industry();
+      return view('admin/industry/list_industry',$data);
     }
 
     public function add_industry()
     {
+      $data = [];
       if ($this->request->getMethod() == 'post') {
         $input = $this->validate([  
-          'category' => 'required|min_length[5]',
+          'industry' => 'required|min_length[5]',
         ]);
 
-
-
+      if ($input == true) {
+        $addindustrydata=[
+          'name' => $this->request->getPost( 'industry' ),
+          'slug' => $this->request->getPost( 'industry' ),
+      ];
+      $addindustry = $this->adminModel->add_industry($addindustrydata);
+      return redirect()->to( '/admin/list_industry' );
       }
-      return view('admin/industry/add_industry');
+      else{
+        $data['validation']= $this->validator;
+          }
+      }
+      return view('admin/industry/add_industry', $data);
+    }
+
+    public function edit_industry($id) 
+    {
+      $industry_row = $this->adminModel->get_industry_by_id( $id );
+      $data['industry_row'] = $industry_row;
+      // pre( $data );
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'industry' => 'required|min_length[5]',
+        ]);
+
+        if ($input == true) {
+          $editindustry=[
+            'name' => $this->request->getPost( 'industry' ),
+            'slug' => $this->request->getPost( 'industry' ),
+        ];
+        $editindustrydata = $this->adminModel->edit_industry($editindustry,$id);
+          return redirect()->to( '/admin/list_industry' );
+        }
+        else{
+          $data['validation']= $this->validator;
+            }
+      }
+      return view( 'admin/industry/edit_industry', $data );
+    } 
+
+    public function del_industry($id)
+    {
+      $this->adminModel->del_industry($id);
+      return redirect()->to( '/admin/list_industry' );
+    }
+
+    public function list_packages()
+    {
+      $data['packages'] = $this->adminModel->get_all_packages();
+      return view('admin/packages/list_packages',$data);
+    }
+
+    public function add_packages()
+    {
+      $data = [];
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'title' => 'required',
+          'price' => 'required',
+          'detail' => 'required',
+          'no_of_days' => 'required',
+          'no_of_posts' => 'required',
+          'sort_order' => 'required'
+        ]);
+      if ($input == true) {
+      $addpackage=[
+        'title' => $this->request->getPost( 'title' ),
+        'slug' => $this->request->getPost( 'title' ),
+        'price' => $this->request->getPost( 'price' ),
+        'detail' => $this->request->getPost( 'detail' ),
+        'no_of_days' => $this->request->getPost( 'no_of_days' ),
+        'no_of_posts' => $this->request->getPost( 'no_of_posts' ),
+        'sort_order' => $this->request->getPost( 'sort_order' )
+    ];
+      $addpack = $this->adminModel->add_packages($addpackage);
+      return redirect()->to( '/admin/list_packages' );
+    }
+      else{
+        $data['validation']= $this->validator;
+        }
+      }
+      return view('admin/packages/add_packages',$data);
+    }
+
+    public function edit_packages($id)
+    {
+      $packages_row = $this->adminModel->get_packages_by_id( $id );
+      $data['packages_row'] = $packages_row;
+
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'title' => 'required',
+          'price' => 'required',
+          'detail' => 'required',
+          'no_of_days' => 'required',
+          'no_of_posts' => 'required',
+          'sort_order' => 'required',
+          'status' => 'required'
+        ]);
+      if ($input == true) {
+      $editpackage=[
+        'title' => $this->request->getPost( 'title' ),
+        'slug' => $this->request->getPost( 'title' ),
+        'price' => $this->request->getPost( 'price' ),
+        'detail' => $this->request->getPost( 'detail' ),
+        'no_of_days' => $this->request->getPost( 'no_of_days' ),
+        'no_of_posts' => $this->request->getPost( 'no_of_posts' ),
+        'sort_order' => $this->request->getPost( 'sort_order' ),
+        'is_active' => $this->request->getPost( 'status' )
+    ];
+      $editpack = $this->adminModel->edit_packages($editpackage,$id);
+      return redirect()->to( '/admin/list_packages' );
+      }
+      else{
+          $data['validation']= $this->validator;
+          }
+      }
+
+      return view('admin/packages/edit_packages',$data);
     }
 
     public function employer()

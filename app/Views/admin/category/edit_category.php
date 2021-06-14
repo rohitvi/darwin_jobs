@@ -31,11 +31,11 @@
               
               <!-- /.card-header -->
               <!-- form start-->
-              <form action="<?php echo base_url('admin/edit_category/'.$category_row['id'])?>"  name="addcategory" id="addcategory" method="post">
+              <form action="<?php echo base_url('admin/edit_category/'.$category_row[0]['id'])?>"  name="editcategory" id="editcategory" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
-                    <input type="text" name="category" class="form-control" id="category" value="<?php echo set_value('category', $category_row['name']);?>" placeholder="Category Name">
+                    <input type="text" name="category" class="form-control" id="category" value="<?php echo  $category_row[0]['name'];?>" placeholder="category Name">
                     <?php
                    // print_r($validation);
                       if(isset($validation) && $validation->hasError('category')){
@@ -46,7 +46,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <input type="submit" name="submit" value="Update Category" class="btn btn-info">
+                  <input type="submit" name="submit" value="Update category" class="btn btn-info">
                 </div>
                 </form>
             </div>

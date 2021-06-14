@@ -42,6 +42,7 @@ $routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 $routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 
 
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
