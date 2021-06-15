@@ -129,6 +129,30 @@
             </ul>
           </li>
           <!-- separator -->
+          <li class="nav-item menu <?=($ap==='users' || $ap==='adduser')? 'menu-open':''?>">
+            <a href="#" class="nav-link <?=($ap==='users' || $ap==='adduser')? 'active':''?>">
+              <i class="nav-icon fas fa fa-user"></i>
+              <p>
+                Users
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/users'); ?>" class="nav-link <?=($ap==='users') ?'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>User List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/adduser'); ?>" class="nav-link <?=($ap==='adduser') ?'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New User</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- separator -->
           <li class="nav-item menu <?=($ap==='employer' || $ap==='addemployer')? 'menu-open':''?>">
             <a href="#" class="nav-link <?=($ap==='employer' || $ap==='addemployer')? 'active':''?>">
               <i class="nav-icon fas fa fa-user-circle"></i>
@@ -207,6 +231,30 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/job_type'); ?>" class="nav-link <?=($ap==='job_type') ?'active':''?>">
+              <i class="nav-icon far fa fa-industry"></i>
+              <p>
+              Job Type
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/education'); ?>" class="nav-link <?=($ap==='education') ?'active':''?>">
+              <i class="nav-icon far fa fa-industry"></i>
+              <p>
+              Education
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/employment'); ?>" class="nav-link <?=($ap==='employment') ?'active':''?>">
+              <i class="nav-icon far fa fa-industry"></i>
+              <p>
+              Employment Type
+              </p>
+            </a>
           </li>
         </ul>
       </nav>
