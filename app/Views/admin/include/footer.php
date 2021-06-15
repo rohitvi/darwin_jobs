@@ -51,5 +51,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <script src="https://unpkg.com/izitoast@1.4.0/dist/js/iziToast.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Toastr -->
+<script src="<?= base_url('public/admin/plugins/toastr/toastr.min.js')?>"></script>
+<script type="text/javascript">
+<?= (session()->getFlashdata('success')) ? "toastr.success('".session()->getFlashdata('success')."')":''?>
+<?= (session()->getFlashdata('error')) ? "toastr.error('".session()->getFlashdata('error')."')":''?>
+<?= (session()->getFlashdata('denied')) ? "toastr.warning('".session()->getFlashdata('denied')."')":''?>
+</script>
 </body>
 </html>

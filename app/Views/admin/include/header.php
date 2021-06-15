@@ -33,7 +33,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
-
+  <!-- Toastr -->
+  <link rel="stylesheet" href="<?= base_url('public/admin/plugins/toastr/toastr.min.css')?>">
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js')?>"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -129,8 +130,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item menu <?=($ap==='employer' || $ap==='addemployer')? 'menu-open':''?>">
-            <a href="#" class="nav-link <?=($ap==='employer' || $ap==='addemployer')? 'active':''?>">
+          <li class="nav-item menu <?=($ap==='post' || $ap==='view_jobs' )? 'menu-open':''?>">
+            <a href="#" class="nav-link <?=($ap==='post' || $ap==='view_jobs')? 'active':''?>">
               <i class="nav-icon fas fa-file"></i>
               <p>
                 Job Posting
@@ -139,13 +140,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= base_url('admin/employer'); ?>" class="nav-link <?=($ap==='employer') ?'active':''?>">
+                <a href="<?= base_url('admin/view_jobs'); ?>" class="nav-link <?=($ap==='view_jobs') ?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View Jobs</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= base_url('admin/addemployer'); ?>" class="nav-link <?=($ap==='addemployer') ?'active':''?>">
+                <a href="<?= base_url('admin/post'); ?>" class="nav-link <?=($ap==='post') ?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add New Job</p>
                 </a>

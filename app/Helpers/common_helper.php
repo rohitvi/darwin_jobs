@@ -23,3 +23,36 @@ function get_experience_list($type)
     }
     return $experience;
 }
+
+
+// Get city name by ID
+function get_city_name($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('cities');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
+
+// Get city ID by title
+function get_city_slug($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('cities');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['slug'];
+}
+
+// Get state's cities
+function get_state_cities($state_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('cities');
+    return $builder->getWhere(array('state_id' => $state_id))->getResultArray();
+}
+
+// Get state name by ID
+function get_state_name($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('states');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}

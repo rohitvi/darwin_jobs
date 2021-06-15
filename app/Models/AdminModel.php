@@ -389,4 +389,12 @@ class AdminModel extends Model
     {
         return $this->db->table('employment')->where('id',$id)->delete();
     }
+
+    // Add new Job
+    public function add_job($data)
+    {
+        $builder = $this->db->table('job_post');
+        return $builder->insert($data);
+    }
+
 }

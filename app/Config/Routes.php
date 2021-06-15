@@ -70,6 +70,9 @@ $routes->add('admin/deleteeducation/(:num)','Admin::deleteeducation/$1');
 $routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 $routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 
+// Job Add
+
+$routes->match(['get', 'post'], 'admin/post', 'Admin::post');
 
 
 /*

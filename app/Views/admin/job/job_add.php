@@ -11,7 +11,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="<?= base_url('admin/employer'); ?>">List Job</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url('admin/view_jobs'); ?>">List Job</a></li>
               <li class="breadcrumb-item active"><a>Add Job</a></li>
             </ol>
           </div>
@@ -32,7 +32,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-				<form action="<?= base_url('admin/job/post'); ?>" id="post_job" method="post">
+				<form action="<?= base_url('jobs/post'); ?>" id="post_job" method="post">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
