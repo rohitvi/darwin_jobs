@@ -242,7 +242,7 @@
           </li>
           <li class="nav-item">
             <a href="<?= base_url('admin/education'); ?>" class="nav-link <?=($ap==='education') ?'active':''?>">
-              <i class="nav-icon far fa fa-industry"></i>
+              <i class="nav-icon fa fa-graduation-cap"></i>
               <p>
               Education
               </p>
