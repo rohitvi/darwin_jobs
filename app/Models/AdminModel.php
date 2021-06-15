@@ -4,11 +4,6 @@ use CodeIgniter\Model;
 
 class AdminModel extends Model
  {
-    // protected $table      = 'categories';
-    // protected $primaryKey = 'id';
-    // protected $allowedFields = ['name', 'slug', 'status', 'top_category'];
-    // protected $deletedField  = 'deleted_at';
-
     protected $table = NULL;
 
     public function test()
@@ -126,19 +121,27 @@ class AdminModel extends Model
         $builder->where('id',$id);
         return $query=$builder->update($update_row);
     }
+//====Packers Model End========================newsletters Model start=================================
+    public function get_all_newsletters(){
+       return $this->db->table('subscribers')->get()->getResultArray();
+    }
 
-<<<<<<< HEAD
+    public function del_newsletters($id){
+        return $this->db->table('subscribers')->where('id',$id)->delete();
+    }
+//====newsletters Model End========================contactus Model start=================================
+    public function get_all_contactus(){
+        return $this->db->table('contact_us')->get()->getResultArray();
+    }
 
-=======
->>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1
-    public function get_job_type($id = ''){
+    public function del_contactus($id){
+        return $this->db->table('contact_us')->where('id',$id)->delete();
+    }
+
+    public function get_job_type($id){
         return $this->db->table( 'job_type' )->get()->getResultArray();
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1
     public function get_countries_list() 
     {
         return $this->db->table( 'countries' )->get()->getResultArray();
@@ -207,13 +210,4 @@ class AdminModel extends Model
             return $query;
         }
     }
-<<<<<<< HEAD
-=======
-
-    public function updatecompany($id)
-    {
-        return $id;
-    }
-
->>>>>>> bbd2ba9b9bf96330d0671c19ac0110204ef4b2d1
 }

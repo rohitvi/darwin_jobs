@@ -13,12 +13,11 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<script src="<?= base_url('public/admin/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script>
+<!-- <script src="<?= base_url('public/admin/plugins/sweetalert2/sweetalert2.min.js'); ?>"></script> -->
 <!-- jQuery -->
 <!-- jQuery UI 1.11.4 -->
 <script src="<?= base_url('public/admin/plugins/jquery-ui/jquery-ui.min.js')?>"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -48,7 +47,6 @@
 <script src="<?= base_url('public/admin/dist/js/demo.js')?>"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?= base_url('public/admin/dist/js/pages/dashboard.js')?>"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <script src="https://unpkg.com/izitoast@1.4.0/dist/js/iziToast.js"></script>

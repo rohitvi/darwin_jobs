@@ -35,6 +35,7 @@
 
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js')?>"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -224,6 +225,113 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-bars"></i>
+              <p>
+                Category
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/add_category'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-industry "></i>
+              <p>
+                Industry
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Industry List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/add_industry'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Industry</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-bars"></i>
+              <p>
+                Packages
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Packages List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/add_packages'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Packages</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-envelope"></i>
+              <p>
+                Newsletters
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_newsletters'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Newsletters</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-envelope"></i>
+              <p>
+              Contact Queries
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_contact'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Queries</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <!-- separator -->
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
@@ -462,45 +570,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-              Category
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-              Industry
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                Packages
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Packages List</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Packages</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+  
           <li class="nav-item">
             <a href="pages/kanban.html" class="nav-link">
               <i class="nav-icon fas fa-columns"></i>
