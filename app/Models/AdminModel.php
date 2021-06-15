@@ -242,4 +242,19 @@ class AdminModel extends Model
             return $builder->delete();
         }
     }
+
+    // Get the Salary Offered Dropdown
+    public function get_salary_list()
+    {
+        $builder = $this->db->table('expected_salary');
+        return $builder->get()->getResultArray();
+    }
+
+    // Get the Education Status Dropdown
+    public function get_education_list()
+    {
+        $builder = $this->db->table('education');
+        return $builder->get()->getResultArray();
+    }
+
 }
