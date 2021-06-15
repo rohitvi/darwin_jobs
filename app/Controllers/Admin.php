@@ -228,7 +228,7 @@ class Admin extends BaseController
     }
 
     public function add_category()
-    {
+    {   
         $data = [];
         if ( $this->request->getMethod() == 'post' ) {
             $input = $this->validate( [
@@ -241,8 +241,8 @@ class Admin extends BaseController
                   'slug' => $this->request->getPost( 'category' ),
               ];
                 $addcategory = $this->adminModel->add_category($addcategorydata);
-                //$session->setFlashdata( 'success', 'Category Added successfully' );
-                return redirect()->to( '/admin/list_category' );
+                $this->session->setFlashdata( 'status', 'Category Added successfully' );
+                return redirect()->to( '/admin/list_category' )->with('status_icon','success');
               } else {
                 //form not validated successfully
                 $data['validation'] = $this->validator;
@@ -267,8 +267,8 @@ class Admin extends BaseController
                 'slug' => $this->request->getPost( 'category' ),
             ];
                 $editcategorydata = $this->adminModel->edit_category($editcategory,$id);
-                //$session->setFlashdata( 'success', 'Category Update successfully' );
-                return redirect()->to( '/admin/list_category' );
+                $this->session->setFlashdata( 'status', 'Category Updated Successfully' );
+                return redirect()->to( '/admin/list_category' )->with('status_icon','success');
             } else {
                 //form not validated successfully
                 $data['validation'] = $this->validator;
@@ -302,7 +302,8 @@ class Admin extends BaseController
           'slug' => $this->request->getPost( 'industry' ),
       ];
       $addindustry = $this->adminModel->add_industry($addindustrydata);
-      return redirect()->to( '/admin/list_industry' );
+      $this->session->setFlashdata( 'status', 'Industry Added Successfully' );
+      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
       }
       else{
         $data['validation']= $this->validator;
@@ -327,7 +328,8 @@ class Admin extends BaseController
             'slug' => $this->request->getPost( 'industry' ),
         ];
         $editindustrydata = $this->adminModel->edit_industry($editindustry,$id);
-          return redirect()->to( '/admin/list_industry' );
+        $this->session->setFlashdata( 'status', 'Industry Updated Successfully' );
+        return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
         }
         else{
           $data['validation']= $this->validator;
@@ -413,17 +415,235 @@ class Admin extends BaseController
           $data['validation']= $this->validator;
           }
       }
-
       return view('admin/packages/edit_packages',$data);
+    }
+
+    public function list_newsletters()
+    {
+      $data['newsletters'] = $this->adminModel->get_all_newsletters();
+      return view('admin/newsletters/list_newsletters',$data);
+    }
+
+    public function del_newsletters($id)
+    {
+      $this->adminModel->del_newsletters($id);
+      return redirect()->to( '/admin/list_newsletters' );
+    }
+
+    public function list_contact(){
+      $data['contact']=$this->adminModel->get_all_contactus();
+      return view('admin/contact/list_contact',$data);
+    }
+
+    public function del_contactus($id)
+    {
+      $this->adminModel->del_contactus($id);
+      return redirect()->to( '/admin/list_contact' );
     }
 
     // Job type
 
     public function job_type(){
       $data['types'] = $this->adminModel->get_job_type();
-      // pre($data['types']);
       return view('admin/job_attributes/job_type',$data);
-}
+      }
+    
+
+    public function addjob()
+    {
+      if ($this->request->getMethod() == 'post') {
+        $rules = ['type'=> ['label'=>'type','rules'=>'required']];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = ['type' => $this->request->getPost('type')];
+        $query = $this->adminModel->addjob($data);
+        if ($query->resultID == 1) {
+          $this->session->setFlashdata('success', 'Job successfully added');
+          return redirect()->to(base_url('admin/job_type'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+      return view('admin/job_attributes/add_job_type');
+    }
+
+    public function editjob($id)
+    {
+      $get['data'] = $this->adminModel->editjob($id);
+      return view('admin/job_attributes/edit_job_type',$get);
+    }
+
+    public function updatejob($id)
+    {
+      if ($this->request->getMethod() == 'put') {
+        $rules = [
+          'type' => ['label'=>'type','rules'=>'required']
+        ];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = ['type' => $this->request->getPost('type')];
+        $query = $this->adminModel->updatejob($id,$data);
+        if ($query == 1) {
+          $this->session->setFlashdata('success', 'Job successfully updated');
+          return redirect()->to(base_url('admin/job_type'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+    }
+
+    public function deletejob($id)
+    {
+      $query = $this->adminModel->deletejob($id);
+      if ($query->resultID == 1) {
+        $this->session->setFlashdata('success', 'Job successfully deleted');
+          return redirect()->to(base_url('admin/job_type'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+    }
+
+    // Education
+
+    public function education()
+    {
+      $get['data'] = $this->adminModel->education();
+      return view('admin/education/education',$get);
+    }
+
+    public function addeducation()
+    {
+      if ($this->request->getMethod() == 'post') {
+        $rules = ['type'=> ['label'=>'type','rules'=>'required']];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = ['type' => $this->request->getPost('type')];
+        $query = $this->adminModel->addeducation($data);
+        if ($query->resultID == 1) {
+          $this->session->setFlashdata('success', 'Education successfully added');
+          return redirect()->to(base_url('admin/education'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+      return view('admin/education/add_education');
+    }
+
+    public function editeducation($id)
+    {
+      $get['data'] = $this->adminModel->editeducation($id);
+      return view('admin/education/edit_education',$get);
+    }
+
+    public function updateeducation($id)
+    {
+      if ($this->request->getMethod() == 'put') {
+        $rules = [
+          'type' => ['label'=>'type','rules'=>'required']
+        ];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = ['type' => $this->request->getPost('type')];
+        $query = $this->adminModel->updateeducation($id,$data);
+        if ($query == 1) {
+          $this->session->setFlashdata('success', 'Education successfully updated');
+          return redirect()->to(base_url('admin/education'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+    }
+
+    public function deleteeducation($id)
+    {
+      $query = $this->adminModel->deleteeducation($id);
+      if ($query->resultID == 1) {
+        $this->session->setFlashdata('success', 'Education successfully deleted');
+          return redirect()->to(base_url('admin/education'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+    }
+
+    // Employment
+
+    public function employment()
+    {
+      $get['data'] = $this->adminModel->employment();
+      return view('admin/employment/employment',$get);
+    }
+
+    public function addemployment()
+    {
+      if ($this->request->getMethod() == 'post') {
+        $rules = ['type'=> ['label'=>'type','rules'=>'required']];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = ['type' => $this->request->getPost('type')];
+        $query = $this->adminModel->addemployment($data);
+        if ($query->resultID == 1) {
+          $this->session->setFlashdata('success', 'Employment successfully added');
+          return redirect()->to(base_url('admin/employment'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+      return view('admin/employment/add_employment');
+    }
+
+    public function editemployment($id)
+    {
+      $get['data'] = $this->adminModel->editemployment($id);
+      return view('admin/employment/edit_employment',$get);
+    }
+
+    public function updateemployment($id)
+    {
+      if ($this->request->getMethod() == 'put') {
+        $rules = [
+          'type' => ['label'=>'type','rules'=>'required']
+        ];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = ['type' => $this->request->getPost('type')];
+        $query = $this->adminModel->updateemployment($id,$data);
+        if ($query == 1) {
+          $this->session->setFlashdata('success', 'Employment successfully updated');
+          return redirect()->to(base_url('admin/employment'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+    }
+
+    public function deleteemployment($id)
+    {
+      $query = $this->adminModel->deleteemployment($id);
+      if ($query->resultID == 1) {
+        $this->session->setFlashdata('success', 'Employment successfully deleted');
+          return redirect()->to(base_url('admin/employment'));
+        }else
+        {
+          echo '0~Something went wrong, please try again!';
+        }
+    }
+
+    // Employer
+
     public function employer()
     {
       $employer['data'] = $this->adminModel->getemployer();
@@ -606,6 +826,95 @@ class Admin extends BaseController
             if ($query == 1) {
               return 'success';
             }
+      }
+    }
+
+    public function users()
+    {
+      $get['data'] = $this->adminModel->users();
+      return view('admin/users/showusers.php',$get);
+    }
+
+    public function adduser()
+    {
+      if ($this->request->getMethod() == 'post') {
+        $rules = [
+          'firstname'=>['label'=>'firstname','rules'=>'required'],
+          'lastname'=>['label'=>'lastname','rules'=>'required'],
+          'email'=>['label'=>'email','rules'=>'required'],
+          'mobile_no'=>['label'=>'mobile_no','rules'=>'required'],
+          'password'=>['label'=>'password','rules'=>'required'],
+          'address'=>['label'=>'address','rules'=>'required']
+        ];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = [
+          'firstname' => $this->request->getPost('firstname'),
+          'lastname' => $this->request->getPost('lastname'),
+          'email' => $this->request->getPost('email'),
+          'mobile_no' => $this->request->getPost('mobile_no'),
+          'password' => $this->request->getPost('password'),
+          'address' => $this->request->getPost('address')
+        ];
+        $query = $this->adminModel->adduser($data);
+        if ($query->resultID == 1) {
+          $this->session->setFlashdata('success', 'User successfully added');
+          return redirect()->to(base_url('admin/users'));
+        }
+        else{
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+      return view('admin/users/adduser');
+    }
+
+    public function edituser($id)
+    {
+      $get['data'] = $this->adminModel->edituser($id);
+      return view('admin/users/edituser',$get);
+    }
+
+    public function updateuser($id)
+    {
+      if ($this->request->getMethod() == 'put') {
+        $rules = [
+          'firstname' => ['label'=>'firstname','rules'=>'required'],
+          'lastname' => ['label'=>'lastname','rules'=>'required'],
+          'email' => ['label'=>'email','rules'=>'required'],
+          'mobile_no' => ['label'=>'mobile_no','rules'=>'required'],
+          'is_active' => ['label'=>'is_active','rules'=>'required'],
+        ];
+        if ($this->validate($rules) == FALSE) {
+          echo '0~'.$this->validation->listErrors();exit;
+        }
+        $data = [
+          'firstname' => $this->request->getPost('firstname'),
+          'lastname' => $this->request->getPost('lastname'),
+          'email' => $this->request->getPost('email'),
+          'mobile_no' => $this->request->getPost('mobile_no'),
+          'is_active' => $this->request->getPost('is_active'),
+        ];
+        $query = $this->adminModel->updateuser($id,$data);
+        if ($query == 1) {
+          $this->session->setFlashdata('success', 'User successfully updated');
+          return redirect()->to(base_url('admin/users'));
+        }
+        else{
+          echo '0~Something went wrong, please try again!';
+        }
+      }
+    }
+
+    public function deleteuser($id)
+    {
+      $query = $this->adminModel->deleteuser($id);
+      if ($query->resultID == 1) {
+        $this->session->setFlashdata('success', 'User successfully deleted');
+          return redirect()->to(base_url('admin/users'));
+        }
+        else{
+          echo '0~Something went wrong, please try again!';
       }
     }
 }

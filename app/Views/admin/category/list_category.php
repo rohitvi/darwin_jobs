@@ -1,6 +1,5 @@
 <?php include(VIEWPATH.'admin/include/header.php'); ?>
   <!-- Content Wrapper. Contains page content -->
-
   <div class="content-wrapper">
   <section class="content-header">
       <div class="container-fluid">
@@ -76,7 +75,21 @@
       </div>
     </section>
 
- </div>
+<script>
+$(document).ready(function(){
+<?php if (session()->getFlashdata('status')) {?>
+      swal({
+        title: "<?= session()->getFlashdata('status') ?>",
+        icon: "<?= session()->getFlashdata('status_icon') ?>",
+        button: "OK",
+        });
+<?php }?>
 
+$('.swal-overlay').delay(3000).fadeOut('slow');
+});
+</script>
+
+ </div>
   <!-- /.content-wrapper -->
   <?php include(VIEWPATH.'admin/include/footer.php'); ?>
+  

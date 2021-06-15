@@ -36,6 +36,7 @@
 
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js')?>"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -152,6 +153,137 @@
             </ul>
           </li>
           <!-- separator -->
+          <li class="nav-item menu <?=($ap==='users' || $ap==='adduser')? 'menu-open':''?>">
+            <a href="#" class="nav-link <?=($ap==='users' || $ap==='adduser')? 'active':''?>">
+              <i class="nav-icon fas fa fa-user"></i>
+              <p>
+                Users
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/users'); ?>" class="nav-link <?=($ap==='users') ?'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>User List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/adduser'); ?>" class="nav-link <?=($ap==='adduser') ?'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New User</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-bars"></i>
+              <p>
+                Category
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/add_category'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-industry "></i>
+              <p>
+                Industry
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Industry List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/add_industry'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Industry</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-bars"></i>
+              <p>
+                Packages
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Packages List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/add_packages'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Packages</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-envelope"></i>
+              <p>
+                Newsletters
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_newsletters'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Newsletters</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-envelope"></i>
+              <p>
+              Contact Queries
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/list_contact'); ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Queries</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- separator -->
           <li class="nav-item menu <?=($ap==='employer' || $ap==='addemployer')? 'menu-open':''?>">
             <a href="#" class="nav-link <?=($ap==='employer' || $ap==='addemployer')? 'active':''?>">
               <i class="nav-icon fas fa fa-user-circle"></i>
@@ -176,47 +308,26 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('admin/list_category'); ?>" class="nav-link <?=($ap==='list_category') ?'active':''?>">
-              <i class="nav-icon far fa fa-bars"></i>
+            <a href="pages/calendar.html" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
               <p>
-              Category
+                Calendar
+                <span class="badge badge-info right">2</span>
+              </p>
+            </a>
+          </li>
+  
+          <li class="nav-item">
+            <a href="pages/kanban.html" class="nav-link">
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Kanban Board
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link <?=($ap==='list_industry') ?'active':''?>">
-              <i class="nav-icon far fa fa-industry"></i>
-              <p>
-              Industry
-              </p>
-            </a>
-          </li>
-          <li class="nav-item <?=($ap==='list_packages')? 'menu-open':''?>">
-            <a href="#" class="nav-link <?=($ap==='list_packages')? 'active':''?>">
-              <i class="nav-icon fa fa-bars"></i>
-              <p>
-                Packages
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link  <?=($ap==='list_packages')? 'active':''?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Packages List</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Packages</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item <?=($ap==='payments')? 'menu-open':''?>">
-            <a href="#" class="nav-link <?=($ap==='payments')? 'active':''?>">
-              <i class="nav-icon fa fa-bars"></i>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Payments
                 <i class="fas fa-angle-left right"></i>
@@ -230,6 +341,30 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/job_type'); ?>" class="nav-link <?=($ap==='job_type') ?'active':''?>">
+              <i class="nav-icon far fa fa-industry"></i>
+              <p>
+              Job Type
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/education'); ?>" class="nav-link <?=($ap==='education') ?'active':''?>">
+              <i class="nav-icon far fa fa-industry"></i>
+              <p>
+              Education
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/employment'); ?>" class="nav-link <?=($ap==='employment') ?'active':''?>">
+              <i class="nav-icon far fa fa-industry"></i>
+              <p>
+              Employment Type
+              </p>
+            </a>
           </li>
         </ul>
       </nav>

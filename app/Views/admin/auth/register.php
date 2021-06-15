@@ -32,27 +32,27 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="<?= base_url('admin/registeradmin'); ?>" method="post">
+              <form action="<?= base_url('admin/adduser'); ?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name='username' placeholder="Enter email">
+                    <input type="text" class="form-control" id="username" name='username' placeholder="Username">
                   </div>
                   <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Password">
+                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name">
                   </div>
                   <div class="form-group">
                    <label for="lastname">Last Name</label>
-                   <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Password">
+                   <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
                   </div>
                   <div class="form-group">
                    <label for="email">Email</label>
-                   <input type="email" class="form-control" id="email" name="email" placeholder="Password">
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                   </div>
                   <div class="form-group">
                    <label for="mobile_no">Mobile Number</label>
-                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Password">
+                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile Number">
                   </div>
                   <div class="form-group">
                    <label for="password">Password</label>
@@ -62,13 +62,11 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Add User</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
-
-            <
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
