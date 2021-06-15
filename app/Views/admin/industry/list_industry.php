@@ -75,6 +75,20 @@
         </div>
       </div>
     </section>
+  
+    <script>
+$(document).ready(function(){
+<?php if (session()->getFlashdata('status')) {?>
+      swal({
+        title: "<?= session()->getFlashdata('status') ?>",
+        icon: "<?= session()->getFlashdata('status_icon') ?>",
+        button: "OK",
+        });
+<?php }?>
+
+$('.swal-overlay').delay(3000).fadeOut('slow');
+});
+</script>
 
  </div>
 
