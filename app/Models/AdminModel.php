@@ -138,9 +138,6 @@ class AdminModel extends Model
         return $this->db->table('contact_us')->where('id',$id)->delete();
     }
 
-    public function get_job_type($id){
-        return $this->db->table( 'job_type' )->get()->getResultArray();
-    }
 
     public function get_countries_list() 
     {
@@ -209,5 +206,173 @@ class AdminModel extends Model
         if ($query = $builder->update($update_row) == 1) {
             return $query;
         }
+    }
+    
+    public function updatecompany($id,$data)
+    {
+        $builder = $this->db->table('companies');
+        $update_row = [
+            'company_logo'=> $data['company_logo'],
+            'company_name'=> $data['company_name'],
+            'email'=> $data['company_email'],
+            'phone_no'=> $data['phone_no'],
+            'website'=> $data['website'],
+            'category'=> $data['category'],
+            'founded_date'=> $data['founded_date'],
+            'no_of_employers'=> $data['no_of_employers'],
+            'description'=> $data['description'],
+            'country'=> $data['country'],
+            'state'=> $data['state'],
+            'city'=> $data['city'],
+            'postcode'=> $data['postcode'],
+            'address'=> $data['full_address'],
+            'facebook_link'=> $data['facebook_link'],
+            'twitter_link'=> $data['twitter_link'],
+            'youtube_link'=> $data['youtube_link'],
+            'linkedin_link'=> $data['linkedin_link'],
+        ];
+        $builder->where('id',$id);
+        if ($query = $builder->update($update_row) == 1) {
+            return $query;
+        }
+    }
+
+    public function payment()
+    {
+        $builder = $this->db->table('payments');
+        $builder->select('*');
+        return $builder->join('packages','packages.id = purchased_plan')->get()->getResultArray();
+    }
+
+    public function deleteemployer($id)
+    {
+        $builder = $this->db->table('employers');
+        $builder->where('id',$id);
+        if($builder->delete()){
+            $builder = $this->db->table('companies');
+            $builder->where('employer_id',$id);
+            return $builder->delete();
+        }
+    }
+
+    public function users()
+    {
+        return $this->db->table('users')->get()->getResultArray();
+    }
+
+    public function adduser($data)
+    {
+        $builder = $this->db->table('users');
+        return $builder->insert($data);
+    }
+
+    public function edituser($id)
+    {
+        return $this->db->table('users')->where('id',$id)->get()->getResultArray();
+    }
+
+    public function updateuser($id,$data){
+        $update_row =[
+            'firstname'=>$data['firstname'],
+            'lastname' => $data['lastname'],
+            'email'=>$data['email'],
+            'mobile_no' => $data['mobile_no'],
+            'is_active'=>$data['is_active']
+        ];
+        $builder = $this->db->table('users');
+        return $builder->where('id',$id)->update($update_row);
+    }
+
+    public function deleteuser($id)
+    {
+        return $this->db->table('users')->where('id',$id)->delete();
+    }
+
+    public function get_job_type()
+    {
+        return $this->db->table('job_type')->get()->getResultArray();
+    }
+
+    public function addjob($data)
+    {
+        $builder = $this->db->table('job_type');
+        return $builder->insert($data);
+    }
+
+    public function editjob($id)
+    {
+        return $this->db->table('job_type')->where('id',$id)->get()->getResultArray();
+    }
+
+    public function updatejob($id,$data)
+    {
+        $update_row =[
+            'type'=>$data['type']
+        ];
+        $builder = $this->db->table('job_type');
+        return $builder->where('id',$id)->update($update_row);
+    }
+
+    public function deletejob($id)
+    {
+        return $this->db->table('job_type')->where('id',$id)->delete();
+    }
+
+    public function education()
+    {
+        return $this->db->table('education')->get()->getResultArray();
+    }
+
+    public function addeducation($data)
+    {
+        return $this->db->table('education')->insert($data);
+    }
+
+    public function editeducation($id)
+    {
+        return $this->db->table('education')->where('id',$id)->get()->getResultArray();
+    }
+
+    public function updateeducation($id,$data)
+    {
+        $update_row =[
+            'type'=>$data['type']
+        ];
+        $builder = $this->db->table('education');
+        return $builder->where('id',$id)->update($update_row);
+    }
+
+    public function deleteeducation($id)
+    {
+        return $this->db->table('education')->where('id',$id)->delete();
+    }
+
+    public function employment()
+    {
+        return $this->db->table('employment')->get()->getResultArray();
+    }
+
+    public function addemployment($data)
+    {
+        return $this->db->table('employment')->insert($data);
+    }
+
+    public function editemployment($id)
+    {
+        return $this->db->table('employment')->where('id',$id)->get()->getResultArray();
+    }
+
+    public function updateemployment($id,$data)
+    {
+        $update_row =[
+            'type'=>$data['type']
+        ];
+        $builder = $this->db->table('employment');
+        return $builder->where('id',$id)->update($update_row);
+    }
+
+    public function deleteemployment($id)
+    {
+        return $this->db->table('employment')->where('id',$id)->delete();
     }
 }

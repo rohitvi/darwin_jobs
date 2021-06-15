@@ -50,6 +50,7 @@
                       <th>Firstname</th>
                       <th>Email</th>
                       <th>Mobile No</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -69,6 +70,10 @@
                       </td>
                       <td>
                         <?= $row['mobile_no']; ?>
+                      </td>
+                      <td>
+                        <a type="button" class="btn btn-secondary" href="<?= base_url('admin/showadmin/'.$row['id']); ?>">Edit</a>
+                        <a type="button" class="btn btn-danger" href="<?= base_url('admin/deleteadmin/'.$row['id']); ?>">Delete</a>
                       </td>
                     </tr>
                     <?php endforeach; ?>
