@@ -228,7 +228,7 @@ class Admin extends BaseController
     }
 
     public function add_category()
-    {
+    {   
         $data = [];
         if ( $this->request->getMethod() == 'post' ) {
             $input = $this->validate( [
@@ -241,8 +241,8 @@ class Admin extends BaseController
                   'slug' => $this->request->getPost( 'category' ),
               ];
                 $addcategory = $this->adminModel->add_category($addcategorydata);
-                //$session->setFlashdata( 'success', 'Category Added successfully' );
-                return redirect()->to( '/admin/list_category' );
+                $this->session->setFlashdata( 'status', 'Category Added successfully' );
+                return redirect()->to( '/admin/list_category' )->with('status_icon','success');
               } else {
                 //form not validated successfully
                 $data['validation'] = $this->validator;
@@ -267,8 +267,8 @@ class Admin extends BaseController
                 'slug' => $this->request->getPost( 'category' ),
             ];
                 $editcategorydata = $this->adminModel->edit_category($editcategory,$id);
-                //$session->setFlashdata( 'success', 'Category Update successfully' );
-                return redirect()->to( '/admin/list_category' );
+                $this->session->setFlashdata( 'status', 'Category Updated Successfully' );
+                return redirect()->to( '/admin/list_category' )->with('status_icon','success');
             } else {
                 //form not validated successfully
                 $data['validation'] = $this->validator;
@@ -302,7 +302,8 @@ class Admin extends BaseController
           'slug' => $this->request->getPost( 'industry' ),
       ];
       $addindustry = $this->adminModel->add_industry($addindustrydata);
-      return redirect()->to( '/admin/list_industry' );
+      $this->session->setFlashdata( 'status', 'Industry Added Successfully' );
+      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
       }
       else{
         $data['validation']= $this->validator;
@@ -327,7 +328,8 @@ class Admin extends BaseController
             'slug' => $this->request->getPost( 'industry' ),
         ];
         $editindustrydata = $this->adminModel->edit_industry($editindustry,$id);
-          return redirect()->to( '/admin/list_industry' );
+        $this->session->setFlashdata( 'status', 'Industry Updated Successfully' );
+        return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
         }
         else{
           $data['validation']= $this->validator;
@@ -413,8 +415,30 @@ class Admin extends BaseController
           $data['validation']= $this->validator;
           }
       }
-
       return view('admin/packages/edit_packages',$data);
+    }
+
+    public function list_newsletters()
+    {
+      $data['newsletters'] = $this->adminModel->get_all_newsletters();
+      return view('admin/newsletters/list_newsletters',$data);
+    }
+
+    public function del_newsletters($id)
+    {
+      $this->adminModel->del_newsletters($id);
+      return redirect()->to( '/admin/list_newsletters' );
+    }
+
+    public function list_contact(){
+      $data['contact']=$this->adminModel->get_all_contactus();
+      return view('admin/contact/list_contact',$data);
+    }
+
+    public function del_contactus($id)
+    {
+      $this->adminModel->del_contactus($id);
+      return redirect()->to( '/admin/list_contact' );
     }
 
     // Job type
@@ -422,7 +446,8 @@ class Admin extends BaseController
     public function job_type(){
       $data['types'] = $this->adminModel->get_job_type();
       return view('admin/job_attributes/job_type',$data);
-    }
+      }
+    
 
     public function addjob()
     {

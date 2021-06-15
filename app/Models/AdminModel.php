@@ -4,11 +4,6 @@ use CodeIgniter\Model;
 
 class AdminModel extends Model
  {
-    // protected $table      = 'categories';
-    // protected $primaryKey = 'id';
-    // protected $allowedFields = ['name', 'slug', 'status', 'top_category'];
-    // protected $deletedField  = 'deleted_at';
-
     protected $table = NULL;
 
     public function test()
@@ -126,6 +121,23 @@ class AdminModel extends Model
         $builder->where('id',$id);
         return $query=$builder->update($update_row);
     }
+//====Packers Model End========================newsletters Model start=================================
+    public function get_all_newsletters(){
+       return $this->db->table('subscribers')->get()->getResultArray();
+    }
+
+    public function del_newsletters($id){
+        return $this->db->table('subscribers')->where('id',$id)->delete();
+    }
+//====newsletters Model End========================contactus Model start=================================
+    public function get_all_contactus(){
+        return $this->db->table('contact_us')->get()->getResultArray();
+    }
+
+    public function del_contactus($id){
+        return $this->db->table('contact_us')->where('id',$id)->delete();
+    }
+
 
     public function get_countries_list() 
     {
