@@ -35,6 +35,8 @@ class Employer extends BaseController
 
     public function personal_info(){
         return view('employer/profile/profile_page');
+    }
+    
     public function login()
     {
         if ($this->request->getMethod() == 'post') {
