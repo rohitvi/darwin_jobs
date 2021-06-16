@@ -24,13 +24,13 @@ Author: SAEROX
           });
         </script>
         <!-- Favicon -->
-        <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('public/employer/assets/img/apple-touch-icon.png') ?>">
+        <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('public/employer/assets/img/favicon-32x32.png') ?>">
+        <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('public/employer/assets/img/favicon-16x16.png') ?>">
         <!-- Stylesheet -->
-        <link rel="stylesheet" href="assets/vendors/css/base/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/vendors/css/base/elisyam-1.5.min.css">
-        <link rel="stylesheet" href="assets/css/animate/animate.min.css">
+        <link rel="stylesheet" href="<?= base_url('public/employer/assets/vendors/css/base/bootstrap.min.css') ?>">
+        <link rel="stylesheet" href="<?= base_url('public/employer/assets/vendors/css/base/elisyam-1.5.min.css') ?>">
+        <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/animate/animate.min.css') ?>">
         <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -39,7 +39,7 @@ Author: SAEROX
         <!-- Begin Preloader -->
         <div id="preloader">
             <div class="canvas">
-                <img src="assets/img/logo.png" alt="logo" class="loader-logo">
+                <img src="<?= base_url('public/employer/assets/img/logo.png') ?>" alt="logo" class="loader-logo">
                 <div class="spinner"></div>   
             </div>
         </div>
@@ -54,7 +54,7 @@ Author: SAEROX
                         <div class="authentication-col-content-2 mx-auto text-center">
                             <div class="logo-centered">
                                 <a href="db-default.html">
-                                    <img src="assets/img/logo.png" alt="logo">
+                                    <img src="<?= base_url('public/employer/assets/img/logo.png') ?>" alt="logo">
                                 </a>
                             </div>
                             <h1>Join Our Community</h1>
@@ -76,21 +76,20 @@ Author: SAEROX
                         <div class="tab-content" id="animate-tab-content">
                             <!-- Begin Sign In -->
                             <div role="tabpanel" class="tab-pane show active" id="singin" aria-labelledby="singin-tab">
-                                <h3>Sign In To Elisyam</h3>
-                                <form>
+                                <h3>Sign In For Employer</h3>
+                                <form action="<?= base_url('employer/login') ?>" method="post">
                                     <div class="group material-input">
-        							    <input type="text" required>
+        							    <input type="text" name="email" required>
         							    <span class="highlight"></span>
         							    <span class="bar"></span>
         							    <label>Email</label>
                                     </div>
                                     <div class="group material-input">
-        							    <input type="password" required>
+        							    <input type="password" name="password" required>
         							    <span class="highlight"></span>
         							    <span class="bar"></span>
         							    <label>Password</label>
                                     </div>
-                                </form>
                                 <div class="row">
                                     <div class="col text-left">
                                         <div class="styled-checkbox">
@@ -103,10 +102,11 @@ Author: SAEROX
                                     </div>
                                 </div>
                                 <div class="sign-btn text-center">
-                                    <a href="db-default.html" class="btn btn-lg btn-gradient-01">
+                                    <button type="submit" class="btn btn-lg btn-gradient-01">
                                         Sign In
-                                    </a>
+                                    </button>
                                 </div>
+                                </form> 
                             </div>
                             <!-- End Sign In -->
                             <!-- Begin Sign Up -->
@@ -157,14 +157,14 @@ Author: SAEROX
         </div>
         <!-- End Container -->    
         <!-- Begin Vendor Js -->
-        <script src="assets/vendors/js/base/jquery.min.js"></script>
-        <script src="assets/vendors/js/base/core.min.js"></script>
+        <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
+        <script src="<?= base_url('public/employer/assets/vendors/js/base/core.min.js') ?>"></script>
         <!-- End Vendor Js -->
         <!-- Begin Page Vendor Js -->
-        <script src="assets/vendors/js/app/app.min.js"></script>
+        <script src="<?= base_url('public/employer/assets/vendors/js/app/app.min.js') ?>"></script>
         <!-- End Page Vendor Js -->
         <!-- Begin Page Snippets -->
-        <script src="assets/js/components/tabs/animated-tabs.min.js"></script>
+        <script src="<?= base_url('public/employer/assets/js/components/tabs/animated-tabs.min.js') ?>"></script>
         <!-- End Page Snippets -->
     </body>
 </html>

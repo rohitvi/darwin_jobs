@@ -105,8 +105,6 @@
     <script src="<?= base_url('public/employer/assets/vendors/js/noty/noty.min.js')?>"></script>
     <!-- End Page Snippets -->
 
-    <!-- Begin Custom -->
-    <script src="<?= base_url('public/employer/assets/js/custom/custom.js')?>"></script>
     <!-- End Custom -->
 
     <script type="text/javascript">
