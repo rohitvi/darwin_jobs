@@ -28,7 +28,6 @@
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/owl-carousel/owl.theme.min.css')?>">
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/datatables/datatables.min.css')?>">
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/animate/animate.min.css')?>">
-        <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/custom/custom.css')?>">
     </head>
     <body id="page-top">
         <!-- Begin Preloader -->
@@ -47,7 +46,7 @@
                     <div class="navbar-holder d-flex align-items-center align-middle justify-content-between">
                         <!-- Begin Logo -->
                         <div class="navbar-header">
-                            <a href="db-default.html" class="navbar-brand">
+                            <a href="<?= base_url('employer') ?>" class="navbar-brand">
                                 <div class="brand-image brand-big">
                                     <img src="<?= base_url('public/employer/assets/img/logo-big.png')?>" alt="logo" class="logo-big">
                                 </div>
@@ -142,7 +141,7 @@
                                         <img src="<?= base_url('public/employer/assets/img/avatar/avatar-01.jpg')?>" alt="..." class="rounded-circle">
                                     </li>
                                     <li>
-                                        <a href="pages-profile.html" class="dropdown-item"> 
+                                        <a href="<?= base_url('employer/profile') ?>" class="dropdown-item"> 
                                             Profile
                                         </a>
                                     </li>
@@ -162,7 +161,7 @@
                                             Faq
                                         </a>
                                     </li>
-                                    <li><a rel="nofollow" href="pages-login.html" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
+                                    <li><a rel="nofollow" href="<?= base_url('employer/logout') ?>" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
                                 </ul>
                             </li>
                             <!-- End User -->
@@ -180,17 +179,8 @@
                     <nav class="side-navbar box-scroll sidebar-scroll">
                         <!-- Begin Main Navigation -->
                         <ul class="list-unstyled">
-                            <li class="active"><a href="#dropdown-db" aria-expanded="true" data-toggle="collapse"><i class="la la-columns"></i><span>Dashboard</span></a>
-                                <ul id="dropdown-db" class="collapse list-unstyled show pt-0">
-                                    <li><a class="active" href="db-default.html">Default</a></li>
-                                    <li><a href="db-clean.html">Clean</a></li>
-                                    <li><a href="db-compact.html">Compact</a></li>
-                                    <li><a href="db-modern.html">Modern</a></li>
-                                    <li><a href="db-social.html">Social</a></li>
-                                    <li><a href="db-smarthome.html">Smarthome</a></li>
-                                    <li><a href="db-all.html">All</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
+                            <li><a href="<?= base_url('employer/packages') ?>"><i class="la la-tasks"></i><span>Packages</span></a></li>
                             <li><a href="#dropdown-app" aria-expanded="false" data-toggle="collapse"><i class="la la-puzzle-piece"></i><span>Applications</span></a>
                                 <ul id="dropdown-app" class="collapse list-unstyled pt-0">
                                     <li><a href="app-calendar.html">Calendar</a></li>
@@ -259,7 +249,7 @@
                             <li><a href="#dropdown-generic" aria-expanded="false" data-toggle="collapse"><i class="la la-file-text"></i><span>Generic</span></a>
                                 <ul id="dropdown-generic" class="collapse list-unstyled pt-0">
                                     <li><a href="pages-coming-soon.html">Coming Soon</a></li>
-                                    <li><a href="pages-profile.html">Profile</a></li>
+                                    <li><a href="<?= base_url('employer/profile') ?>">Profile</a></li>
                                     <li><a href="pages-invoice.html">Invoice</a></li>
                                     <li><a href="pages-search.html">Search</a></li>
                                     <li><a href="pages-faq.html">FAQ</a></li>
