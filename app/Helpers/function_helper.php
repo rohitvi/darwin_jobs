@@ -20,10 +20,6 @@ function get_direct_value($table,$columnRequired,$columnNameToCompare,$columnVal
         return 0;
 }
 
-function app_name(){
-    return get_direct_value('general_settings','value','name','app_name');
-}
-
 function RandomString($length = 10) {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }
@@ -43,6 +39,13 @@ function authenticate($para='admin_logged_in')
             return FALSE;
         else
             return session('admin_id');
+    }
+    if($para == 'admin_username')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return session('admin_username');
     }
 }
 
@@ -171,4 +174,15 @@ function DeleteDcloudFile($FILES)
         // return $errmsg;
         return array('status'=>false,'message'=>'Failed To upload');
     }
+}
+
+function general_value($column){
+    $db      = \Config\Database::connect();
+    $builder = $db->table('general_settings');
+    $value   = $builder->select($column)->get()->getResultArray();
+    if($value){
+        return $value[0][$column];
+    }
+    else
+        return 0;
 }

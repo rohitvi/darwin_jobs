@@ -35,16 +35,38 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Admin::index');
 $routes->get('/', 'Admin::add_category');
 $routes->post('/', 'Admin::add_category');
-
+// Admin Edit Routes
 $routes->add('admin/showadmin/(:num)','Admin::editadmin/$1');
+// Admin Update Routes
 $routes->add('admin/updateadmin/(:num)','Admin::updateadmin/$1');
+// Admin Delete Routes
 $routes->add('admin/deleteadmin/(:num)','Admin::deleteadmin/$1');
+// Employer Edit Routes
 $routes->add('admin/employer/(:num)','Admin::editemployer/$1');
+// Employer Update Routes
 $routes->add('admin/updateemployer/(:num)','Admin::updateemployer/$1');
-
+// Company Update Routes
 $routes->add('admin/updatecompany/(:num)','Admin::updatecompany/$1');
-
-
+// Delete Employer/Company Routes
+$routes->add('admin/deleteemployer/(:num)','Admin::deleteemployer/$1');
+// Edit Users Routes
+$routes->add('admin/edituser/(:num)','Admin::edituser/$1');
+// Update Users Routes
+$routes->add('admin/updateuser/(:num)','Admin::updateuser/$1');
+// Delete Users Routes
+$routes->add('admin/deleteuser/(:num)','Admin::deleteuser/$1');
+// Edit Job Type Routes
+$routes->add('admin/editjob/(:num)','Admin::editjob/$1');
+// Update Job Type Routes
+$routes->add('admin/updatejob/(:num)','Admin::updatejob/$1');
+// Delete Job Type Routes
+$routes->add('admin/deletejob/(:num)','Admin::deletejob/$1');
+// Edit Education Routes
+$routes->add('admin/editeducation/(:num)','Admin::editeducation/$1');
+// Update Education Routes
+$routes->add('admin/updateeducation/(:num)','Admin::updateeducation/$1');
+// Delete Education Routes
+$routes->add('admin/deleteeducation/(:num)','Admin::deleteeducation/$1');
 $routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 $routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 

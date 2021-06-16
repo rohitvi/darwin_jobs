@@ -17,6 +17,26 @@ class AuthModel extends Model
             return 0;
         }
     }
+
+    public function register($data)
+    {
+        $builder = $this->db->table('admin');
+        return $builder->insert($data);
+    }
+
+    public function deleteadmin($id)
+    {
+        $builder = $this->db->table('admin');
+        $builder->where('id',$id);
+        return $builder->delete();
+    }
+
+    public function getaccount($id)
+    {
+        $builder = $this->db->table('admin');
+        return $builder->where('id',$id)->get()->getResultArray();
+    }
+
     public function account($userdata,$id)
     {
         $builder = $this->db->table('admin');
@@ -29,9 +49,9 @@ class AuthModel extends Model
         ];
         $builder->where('id', $id );
         
-        if ($builder->update($update_row) == 1)
+        if ($query = $builder->update($update_row) == 1)
         {
-            echo 'done';
+            return $query;
         }
     }
     public function changepassword($password,$id)
