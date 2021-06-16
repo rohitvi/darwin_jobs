@@ -199,7 +199,7 @@
                                     <li><a href="app-contact.html">Contact</a></li>
                                 </ul>
                             </li>
-                            <li><a href="components-widgets.html"><i class="la la-spinner"></i><span>Widgets</span></a></li>
+                            <li><a href="<?= base_url('employer/personal_info/5'); ?>"><i class="la la-user"></i><span>Personal Information</span></a></li>
                         </ul>
                         <span class="heading">Components</span>
                         <ul class="list-unstyled">

@@ -12,4 +12,8 @@ class Employer extends BaseController
     {
         return view('employer/dashboard');
     }
+
+    public function personal_info(){
+        return view('employer/profile/profile_page');
+    }
 }
