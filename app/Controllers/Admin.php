@@ -251,9 +251,7 @@ class Admin extends BaseController
         return view( 'admin/category/add_category', $data );
     }
 
-    public function edit_category($id) 
-    {
-        //$session = \Config\Services::session();
+    public function edit_category($id) {
         $category_row = $this->adminModel->get_category_by_id( $id );
         $data['category_row'] = $category_row;
 
@@ -279,18 +277,17 @@ class Admin extends BaseController
 
     public function del_category($id) {
         $this->adminModel->del_category($id);
-        return redirect()->to( base_url( 'admin/list_category' ) );
+        $this->session->setFlashdata( 'status', 'Category Deleted Successfully' );
+        return redirect()->to( base_url( 'admin/list_category' ) )->with('status_icon','success');
     }
 
 
-    public function list_industry()
-    {
+    public function list_industry(){
       $data['industry'] = $this->adminModel->get_all_industry();
       return view('admin/industry/list_industry',$data);
     }
 
-    public function add_industry()
-    {
+    public function add_industry(){
       $data = [];
       if ($this->request->getMethod() == 'post') {
         $input = $this->validate([  
@@ -312,8 +309,7 @@ class Admin extends BaseController
       return view('admin/industry/add_industry', $data);
     }
 
-    public function edit_industry($id) 
-    {
+    public function edit_industry($id) {
       $industry_row = $this->adminModel->get_industry_by_id( $id );
       $data['industry_row'] = $industry_row;
       // pre( $data );
@@ -338,10 +334,10 @@ class Admin extends BaseController
       return view( 'admin/industry/edit_industry', $data );
     } 
 
-    public function del_industry($id)
-    {
+    public function del_industry($id){
       $this->adminModel->del_industry($id);
-      return redirect()->to( '/admin/list_industry' );
+      $this->session->setFlashdata( 'status', 'Industry Deleted Successfully' );
+      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
     }
 
     public function list_packages()
@@ -373,7 +369,8 @@ class Admin extends BaseController
         'sort_order' => $this->request->getPost( 'sort_order' )
     ];
       $addpack = $this->adminModel->add_packages($addpackage);
-      return redirect()->to( '/admin/list_packages' );
+      $this->session->setFlashdata( 'status', 'Packages Added Successfully' );
+      return redirect()->to( '/admin/list_packages' )->with('status_icon','success');
     }
       else{
         $data['validation']= $this->validator;
@@ -409,7 +406,8 @@ class Admin extends BaseController
         'is_active' => $this->request->getPost( 'status' )
     ];
       $editpack = $this->adminModel->edit_packages($editpackage,$id);
-      return redirect()->to( '/admin/list_packages' );
+      $this->session->setFlashdata( 'status', 'Packages Updated Successfully' );
+      return redirect()->to( '/admin/list_packages' )->with('status_icon','success');
       }
       else{
           $data['validation']= $this->validator;

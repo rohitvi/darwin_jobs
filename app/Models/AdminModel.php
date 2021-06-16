@@ -138,7 +138,6 @@ class AdminModel extends Model
         return $this->db->table('contact_us')->where('id',$id)->delete();
     }
 
-
     public function get_countries_list() 
     {
         return $this->db->table( 'countries' )->get()->getResultArray();

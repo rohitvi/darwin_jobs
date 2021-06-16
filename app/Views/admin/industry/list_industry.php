@@ -76,7 +76,7 @@
       </div>
     </section>
   
-    <script>
+<script>
 $(document).ready(function(){
 <?php if (session()->getFlashdata('status')) {?>
       swal({
