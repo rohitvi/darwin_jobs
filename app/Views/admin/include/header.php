@@ -33,7 +33,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
-
+  <!-- Toastr -->
+  <link rel="stylesheet" href="<?= base_url('public/admin/plugins/toastr/toastr.min.css')?>">
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js')?>"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -125,6 +126,29 @@
                 <a href="<?= base_url('admin/registeradmin'); ?>" class="nav-link <?=($ap==='registeradmin') ?'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Register Admin</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item menu <?=($ap==='post' || $ap==='view_jobs' )? 'menu-open':''?>">
+            <a href="#" class="nav-link <?=($ap==='post' || $ap==='view_jobs')? 'active':''?>">
+              <i class="nav-icon fas fa-file"></i>
+              <p>
+                Job Posting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= base_url('admin/view_jobs'); ?>" class="nav-link <?=($ap==='view_jobs') ?'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Jobs</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= base_url('admin/post'); ?>" class="nav-link <?=($ap==='post') ?'active':''?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add New Job</p>
                 </a>
               </li>
             </ul>
@@ -285,24 +309,6 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Calendar
-                <span class="badge badge-info right">2</span>
-              </p>
-            </a>
-          </li>
-  
-          <li class="nav-item">
-            <a href="pages/kanban.html" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
-                Kanban Board
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
               <p>
@@ -329,7 +335,7 @@
           </li>
           <li class="nav-item">
             <a href="<?= base_url('admin/education'); ?>" class="nav-link <?=($ap==='education') ?'active':''?>">
-              <i class="nav-icon far fa fa-industry"></i>
+              <i class="nav-icon fa fa-graduation-cap"></i>
               <p>
               Education
               </p>

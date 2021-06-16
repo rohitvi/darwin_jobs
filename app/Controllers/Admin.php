@@ -915,4 +915,98 @@ class Admin extends BaseController
           echo '0~Something went wrong, please try again!';
       }
     }
+                  // Post Jobs
+// make job slugon
+    private function make_job_slug($job_title, $city){
+        $final_job_url ='';
+        $job_title = trim($job_title);
+        $city = get_city_name($city);
+        $job_title_slug = make_slug($job_title). '-job-in-'.make_slug($city);  // make slug is a helper function
+        $final_job_url = $job_title_slug;
+        return $final_job_url;
+    }
+  
+
+
+    public function post()
+    {
+        $admin_id  = session('admin_id');
+        $data['categories'] = $this->adminModel->get_all_categories(); 
+        $data['industries'] = $this->adminModel->get_all_industry();
+        $data['countries']  = $this->adminModel->get_countries_list();
+        $data['salaries']   = $this->adminModel->get_salary_list();  
+        $data['educations'] = $this->adminModel->get_education_list();
+        $data['companies']  = $this->adminModel->getemployer();
+        if ($this->request->getMethod() == 'post'){
+            $rules = [
+                "employer_id"       => ["label" => "employer id", "rules" => "trim|required"],
+                "job_title"         => ["label" => "job title", "rules" => "trim|required"],
+                "category"          => ["label" => "category", "rules" => "trim|required"],
+                "industry"          => ["label" => "industry", "rules" => "trim|required"],
+                "min_experience"    => ["label" => "min experience", "rules" => "trim|required"],
+                "max_experience"    => ["label" => "max experience", "rules" => "trim|required"],
+                "salary_period"     => ["label" => "salary period", "rules" => "trim|required"],
+                "min_salary"        => ["label" => "min salary", "rules" => "trim|required"],
+                "max_salary"        => ["label" => "max salary", "rules" => "trim|required"],
+                "skills"            => ["label" => "skills", "rules" => "trim|required"],
+                "description"       => ["label" => "description", "rules" => "trim|required"],
+                "total_positions"   => ["label" => "total positions", "rules" => "trim|required"],
+                "gender"            => ["label" => "gender", "rules" => "trim|required"],
+                "employment_type"   => ["label" => "employment type", "rules" => "trim|required"],
+                "education"         => ["label" => "education", "rules" => "trim|required"],
+                "country"           => ["label" => "country", "rules" => "trim|required"],
+                "city"              => ["label" => "city", "rules" => "trim|required"],
+                "location"          => ["label" => "location", "rules" => "trim|required"],
+            ];
+            if($this->validate($rules) == FALSE) {
+                $data = array(
+                    'errors' => $this->validation->listErrors(),
+                );
+                $this->session->setFlashdata('error',$data['errors']);
+                return redirect()->to(base_url('admin/post'));
+            }else{
+                $data = array(
+                    'admin_id'      => $admin_id,
+                    'employer_id'   => $this->request->getPost('employer_id'),
+                    'title'         => $this->request->getPost('job_title'),
+                    'job_type'      => $this->request->getPost('job_type'),
+                    'category'      => $this->request->getPost('category'),
+                    'industry'      => $this->request->getPost('industry'),
+                    'experience'    => $this->request->getPost('min_experience').'-'.$this->request->getPost('max_experience'),
+                    'min_salary'    => $this->request->getPost('min_salary'),
+                    'max_salary'    => $this->request->getPost('max_salary'),
+                    'salary_period' => $this->request->getPost('salary_period'),
+                    'description'   => $this->request->getPost('description'),
+                    'skills'        => $this->request->getPost('skills'),
+                    'total_positions' => $this->request->getPost('total_positions'),
+                    'gender'        => $this->request->getPost('gender'),
+                    'education'     => $this->request->getPost('education'),
+                    'employment_type' => $this->request->getPost('employment_type'),
+                    'country'       => $this->request->getPost('country'),
+                    'state'         => $this->request->getPost('state'),
+                    'city'          => $this->request->getPost('city'),
+                    'location'      => $this->request->getPost('location'),
+                    'created_date'  => date('Y-m-d : H:i:s'),
+                    'updated_date'  => date('Y-m-d : H:i:s')
+                );
+
+                $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
+
+                $result = $this->adminModel->add_job($data);
+                if ($result){
+                    $this->session->setFlashdata('success','Congratulation! Job has been Posted successfully');
+                    return redirect()->to(base_url('admin/post'));
+                }
+                else{
+                    $this->session->setFlashdata('error','Oops Somthing went wrong, please try gain letter');
+                    return redirect()->to(base_url('admin/post'));
+                }
+            }
+        }
+        else{
+            $data['title'] = 'Post Job';
+            return view('admin/job/job_add', $data);
+        }
+    }
+
 }

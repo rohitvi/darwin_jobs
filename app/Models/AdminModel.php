@@ -254,6 +254,20 @@ class AdminModel extends Model
         }
     }
 
+    // Get the Salary Offered Dropdown
+    public function get_salary_list()
+    {
+        $builder = $this->db->table('expected_salary');
+        return $builder->get()->getResultArray();
+    }
+
+    // Get the Education Status Dropdown
+    public function get_education_list()
+    {
+        $builder = $this->db->table('education');
+        return $builder->get()->getResultArray();
+    }
+
     public function users()
     {
         return $this->db->table('users')->get()->getResultArray();
@@ -374,4 +388,12 @@ class AdminModel extends Model
     {
         return $this->db->table('employment')->where('id',$id)->delete();
     }
+
+    // Add new Job
+    public function add_job($data)
+    {
+        $builder = $this->db->table('job_post');
+        return $builder->insert($data);
+    }
+
 }
