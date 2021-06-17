@@ -67,6 +67,8 @@ $routes->add('admin/editeducation/(:num)','Admin::editeducation/$1');
 $routes->add('admin/updateeducation/(:num)','Admin::updateeducation/$1');
 // Delete Education Routes
 $routes->add('admin/deleteeducation/(:num)','Admin::deleteeducation/$1');
+// View Mypackages Details Routes
+$routes->add('employer/mypackage/(:num)','employer::mypackagedetails/$1');
 $routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 $routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 
