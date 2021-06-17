@@ -18,8 +18,8 @@ function get_experience_list($type)
 {
     $experience = [];
     $experience[''] = $type;
-    for ($i= 1; $i < 21 ; $i++) { 
-        $experience[$i] = $i.' Years';
+    for ($i = 1; $i < 21; $i++) {
+        $experience[$i] = $i . ' Years';
     }
     return $experience;
 }
@@ -55,4 +55,36 @@ function get_state_name($id)
     $db      = \Config\Database::connect();
     $builder = $db->table('states');
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
+
+
+// -----------------------------------------------------------------------------
+// Get industry name by id
+function get_industry_name($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('industries');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
+
+// -----------------------------------------------------------------------------
+// Get country name by ID
+function get_country_name($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('countries');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
+
+function arrayToList(array $array): string
+{
+    $html = '';
+    if (count($array)) {
+        $html .= '<ul>';
+        foreach ($array as $value) {
+            $html .= '<li>' . $value . '</li>';
+        }
+        $html .= '</ul>';
+    }
+    return $html;
 }
