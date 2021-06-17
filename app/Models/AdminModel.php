@@ -148,7 +148,7 @@ class AdminModel extends Model
     }
 
 
-    public function get_countries_list()
+    public function get_countries_list() 
     {
         return $this->db->table('countries')->get()->getResultArray();
     }

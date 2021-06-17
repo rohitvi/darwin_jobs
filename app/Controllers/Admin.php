@@ -246,10 +246,8 @@ class Admin extends BaseController
         return view('admin/category/add_category', $data);
     }
 
-    public function edit_category($id)
-    {
-        //$session = \Config\Services::session();
-        $category_row = $this->adminModel->get_category_by_id($id);
+    public function edit_category($id) {
+        $category_row = $this->adminModel->get_category_by_id( $id );
         $data['category_row'] = $category_row;
 
         if ($this->request->getMethod() == 'post') {
@@ -336,6 +334,67 @@ class Admin extends BaseController
     {
         $this->adminModel->del_industry($id);
         return redirect()->to('/admin/list_industry');
+        $this->session->setFlashdata( 'status', 'Category Deleted Successfully' );
+        return redirect()->to( base_url( 'admin/list_category' ) )->with('status_icon','success');
+    }
+
+
+    public function list_industry(){
+      $data['industry'] = $this->adminModel->get_all_industry();
+      return view('admin/industry/list_industry',$data);
+    }
+
+    public function add_industry(){
+      $data = [];
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'industry' => 'required|min_length[5]'
+        ]);
+      if ($input == true) {
+        $addindustrydata=[
+          'name' => $this->request->getPost( 'industry' ),
+          'slug' => $this->request->getPost( 'industry' ),
+      ];
+      $addindustry = $this->adminModel->add_industry($addindustrydata);
+      $this->session->setFlashdata( 'status', 'Industry Added Successfully' );
+      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
+      }
+      else{
+        $data['validation']= $this->validator;
+          }
+      }
+      return view('admin/industry/add_industry', $data);
+    }
+
+    public function edit_industry($id) {
+      $industry_row = $this->adminModel->get_industry_by_id( $id );
+      $data['industry_row'] = $industry_row;
+      // pre( $data );
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'industry' => 'required|min_length[5]',
+        ]);
+
+        if ($input == true) {
+          $editindustry=[
+            'name' => $this->request->getPost( 'industry' ),
+            'slug' => $this->request->getPost( 'industry' ),
+        ];
+        $editindustrydata = $this->adminModel->edit_industry($editindustry,$id);
+        $this->session->setFlashdata( 'status', 'Industry Updated Successfully' );
+        return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
+        }
+        else{
+          $data['validation']= $this->validator;
+            }
+      }
+      return view( 'admin/industry/edit_industry', $data );
+    } 
+
+    public function del_industry($id){
+      $this->adminModel->del_industry($id);
+      $this->session->setFlashdata( 'status', 'Industry Deleted Successfully' );
+      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
     }
 
     public function list_packages()
@@ -373,6 +432,35 @@ class Admin extends BaseController
             }
         }
         return view('admin/packages/add_packages', $data);
+      $data = [];
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'title' => 'required',
+          'price' => 'required',
+          'detail' => 'required',
+          'no_of_days' => 'required',
+          'no_of_posts' => 'required',
+          'sort_order' => 'required'
+        ]);
+      if ($input == true) {
+      $addpackage=[
+        'title' => $this->request->getPost( 'title' ),
+        'slug' => $this->request->getPost( 'title' ),
+        'price' => $this->request->getPost( 'price' ),
+        'detail' => $this->request->getPost( 'detail' ),
+        'no_of_days' => $this->request->getPost( 'no_of_days' ),
+        'no_of_posts' => $this->request->getPost( 'no_of_posts' ),
+        'sort_order' => $this->request->getPost( 'sort_order' )
+    ];
+      $addpack = $this->adminModel->add_packages($addpackage);
+      $this->session->setFlashdata( 'status', 'Packages Added Successfully' );
+      return redirect()->to( '/admin/list_packages' )->with('status_icon','success');
+    }
+      else{
+        $data['validation']= $this->validator;
+        }
+      }
+      return view('admin/packages/add_packages',$data);
     }
 
     public function edit_packages($id)
@@ -408,6 +496,39 @@ class Admin extends BaseController
             }
         }
         return view('admin/packages/edit_packages', $data);
+      $packages_row = $this->adminModel->get_packages_by_id( $id );
+      $data['packages_row'] = $packages_row;
+
+      if ($this->request->getMethod() == 'post') {
+        $input = $this->validate([  
+          'title' => 'required',
+          'price' => 'required',
+          'detail' => 'required',
+          'no_of_days' => 'required',
+          'no_of_posts' => 'required',
+          'sort_order' => 'required',
+          'status' => 'required'
+        ]);
+      if ($input == true) {
+      $editpackage=[
+        'title' => $this->request->getPost( 'title' ),
+        'slug' => $this->request->getPost( 'title' ),
+        'price' => $this->request->getPost( 'price' ),
+        'detail' => $this->request->getPost( 'detail' ),
+        'no_of_days' => $this->request->getPost( 'no_of_days' ),
+        'no_of_posts' => $this->request->getPost( 'no_of_posts' ),
+        'sort_order' => $this->request->getPost( 'sort_order' ),
+        'is_active' => $this->request->getPost( 'status' )
+    ];
+      $editpack = $this->adminModel->edit_packages($editpackage,$id);
+      $this->session->setFlashdata( 'status', 'Packages Updated Successfully' );
+      return redirect()->to( '/admin/list_packages' )->with('status_icon','success');
+      }
+      else{
+          $data['validation']= $this->validator;
+          }
+      }
+      return view('admin/packages/edit_packages',$data);
     }
 
     public function list_newsletters()
