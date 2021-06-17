@@ -38,13 +38,14 @@
                                                     <img src="<?= base_url('public/employer/assets/img/icone-01.png') ?>" alt="...">
                                                 </div>
                                                 <div class="title"><?= $value['title']; ?></div>
-                                                <div class="container-text"><?= $value['slug']; ?></div>
+                                                <div class="container-text">(<?= $value['no_of_posts']; ?> Posts)</div>
+                                                <div class="container-text">Package Duration (<?= $value['no_of_days']; ?> Days)</div>
                                                 <div class="main-number"><?= $value['price']; ?></div>
                                                 <div class="pricing-list">
                                                     <p><?= $value['detail']; ?></p>
                                                 </div>
                                             </div>
-                                            <a class="btn btn-lg btn-shadow" href="<?= base_url('') ?>">Purchase</a>
+                                            <a href="<?= base_url('employer/package_confirmation/'.$value['id']) ?>"><button class="btn btn-lg btn-shadow" <?= ($value['price'] == '0') ? 'disabled' : '' ?> >Purchase</button></a>
                                         </div>
                                     </div>
                                 <?php endforeach ?>
@@ -57,5 +58,5 @@
         </div>
         <!-- End Row -->
     </div>
-                    <!-- End Container -->
+<!-- End Container -->
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
