@@ -148,7 +148,7 @@ class AdminModel extends Model
     }
 
 
-    public function get_countries_list() 
+    public function get_countries_list()
     {
         return $this->db->table('countries')->get()->getResultArray();
     }
@@ -442,4 +442,80 @@ class AdminModel extends Model
         $builder = $this->db->table('job_post');
         return $builder->insert($data);
     }
+
+	// Edit Job
+	public function edit_job($data,$job_id){
+        $builder = $this->db->table('job_post');
+        $builder->where('id',$job_id);
+		if($builder->update($data))
+		    return true;
+        else
+            return false;
+	}
+
+	// Get job by ID
+	public function get_job_by_id($job_id){
+        $builder = $this->db->table('job_post');
+		return $builder->getWhere(array('id' => $job_id ))->getRowArray();
+        // return $query->getRowArray();
+	}
+
+    // Get Shortlisted candidates
+    public function get_shortlisted_applicants($job_id)
+    {
+        $builder = $this->db->table('seeker_applied_job');
+
+        $builder->select('seeker_applied_job.id, 
+			seeker_applied_job.applied_date as apply_date,
+			users.firstname, users.lastname,
+			users.email,
+			users.profile_picture,
+			users.city,
+			users.country,
+			users.category,
+			users.job_title,
+			users.current_salary,
+			users.resume,
+			seeker_applied_job.*');
+        $builder->join('users', 'users.id = seeker_applied_job.seeker_id', 'left');
+        $builder->where(' seeker_applied_job.job_id', $job_id);
+        $builder->where(' seeker_applied_job.is_shortlisted', 1);
+        $builder->orderBy("seeker_applied_job.applied_date", "DESC");
+        return $builder->get()->getResultArray();
+    }
+
+	public function get_applicants($job_id)
+	{
+        $builder = $this->db->table('seeker_applied_job');
+        $builder->select('seeker_applied_job.id,
+			seeker_applied_job.job_id,
+			seeker_applied_job.applied_date as apply_date, 
+			users.firstname, 
+			users.lastname, 
+			users.job_title, 
+			users.email,
+			users.profile_picture,
+			users.category,
+			users.city,   
+			users.country, 
+			users.resume,
+			seeker_applied_job.*');
+        $builder->join('users', 'users.id = seeker_applied_job.seeker_id', 'left');
+		$builder->where(' seeker_applied_job.job_id',$job_id); 
+		$builder->orderBy("seeker_applied_job.applied_date", "DESC");
+		return $builder->get()->getResultArray();
+	}
+
+	// Shortlist
+	public function do_shortlist($id)
+	{
+        $builder = $this->db->table('seeker_applied_job');
+		$builder->where('id', $id);
+		if($builder->update(array('is_shortlisted' => 1)))
+		    return true;
+        else
+            return false;
+	}
+
+
 }

@@ -37,7 +37,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<label>Industry:</label>
-											<select onchange="job_filter()" name="job_search_industry" class="form-control">
+											<select onchange="job_filter()" name="job_search_industry" class="form-control select2bs4">
 												<option value=""> --Select--</option>
 												<?php foreach ($industries as $industry) : ?>
 													<option value="<?php echo $industry['id']; ?>"> <?php echo $industry['name']; ?> </option>
@@ -46,7 +46,7 @@
 										</div>
 										<div class="col-md-2">
 											<label>Category:</label>
-											<select onchange="job_filter()" name="job_search_category" class="form-control ">
+											<select onchange="job_filter()" name="job_search_category" class="form-control select2bs4">
 												<option value=""> --Select--</option>
 												<?php foreach ($categories as $category) : ?>
 													<option value="<?php echo $category['id']; ?>"> <?php echo $category['name']; ?> </option>
@@ -55,7 +55,7 @@
 										</div>
 										<div class="col-md-2">
 											<label>Location:</label>
-											<select onchange="job_filter()" name="job_search_location" class="form-control">
+											<select onchange="job_filter()" name="job_search_location" class="form-control select2bs4">
 												<option value=""> --Select--</option>
 												<?php foreach ($countries as $location) : ?>
 													<option value="<?php echo $location['id']; ?>"> <?php echo $location['name']; ?> </option>

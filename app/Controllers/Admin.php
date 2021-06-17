@@ -246,8 +246,9 @@ class Admin extends BaseController
         return view('admin/category/add_category', $data);
     }
 
-    public function edit_category($id) {
-        $category_row = $this->adminModel->get_category_by_id( $id );
+    public function edit_category($id)
+    {
+        $category_row = $this->adminModel->get_category_by_id($id);
         $data['category_row'] = $category_row;
 
         if ($this->request->getMethod() == 'post') {
@@ -275,7 +276,6 @@ class Admin extends BaseController
         $this->adminModel->del_category($id);
         return redirect()->to(base_url('admin/list_category'));
     }
-
 
     public function list_industry()
     {
@@ -333,68 +333,8 @@ class Admin extends BaseController
     public function del_industry($id)
     {
         $this->adminModel->del_industry($id);
-        return redirect()->to('/admin/list_industry');
-        $this->session->setFlashdata( 'status', 'Category Deleted Successfully' );
-        return redirect()->to( base_url( 'admin/list_category' ) )->with('status_icon','success');
-    }
-
-
-    public function list_industry(){
-      $data['industry'] = $this->adminModel->get_all_industry();
-      return view('admin/industry/list_industry',$data);
-    }
-
-    public function add_industry(){
-      $data = [];
-      if ($this->request->getMethod() == 'post') {
-        $input = $this->validate([  
-          'industry' => 'required|min_length[5]'
-        ]);
-      if ($input == true) {
-        $addindustrydata=[
-          'name' => $this->request->getPost( 'industry' ),
-          'slug' => $this->request->getPost( 'industry' ),
-      ];
-      $addindustry = $this->adminModel->add_industry($addindustrydata);
-      $this->session->setFlashdata( 'status', 'Industry Added Successfully' );
-      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
-      }
-      else{
-        $data['validation']= $this->validator;
-          }
-      }
-      return view('admin/industry/add_industry', $data);
-    }
-
-    public function edit_industry($id) {
-      $industry_row = $this->adminModel->get_industry_by_id( $id );
-      $data['industry_row'] = $industry_row;
-      // pre( $data );
-      if ($this->request->getMethod() == 'post') {
-        $input = $this->validate([  
-          'industry' => 'required|min_length[5]',
-        ]);
-
-        if ($input == true) {
-          $editindustry=[
-            'name' => $this->request->getPost( 'industry' ),
-            'slug' => $this->request->getPost( 'industry' ),
-        ];
-        $editindustrydata = $this->adminModel->edit_industry($editindustry,$id);
-        $this->session->setFlashdata( 'status', 'Industry Updated Successfully' );
-        return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
-        }
-        else{
-          $data['validation']= $this->validator;
-            }
-      }
-      return view( 'admin/industry/edit_industry', $data );
-    } 
-
-    public function del_industry($id){
-      $this->adminModel->del_industry($id);
-      $this->session->setFlashdata( 'status', 'Industry Deleted Successfully' );
-      return redirect()->to( '/admin/list_industry' )->with('status_icon','success');
+        $this->session->setFlashdata('status', 'Industry Deleted Successfully');
+        return redirect()->to('/admin/list_industry')->with('status_icon', 'success');
     }
 
     public function list_packages()
@@ -432,35 +372,34 @@ class Admin extends BaseController
             }
         }
         return view('admin/packages/add_packages', $data);
-      $data = [];
-      if ($this->request->getMethod() == 'post') {
-        $input = $this->validate([  
-          'title' => 'required',
-          'price' => 'required',
-          'detail' => 'required',
-          'no_of_days' => 'required',
-          'no_of_posts' => 'required',
-          'sort_order' => 'required'
-        ]);
-      if ($input == true) {
-      $addpackage=[
-        'title' => $this->request->getPost( 'title' ),
-        'slug' => $this->request->getPost( 'title' ),
-        'price' => $this->request->getPost( 'price' ),
-        'detail' => $this->request->getPost( 'detail' ),
-        'no_of_days' => $this->request->getPost( 'no_of_days' ),
-        'no_of_posts' => $this->request->getPost( 'no_of_posts' ),
-        'sort_order' => $this->request->getPost( 'sort_order' )
-    ];
-      $addpack = $this->adminModel->add_packages($addpackage);
-      $this->session->setFlashdata( 'status', 'Packages Added Successfully' );
-      return redirect()->to( '/admin/list_packages' )->with('status_icon','success');
-    }
-      else{
-        $data['validation']= $this->validator;
+        $data = [];
+        if ($this->request->getMethod() == 'post') {
+            $input = $this->validate([
+                'title' => 'required',
+                'price' => 'required',
+                'detail' => 'required',
+                'no_of_days' => 'required',
+                'no_of_posts' => 'required',
+                'sort_order' => 'required'
+            ]);
+            if ($input == true) {
+                $addpackage = [
+                    'title' => $this->request->getPost('title'),
+                    'slug' => $this->request->getPost('title'),
+                    'price' => $this->request->getPost('price'),
+                    'detail' => $this->request->getPost('detail'),
+                    'no_of_days' => $this->request->getPost('no_of_days'),
+                    'no_of_posts' => $this->request->getPost('no_of_posts'),
+                    'sort_order' => $this->request->getPost('sort_order')
+                ];
+                $addpack = $this->adminModel->add_packages($addpackage);
+                $this->session->setFlashdata('status', 'Packages Added Successfully');
+                return redirect()->to('/admin/list_packages')->with('status_icon', 'success');
+            } else {
+                $data['validation'] = $this->validator;
+            }
         }
-      }
-      return view('admin/packages/add_packages',$data);
+        return view('admin/packages/add_packages', $data);
     }
 
     public function edit_packages($id)
@@ -496,39 +435,38 @@ class Admin extends BaseController
             }
         }
         return view('admin/packages/edit_packages', $data);
-      $packages_row = $this->adminModel->get_packages_by_id( $id );
-      $data['packages_row'] = $packages_row;
+        $packages_row = $this->adminModel->get_packages_by_id($id);
+        $data['packages_row'] = $packages_row;
 
-      if ($this->request->getMethod() == 'post') {
-        $input = $this->validate([  
-          'title' => 'required',
-          'price' => 'required',
-          'detail' => 'required',
-          'no_of_days' => 'required',
-          'no_of_posts' => 'required',
-          'sort_order' => 'required',
-          'status' => 'required'
-        ]);
-      if ($input == true) {
-      $editpackage=[
-        'title' => $this->request->getPost( 'title' ),
-        'slug' => $this->request->getPost( 'title' ),
-        'price' => $this->request->getPost( 'price' ),
-        'detail' => $this->request->getPost( 'detail' ),
-        'no_of_days' => $this->request->getPost( 'no_of_days' ),
-        'no_of_posts' => $this->request->getPost( 'no_of_posts' ),
-        'sort_order' => $this->request->getPost( 'sort_order' ),
-        'is_active' => $this->request->getPost( 'status' )
-    ];
-      $editpack = $this->adminModel->edit_packages($editpackage,$id);
-      $this->session->setFlashdata( 'status', 'Packages Updated Successfully' );
-      return redirect()->to( '/admin/list_packages' )->with('status_icon','success');
-      }
-      else{
-          $data['validation']= $this->validator;
-          }
-      }
-      return view('admin/packages/edit_packages',$data);
+        if ($this->request->getMethod() == 'post') {
+            $input = $this->validate([
+                'title' => 'required',
+                'price' => 'required',
+                'detail' => 'required',
+                'no_of_days' => 'required',
+                'no_of_posts' => 'required',
+                'sort_order' => 'required',
+                'status' => 'required'
+            ]);
+            if ($input == true) {
+                $editpackage = [
+                    'title' => $this->request->getPost('title'),
+                    'slug' => $this->request->getPost('title'),
+                    'price' => $this->request->getPost('price'),
+                    'detail' => $this->request->getPost('detail'),
+                    'no_of_days' => $this->request->getPost('no_of_days'),
+                    'no_of_posts' => $this->request->getPost('no_of_posts'),
+                    'sort_order' => $this->request->getPost('sort_order'),
+                    'is_active' => $this->request->getPost('status')
+                ];
+                $editpack = $this->adminModel->edit_packages($editpackage, $id);
+                $this->session->setFlashdata('status', 'Packages Updated Successfully');
+                return redirect()->to('/admin/list_packages')->with('status_icon', 'success');
+            } else {
+                $data['validation'] = $this->validator;
+            }
+        }
+        return view('admin/packages/edit_packages', $data);
     }
 
     public function list_newsletters()
@@ -1031,16 +969,16 @@ class Admin extends BaseController
         }
     }
 
-    
+
     // Jobs
-	public function search()
-	{
-		$this->session->set('job_search_from',$this->request->getPost('job_search_from'));
-		$this->session->set('job_search_to',$this->request->getPost('job_search_to'));
-		$this->session->set('job_search_industry',$this->request->getPost('job_search_industry'));
-		$this->session->set('job_search_category',$this->request->getPost('job_search_category'));
-		$this->session->set('job_search_location',$this->request->getPost('job_search_location'));
-	}
+    public function search()
+    {
+        $this->session->set('job_search_from', $this->request->getPost('job_search_from'));
+        $this->session->set('job_search_to', $this->request->getPost('job_search_to'));
+        $this->session->set('job_search_industry', $this->request->getPost('job_search_industry'));
+        $this->session->set('job_search_category', $this->request->getPost('job_search_category'));
+        $this->session->set('job_search_location', $this->request->getPost('job_search_location'));
+    }
 
     public function list_job()
     {
@@ -1066,22 +1004,22 @@ class Admin extends BaseController
 
         $i = 1;
         foreach ($records['data']  as $row) {
-            $buttoncontroll = '<a class="btn btn-xs btn-success" href=' . base_url("admin/job/edit/" . $row['id']) . ' title="View" > 
+            $buttoncontroll = '<a class="btn btn-xs btn-success" href=' . base_url("admin/edit_post/" . $row['id']) . ' title="View" >
 				 <i class="fa fa-eye"></i></a>&nbsp;&nbsp;
 
-				  <a class="edit btn btn-xs btn-primary" href=' . base_url("admin/job/edit/" . $row['id']) . ' title="Edit" > 
+				  <a class="edit btn btn-xs btn-primary" href=' . base_url("admin/edit_post/" . $row['id']) . ' title="Edit" > 
 				 <i class="fa fa-edit"></i></a>&nbsp;&nbsp;
 
-				 <a class="btn-delete btn btn-xs btn-danger" href=' . base_url("admin/job/del/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')"> 
+				 <a class="btn-delete btn btn-xs btn-danger" href=' . base_url("admin/delete_post/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')"> 
 				 <i class="fa fa-trash"></i></a>';
 
             $data[] = array(
                 $i++,
                 $row['title'],
-                '<a class="edit btn btn-xs btn-info mb-3" href=' . base_url("admin/applicants/view/" . $row['id']) . ' title="Applicants" > 
+                '<a class="edit btn btn-xs btn-info mb-3" href=' . base_url("admin/view_job_applicants/" . $row['id']) . ' title="Applicants" > 
 				 Applied [ ' . $row['cand_applied'] . ' ]
 				</a>
-				<a class="edit btn btn-xs btn-info" href=' . base_url("admin/applicants/shortlisted/" . $row['id']) . ' title="Applicants" > 
+				<a class="edit btn btn-xs btn-info" href=' . base_url("admin/shortlisted/" . $row['id']) . ' title="Applicants" > 
 				 Shortlisted [ ' . $row['total_shortlisted'] . ' ]
 				</a>',
                 get_industry_name($row['industry']),  //  helper function
@@ -1106,6 +1044,18 @@ class Admin extends BaseController
         return $final_job_url;
     }
 
+    // Delete the job
+    public function delete_post($id = 0)
+    {
+        $builder = $this->db->table('job_post');
+        $builder->where('id', $id);
+        if ($query = $builder->delete())
+            $this->session->setFlashdata('success', 'Congratulation! Job has been Deleted successfully');
+        else
+            $this->session->setFlashdata('error', 'Oops! Failed to Delete Job');
+        return redirect()->to(base_url('admin/list_job'));
+    }
+
     public function post()
     {
         $admin_id  = session('admin_id');
@@ -1117,7 +1067,7 @@ class Admin extends BaseController
         $data['companies']  = $this->adminModel->getemployer();
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "employer_id"       => ["label" => "employer id", "rules" => "trim|required"],
+                "employer_id"       => ["label" => "employer id", "rules" => "trim|required|min_length[3]"],
                 "job_title"         => ["label" => "job title", "rules" => "trim|required"],
                 "category"          => ["label" => "category", "rules" => "trim|required"],
                 "industry"          => ["label" => "industry", "rules" => "trim|required"],
@@ -1127,7 +1077,7 @@ class Admin extends BaseController
                 "min_salary"        => ["label" => "min salary", "rules" => "trim|required"],
                 "max_salary"        => ["label" => "max salary", "rules" => "trim|required"],
                 "skills"            => ["label" => "skills", "rules" => "trim|required"],
-                "description"       => ["label" => "description", "rules" => "trim|required"],
+                "description"       => ["label" => "description", "rules" => "trim|required|min_length[3]"],
                 "total_positions"   => ["label" => "total positions", "rules" => "trim|required"],
                 "gender"            => ["label" => "gender", "rules" => "trim|required"],
                 "employment_type"   => ["label" => "employment type", "rules" => "trim|required"],
@@ -1181,6 +1131,110 @@ class Admin extends BaseController
         } else {
             $data['title'] = 'Post Job';
             return view('admin/job/job_add', $data);
+        }
+    }
+
+    public function edit_post($job_id=0)
+    {
+        $admin_id  = session('admin_id');
+        $data['categories'] = $this->adminModel->get_all_categories();
+        $data['industries'] = $this->adminModel->get_all_industry();
+        $data['countries']  = $this->adminModel->get_countries_list();
+        $data['salaries']   = $this->adminModel->get_salary_list();
+        $data['educations'] = $this->adminModel->get_education_list();
+        $data['companies']  = $this->adminModel->getemployer();
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                "job_title"         => ["label" => "job title", "rules" => "trim|required|min_length[3]"],
+                "category"          => ["label" => "category", "rules" => "trim|required"],
+                "industry"          => ["label" => "industry", "rules" => "trim|required"],
+                "min_experience"    => ["label" => "min experience", "rules" => "trim|required"],
+                "max_experience"    => ["label" => "max experience", "rules" => "trim|required"],
+                "salary_period"     => ["label" => "salary period", "rules" => "trim|required"],
+                "min_salary"        => ["label" => "min salary", "rules" => "trim|required"],
+                "max_salary"        => ["label" => "max salary", "rules" => "trim|required"],
+                "skills"            => ["label" => "skills", "rules" => "trim|required"],
+                "description"       => ["label" => "description", "rules" => "trim|required|min_length[3]"],
+                "total_positions"   => ["label" => "total positions", "rules" => "trim|required"],
+                "gender"            => ["label" => "gender", "rules" => "trim|required"],
+                "employment_type"   => ["label" => "employment type", "rules" => "trim|required"],
+                "education"         => ["label" => "education", "rules" => "trim|required"],
+                "country"           => ["label" => "country", "rules" => "trim|required"],
+                "city"              => ["label" => "city", "rules" => "trim|required"],
+                "location"          => ["label" => "location", "rules" => "trim|required"],
+            ];
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/post'));
+            } else {
+                $data = array(
+                    'title'         => $this->request->getPost('job_title'),
+                    'job_type'      => $this->request->getPost('job_type'),
+                    'category'      => $this->request->getPost('category'),
+                    'industry'      => $this->request->getPost('industry'),
+                    'experience'    => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
+                    'min_salary'    => $this->request->getPost('min_salary'),
+                    'max_salary'    => $this->request->getPost('max_salary'),
+                    'salary_period' => $this->request->getPost('salary_period'),
+                    'description'   => $this->request->getPost('description'),
+                    'skills'        => $this->request->getPost('skills'),
+                    'total_positions' => $this->request->getPost('total_positions'),
+                    'gender'        => $this->request->getPost('gender'),
+                    'education'     => $this->request->getPost('education'),
+                    'employment_type' => $this->request->getPost('employment_type'),
+                    'country'       => $this->request->getPost('country'),
+                    'state'         => $this->request->getPost('state'),
+                    'city'          => $this->request->getPost('city'),
+                    'location'      => $this->request->getPost('location'),
+                    'updated_date'  => date('Y-m-d : H:i:s')
+                );
+
+                $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
+
+                $result = $this->adminModel->edit_job($data,$job_id);
+                if ($result) {
+                    $this->session->setFlashdata('success', 'Congratulation! Job has been Updated successfully');
+                    return redirect()->to(base_url('admin/list_job'));
+                } else {
+                    $this->session->setFlashdata('error', 'Oops Somthing went wrong, please try gain letter');
+                    return redirect()->to(base_url('admin/post'));
+                }
+            }
+        } else {
+			$data['job_detail'] = $this->adminModel->get_job_by_id($job_id);
+            $data['title'] = 'Edit Job';
+            return view('admin/job/job_edit', $data);
+        }
+    }
+
+    // Shortlisted Applicant
+    public function shortlisted($job_id)
+    {
+        $data['applicants'] = $this->adminModel->get_shortlisted_applicants($job_id);
+        $data['title'] = 'Shortlisted Applicants';
+        // pre($data);
+        return view('admin/job/shortlist_applicants', $data);
+    }
+
+    // Applicants who have applied for the job
+    public function view_job_applicants($job_id)
+    {
+		$data['applicants'] = $this->adminModel->get_applicants($job_id);
+		$data['title'] = 'Job Applicants'; 
+        // pre($data);
+        return view('admin/job/view_job_applicants', $data);
+    }
+
+    // Make Shortlist Applicant
+    public function make_shortlist($id,$job_id)
+    {
+        if ($this->adminModel->do_shortlist($id))
+        {
+            $this->session->setFlashdata('success', 'Congratulation! Applicant Shortlisted successfully');
+            return redirect()->to(base_url('admin/shortlisted/' . $job_id));
+        }else{
+            $this->session->setFlashdata('error', 'Oops Somthing went wrong, please try gain letter');
+            return redirect()->to(base_url('admin/view_job_applicants/' . $job_id));
         }
     }
 }

@@ -76,6 +76,22 @@ function get_country_name($id)
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
 }
 
+// Get category name by id
+function get_category_name($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('categories');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
+
+// Get country's states
+function get_country_states($country_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('states');
+    return $builder->select('*')->where('country_id',$country_id)->get()->getResultArray();
+}
+
 function arrayToList(array $array): string
 {
     $html = '';
