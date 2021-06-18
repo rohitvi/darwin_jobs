@@ -53,7 +53,7 @@ class EmployerModel extends Model
     public function shortlisted($id)
     {
       return $this->db->table('cv_shortlisted')->select('*')->join('users','users.id = cv_shortlisted.user_id')->where('cv_shortlisted.employer_id',$id)->get()->getResultArray();
-    }
+    } 
 
     public function get_countries_list() 
     {
@@ -62,5 +62,31 @@ class EmployerModel extends Model
     public function userdetails($id)
     {
         return $this->db->table('users')->where('id',$id)->get()->getResultArray();
+    }
+    public function get_seeker_education($id)
+    {
+      return $this->db->table('seeker_education')->select('*')->join('education','education.id = seeker_education.degree')->where('user_id',$id)->get()->getResultArray();
+    }
+    public function get_user_experience($id)
+    {
+      return $this->db->table('seeker_experience')->where('user_id',$id)->get()->getResultArray();
+    }
+    public function get_user_language($id)
+    {
+      return $this->db->table('seeker_languages')->select('*')->join('languages','languages.lang_id = seeker_languages.language')->where('user_id',$id)->get()->getResultArray();
+    }
+    public function get_education()
+    {
+      return $this->db->table('education')->get()->getResultArray();
+    }
+
+    public function get_companies()
+    {
+      return $this->db->table('companies')->get()->getResultArray();
+    }
+
+    public function postjob($data)
+    {
+      return $this->db->table('job_post')->insert($data);
     }
 }

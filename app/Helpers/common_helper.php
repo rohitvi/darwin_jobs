@@ -103,3 +103,39 @@ function arrayToList(array $array): string
     }
     return $html;
 }
+
+// Get Education Type
+
+function get_education($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('education');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
+}
+
+// Get Month by ID
+
+function get_month($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('months');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
+
+// Get Category list
+
+function get_category_list()
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('categories');
+    return $builder->get()->getResultArray();
+}
+
+// Get Industry list
+
+function get_industry_list()
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('industries');
+    return $builder->get()->getResultArray();
+}

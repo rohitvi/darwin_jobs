@@ -71,9 +71,10 @@ class Admin extends BaseController
             $change = $this->adminAuthModel->account($data, $id);
             if ($change) {
                 $this->session->setFlashdata('success', 'Account successfully updated');
-                echo '1~successfully updated';
+                return redirect()->to(base_url('admin/showadmin'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/account'));
             }
         }
         $id = session('admin_id');
@@ -109,7 +110,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Admin successfully Registered');
                 return redirect()->to(base_url('admin/showadmin'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/registeradmin'));
             }
         }
         return view('admin/auth/register');
@@ -121,7 +123,8 @@ class Admin extends BaseController
         if ($query->resultID == 1) {
             return redirect()->to(base_url('admin/showadmin'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/showadmin'));
         }
     }
 
@@ -131,7 +134,8 @@ class Admin extends BaseController
         if ($query->resultID == 1) {
             return redirect()->to(base_url('admin/employer'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/employer'));
         }
     }
 
@@ -204,7 +208,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Account successfully updated');
                 return redirect()->to(base_url('admin/showadmin'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editadmin'));
             }
         }
     }
@@ -516,7 +521,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Job successfully added');
                 return redirect()->to(base_url('admin/job_type'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/job_type'));
             }
         }
         return view('admin/job_attributes/add_job_type');
@@ -544,7 +550,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Job successfully updated');
                 return redirect()->to(base_url('admin/job_type'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editjob'));
             }
         }
     }
@@ -556,7 +563,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'Job successfully deleted');
             return redirect()->to(base_url('admin/job_type'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/job_type'));
         }
     }
 
@@ -582,7 +590,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Education successfully added');
                 return redirect()->to(base_url('admin/education'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/addeducation'));
             }
         }
         return view('admin/education/add_education');
@@ -610,7 +619,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Education successfully updated');
                 return redirect()->to(base_url('admin/education'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editeducation'));
             }
         }
     }
@@ -622,7 +632,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'Education successfully deleted');
             return redirect()->to(base_url('admin/education'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/education'));
         }
     }
 
@@ -648,7 +659,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employment successfully added');
                 return redirect()->to(base_url('admin/employment'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/addemployment'));
             }
         }
         return view('admin/employment/add_employment');
@@ -676,7 +688,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employment successfully updated');
                 return redirect()->to(base_url('admin/employment'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editemployment'));
             }
         }
     }
@@ -688,7 +701,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'Employment successfully deleted');
             return redirect()->to(base_url('admin/employment'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/employment'));
         }
     }
 
@@ -761,7 +775,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employer and company successfully registered');
                 return redirect()->to(base_url('admin/employer'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/addemployers'));
             }
         }
         return view('admin/employer/addemployers', $data);
@@ -818,7 +833,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employer successfully updated');
                 return redirect()->to(base_url('admin/employer'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editemployer'));
             }
         }
     }
@@ -915,7 +931,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'User successfully added');
                 return redirect()->to(base_url('admin/users'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/adduser'));
             }
         }
         return view('admin/users/adduser');
@@ -953,7 +970,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'User successfully updated');
                 return redirect()->to(base_url('admin/users'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/edituser'));
             }
         }
     }
@@ -965,7 +983,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'User successfully deleted');
             return redirect()->to(base_url('admin/users'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/users'));
         }
     }
 
