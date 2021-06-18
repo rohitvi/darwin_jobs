@@ -652,7 +652,6 @@ class Admin extends BaseController
     {
       if ($this->request->isAJAX()) {
         $country_id = $this->request->getPost('country_id');
-        // return json_encode($this->adminModel->get_states_list($country_id));
         $states = $this->adminModel->get_states_list($country_id);
         return json_encode($states);
         exit();

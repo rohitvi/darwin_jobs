@@ -274,7 +274,7 @@
       $('#ccountry').on('change',function(){
         var country_id = this.value;
         $.ajax({
-          url: '<?= base_url('admin/addemployer'); ?>',
+          url: '<?= base_url('employer/addemployer'); ?>',
           type: 'POST',
           data: {
             country_id: country_id
