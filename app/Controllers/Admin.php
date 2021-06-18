@@ -702,65 +702,6 @@ class Admin extends BaseController
 
     public function addemployer()
     {
-      if ($this->request->isAJAX()) {
-        $country_id = $this->request->getPost('country_id');
-        $states = $this->adminModel->get_states_list($country_id);
-        return json_encode($states);
-        exit();
-      }
-      $data['categories'] = $this->adminModel->get_all_categories();
-      $data['countries'] = $this->adminModel->get_countries_list();
-      if ($this->request->getMethod() == 'post') {
-        $rules = [
-          'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-          'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-          'email' => ['label' => 'email', 'rules' => 'required'],
-          'password' => ['label' => 'password', 'rules' => 'required'],
-          'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
-          'company_name' => ['label' => 'company_name', 'rules' => 'required'],
-          'category' => ['label' => 'category', 'rules' => 'required'],
-          'org_type' => ['label' => 'org_type', 'rules' => 'required'],
-          'country' => ['label' => 'country', 'rules' => 'required'],
-          'state' => ['label' => 'state', 'rules' => 'required'],
-          'city' => ['label' => 'city', 'rules' => 'required'],
-          'postcode' => ['label' => 'postcode', 'rules' => 'required'],
-          'address' => ['label' => 'address', 'rules' => 'required'],
-          'phone_no' => ['label' => 'phone_no', 'rules' => 'required'],
-          'website' => ['label' => 'website', 'rules' => 'required'],
-          'description' => ['label' => 'description', 'rules' => 'required|min_length[10]']
-        ];
-        if ($this->validate($rules) == FALSE) {
-          echo '0~'.$this->validation->listErrors();exit;
-        }
-        $emp = [
-          'firstname' => $this->request->getPost('firstname'),
-          'lastname' => $this->request->getPost('lastname'),
-          'email' => $this->request->getPost('email'),
-          'password' => $this->request->getPost('password')
-        ];
-        $cmpny = [
-        'company_name' => $this->request->getPost('company_name'),
-          'category' => $this->request->getPost('category'),
-          'email' => $this->request->getPost('email'),
-          'org_type' => $this->request->getPost('org_type'),
-          'country' => $this->request->getPost('country'),
-          'state' => $this->request->getPost('state'),
-          'city' => $this->request->getPost('city'),
-          'postcode' => $this->request->getPost('postcode'),
-          'address' => $this->request->getPost('address'),
-          'phone_no' => $this->request->getPost('phone_no'),
-          'website' => $this->request->getPost('website'),
-          'description' => $this->request->getPost('description')
-        ];
-        $emp_id = $this->adminModel->insertemployer($emp);
-        $cmpny['employer_id'] = $emp_id[0]->max_id;
-        $result = $this->adminModel->insertcmpny($cmpny);
-        if ($result->resultID == 1) {
-          $this->session->setFlashdata('success', 'Employer and company successfully registered');
-          return redirect()->to(base_url('admin/employer'));
-        }else
-        {
-          echo '0~Something went wrong, please try again!';
         if ($this->request->isAJAX()) {
             $country_id = $this->request->getPost('country_id');
             // return json_encode($this->adminModel->get_states_list($country_id));
