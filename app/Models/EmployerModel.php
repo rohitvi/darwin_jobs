@@ -49,4 +49,18 @@ class EmployerModel extends Model
     {
       return $this->db->table('packages_bought')->select('*')->join('packages','packages.id = packages_bought.package_id')->where('payment_id',$id)->get()->getResultArray();
     }
+
+    public function shortlisted($id)
+    {
+      return $this->db->table('cv_shortlisted')->select('*')->join('users','users.id = cv_shortlisted.user_id')->where('cv_shortlisted.employer_id',$id)->get()->getResultArray();
+    }
+
+    public function get_countries_list() 
+    {
+        return $this->db->table( 'countries' )->get()->getResultArray();
+    }
+    public function userdetails($id)
+    {
+        return $this->db->table('users')->where('id',$id)->get()->getResultArray();
+    }
 }

@@ -28,6 +28,7 @@
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/owl-carousel/owl.theme.min.css')?>">
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/datatables/datatables.min.css')?>">
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/animate/animate.min.css')?>">
+        <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js')?>"></script>
         <link rel="stylesheet" type="text/css" href="<?= base_url('public/employer/assets/css/custom.css') ?>">
     </head>
     <body id="page-top">
@@ -182,6 +183,7 @@
                         <ul class="list-unstyled">
                             <li><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
                             <li><a href="<?= base_url('employer/packages') ?>"><i class="la la-tasks"></i><span>Packages</span></a></li>
+                            <li><a href="<?= base_url('employer/shortlisted') ?>"><i class="la la-reorder"></i><span>Shortlisted Resume</span></a></li>
                             <li><a href="#dropdown-app" aria-expanded="false" data-toggle="collapse"><i class="la la-puzzle-piece"></i><span>Applications</span></a>
                                 <ul id="dropdown-app" class="collapse list-unstyled pt-0">
                                     <li><a href="app-calendar.html">Calendar</a></li>
@@ -190,7 +192,7 @@
                                     <li><a href="app-contact.html">Contact</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<?= base_url('employer/personal_info/5'); ?>"><i class="la la-user"></i><span>Personal Information</span></a></li>
+                            <li><a href="<?= base_url('employer/personal_info'); ?>"><i class="la la-user"></i><span>Personal Information</span></a></li>
                         </ul>
                         <span class="heading">Components</span>
                         <ul class="list-unstyled">

@@ -57,7 +57,6 @@ function get_state_name($id)
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
 }
 
-
 // -----------------------------------------------------------------------------
 // Get industry name by id
 function get_industry_name($id)

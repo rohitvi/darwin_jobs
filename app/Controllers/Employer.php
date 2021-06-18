@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\EmployerModel;
 use App\Models\auth\EmployerAuthModel;
+use App\Models\AdminModel;
 
 
 class Employer extends BaseController
@@ -10,6 +11,7 @@ class Employer extends BaseController
    {
        $this->EmployerModel = new EmployerModel();
        $this->EmployerAuthModel = new EmployerAuthModel();
+       $this->adminModel = new AdminModel();
    }
 
    public function checklogin()
@@ -33,10 +35,6 @@ class Employer extends BaseController
         return view('employer/dashboard');
     }
 
-    public function personal_info(){
-        return view('employer/profile/profile_page');
-    }
-    
     public function login()
     {
         if ($this->request->getMethod() == 'post') {
@@ -64,6 +62,36 @@ class Employer extends BaseController
             }
         }
         return view('employer/auth/login');
+    }
+
+    public function personal_info_update(){
+
+        $rules = [
+            'profile_picture'  => ['uploaded[profile_picture]','max_size[profile_picture,1024]']
+        ];
+            $result = UploadFile($_FILES['profile_picture']);
+            if($result['status'] == true){
+                $url = $result['result']['file_url'];
+            }else{
+                echo '0~'.$result['message'];exit;
+                }
+        if ($this->request->getMethod() == 'post') {
+                    $update_per_info=[
+                        'firstname' => $this->request->getPost( 'fname' ),
+                        'lastname' => $this->request->getPost( 'lastname' ),
+                        'email' => $this->request->getPost( 'email' ),
+                        'designation' => $this->request->getPost( 'designation' ),
+                        'mobile_no' => $this->request->getPost( 'phoneno' ),
+                        'country' => $this->request->getPost( 'country' ),
+                        'state' => $this->request->getPost( 'state' ),
+                        'city' => $this->request->getPost( 'city' ),
+                        'profile_picture' => $url,
+                        'address' => $this->request->getPost( 'address' )
+                    ];
+                    $id = session('employer_id');
+                    $update_per = $this->EmployerAuthModel->personal_info_update($update_per_info,$id);
+                    return redirect()->to(base_url('employer/profile'));
+        }
     }
 
     public function logout()
@@ -99,13 +127,75 @@ class Employer extends BaseController
 
     public function profile()
     {
-        return view('employer/auth/profile');
+        if ($this->request->isAJAX()) {
+            $country_id = $this->request->getPost('country_id');
+            $states = $this->adminModel->get_states_list($country_id);
+            return json_encode($states);
+            exit();
+        }
+        $id = session('employer_id');
+
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list(); 
+        $get['data'] = $this->EmployerAuthModel->personal_info($id);
+        $get['cmpinfo']= $this->EmployerAuthModel->cmp_info($id);
+        return view('employer/auth/profile',$get);
     }
 
+    public function getcities()
+    {
+      if ($this->request->isAJAX()) {
+        $state = $this->request->getPost('state_id');
+        $cities = $this->adminModel->get_cities_list($state);
+        return json_encode($cities);
+        exit();
+      }
+    }
+
+    public function cmp_info_update(){
+
+        $rules = [
+            'company_logo'  => ['uploaded[company_logo]','max_size[company_logo,1024]']
+        ];
+
+            $result = UploadFile($_FILES['company_logo']);
+            if($result['status'] == true){
+                $url = $result['result']['file_url'];
+            }else{
+                echo '0~'.$result['message'];exit;
+                }
+        if ($this->request->getMethod() == 'post') {
+            $cmp_info_update=[
+                'company_logo' => $url,
+                'company_name' => $this->request->getPost( 'company_name' ),
+                'email' => $this->request->getPost( 'company_email' ),
+                'phone_no' => $this->request->getPost( 'phone_no' ),
+                'website' => $this->request->getPost( 'website' ),
+                'category' => $this->request->getPost( 'category' ),
+                'founded_date' => $this->request->getPost( 'founded_date' ),
+                'org_type' => $this->request->getPost( 'org_type' ),
+                'no_of_employers' => $this->request->getPost( 'no_of_employers' ),
+                'description' => $this->request->getPost( 'description' ),
+                'country' => $this->request->getPost( 'country' ),
+                'state' => $this->request->getPost( 'state' ),
+                'city' => $this->request->getPost( 'city' ),
+                'postcode' => $this->request->getPost( 'postcode' ),
+                'address' => $this->request->getPost( 'full_address' ),
+                'facebook_link' => $this->request->getPost( 'facebook_link' ),
+                'twitter_link' => $this->request->getPost( 'twitter_link' ),
+                'youtube_link' => $this->request->getPost( 'youtube_link' ),
+                'linkedin_link' => $this->request->getPost( 'linkedin_link' )
+            ];
+            $id = session('employer_id');
+            $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update,$id);
+            return redirect()->to(base_url('employer/profile'));
+        }
+    }
+    
     // Packages Part
 
     public function packages()
-    {
+    {   
         $get['data'] = $this->EmployerModel->getpackages();
         return view('employer/packages/packages',$get);
     }
@@ -224,6 +314,104 @@ class Employer extends BaseController
             {
               echo '0~Something went wrong, please try again!';
             }
+        }
+    }
+
+    public function shortlisted()
+    {   
+        $id = session('employer_id');
+        $get['data'] = $this->EmployerModel->shortlisted($id);
+     //   pre($get);
+        return view('employer/resume/shortlisted_resume',$get);
+    }
+
+    public function userdetails()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('user_id');
+            $query = $this->EmployerModel->userdetails($id);
+            $html = '<div class="row">
+                        <div class="col-6">
+                            <h4>Personal Details</h4>
+                            <hr>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Full Name</td>
+                                        <td>Full Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>Email</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Of Birth</td>
+                                        <td>Date Of Birth</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Category</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Job Title</td>
+                                        <td>User Job Title</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Experience</td>
+                                        <td>Experience</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skills</td>
+                                        <td>Skills</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Salary (INR)</td>
+                                        <td>Current Salary (INR)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nationality</td>
+                                        <td>Nationality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>Country</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City / Town</td>
+                                        <td>City / Town</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Postcode</td>
+                                        <td>Postcode</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>Address</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Objectives</td>
+                                        <td>Objectives</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <h4>Education</h4>
+                            <hr>
+                            <p>Bachelor′s degree, Accounting</p>
+                            <h4>Experience</h4>
+                            <hr>
+                            <p>Senior Accountant</p>
+                            <h4>Languages</h4>
+                            <hr>
+                            <p>English (Beginner)</p>
+                        </div>            
+                    </div>';
+            return ($html);
         }
     }
 }
