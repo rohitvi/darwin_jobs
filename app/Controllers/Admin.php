@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\AdminModel;
 use App\Models\auth\AuthModel;
+use App\Libraries\Mailer;
 
 class Admin extends BaseController
 {
@@ -11,6 +12,7 @@ class Admin extends BaseController
     {
         $this->adminAuthModel = new AuthModel();
         $this->adminModel = new AdminModel();
+        $this->mailer = new Mailer();
         helper(['form']);
     }
 
@@ -30,13 +32,13 @@ class Admin extends BaseController
 
     public function login()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->isAJAX()) {
             $rules = [
                 'username' => ['label' => 'username', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
-                echo '0~' . $this->validation->listErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $username = $this->request->getPost('username');
@@ -44,6 +46,7 @@ class Admin extends BaseController
             $logindata = $this->adminAuthModel->login_validate($username, $password);
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
+                exit;
             } elseif ($logindata['id'] == 1) {
                 $admindata = [
                     'admin_id' => $logindata['id'],
@@ -51,7 +54,8 @@ class Admin extends BaseController
                     'admin_username' => $username
                 ];
                 $this->session->set($admindata);
-                return redirect()->to('/');
+                echo '1~ You Have Successfully Logged in';
+                exit;
             }
         }
         return view('admin/auth/login');
@@ -103,7 +107,7 @@ class Admin extends BaseController
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
-                'password' => $this->request->getPost('password'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
             $query = $this->adminAuthModel->register($data);
             if ($query->resultID == 1) {
@@ -157,7 +161,7 @@ class Admin extends BaseController
                 exit;
             }
             $id = session('admin_id');
-            $password = $this->request->getPost('password');
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $update = $this->adminAuthModel->changepassword($password, $id);
             if ($update == 'done') {
                 $this->session->setFlashdata('success', 'Password changed successfully');
@@ -650,8 +654,8 @@ class Admin extends BaseController
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
             if ($this->validate($rules) == FALSE) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/employment'));
             }
             $data = ['type' => $this->request->getPost('type')];
             $query = $this->adminModel->addemployment($data);
@@ -752,7 +756,7 @@ class Admin extends BaseController
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
-                'password' => $this->request->getPost('password')
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT)
             ];
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name'),
@@ -923,7 +927,7 @@ class Admin extends BaseController
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
-                'password' => $this->request->getPost('password'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'address' => $this->request->getPost('address')
             ];
             $query = $this->adminModel->adduser($data);
@@ -1153,7 +1157,7 @@ class Admin extends BaseController
         }
     }
 
-    public function edit_post($job_id=0)
+    public function edit_post($job_id = 0)
     {
         $admin_id  = session('admin_id');
         $data['categories'] = $this->adminModel->get_all_categories();
@@ -1210,7 +1214,7 @@ class Admin extends BaseController
 
                 $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
 
-                $result = $this->adminModel->edit_job($data,$job_id);
+                $result = $this->adminModel->edit_job($data, $job_id);
                 if ($result) {
                     $this->session->setFlashdata('success', 'Congratulation! Job has been Updated successfully');
                     return redirect()->to(base_url('admin/list_job'));
@@ -1220,7 +1224,7 @@ class Admin extends BaseController
                 }
             }
         } else {
-			$data['job_detail'] = $this->adminModel->get_job_by_id($job_id);
+            $data['job_detail'] = $this->adminModel->get_job_by_id($job_id);
             $data['title'] = 'Edit Job';
             return view('admin/job/job_edit', $data);
         }
@@ -1238,22 +1242,54 @@ class Admin extends BaseController
     // Applicants who have applied for the job
     public function view_job_applicants($job_id)
     {
-		$data['applicants'] = $this->adminModel->get_applicants($job_id);
-		$data['title'] = 'Job Applicants'; 
+        $data['applicants'] = $this->adminModel->get_applicants($job_id);
+        $data['title'] = 'Job Applicants';
         // pre($data);
         return view('admin/job/view_job_applicants', $data);
     }
 
     // Make Shortlist Applicant
-    public function make_shortlist($id,$job_id)
+    public function make_shortlist($id, $job_id)
     {
-        if ($this->adminModel->do_shortlist($id))
-        {
+        if ($this->adminModel->do_shortlist($id)) {
+            $user_email = $this->adminModel->get_applied_candidate_email($id);
+
+            $job = get_job_detail($job_id);
+
+            // sending shortlisted email 
+            $mail_data = array(
+                'job_title' => $job['title']
+            );
+
+            $this->mailer->mail_template($user_email, 'candidate-shortlisted', $mail_data);
+
             $this->session->setFlashdata('success', 'Congratulation! Applicant Shortlisted successfully');
             return redirect()->to(base_url('admin/shortlisted/' . $job_id));
-        }else{
+        } else {
             $this->session->setFlashdata('error', 'Oops Somthing went wrong, please try gain letter');
             return redirect()->to(base_url('admin/view_job_applicants/' . $job_id));
+        }
+    }
+
+    // Sending Email to applicant
+    public function send_interview_email()
+    {
+        $email = trim($this->request->getPost('email'));
+        $title = trim($this->request->getPost('subject'));
+        $message = trim($this->request->getPost('message'));
+
+        $subject = 'Interview Message | Darwin Jobs';
+        $message =  '<p>Subject: ' . $title . '</p>
+		<p>Message: ' . $message . '</p>';
+
+        $mail_data['receiver_email'] = $email;
+        $mail_data['mail_subject'] = $subject;
+        $mail_data['mail_body'] = $message;
+
+        if (sendEmail($mail_data)) {
+            echo 'Email has been sent successfully !';
+        } else {
+            echo 'There is a problem while sending email !';
         }
     }
 }
