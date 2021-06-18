@@ -226,4 +226,102 @@ class Employer extends BaseController
             }
         }
     }
+
+    public function shortlisted()
+    {   
+        $id = session('employer_id');
+        $get['data'] = $this->EmployerModel->shortlisted($id);
+     //   pre($get);
+        return view('employer/resume/shortlisted_resume',$get);
+    }
+
+    public function userdetails()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('user_id');
+            $query = $this->EmployerModel->userdetails($id);
+            $html = '<div class="row">
+                        <div class="col-6">
+                            <h4>Personal Details</h4>
+                            <hr>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Full Name</td>
+                                        <td>Full Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>Email</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Of Birth</td>
+                                        <td>Date Of Birth</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Category</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Job Title</td>
+                                        <td>User Job Title</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Experience</td>
+                                        <td>Experience</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skills</td>
+                                        <td>Skills</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Salary (INR)</td>
+                                        <td>Current Salary (INR)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nationality</td>
+                                        <td>Nationality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>Country</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City / Town</td>
+                                        <td>City / Town</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Postcode</td>
+                                        <td>Postcode</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>Address</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Objectives</td>
+                                        <td>Objectives</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <h4>Education</h4>
+                            <hr>
+                            <p>Bachelor′s degree, Accounting</p>
+                            <h4>Experience</h4>
+                            <hr>
+                            <p>Senior Accountant</p>
+                            <h4>Languages</h4>
+                            <hr>
+                            <p>English (Beginner)</p>
+                        </div>            
+                    </div>';
+            return ($html);
+        }
+    }
 }

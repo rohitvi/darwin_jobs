@@ -182,6 +182,7 @@
                         <ul class="list-unstyled">
                             <li><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
                             <li><a href="<?= base_url('employer/packages') ?>"><i class="la la-tasks"></i><span>Packages</span></a></li>
+                            <li><a href="<?= base_url('employer/shortlisted') ?>"><i class="la la-reorder"></i><span>Shortlisted Resume</span></a></li>
                             <li><a href="#dropdown-app" aria-expanded="false" data-toggle="collapse"><i class="la la-puzzle-piece"></i><span>Applications</span></a>
                                 <ul id="dropdown-app" class="collapse list-unstyled pt-0">
                                     <li><a href="app-calendar.html">Calendar</a></li>

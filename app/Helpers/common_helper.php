@@ -56,3 +56,11 @@ function get_state_name($id)
     $builder = $db->table('states');
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
 }
+
+// Get country title by ID
+function get_country_name($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('countries');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+}
