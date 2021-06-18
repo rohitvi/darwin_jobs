@@ -112,26 +112,37 @@ Author: SAEROX
                             <!-- Begin Sign Up -->
                             <div role="tabpanel" class="tab-pane" id="signup" aria-labelledby="signup-tab">
                                 <h3>Create An Account</h3>
-                                <form>
+                                <form action="<?= base_url('employer/register') ?>" method="post">
                                     <div class="group material-input">
-                                        <input type="text" required>
+                                        <input type="text" name="firstname" required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Firstname</label>
+                                    </div>
+                                    <div class="group material-input">
+                                        <input type="text" name="company_name" required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Company Name</label>
+                                    </div>
+                                    <div class="group material-input">
+                                        <input type="email" name="email" required>
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
                                         <label>Email</label>
                                     </div>
                                     <div class="group material-input">
-                                        <input type="password" required>
+                                        <input type="password" name="password" required>
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
                                         <label>Password</label>
                                     </div>
                                     <div class="group material-input">
-                                        <input type="password" required>
+                                        <input type="password" name="cpassword" required>
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
                                         <label>Confirm Password</label>
                                     </div>
-                                </form>
                                 <div class="row">
                                     <div class="col text-left">
                                         <div class="styled-checkbox">
@@ -141,11 +152,10 @@ Author: SAEROX
                                     </div>
                                 </div>
                                 <div class="sign-btn text-center">
-                                    <a href="db-default.html" class="btn btn-lg btn-gradient-01">
-                                        Sign Up
-                                    </a>
+                                    <input class="btn btn-lg btn-gradient-01" type="submit" value="Sign Up">
                                 </div>
                             </div>
+                            </form>
                             <!-- End Sign Up -->
                         </div>
                     </div>

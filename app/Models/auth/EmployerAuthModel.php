@@ -81,6 +81,21 @@ class EmployerAuthModel extends Model
         ];
         $builder->where('id',$id);
         return $query=$builder->update($cmp_info_row);
+    public function getlastid()
+    {
+        $lastid = $this->db->query('SELECT MAX(id) as max_id FROM employers')->getResult();
+        return $lastid;
+    }
+
+    public function register($data)
+    {
+        $this->db->table('employers')->insert($data);
+        return $this->getlastid();
+    }
+
+    public function registercmpny($data)
+    {
+        return $this->db->table('companies')->insert($data);
     }
 
 }

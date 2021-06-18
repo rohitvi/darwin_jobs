@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/datatables/datatables.min.css')?>">
         <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/animate/animate.min.css')?>">
         <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js')?>"></script>
+        <link rel="stylesheet" type="text/css" href="<?= base_url('public/employer/assets/css/custom.css') ?>">
     </head>
     <body id="page-top">
         <!-- Begin Preloader -->
