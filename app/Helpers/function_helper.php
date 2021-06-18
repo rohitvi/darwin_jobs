@@ -20,6 +20,12 @@ function get_direct_value($table,$columnRequired,$columnNameToCompare,$columnVal
         return 0;
 }
 
+function get_g_setting_val($column){
+    $db      = \Config\Database::connect();
+    $builder = $db->table('general_settings');
+    return $builder->getWhere(array('id'=>1))->getRowArray()[$column];
+}
+
 function RandomString($length = 10) {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }
@@ -108,9 +114,9 @@ function BgColor(){
 }
 
 function UploadFile($FILE){
-    $url        = get_direct_value('general_settings', 'dcloud_api', 'id', 1);
-    $X_Key      = get_direct_value('general_settings', 'x-key', 'id', 1);
-    $X_Secret   = get_direct_value('general_settings', 'x-secret', 'id', 1);
+    $url        = get_g_setting_val('dcloud_api');
+    $X_Key      = get_g_setting_val('x-key');
+    $X_Secret   = get_g_setting_val('x-secret');
     $ch = curl_init();
     $RealTitle = $FILE['name'];
 
@@ -144,9 +150,9 @@ function UploadFile($FILE){
 
 function DeleteDcloudFile($FILES)
 {
-    $url        = get_direct_value('general_settings', 'dcloud_api', 'id', 1);
-    $X_Key      = get_direct_value('general_settings', 'x-key', 'id', 1);
-    $X_Secret   = get_direct_value('general_settings', 'x-secret', 'id', 1);
+    $url        = get_g_setting_val('dcloud_api');
+    $X_Key      = get_g_setting_val('x-key');
+    $X_Secret   = get_g_setting_val('x-secret');
     $ch = curl_init();
     curl_setopt_array($ch, array(
         CURLOPT_URL => $url,

@@ -124,9 +124,9 @@
                 $.ajax({
                     data: _form,
                     type: 'POST',
-                    url: '<?= base_url(); ?>admin/applicants/email',
+                    url: '<?= base_url('admin/send_interview_email') ?>',
                     success: function(response) {
-                        modal.find('.modal-title').text(response);
+                        toastr.info(response);
                         $(".email-from").trigger('reset');
                         $('.close').trigger('click');
                     }

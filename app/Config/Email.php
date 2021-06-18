@@ -6,6 +6,15 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
+	public function __construct()
+	{
+		$this->fromEmail 	= get_g_setting_val('email_from');
+		$this->fromName 	= get_g_setting_val('application_name');
+		$this->SMTPHost 	= get_g_setting_val('smtp_host');
+		$this->SMTPPort 	= get_g_setting_val('smtp_port');
+		$this->SMTPUser 	= get_g_setting_val('smtp_user');
+		$this->SMTPPass 	= get_g_setting_val('smtp_pass');
+	}
 	/**
 	 * @var string
 	 */
@@ -47,21 +56,21 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $SMTPHost = 'mail.dprl.in';
+	public $SMTPHost;
 
 	/**
 	 * SMTP Username
 	 *
 	 * @var string
 	 */
-	public $SMTPUser = 'mail@dprl.in';
+	public $SMTPUser;
 
 	/**
 	 * SMTP Password
 	 *
 	 * @var string
 	 */
-	public $SMTPPass = 'KCc7#@92_?_v';
+	public $SMTPPass;
 
 	/**
 	 * SMTP Port
@@ -167,5 +176,4 @@ class Email extends BaseConfig
 	 * @var boolean
 	 */
 	public $DSN = false;
-
 }

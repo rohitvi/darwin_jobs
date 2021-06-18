@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\AdminModel;
 use App\Models\auth\AuthModel;
+use App\Libraries\Mailer;
 
 class Admin extends BaseController
 {
@@ -11,6 +12,7 @@ class Admin extends BaseController
     {
         $this->adminAuthModel = new AuthModel();
         $this->adminModel = new AdminModel();
+        $this->mailer = new Mailer();
         helper(['form']);
     }
 
@@ -1230,6 +1232,17 @@ class Admin extends BaseController
     {
         if ($this->adminModel->do_shortlist($id))
         {
+            $user_email = $this->adminModel->get_applied_candidate_email($id);
+
+            $job = get_job_detail($job_id);
+
+            // sending shortlisted email 
+            $mail_data = array(
+                'job_title' => $job['title']
+            );
+
+            $this->mailer->mail_template($user_email,'candidate-shortlisted',$mail_data);
+
             $this->session->setFlashdata('success', 'Congratulation! Applicant Shortlisted successfully');
             return redirect()->to(base_url('admin/shortlisted/' . $job_id));
         }else{
@@ -1237,4 +1250,27 @@ class Admin extends BaseController
             return redirect()->to(base_url('admin/view_job_applicants/' . $job_id));
         }
     }
+
+	// Sending Email to applicant
+	public function send_interview_email()
+	{
+		$email = trim($this->request->getPost('email'));
+		$title = trim($this->request->getPost('subject'));
+		$message = trim($this->request->getPost('message'));
+
+		$subject = 'Interview Message | Darwin Jobs';
+		$message =  '<p>Subject: '.$title.'</p>
+		<p>Message: '.$message.'</p>' ;
+
+        $mail_data['receiver_email'] = $email;
+        $mail_data['mail_subject'] = $subject;
+        $mail_data['mail_body'] = $message;
+
+		if(sendEmail($mail_data)){
+			echo 'Email has been sent successfully !';
+		}else {
+			echo 'There is a problem while sending email !';
+		}
+	}
+
 }
