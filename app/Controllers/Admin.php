@@ -27,7 +27,8 @@ class Admin extends BaseController
 
     public function dashboard()
     {
-        return view('admin/dashboard');
+        $data['title'] = 'Dashboard';
+        return view('admin/dashboard',$data);
     }
 
     public function login()
@@ -82,6 +83,7 @@ class Admin extends BaseController
         }
         $id = session('admin_id');
         $get['data'] = $this->adminAuthModel->getaccount($id);
+        $get['title'] = 'My Profile';
         return view('admin/auth/account', $get);
     }
 
@@ -116,7 +118,8 @@ class Admin extends BaseController
                 echo '0~Something went wrong, please try again!';
             }
         }
-        return view('admin/auth/register');
+        $data['title'] = 'Register Admin';
+        return view('admin/auth/register',$data);
     }
 
     public function deleteadmin($id)
@@ -142,6 +145,7 @@ class Admin extends BaseController
     public function payments()
     {
         $get['data'] = $this->adminModel->payment();
+        $get['title'] = 'Payments';
         return view('admin/payment/showpayment', $get);
     }
 
@@ -167,18 +171,21 @@ class Admin extends BaseController
                 return redirect()->to('/');
             }
         }
-        return view('admin/auth/changepassword');
+        $data['title'] = 'Change Password';
+        return view('admin/auth/changepassword',$data);
     }
 
     public function showadmin()
     {
         $result['admin'] = $this->adminAuthModel->showadmin();
+        $result['title'] = 'Admin List';
         return view('admin/showadmin.php', $result);
     }
 
     public function editadmin($id)
     {
         $get['data'] = $this->adminAuthModel->getaccount($id);
+        $get['title'] = 'Edit Admin';
         return view('admin/auth/editadmin', $get);
     }
 
@@ -223,6 +230,7 @@ class Admin extends BaseController
     {
         $data['categories'] = $this->adminModel->get_all_categories();
         //$data['categories'] = $model->get_all_categories();
+        $data['title'] = 'List Category';
         return view('admin/category/list_category', $data);
     }
 
@@ -247,6 +255,7 @@ class Admin extends BaseController
                 $data['validation'] = $this->validator;
             }
         }
+        $data['title'] = 'Add Category';
         return view('admin/category/add_category', $data);
     }
 
@@ -272,6 +281,7 @@ class Admin extends BaseController
                 $data['validation'] = $this->validator;
             }
         }
+        $data['title'] = 'Edit Category';
         return view('admin/category/edit_category', $data);
     }
 
@@ -284,6 +294,7 @@ class Admin extends BaseController
     public function list_industry()
     {
         $data['industry'] = $this->adminModel->get_all_industry();
+        $data['title'] = 'List Industry';
         return view('admin/industry/list_industry', $data);
     }
 
@@ -306,6 +317,7 @@ class Admin extends BaseController
                 $data['validation'] = $this->validator;
             }
         }
+        $data['title'] = 'Add Industry';
         return view('admin/industry/add_industry', $data);
     }
 
@@ -331,6 +343,7 @@ class Admin extends BaseController
                 $data['validation'] = $this->validator;
             }
         }
+        $data['title'] = 'Edit Industry';
         return view('admin/industry/edit_industry', $data);
     }
 
@@ -344,12 +357,14 @@ class Admin extends BaseController
     public function list_packages()
     {
         $data['packages'] = $this->adminModel->get_all_packages();
+        $data['title'] = 'List Packages';
         return view('admin/packages/list_packages', $data);
     }
 
     public function add_packages()
     {
         $data = [];
+        $data['title'] = 'Add Packages';
         if ($this->request->getMethod() == 'post') {
             $input = $this->validate([
                 'title' => 'required',
@@ -408,6 +423,7 @@ class Admin extends BaseController
 
     public function edit_packages($id)
     {
+        $data['title'] = 'Edit Packages';
         $packages_row = $this->adminModel->get_packages_by_id($id);
         $data['packages_row'] = $packages_row;
 
@@ -476,6 +492,7 @@ class Admin extends BaseController
     public function list_newsletters()
     {
         $data['newsletters'] = $this->adminModel->get_all_newsletters();
+        $data['title'] = 'Newsletters';
         return view('admin/newsletters/list_newsletters', $data);
     }
 
@@ -488,6 +505,7 @@ class Admin extends BaseController
     public function list_contact()
     {
         $data['contact'] = $this->adminModel->get_all_contactus();
+        $data['title'] = 'List Contacts';
         return view('admin/contact/list_contact', $data);
     }
 
@@ -502,6 +520,7 @@ class Admin extends BaseController
     public function job_type()
     {
         $data['types'] = $this->adminModel->get_job_type();
+        $data['title'] = 'Job Types';
         return view('admin/job_attributes/job_type', $data);
     }
 
@@ -523,12 +542,14 @@ class Admin extends BaseController
                 echo '0~Something went wrong, please try again!';
             }
         }
+        $data['title'] = 'Add Job Type';
         return view('admin/job_attributes/add_job_type');
     }
 
     public function editjob($id)
     {
         $get['data'] = $this->adminModel->editjob($id);
+        $data['title'] = 'Edit Job Type';
         return view('admin/job_attributes/edit_job_type', $get);
     }
 
@@ -569,6 +590,7 @@ class Admin extends BaseController
     public function education()
     {
         $get['data'] = $this->adminModel->education();
+        $get['title'] = 'Education';
         return view('admin/education/education', $get);
     }
 
@@ -589,12 +611,14 @@ class Admin extends BaseController
                 echo '0~Something went wrong, please try again!';
             }
         }
-        return view('admin/education/add_education');
+        $get['title'] = 'Add Education';
+        return view('admin/education/add_education',$get);
     }
 
     public function editeducation($id)
     {
         $get['data'] = $this->adminModel->editeducation($id);
+        $get['title'] = 'Edit Education';
         return view('admin/education/edit_education', $get);
     }
 
@@ -635,6 +659,7 @@ class Admin extends BaseController
     public function employment()
     {
         $get['data'] = $this->adminModel->employment();
+        $get['title'] = 'Employment';
         return view('admin/employment/employment', $get);
     }
 
@@ -656,12 +681,14 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/employment'));
             }
         }
-        return view('admin/employment/add_employment');
+        $get['title'] = 'Add Employment';
+        return view('admin/employment/add_employment',$get);
     }
 
     public function editemployment($id)
     {
         $get['data'] = $this->adminModel->editemployment($id);
+        $get['title'] = 'Edit Employment';
         return view('admin/employment/edit_employment', $get);
     }
 
@@ -702,6 +729,7 @@ class Admin extends BaseController
     public function employer()
     {
         $employer['data'] = $this->adminModel->getemployer();
+        $employer['title'] = 'Employer';
         return view('admin/employer/showemployers', $employer);
     }
 
@@ -769,6 +797,7 @@ class Admin extends BaseController
                 echo '0~Something went wrong, please try again!';
             }
         }
+        $data['title'] = 'Add Employer';
         return view('admin/employer/addemployers', $data);
     }
 
@@ -777,6 +806,7 @@ class Admin extends BaseController
         $query['data'] = $this->adminModel->editemployer($id);
         $query['categories'] = $this->adminModel->get_all_categories();
         $query['countries'] = $this->adminModel->get_countries_list();
+        $query['title'] = 'Edit Employer';
         return view('admin/employer/editemployer', $query);
     }
 
@@ -923,12 +953,14 @@ class Admin extends BaseController
                 echo '0~Something went wrong, please try again!';
             }
         }
-        return view('admin/users/adduser');
+        $data['title'] = 'Add User';
+        return view('admin/users/adduser',$data);
     }
 
     public function edituser($id)
     {
         $get['data'] = $this->adminModel->edituser($id);
+        $get['title'] = 'Edit User';
         return view('admin/users/edituser', $get);
     }
 
