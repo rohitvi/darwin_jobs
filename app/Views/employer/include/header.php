@@ -183,12 +183,11 @@
                         <ul class="list-unstyled">
                             <li><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
                             <li><a href="<?= base_url('employer/packages') ?>"><i class="la la-tasks"></i><span>Packages</span></a></li>
-                            <li><a href="#dropdown-app" aria-expanded="false" data-toggle="collapse"><i class="la la-puzzle-piece"></i><span>Applications</span></a>
+                            <li><a href="<?= base_url('employer/shortlisted') ?>"><i class="la la-reorder"></i><span>Shortlisted Resume</span></a></li>
+                            <li><a href="#dropdown-app" aria-expanded="false" data-toggle="collapse"><i class="la la-puzzle-piece"></i><span>Job Posting</span></a>
                                 <ul id="dropdown-app" class="collapse list-unstyled pt-0">
-                                    <li><a href="app-calendar.html">Calendar</a></li>
-                                    <li><a href="app-chat.html">Chat</a></li>
-                                    <li><a href="app-mail.html">Mail</a></li>
-                                    <li><a href="app-contact.html">Contact</a></li>
+                                    <li><a href="<?= base_url('employer/list_jobs') ?>">View Job</a></li>
+                                    <li><a href="<?= base_url('employer/post') ?>">Add New Job</a></li>
                                 </ul>
                             </li>
                             <li><a href="<?= base_url('employer/personal_info'); ?>"><i class="la la-user"></i><span>Personal Information</span></a></li>

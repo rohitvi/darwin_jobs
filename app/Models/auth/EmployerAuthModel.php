@@ -99,6 +99,5 @@ class EmployerAuthModel extends Model
     {
         return $this->db->table('companies')->insert($data);
     }
-
 }
 ?>
