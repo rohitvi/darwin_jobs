@@ -1,3 +1,7 @@
 .conf{
 	height: auto!important;
 }
+
+#widgetbody{
+	padding: 0.4rem;
+}

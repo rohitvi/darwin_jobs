@@ -517,5 +517,10 @@ class AdminModel extends Model
             return false;
 	}
 
+    public function add_general_settings($data){
+        $builder = $this->db->table('general_settings');
+        return $query= $builder->insert($data);
+    }
+
 
 }
