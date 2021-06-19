@@ -76,9 +76,10 @@ class Admin extends BaseController
             $change = $this->adminAuthModel->account($data, $id);
             if ($change) {
                 $this->session->setFlashdata('success', 'Account successfully updated');
-                echo '1~successfully updated';
+                return redirect()->to(base_url('admin/showadmin'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/account'));
             }
         }
         $id = session('admin_id');
@@ -115,7 +116,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Admin successfully Registered');
                 return redirect()->to(base_url('admin/showadmin'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/registeradmin'));
             }
         }
         $data['title'] = 'Register Admin';
@@ -128,7 +130,8 @@ class Admin extends BaseController
         if ($query->resultID == 1) {
             return redirect()->to(base_url('admin/showadmin'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/showadmin'));
         }
     }
 
@@ -138,7 +141,8 @@ class Admin extends BaseController
         if ($query->resultID == 1) {
             return redirect()->to(base_url('admin/employer'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/employer'));
         }
     }
 
@@ -215,7 +219,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Account successfully updated');
                 return redirect()->to(base_url('admin/showadmin'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editadmin'));
             }
         }
     }
@@ -539,7 +544,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Job successfully added');
                 return redirect()->to(base_url('admin/job_type'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/job_type'));
             }
         }
         $data['title'] = 'Add Job Type';
@@ -569,7 +575,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Job successfully updated');
                 return redirect()->to(base_url('admin/job_type'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editjob'));
             }
         }
     }
@@ -581,7 +588,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'Job successfully deleted');
             return redirect()->to(base_url('admin/job_type'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/job_type'));
         }
     }
 
@@ -608,7 +616,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Education successfully added');
                 return redirect()->to(base_url('admin/education'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/addeducation'));
             }
         }
         $get['title'] = 'Add Education';
@@ -638,7 +647,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Education successfully updated');
                 return redirect()->to(base_url('admin/education'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editeducation'));
             }
         }
     }
@@ -650,7 +660,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'Education successfully deleted');
             return redirect()->to(base_url('admin/education'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/education'));
         }
     }
 
@@ -677,8 +688,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employment successfully added');
                 return redirect()->to(base_url('admin/employment'));
             } else {
-                $this->session->setFlashdata('error', 'Something went wrong, please try again!');
-                return redirect()->to(base_url('admin/employment'));
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/addemployment'));
             }
         }
         $get['title'] = 'Add Employment';
@@ -708,7 +719,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employment successfully updated');
                 return redirect()->to(base_url('admin/employment'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editemployment'));
             }
         }
     }
@@ -720,7 +732,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'Employment successfully deleted');
             return redirect()->to(base_url('admin/employment'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/employment'));
         }
     }
 
@@ -794,7 +807,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employer and company successfully registered');
                 return redirect()->to(base_url('admin/employer'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/addemployers'));
             }
         }
         $data['title'] = 'Add Employer';
@@ -853,7 +867,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'Employer successfully updated');
                 return redirect()->to(base_url('admin/employer'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/editemployer'));
             }
         }
     }
@@ -950,7 +965,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'User successfully added');
                 return redirect()->to(base_url('admin/users'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/adduser'));
             }
         }
         $data['title'] = 'Add User';
@@ -990,7 +1006,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('success', 'User successfully updated');
                 return redirect()->to(base_url('admin/users'));
             } else {
-                echo '0~Something went wrong, please try again!';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('admin/edituser'));
             }
         }
     }
@@ -1002,7 +1019,8 @@ class Admin extends BaseController
             $this->session->setFlashdata('success', 'User successfully deleted');
             return redirect()->to(base_url('admin/users'));
         } else {
-            echo '0~Something went wrong, please try again!';
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('admin/users'));
         }
     }
 
@@ -1285,6 +1303,47 @@ class Admin extends BaseController
         }
     }
 
+    public function add_general_settings()
+    {   
+        if ($this->request->getMethod() == 'post') {
+        $data = array(
+			'application_name' => $this->request->getPost('application_name'),
+			//'timezone' => $this->request->getPost('timezone'),
+			'currency' => $this->request->getPost('currency'),
+			'copyright' => $this->request->getPost('copyright'),
+			'email_from' => $this->request->getPost('email_from'),
+			'admin_email' => $this->request->getPost('admin_email'),
+			'smtp_host' => $this->request->getPost('smtp_host'),
+			'smtp_port' => $this->request->getPost('smtp_port'),
+			'smtp_user' => $this->request->getPost('smtp_user'),
+			'smtp_pass' => $this->request->getPost('smtp_pass'),
+			'facebook_link' => $this->request->getPost('facebook_link'),
+			'twitter_link' => $this->request->getPost('twitter_link'),
+			'google_link' => $this->request->getPost('google_link'),
+			'youtube_link' => $this->request->getPost('youtube_link'),
+			'linkedin_link' => $this->request->getPost('linkedin_link'),
+			'instagram_link' => $this->request->getPost('instagram_link'),
+			'recaptcha_secret_key' => $this->request->getPost('recaptcha_secret_key'),
+			'recaptcha_site_key' => $this->request->getPost('recaptcha_site_key'),
+			'recaptcha_lang' => $this->request->getPost('recaptcha_lang'),
+			'paypal_sandbox' => $this->request->getPost('paypal_sandbox'),
+		    'paypal_sandbox_url' => $this->request->getPost('paypal_sandbox_url'),
+		    'paypal_live_url' => $this->request->getPost('paypal_live_url'),
+		    'paypal_email' => $this->request->getPost('paypal_email'),
+			'paypal_client_id' => $this->request->getPost('client_id'),
+			'paypal_status' => $this->request->getPost('paypal_status'),
+			'stripe_secret_key' => $this->request->getPost('stripe_secret_key', true),
+			'stripe_publish_key' => $this->request->getPost('stripe_publish_key', true),
+			'created_date' => date('Y-m-d : h:m:s'),
+			'updated_date' => date('Y-m-d : h:m:s')
+		);
+
+                    $addgeneralsetting = $this->adminModel->add_general_settings($data);
+                    $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
+                    return redirect()->to('/admin/general_settings')->with('status_icon', 'success'); 
+        }
+        return view('admin/settings/general_settings');
+    }
     // Sending Email to applicant
     public function send_interview_email()
     {

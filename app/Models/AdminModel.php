@@ -517,7 +517,13 @@ class AdminModel extends Model
             return true;
         else
             return false;
+	}
+
+    public function add_general_settings($data){
+        $builder = $this->db->table('general_settings');
+        return $query= $builder->insert($data);
     }
+
 
     // Short listed candidate email
     public function get_applied_candidate_email($id)

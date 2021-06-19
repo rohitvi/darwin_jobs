@@ -187,8 +187,8 @@
               </ul>
             </li>
 
-            <li class="nav-item">
-              <a href="#" class="nav-link">
+            <li class="nav-item menu <?= ($ap === 'list_category' || $ap === 'add_category') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= ($ap === 'list_category' || $ap === 'add_category') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-bars"></i>
                 <p>
                   Category
@@ -197,13 +197,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/list_category'); ?>" class="nav-link <?= ($ap === 'list_category') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Category List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_category'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/add_category'); ?>" class="nav-link <?= ($ap === 'add_category') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Category</p>
                   </a>
@@ -355,6 +355,14 @@
                 <i class="nav-icon far fa fa-industry"></i>
                 <p>
                   Employment Type
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('admin/add_general_settings'); ?>" class="nav-link <?= ($ap === 'education') ? 'active' : '' ?>">
+                <i class="nav-icon fa fa-cogs"></i>
+                <p>
+                General Settings
                 </p>
               </a>
             </li>

@@ -23,7 +23,7 @@
                             <div class="col-xl-3">
                                 <!-- Begin Widget -->
                                 <div class="widget has-shadow">
-                                    <div class="widget-body">
+                                    <div id='widgetbody' class="widget-body">
                                         <div class="mt-5">
                                             <img src="<?= base_url('public/employer/assets/img/avatar/avatar-01.jpg') ?>" alt="..." style="width: 120px;" class="avatar rounded-circle d-block mx-auto">
                                         </div>
@@ -35,7 +35,7 @@
                                                 <a class="nav-link" href="<?= base_url('employer/mypackages') ?>"><i class="la la-bell la-2x align-middle pr-2"></i>My Packages</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-bolt la-2x align-middle pr-2"></i>Activity</a>
+                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-user la-2x align-middle pr-2"></i>Personal Information</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="javascript:void(0)"><i class="la la-comments la-2x align-middle pr-2"></i>Messages</a>
