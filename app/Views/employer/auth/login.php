@@ -77,7 +77,7 @@ Author: SAEROX
                             <!-- Begin Sign In -->
                             <div role="tabpanel" class="tab-pane show active" id="singin" aria-labelledby="singin-tab">
                                 <h3>Sign In For Employer</h3>
-                                <form action="<?= base_url('employer/login') ?>" method="post">
+                                <form action="<?= base_url('employer/login') ?>" method="post" id="sign_in">
                                     <div class="group material-input">
         							    <input type="text" name="email" required>
         							    <span class="highlight"></span>
@@ -168,6 +168,37 @@ Author: SAEROX
         <!-- End Container -->    
         <!-- Begin Vendor Js -->
         <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
+        <script>
+        $("#sign_in").on("submit", function() {
+          event.preventDefault();
+          var fields = $('#sign_in').serialize();
+          $.ajax({
+            url: "<?= base_url('employer/login') ?>",
+            method: "POST",
+            data: fields,
+            success: function(responses) {
+              var response = responses.split('~');
+              if ($.trim(response[0]) == 0) {
+                $('#sign_in').trigger("reset");
+                // toastr.error(response[1]);
+              }
+              if ($.trim(response[0]) == 1) {
+                $('#sign_in').trigger("reset");
+                setTimeout(function() {
+                  window.location.href = 'dashboard';
+                }, 500);
+                // toastr.success(response[1]);
+              }
+              if ($.trim(response[0]) == 2) {
+                // toastr.error(response[1]);
+              }
+            },
+            error: function(jqXHR, exception) {
+              console.log(jqXHR);
+            }
+          });
+        });
+        </script>
         <script src="<?= base_url('public/employer/assets/vendors/js/base/core.min.js') ?>"></script>
         <!-- End Vendor Js -->
         <!-- Begin Page Vendor Js -->

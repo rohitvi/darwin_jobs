@@ -8,12 +8,14 @@ class EmployerAuthModel extends Model
 	public function login_validate($email,$password)
     {
         $builder = $this->db->table('employers');
-        $result = $builder->where(array('email' => $email ,'password' => $password ))->get()->getResultArray();
+        $result = $builder->where(array('email' => $email))->get()->getResultArray();
         if (count($result) == 1) {
-           $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname']);
-           return $array; 
-        } else 
-        {
+            if (password_verify($password, $result[0]['password'])) {
+               $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname']);
+               return $array; 
+            } else 
+                return 0;
+        } else {
             return 0;
         }
     }
