@@ -46,7 +46,7 @@ class Employer extends BaseController
                 echo '0~'.$this->validation->listErrors();exit;
             }
             $email = $this->request->getPost('email');
-            $password = $this->request->getPost('password');
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $logindata = $this->EmployerAuthModel->login_validate($email,$password);
             if ($logindata == 0) {
               echo '0~Invalid email or password';

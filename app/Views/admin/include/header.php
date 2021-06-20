@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title><?= $title .' | '. get_g_setting_val('application_name') ?></title>
   <link rel="shortcut icon" href="<?= get_g_setting_val('favicon') ?>">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -79,7 +79,7 @@
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
         <img src="<?= base_url('public/admin/dist/img/AdminLTELogo.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light"><?= general_value('application_name') ?></span>
+        <span class="brand-text font-weight-light"><?= get_g_setting_val('application_name') ?></span>
       </a>
 
       <!-- Sidebar -->
@@ -187,8 +187,8 @@
               </ul>
             </li>
 
-            <li class="nav-item">
-              <a href="#" class="nav-link">
+            <li class="nav-item menu <?= ($ap === 'list_category' || $ap === 'add_category') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= ($ap === 'list_category' || $ap === 'add_category') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-bars"></i>
                 <p>
                   Category
@@ -197,13 +197,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_category'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/list_category'); ?>" class="nav-link <?= ($ap === 'list_category') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Category List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_category'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/add_category'); ?>" class="nav-link <?= ($ap === 'add_category') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Category</p>
                   </a>
@@ -355,6 +355,14 @@
                 <i class="nav-icon far fa fa-industry"></i>
                 <p>
                   Employment Type
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('admin/add_general_settings'); ?>" class="nav-link <?= ($ap === 'education') ? 'active' : '' ?>">
+                <i class="nav-icon fa fa-cogs"></i>
+                <p>
+                General Settings
                 </p>
               </a>
             </li>

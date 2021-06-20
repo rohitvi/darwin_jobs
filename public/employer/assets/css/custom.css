@@ -2,6 +2,10 @@
 	height: auto!important;
 }
 
+#widgetbody{
+	padding: 0.4rem;
+}
+
 .m0p14{
 	margin: 0!important;
 	padding-bottom: 14px!important;
