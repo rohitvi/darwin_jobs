@@ -28,7 +28,7 @@ class Admin extends BaseController
     public function dashboard()
     {
         $data['title'] = 'Dashboard';
-        return view('admin/dashboard',$data);
+        return view('admin/dashboard', $data);
     }
 
     public function login()
@@ -121,7 +121,7 @@ class Admin extends BaseController
             }
         }
         $data['title'] = 'Register Admin';
-        return view('admin/auth/register',$data);
+        return view('admin/auth/register', $data);
     }
 
     public function deleteadmin($id)
@@ -176,7 +176,7 @@ class Admin extends BaseController
             }
         }
         $data['title'] = 'Change Password';
-        return view('admin/auth/changepassword',$data);
+        return view('admin/auth/changepassword', $data);
     }
 
     public function showadmin()
@@ -621,7 +621,7 @@ class Admin extends BaseController
             }
         }
         $get['title'] = 'Add Education';
-        return view('admin/education/add_education',$get);
+        return view('admin/education/add_education', $get);
     }
 
     public function editeducation($id)
@@ -693,7 +693,7 @@ class Admin extends BaseController
             }
         }
         $get['title'] = 'Add Employment';
-        return view('admin/employment/add_employment',$get);
+        return view('admin/employment/add_employment', $get);
     }
 
     public function editemployment($id)
@@ -934,6 +934,7 @@ class Admin extends BaseController
     public function users()
     {
         $get['data'] = $this->adminModel->users();
+        $get['title'] = 'Users';
         return view('admin/users/showusers.php', $get);
     }
 
@@ -970,7 +971,7 @@ class Admin extends BaseController
             }
         }
         $data['title'] = 'Add User';
-        return view('admin/users/adduser',$data);
+        return view('admin/users/adduser', $data);
     }
 
     public function edituser($id)
@@ -1304,43 +1305,43 @@ class Admin extends BaseController
     }
 
     public function add_general_settings()
-    {   
+    {
         if ($this->request->getMethod() == 'post') {
-        $data = array(
-			'application_name' => $this->request->getPost('application_name'),
-			//'timezone' => $this->request->getPost('timezone'),
-			'currency' => $this->request->getPost('currency'),
-			'copyright' => $this->request->getPost('copyright'),
-			'email_from' => $this->request->getPost('email_from'),
-			'admin_email' => $this->request->getPost('admin_email'),
-			'smtp_host' => $this->request->getPost('smtp_host'),
-			'smtp_port' => $this->request->getPost('smtp_port'),
-			'smtp_user' => $this->request->getPost('smtp_user'),
-			'smtp_pass' => $this->request->getPost('smtp_pass'),
-			'facebook_link' => $this->request->getPost('facebook_link'),
-			'twitter_link' => $this->request->getPost('twitter_link'),
-			'google_link' => $this->request->getPost('google_link'),
-			'youtube_link' => $this->request->getPost('youtube_link'),
-			'linkedin_link' => $this->request->getPost('linkedin_link'),
-			'instagram_link' => $this->request->getPost('instagram_link'),
-			'recaptcha_secret_key' => $this->request->getPost('recaptcha_secret_key'),
-			'recaptcha_site_key' => $this->request->getPost('recaptcha_site_key'),
-			'recaptcha_lang' => $this->request->getPost('recaptcha_lang'),
-			'paypal_sandbox' => $this->request->getPost('paypal_sandbox'),
-		    'paypal_sandbox_url' => $this->request->getPost('paypal_sandbox_url'),
-		    'paypal_live_url' => $this->request->getPost('paypal_live_url'),
-		    'paypal_email' => $this->request->getPost('paypal_email'),
-			'paypal_client_id' => $this->request->getPost('client_id'),
-			'paypal_status' => $this->request->getPost('paypal_status'),
-			'stripe_secret_key' => $this->request->getPost('stripe_secret_key', true),
-			'stripe_publish_key' => $this->request->getPost('stripe_publish_key', true),
-			'created_date' => date('Y-m-d : h:m:s'),
-			'updated_date' => date('Y-m-d : h:m:s')
-		);
+            $data = array(
+                'application_name' => $this->request->getPost('application_name'),
+                //'timezone' => $this->request->getPost('timezone'),
+                'currency' => $this->request->getPost('currency'),
+                'copyright' => $this->request->getPost('copyright'),
+                'email_from' => $this->request->getPost('email_from'),
+                'admin_email' => $this->request->getPost('admin_email'),
+                'smtp_host' => $this->request->getPost('smtp_host'),
+                'smtp_port' => $this->request->getPost('smtp_port'),
+                'smtp_user' => $this->request->getPost('smtp_user'),
+                'smtp_pass' => $this->request->getPost('smtp_pass'),
+                'facebook_link' => $this->request->getPost('facebook_link'),
+                'twitter_link' => $this->request->getPost('twitter_link'),
+                'google_link' => $this->request->getPost('google_link'),
+                'youtube_link' => $this->request->getPost('youtube_link'),
+                'linkedin_link' => $this->request->getPost('linkedin_link'),
+                'instagram_link' => $this->request->getPost('instagram_link'),
+                'recaptcha_secret_key' => $this->request->getPost('recaptcha_secret_key'),
+                'recaptcha_site_key' => $this->request->getPost('recaptcha_site_key'),
+                'recaptcha_lang' => $this->request->getPost('recaptcha_lang'),
+                'paypal_sandbox' => $this->request->getPost('paypal_sandbox'),
+                'paypal_sandbox_url' => $this->request->getPost('paypal_sandbox_url'),
+                'paypal_live_url' => $this->request->getPost('paypal_live_url'),
+                'paypal_email' => $this->request->getPost('paypal_email'),
+                'paypal_client_id' => $this->request->getPost('client_id'),
+                'paypal_status' => $this->request->getPost('paypal_status'),
+                'stripe_secret_key' => $this->request->getPost('stripe_secret_key', true),
+                'stripe_publish_key' => $this->request->getPost('stripe_publish_key', true),
+                'created_date' => date('Y-m-d : h:m:s'),
+                'updated_date' => date('Y-m-d : h:m:s')
+            );
 
-                    $addgeneralsetting = $this->adminModel->add_general_settings($data);
-                    $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
-                    return redirect()->to('/admin/general_settings')->with('status_icon', 'success'); 
+            $addgeneralsetting = $this->adminModel->add_general_settings($data);
+            $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
+            return redirect()->to('/admin/general_settings')->with('status_icon', 'success');
         }
         return view('admin/settings/general_settings');
     }

@@ -30,7 +30,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered text-center table-hover">
+              <table id="basic_filter" class="table table-bordered">
                 <thead>
                   <tr>
                     <th>No</th>
