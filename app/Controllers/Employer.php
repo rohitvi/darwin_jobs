@@ -535,19 +535,7 @@ class Employer extends BaseController
         }
     }
 
-    public function list_jobs()
-    {
-        // if ($this->request->isAJAX()) {
-        //     $id = session('employer_id');
-        //     $get['data'] = $this->EmployerModel->list_jobs($id);
-        //     $get['industry'] = $this->EmployerModel->list_jobs($id);
-        //     return json_encode($get);
-        // }
-        return view('employer/job/job_list');
-    }
-
-    public function datatable_json()
-    {
+    public function datatable_json(){
         $records = $this->EmployerModel->list_jobs();
         $data = array();
 
@@ -670,9 +658,11 @@ class Employer extends BaseController
         }
     }
 
-    public function interview()
-    {
-        if ($this->request->isAJAX()) {
-        }
+    public function view_job_applicants($job_id)
+    {   
+        $data['applicants'] = $this->adminModel->get_applicants($job_id);
+        pre($data);
+        exit;
+        return view('employer/job/view_job_applicants',$data);
     }
 }
