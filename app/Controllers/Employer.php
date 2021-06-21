@@ -37,7 +37,7 @@ class Employer extends BaseController
 
     public function login()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->isAJAX()) {
             $rules = [
                 'email' =>['label'=>'email','rules'=>'required'],
                 'password' =>['label'=>'password','rules'=>'required']
@@ -113,7 +113,7 @@ class Employer extends BaseController
                 echo '0~'.$this->validation->listErrors();exit;
             }
             $id = session('employer_id');
-            $password = $this->request->getPost('password');
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $query = $this->EmployerAuthModel->changepassword($id,$password);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
@@ -330,10 +330,9 @@ class Employer extends BaseController
         return view('employer/resume/shortlisted_resume',$get);
     }
 
-    public function userdetails()
+    public function userdetails($id)
     {
         if ($this->request->isAJAX()) {
-            $id = $this->request->getPost('user_id');
             $education = $this->EmployerModel->get_seeker_education($id);
             $experience = $this->EmployerModel->get_user_experience($id);
             $language = $this->EmployerModel->get_user_language($id);
@@ -452,7 +451,7 @@ class Employer extends BaseController
 
     public function post()
     {   
-        $get['companies'] = $this->EmployerModel->get_companies();
+        $get['companies'] = $this->EmployerModel->get_companies(session('employer_id'));
         $get['job_type'] = get_job_type_list();
         $get['job_category'] = get_category_list();
         $get['industry'] = get_industry_list();
@@ -528,6 +527,142 @@ class Employer extends BaseController
 
     public function list_jobs()
     {
+        // if ($this->request->isAJAX()) {
+        //     $id = session('employer_id');
+        //     $get['data'] = $this->EmployerModel->list_jobs($id);
+        //     $get['industry'] = $this->EmployerModel->list_jobs($id);
+        //     return json_encode($get);
+        // }
         return view('employer/job/job_list');
+    }
+
+    public function datatable_json(){
+        $records = $this->EmployerModel->list_jobs();
+        $data = array();
+
+        $i = 1;
+        foreach ($records['data']  as $row) {
+            $buttoncontroll = '<a class="btn btn-sm btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
+                 <i class="la la-eye"></i></a>&nbsp
+
+                  <a class="edit btn btn-sm btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" > 
+                 <i class="la la-edit"></i></a>&nbsp;
+
+                 <a class="btn-delete btn btn-sm btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')"> 
+                 <i class="la-trash"></i></a>';
+
+            $data[] = array(
+                $i++,
+                $row['title'],
+                '<a class="edit btn btn-sm btn-info mb-3" href=' . base_url("employer/view_job_applicants/" . $row['id']) . ' title="Applicants" > 
+                 Applied [ ' . $row['cand_applied'] . ' ]
+                </a>
+                <a class="edit btn btn-sm btn-info" href=' . base_url("employer/shortlisted/" . $row['id']) . ' title="Applicants" > 
+                 Shortlisted [ ' . $row['total_shortlisted'] . ' ]
+                </a>',
+                get_industry_name($row['industry']),  //  helper function
+                get_country_name($row['country']), // same as above
+                date_time($row['created_date']),
+                $row['is_status'],
+                $buttoncontroll
+            );
+        }
+        $records['data'] = $data;
+        echo json_encode($records);
+    }
+
+    public function edit_job($id)
+    {
+        $get['companies'] = $this->EmployerModel->get_companies(session('employer_id'));
+        $get['job_type'] = get_job_type_list();
+        $get['job_category'] = get_category_list();
+        $get['industry'] = get_industry_list();
+        $get['employment'] = get_employment_type_list();
+        $get['educations'] = $this->EmployerModel->get_education();
+        $get['countries'] = $this->EmployerModel->get_countries_list();
+        $get['data'] = $this->EmployerModel->edit_job($id);
+        return view('employer/job/edit_job',$get);
+    }
+
+    public function updatejob($id)
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                "employer_id"       => ["label" => "employer_id", "rules" => "trim|required"],
+                "company_id"       => ["label" => "company_id", "rules" => "trim|required"],
+                "job_title"         => ["label" => "job_title", "rules" => "trim|required"],
+                "category"          => ["label" => "category", "rules" => "trim|required"],
+                "industry"          => ["label" => "industry", "rules" => "trim|required"],
+                "min_experience"    => ["label" => "min_experience", "rules" => "trim|required"],
+                "max_experience"    => ["label" => "max_experience", "rules" => "trim|required"],
+                "salary_period"     => ["label" => "salary period", "rules" => "trim|required"],
+                "min_salary"        => ["label" => "min_salary", "rules" => "trim|required"],
+                "max_salary"        => ["label" => "max_salary", "rules" => "trim|required"],
+                "skills"            => ["label" => "skills", "rules" => "trim|required"],
+                "description"       => ["label" => "description", "rules" => "trim|required|min_length[3]"],
+                "total_positions"   => ["label" => "total_positions", "rules" => "trim|required"],
+                "gender"            => ["label" => "gender", "rules" => "trim|required"],
+                "employment_type"   => ["label" => "employment type", "rules" => "trim|required"],
+                "education"         => ["label" => "education", "rules" => "trim|required"],
+                "country"           => ["label" => "country", "rules" => "trim|required"],
+                "state"              => ["label" => "state", "rules" => "trim|required"],
+                "city"              => ["label" => "city", "rules" => "trim|required"],
+                "location"          => ["label" => "location", "rules" => "trim|required"],
+            ];
+            if ($this->validate($rules) == FALSE) {
+                echo '0~'.$this->validation->listErrors();exit;
+            }
+            $data = array(
+                    'employer_id'   => $this->request->getPost('employer_id'),
+                    'company_id'    => $this->request->getPost('company_id'),
+                    'title'         => $this->request->getPost('job_title'),
+                    'job_type'      => $this->request->getPost('job_type'),
+                    'category'      => $this->request->getPost('category'),
+                    'employment_type' => $this->request->getPost('employment_type'),
+                    'industry'      => $this->request->getPost('industry'),
+                    'description'   => $this->request->getPost('description'),
+                    'salary_period' => $this->request->getPost('salary_period'),
+                    'min_salary'    => $this->request->getPost('min_salary'),
+                    'max_salary'    => $this->request->getPost('max_salary'),
+                    'education'     => $this->request->getPost('education'),
+                    'experience'    => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
+                    'gender'        => $this->request->getPost('gender'),
+                    'total_positions' => $this->request->getPost('total_positions'),
+                    'skills'        => $this->request->getPost('skills'),
+                    'country'       => $this->request->getPost('country'),
+                    'state'         => $this->request->getPost('state'),
+                    'city'          => $this->request->getPost('city'),
+                    'location'      => $this->request->getPost('location'),
+                    'created_date'  => date('Y-m-d : H:i:s'),
+                    'updated_date'  => date('Y-m-d : H:i:s')
+                );
+            $query = $this->EmployerModel->updatejob($id,$data);
+            if ($query == 1) {
+                $this->session->setFlashdata('success', 'Job successfully updated');
+                return redirect()->to(base_url('employer/list_jobs'));
+            }else
+            {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('employer/edit_job/'.$id));
+            }
+        }
+    }
+
+    public function delete_job($id)
+    {
+        $query = $this->EmployerModel->delete_job($id);
+        if ($query->resultID == 1) {
+            return redirect()->to(base_url('employer/list_jobs'));
+        } else {
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('employer/list_jobs'));
+        }
+    }
+
+    public function interview()
+    {
+        if ($this->request->isAJAX()) {
+            
+        }
     }
 }

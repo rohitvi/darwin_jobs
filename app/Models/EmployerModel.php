@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 use CodeIgniter\Model;
+use App\Libraries\Datatable;
 
 class EmployerModel extends Model
  {
@@ -80,13 +81,71 @@ class EmployerModel extends Model
       return $this->db->table('education')->get()->getResultArray();
     }
 
-    public function get_companies()
+    public function get_companies($id)
     {
-      return $this->db->table('companies')->get()->getResultArray();
+      return $this->db->table('companies')->where('id',$id)->get()->getResultArray();
     }
 
     public function postjob($data)
     {
       return $this->db->table('job_post')->insert($data);
+    }
+
+    // public function list_jobs($id)
+    // {
+    //   return $this->db->table('job_post')->where('employer_id',$id)->get()->getResultArray();
+    // }
+
+    public function list_jobs()
+    {
+      $this->datatable = new Datatable();
+      $wh = array();
+
+      if (session('job_search_industry') != '')
+            $wh[] = " job_post.industry = '" . session('job_search_industry') . "'";
+        if (session('job_search_category') != '')
+            $wh[] = " job_post.category = '" . session('job_search_category') . "'";
+        if (session('job_search_location') != '')
+            $wh[] = " job_post.country = '" . session('job_search_location') . "'";
+
+        if (session('job_search_from') != '')
+            $wh[] = " job_post.created_date >= '" . date('Y-m-d', strtotime(session('job_search_from'))) . "'";
+        if (session('job_search_to') != '')
+            $wh[] = " job_post.created_date <= '" . date('Y-m-d', strtotime(session('job_search_to'))) . "'";
+
+        $wh[] = " job_post.employer_id ='" . session('employer_id') . "'";
+        
+        $SQL = 'SELECT
+        job_post.*, 
+        Count(seeker_applied_job.seeker_id) as cand_applied, 
+        SUM(CASE WHEN seeker_applied_job.is_shortlisted > 0 THEN 1 ELSE 0 END) as total_shortlisted,
+        SUM(CASE WHEN seeker_applied_job.is_interviewed > 0 THEN 1 ELSE 0 END) as total_interviewed
+        FROM
+          job_post left Join  seeker_applied_job 
+          On seeker_applied_job.job_id = job_post.id';
+
+        $GROUP_BY = ' GROUP BY job_post.id ';
+
+        if (count($wh) > 0) {
+            $WHERE = implode(' and ', $wh);
+            return $this->datatable->LoadJson($SQL, $WHERE, $GROUP_BY);
+        } else {
+            return $this->datatable->LoadJson($SQL, '', $GROUP_BY);
+        }
+    }
+
+    public function edit_job($id)
+    {
+      return $this->db->table('job_post')->where('id',$id)->get()->getResultArray();
+    }
+
+    public function updatejob($id,$data)
+    {
+      return $this->db->table('job_post')->where('id',$id)->update($data);
+    }
+
+    public function delete_job($id)
+    {
+      return $this->db->table('job_post')->where('id',$id)->delete();
     }
 }

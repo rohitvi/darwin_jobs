@@ -11,12 +11,11 @@ class EmployerAuthModel extends Model
         $result = $builder->where(array('email' => $email))->get()->getResultArray();
         if (count($result) == 1) {
             if (password_verify($password, $result[0]['password'])) {
-           $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname']);
-           return $array; 
-            }else
+               $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname']);
+               return $array; 
+            } else 
                 return 0;
-        } else 
-        {
+        } else {
             return 0;
         }
     }

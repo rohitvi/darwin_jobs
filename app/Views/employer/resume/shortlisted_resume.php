@@ -35,7 +35,7 @@
                                 <button class="btn btn-sm btn-light mb-2" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large"><i class="la la-user animated swing"></i>User Profile</button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-sm btn-light mb-2"><i class="la la-wechat animated swing"></i>Interview</button>
+                                <button class="btn btn-sm btn-light mb-2" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered"><i class="la la-wechat animated swing"></i>Interview</button>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
         <!-- End Row -->
     </div>
 <!-- End Container -->
-<!-- Begin Centered Modal -->
+<!-- Begin User Modal -->
 <div id="modal-large" class="modal fade">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -67,7 +67,32 @@
         </div>
     </div>
 </div>
-<!-- End Centered Modal -->
+<!-- End User Modal -->
+
+<!-- Begin Interview Modal -->
+<div id="modal-centered" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Title</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <div class="modal-body" id="interview-modal">
+                <p>
+                    Donec non lectus nec est porta eleifend. Morbi ut dictum augue, feugiat condimentum est. Pellentesque tincidunt justo nec aliquet tincidunt. Integer dapibus tellus non neque pulvinar mollis. Maecenas dictum laoreet diam, non convallis lorem sagittis nec. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc venenatis lacus arcu, nec ultricies dui vehicula vitae.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Interview Modal -->
 
 <script>
     function userdetails(id){
@@ -78,11 +103,23 @@
             data: {
                 user_id: id,
             },
-            url: "<?= base_url('employer/userdetails') ?>",
+            url: '<?= base_url();?>/employer/userdetails/'+id,
             cached: false,
             success: function(data) {
-                console.log(data);
                 $('#modal-body').html(data);
+            }
+        });
+    }
+    function interview(id){
+        event.preventDefault();
+        var id = id;
+        $.ajax({
+            type: "POST",
+            data: {user_id: id,},
+            url: '<?= base_url();?>/employer/interview/'+id,
+            cached: false,
+            success: function(data) {
+                $('#interview-modal').html(data);
             }
         });
     }
