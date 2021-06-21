@@ -21,7 +21,7 @@
       </div><!-- /.container-fluid -->
     </section>
 
-<form method='post' action="<?= base_url('admin/add_general_settings')?>">
+<form method='post' action="<?= base_url('admin/add_general_settings')?>" enctype="multipart/form-data">
     <section>
     <div class='container-fluid'>
     <div class='row'>
@@ -54,13 +54,19 @@
 
                   <div class="form-group">
                   <label class="control-label">Favicon (25*25)</label>
-                    <input type="file" name="favicon" accept=".png, .jpg, .jpeg, .gif, .svg" class="form-control">
+                  <?php if(!empty($gsetting['favicon'])):?>
+                    <img src="<?= $gsetting['favicon']; ?>" class="favicon">
+                  <?php endif; ?>
+                    <input type="file" name="favicon" class="form-control">
                     <p><small class="text-success">Allowed Types: gif, jpg, png, jpeg</small></p>
                   </div>
 
                   <div class="form-group">
                   <label class="control-label">Logo</label>
-                    <input type="file" name="logo" accept=".png, .jpg, .jpeg, .gif, .svg" class="form-control">
+                  <?php if(!empty($gsetting['logo'])):?>
+                    <img src="<?= $gsetting['logo']; ?>" class="favicon">
+                  <?php endif; ?>
+                    <input type="file" name="logo" class="form-control">
                     <p><small class="text-success">Allowed Types: gif, jpg, png, jpeg</small></p>
                   </div>
 
@@ -107,7 +113,7 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
-                  <input type="text" class="form-control" name="widget_field_title[]" value="<?= $footer['title'] ?>">
+                  <input type="text" class="form-control" name="widget_field_title_add[]" value="<?= $footer['title'] ?>">
                   </div>
                 </div>
 
@@ -117,7 +123,7 @@
                   <?php 
                     $options = array('4' => '1/4','3' => '1/3','2' => '1/2',);
                     $others = array('class' => 'form-control');
-                    echo form_dropdown('widget_field_column[]',$options,$footer['grid_column'],$others);
+                    echo form_dropdown('widget_field_column_add[]',$options,$footer['grid_column'],$others);
                     ?> 
                  
                   </div>
@@ -125,7 +131,7 @@
 
                 <div class="col-md-6">
                   <div class="form-group">
-                  <textarea class="form-control" name="widget_field_content[]"><?= $footer['content'] ?></textarea>
+                  <textarea class="form-control" name="widget_field_content_add[]"><?= $footer['content'] ?></textarea>
                   </div>
                 </div>
                 <div class="col-md-1">
