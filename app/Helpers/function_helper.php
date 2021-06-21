@@ -20,6 +20,14 @@ function get_direct_value($table,$columnRequired,$columnNameToCompare,$columnVal
         return 0;
 }
 
+function rows_count($table,$array=array()){
+    $db      = \Config\Database::connect();
+    $builder = $db->table($table);
+    return $builder->getWhere($array)->countAllResults();
+}
+
+
+
 function get_g_setting_val($column){
     $db      = \Config\Database::connect();
     $builder = $db->table('general_settings');
