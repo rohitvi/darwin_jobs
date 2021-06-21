@@ -19,7 +19,6 @@ class AdminModel extends Model
     //===================Category Model Start==============================================================
     public function get_all_categories()
     {
-        // $result = $this->db->table( 'categories' )->get();
         return $this->db->table('categories')->get()->getResultArray();
     }
 
@@ -519,12 +518,31 @@ class AdminModel extends Model
             return false;
 	}
 
-    public function add_general_settings($data){
+    public function update_general_settings($data){
         $builder = $this->db->table('general_settings');
-        return $query= $builder->insert($data);
+        return $builder->where('id',1)->update($data);
     }
 
+    public function fetch_general_setting(){
 
+        $builder = $this->db->table('general_settings');
+        return $builder->where('id',1)->get()->getRowArray();
+    }
+
+    public function get_footer_settings()
+	{  
+        return $this->db->table('footer_settings')->get()->getResultArray();
+	}
+
+    public function update_footer_setting($footerdata){
+
+        $builder= $this->db->table('footer_settings');
+        return $query=$builder->insert($footerdata);
+	}
+
+    public function delete_footer_all_setting($id){
+        return $this->db->table('footer_settings')->where('id', $id)->delete();
+    }
     // Short listed candidate email
     public function get_applied_candidate_email($id)
     {

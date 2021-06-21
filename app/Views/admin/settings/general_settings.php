@@ -21,7 +21,7 @@
       </div><!-- /.container-fluid -->
     </section>
 
-<form method='post'>
+<form method='post' action="<?= base_url('admin/add_general_settings')?>">
     <section>
     <div class='container-fluid'>
     <div class='row'>
@@ -66,22 +66,12 @@
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Application Name</label>
-                    <input type="text" class="form-control" name="application_name" placeholder="Enter email">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Timezone</label>
-                    <input type="text" class="form-control" name="timezone" placeholder="Password">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputFile">Currency</label>
-                      <input type="text" class="form-control" name="currency" placeholder="Password">
+                    <input type="text" class="form-control" name="application_name" value="<?= $gsetting['application_name'];?>">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputFile">Copyright</label>
-                      <input type="text" class="form-control" name="copyright" placeholder="Password">
+                      <input type="text" class="form-control" name="copyright" value="<?= $gsetting['copyright'];?>">
                   </div>
 
                   
@@ -110,142 +100,41 @@
                     </div>
                 </div>
 
-                <div class="footer-widget-body">
+            <div class="footer-widget-body">
+      
+            <?php foreach ($footer_settings as $footer): ?>
             <div class="widget">
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
-                    <input type="text" class="form-control" name="widget_field_title[]" value="about_us">
+                  <input type="text" class="form-control" name="widget_field_title[]" value="<?= $footer['title'] ?>">
                   </div>
                 </div>
 
                 <div class="col-md-2">
                   <div class="form-group">
-                    <select name="widget_field_column[]" class="form-control">
-                        <option value="4" selected="selected">1/4</option>
-                        <option value="3">1/3</option>
-                        <option value="2">1/2</option>
-                    </select>
+
+                  <?php 
+                    $options = array('4' => '1/4','3' => '1/3','2' => '1/2',);
+                    $others = array('class' => 'form-control');
+                    echo form_dropdown('widget_field_column[]',$options,$footer['grid_column'],$others);
+                    ?> 
+                 
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
-                    <textarea class="form-control" name="widget_field_content[]">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing, Quisque lobortis elit.
-Lorem ipsum dolor sit amet, consectetur adipiscing, Quisque lobortis elit.Lorem ipsum dolor sit amet, consectetur adipiscing, Quisque lobortis elit.Lorem ipsum dolor sit amet, consectetur adipiscing, Quisque lobortis elit.&lt;/p&gt;</textarea>
+                  <textarea class="form-control" name="widget_field_content[]"><?= $footer['content'] ?></textarea>
                   </div>
                 </div>
                 <div class="col-md-1">
-                  <button type="button" class="btn btn-danger remove-footer-widget"><i class="fa fa-trash"></i></button>
+                  <!-- <button type="button" class="btn btn-danger remove-footer-widget"><i class="fa fa-trash"></i></button> -->
+                  <a title="Delete"  class="btn btn-danger remove-footer-widget" href="<?= base_url('admin/delete_footer_setting/'.$footer['id']); ?>"> <i class="nav-icon fas fa-trash"></i></a>
                 </div>
               </div>
             </div>
-
-          
-            <div class="widget">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="widget_field_title[]" value="quick_links">
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <select name="widget_field_column[]" class="form-control">
-<option value="4">1/4</option>
-<option value="3" selected="selected">1/3</option>
-<option value="2">1/2</option>
-</select>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <textarea class="form-control" name="widget_field_content[]">&lt;ul class="footer-nav"&gt;
- &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/jobs"&gt;Search Jobs&lt;/a&gt;&lt;/li&gt;
- &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/jobs-by-category"&gt;Jobs by Category&lt;/a&gt;&lt;/li&gt;
- &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/jobs-by-location"&gt;Jobs by Location&lt;/a&gt;&lt;/li&gt;
- &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/company"&gt;Listed Companies&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</textarea>
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <button type="button" class="btn btn-danger remove-footer-widget"><i class="fa fa-trash"></i></button>
-                </div>
-              </div>
-            </div>
-
-          
-            <div class="widget">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="widget_field_title[]" value="employers">
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <select name="widget_field_column[]" class="form-control">
-<option value="4">1/4</option>
-<option value="3" selected="selected">1/3</option>
-<option value="2">1/2</option>
-</select>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <textarea class="form-control" name="widget_field_content[]">&lt;ul class="footer-nav"&gt;
-            &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/onjob/employers"&gt;Pricing Plans&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/employers/auth/registration"&gt;Create Account&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/employers/job/post"&gt;Post a Job&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/contact"&gt;Contact Us&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</textarea>
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <button type="button" class="btn btn-danger remove-footer-widget"><i class="fa fa-trash"></i></button>
-                </div>
-              </div>
-            </div>
-
-          
-            <div class="widget">
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="widget_field_title[]" value="job_seekers">
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <select name="widget_field_column[]" class="form-control">
-<option value="4">1/4</option>
-<option value="3">1/3</option>
-<option value="2" selected="selected">1/2</option>
-</select>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <textarea class="form-control" name="widget_field_content[]">&lt;ul class="footer-nav"&gt;
-&lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/auth/registration"&gt;Create Account&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://bilalmart.com/onjob/myjobs/matching"&gt;Matching Jobs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://bilalmart.com/onjob/jobs"&gt;Apply for Job&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://codeglamour.com/php/onjob/myjobs"&gt;Applied Jobs&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</textarea>
-                  </div>
-                </div>
-                <div class="col-md-1">
-                  <button type="button" class="btn btn-danger remove-footer-widget"><i class="fa fa-trash"></i></button>
-                </div>
-              </div>
-            </div>
-
+        <?php endforeach; ?>
           
         </div>
       </div>
@@ -266,64 +155,64 @@ Lorem ipsum dolor sit amet, consectetur adipiscing, Quisque lobortis elit.Lorem 
 <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab"><!--Email setting start -->
                 <div class="form-group">
                     <label for="exampleInputEmail1">Admin Email</label>
-                    <input type="text" class="form-control" name="admin_email" placeholder= "my-email@admin.com">
+                    <input type="text" class="form-control" name="admin_email" value="<?= $gsetting['system_email'];?>"  placeholder="my-email@admin.com">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Email From/ Reply to</label>
-                    <input type="text" class="form-control" name="email_from" placeholder="no-reply@domain.com">
+                    <input type="text" class="form-control" name="email_from" value="<?= $gsetting['email_from'];?>" placeholder="no-reply@domain.com">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">SMTP Host</label>
-                    <input type="text" class="form-control" name="smtp_host" placeholder="SMTP Host">
+                    <input type="text" class="form-control" name="smtp_host" value="<?= $gsetting['smtp_host'];?>" placeholder="SMTP Host">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">SMTP Port</label>
-                    <input type="text" class="form-control" name="smtp_port" placeholder="SMTP Port">
+                    <input type="text" class="form-control" name="smtp_port" value="<?= $gsetting['smtp_port'];?>" placeholder="SMTP Port">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">SMTP User</label>
-                    <input type="text" class="form-control" name="smtp_user" placeholder="SMTP User">
+                    <input type="text" class="form-control" name="smtp_user" value="<?= $gsetting['smtp_user'];?>" placeholder="SMTP User">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">SMTP Password</label>
-                    <input type="password" class="form-control" name="smtp_pass" placeholder="SMTP Password">
+                    <input type="password" class="form-control" name="smtp_pass" value="<?= $gsetting['smtp_pass'];?>" placeholder="SMTP Password">
                   </div>
 </div><!--Email setting end -->
 
 <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab"><!--Social setting start -->
                     <div class="form-group">
                     <label for="exampleInputEmail1">Facebook</label>
-                    <input type="text" class="form-control" name="facebook_link" placeholder= "my-email@admin.com">
+                    <input type="text" class="form-control" name="facebook_link" value="<?= $gsetting['facebook_link'];?>">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Twitter</label>
-                    <input type="text" class="form-control" name="twitter_link" placeholder="no-reply@domain.com">
+                    <input type="text" class="form-control" name="twitter_link" value="<?= $gsetting['twitter_link'];?>">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Google Plus</label>
-                    <input type="text" class="form-control" name="google_link" placeholder="no-reply@domain.com">
+                    <input type="text" class="form-control" name="google_link" value="<?= $gsetting['google_link'];?>">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Youtube</label>
-                    <input type="text" class="form-control" name="youtube_link" placeholder="SMTP Host">
+                    <input type="text" class="form-control" name="youtube_link" value="<?= $gsetting['youtube_link'];?>">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">LinkedIn</label>
-                    <input type="text" class="form-control" name="linkedin_link" placeholder="SMTP Port">
+                    <input type="text" class="form-control" name="linkedin_link" value="<?= $gsetting['linkedin_link'];?>">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Instagram</label>
-                    <input type="text" class="form-control" name="instagram_link" placeholder="SMTP User">
+                    <input type="text" class="form-control" name="instagram_link" value="<?= $gsetting['instagram_link'];?>">
                   </div>
 
 </div><!--Social setting end -->
@@ -331,69 +220,43 @@ Lorem ipsum dolor sit amet, consectetur adipiscing, Quisque lobortis elit.Lorem 
 <div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab"><!--google recaptcha setting start -->
                     <div class="form-group">
                     <label for="exampleInputEmail1">Site Key</label>
-                    <input type="text" class="form-control" name="recaptcha_site_key" placeholder="Site Key">
+                    <input type="text" class="form-control" name="recaptcha_site_key" value="<?= $gsetting['recaptcha_site_key'];?>" placeholder="Site Key">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Secret Key</label>
-                    <input type="text" class="form-control" name="recaptcha_secret_key" placeholder="Secret Key">
+                    <input type="text" class="form-control" name="recaptcha_secret_key" value="<?= $gsetting['recaptcha_secret_key'];?>" placeholder="Secret Key">
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Language</label>
-                    <input type="password" class="form-control" name="recaptcha_lang" placeholder="Language Code">
+                    <input type="text" class="form-control" name="recaptcha_lang" value="<?= $gsetting['recaptcha_lang'];?>" placeholder="Language Code">
                     <a href="https://developers.google.com/recaptcha/docs/language" target="_blank">https://developers.google.com/recaptcha/docs/language</a>
                   </div>
 </div><!--google recaptcha setting end -->
 
 <div class="tab-pane fade" id="custom-tabs-four-payment" role="tabpanel" aria-labelledby="custom-tabs-four-payment-tab"><!--payment setting starts -->
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Paypal Sandbox</label>
-                    <select name="paypal_sandbox" class="form-control">
-                        <option value="1" selected="selected">Enable</option>
-                        <option value="0">Disable</option>
-                    </select>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Rozarpay Secret</label>
+                    <input type="text" class="form-control" name="razorpay_secret" value="<?= $gsetting['razorpay_secret'];?>" placeholder="Secret Key">
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Paypal Sandbox URL</label>
-                    <input type="text" class="form-control" name="paypal_sandbox_url" placeholder="Paypal Sandbox URL">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Paypal Live URL</label>
-                    <input type="text" class="form-control" name="paypal_live_url" placeholder="Paypal Live URL">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Paypal Email</label>
-                    <input type="text" class="form-control" name="paypal_email" placeholder="Enter Paypal Email">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Client ID</label>
-                    <input type="text" class="form-control" name="client_id" placeholder="Enter Client ID">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Status</label>
-                    <select name="paypal_status" class="form-control">
-                        <option value="1" selected="selected">Enable</option>
-                        <option value="0">Disable</option>
-                    </select>
+                    <label for="exampleInputEmail1">Rozarpay Key</label>
+                    <input type="text" class="form-control" name="razorpay_key" value="<?= $gsetting['razorpay_key'];?>" placeholder="Secret Key">
                   </div>
 
                   <hr>
                   <label>STRIPE Payment Settings</label>
 
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Secret Key</label>
-                    <input type="text" class="form-control" name="stripe_secret_key" placeholder="Secret Key">
+                    <label for="exampleInputEmail1">x Key</label>
+                    <input type="text" class="form-control" name="x-key" value="<?= $gsetting['x-key'];?>" placeholder="Secret Key">
                   </div>
     
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Publishable Key</label>
-                    <input type="text" class="form-control" name="stripe_publish_key" placeholder="Publishable Key">
+                    <label for="exampleInputEmail1">x Secret</label>
+                    <input type="text" class="form-control" name="x-secret" value="<?= $gsetting['x-secret'];?>" placeholder="Publishable Key">
                   </div>
 
 </div><!--payment setting end -->
@@ -432,12 +295,12 @@ widget = '<div class="widget">\
     <div class="row">\
         <div class="col-md-3">\
           <div class="form-group">\
-            <input type="text" class="form-control" name="widget_field_title[]" >\
+            <input type="text" class="form-control" name="widget_field_title_add[]" >\
           </div>\
         </div>\
         <div class="col-md-2">\
         <div class="form-group">\
-        <select class="form-control" name="widget_field_column[]">\
+        <select class="form-control" name="widget_field_column_add[]">\
         <option value="4">1/4</option>\
         <option value="3">1/3</option>\
         <option value="2">1/2</option>\
@@ -446,7 +309,7 @@ widget = '<div class="widget">\
         </div>\
         <div class="col-md-6">\
           <div class="form-group">\
-            <textarea class="form-control" name="widget_field_content[]"></textarea>\
+            <textarea class="form-control" name="widget_field_content_add[]"></textarea>\
           </div>\
         </div>\
         <div class="col-md-1">\
@@ -456,7 +319,18 @@ widget = '<div class="widget">\
 </div>';
 
 $('.footer-widget-body').append(widget);
+  });
+
+
+
+// Remove Widget
+$(document).on('click','.remove-footer-widget',function()
+{
+  a = confirm('are you sure?');
+  (a) ? $(this).closest('div.widget').remove() : '';
+    
 });
+
 });
     
 </script>

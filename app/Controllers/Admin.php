@@ -1272,15 +1272,17 @@ class Admin extends BaseController
     }
 
     public function add_general_settings()
-    {   
+    {    
+        $get['gsetting'] = $this->adminModel->fetch_general_setting();
+        $get['footer_settings'] = $this->adminModel->get_footer_settings();
+        //echo '<pre>';
+        //print_r( $get);
         if ($this->request->getMethod() == 'post') {
         $data = array(
 			'application_name' => $this->request->getPost('application_name'),
-			//'timezone' => $this->request->getPost('timezone'),
-			'currency' => $this->request->getPost('currency'),
 			'copyright' => $this->request->getPost('copyright'),
 			'email_from' => $this->request->getPost('email_from'),
-			'admin_email' => $this->request->getPost('admin_email'),
+			'system_email' => $this->request->getPost('system_email'),
 			'smtp_host' => $this->request->getPost('smtp_host'),
 			'smtp_port' => $this->request->getPost('smtp_port'),
 			'smtp_user' => $this->request->getPost('smtp_user'),
@@ -1294,24 +1296,60 @@ class Admin extends BaseController
 			'recaptcha_secret_key' => $this->request->getPost('recaptcha_secret_key'),
 			'recaptcha_site_key' => $this->request->getPost('recaptcha_site_key'),
 			'recaptcha_lang' => $this->request->getPost('recaptcha_lang'),
-			'paypal_sandbox' => $this->request->getPost('paypal_sandbox'),
-		    'paypal_sandbox_url' => $this->request->getPost('paypal_sandbox_url'),
-		    'paypal_live_url' => $this->request->getPost('paypal_live_url'),
-		    'paypal_email' => $this->request->getPost('paypal_email'),
-			'paypal_client_id' => $this->request->getPost('client_id'),
-			'paypal_status' => $this->request->getPost('paypal_status'),
-			'stripe_secret_key' => $this->request->getPost('stripe_secret_key', true),
-			'stripe_publish_key' => $this->request->getPost('stripe_publish_key', true),
+		    'razorpay_secret' => $this->request->getPost('razorpay_secret'),
+			'razorpay_key' => $this->request->getPost('razorpay_key'),
+			'x-key' => $this->request->getPost('x-key'),
+            'x-secret' => $this->request->getPost('x-secret'),
 			'created_date' => date('Y-m-d : h:m:s'),
 			'updated_date' => date('Y-m-d : h:m:s')
 		);
 
-                    $addgeneralsetting = $this->adminModel->add_general_settings($data);
-                    $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
-                    return redirect()->to('/admin/general_settings')->with('status_icon', 'success'); 
+                $result = $this->adminModel->update_general_settings($data);
+                if($result){
+                        // Footer Settings
+                        $footer_result = $this->add_footer_widget();
+                    }
+                $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
+                return redirect()->to('/admin/add_general_settings')->with('status_icon', 'success'); 
         }
-        return view('admin/settings/general_settings');
+        return view('admin/settings/general_settings',$get);
     }
+
+
+    public function add_footer_widget(){
+
+                    $rules=[
+                        'widget_field_title_add' => ['label' => 'widget_field_title_add[]', 'rules' => 'required'],
+                        'widget_field_content_add' => ['label' => 'widget_field_content_add[]', 'rules' => 'required']
+                    ];
+                    if ($this->validate($rules) == FALSE) {
+                        echo '0~' . $this->validation->listErrors();
+                        exit;
+                    }
+			//redirect(base_url('admin/add_general_settings'),'refresh');
+		else
+		{
+			$total_widgets = count($this->request->getPost('widget_field_title_add[]'));
+
+			for ($i=0; $i < $total_widgets; $i++) { 
+				$footerdata = array(
+					'title' => $this->request->getPost('widget_field_title_add['.$i.']'),
+					'grid_column' => $this->request->getPost('widget_field_column_add['.$i.']'),
+					'content' => $this->request->getPost('widget_field_content_add['.$i.']'),
+				);
+				$this->adminModel->update_footer_setting($footerdata);
+			}
+			return;
+		}
+    
+        }
+
+    public function delete_footer_setting($id){
+        $this->adminModel->delete_footer_setting($id);
+        return redirect()->to(base_url('admin/add_general_settings'));
+    }
+
+
     // Sending Email to applicant
     public function send_interview_email()
     {

@@ -46,10 +46,11 @@ class Employer extends BaseController
                 echo '0~'.$this->validation->listErrors();exit;
             }
             $email = $this->request->getPost('email');
-            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            $password = $this->request->getPost('password');
             $logindata = $this->EmployerAuthModel->login_validate($email,$password);
             if ($logindata == 0) {
               echo '0~Invalid email or password';
+              exit;
             } elseif ($logindata['id'] > 1)
             {
               $employerdata = [
@@ -58,7 +59,8 @@ class Employer extends BaseController
                 'employer_username' => $logindata['username']
               ];
               $this->session->set($employerdata);
-              return redirect()->to(base_url('employer'));
+              echo '1~ You Have Successfully Logged in';
+              exit;
             }
         }
         return view('employer/auth/login');
