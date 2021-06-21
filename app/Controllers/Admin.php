@@ -1305,80 +1305,80 @@ class Admin extends BaseController
     }
 
     public function add_general_settings()
-    {    
+    {
         $get['gsetting'] = $this->adminModel->fetch_general_setting();
         $get['footer_settings'] = $this->adminModel->get_footer_settings();
         $get['title'] = 'General Setting';
         //echo '<pre>';
         //print_r( $get);
         if ($this->request->getMethod() == 'post') {
-        $data = array(
-			'application_name' => $this->request->getPost('application_name'),
-			'copyright' => $this->request->getPost('copyright'),
-			'email_from' => $this->request->getPost('email_from'),
-			'system_email' => $this->request->getPost('system_email'),
-			'smtp_host' => $this->request->getPost('smtp_host'),
-			'smtp_port' => $this->request->getPost('smtp_port'),
-			'smtp_user' => $this->request->getPost('smtp_user'),
-			'smtp_pass' => $this->request->getPost('smtp_pass'),
-			'facebook_link' => $this->request->getPost('facebook_link'),
-			'twitter_link' => $this->request->getPost('twitter_link'),
-			'google_link' => $this->request->getPost('google_link'),
-			'youtube_link' => $this->request->getPost('youtube_link'),
-			'linkedin_link' => $this->request->getPost('linkedin_link'),
-			'instagram_link' => $this->request->getPost('instagram_link'),
-			'recaptcha_secret_key' => $this->request->getPost('recaptcha_secret_key'),
-			'recaptcha_site_key' => $this->request->getPost('recaptcha_site_key'),
-			'recaptcha_lang' => $this->request->getPost('recaptcha_lang'),
-		    'razorpay_secret' => $this->request->getPost('razorpay_secret'),
-			'razorpay_key' => $this->request->getPost('razorpay_key'),
-			'x-key' => $this->request->getPost('x-key'),
-            'x-secret' => $this->request->getPost('x-secret'),
-			'created_date' => date('Y-m-d : h:m:s'),
-			'updated_date' => date('Y-m-d : h:m:s')
-		);
+            $data = array(
+                'application_name' => $this->request->getPost('application_name'),
+                'copyright' => $this->request->getPost('copyright'),
+                'email_from' => $this->request->getPost('email_from'),
+                'system_email' => $this->request->getPost('system_email'),
+                'smtp_host' => $this->request->getPost('smtp_host'),
+                'smtp_port' => $this->request->getPost('smtp_port'),
+                'smtp_user' => $this->request->getPost('smtp_user'),
+                'smtp_pass' => $this->request->getPost('smtp_pass'),
+                'facebook_link' => $this->request->getPost('facebook_link'),
+                'twitter_link' => $this->request->getPost('twitter_link'),
+                'google_link' => $this->request->getPost('google_link'),
+                'youtube_link' => $this->request->getPost('youtube_link'),
+                'linkedin_link' => $this->request->getPost('linkedin_link'),
+                'instagram_link' => $this->request->getPost('instagram_link'),
+                'recaptcha_secret_key' => $this->request->getPost('recaptcha_secret_key'),
+                'recaptcha_site_key' => $this->request->getPost('recaptcha_site_key'),
+                'recaptcha_lang' => $this->request->getPost('recaptcha_lang'),
+                'razorpay_secret' => $this->request->getPost('razorpay_secret'),
+                'razorpay_key' => $this->request->getPost('razorpay_key'),
+                'x-key' => $this->request->getPost('x-key'),
+                'x-secret' => $this->request->getPost('x-secret'),
+                'created_date' => date('Y-m-d : h:m:s'),
+                'updated_date' => date('Y-m-d : h:m:s')
+            );
 
-                $result = $this->adminModel->update_general_settings($data);
-                if($result){
-                        // Footer Settings
-                        $footer_result = $this->add_footer_widget();
-                    }
-                $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
-                return redirect()->to('/admin/add_general_settings')->with('status_icon', 'success'); 
+            $result = $this->adminModel->update_general_settings($data);
+            if ($result) {
+                // Footer Settings
+                $footer_result = $this->add_footer_widget();
+            }
+            $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
+            return redirect()->to('/admin/add_general_settings')->with('status_icon', 'success');
         }
-        return view('admin/settings/general_settings',$get);
+        return view('admin/settings/general_settings', $get);
     }
 
 
-    public function add_footer_widget(){
+    public function add_footer_widget()
+    {
 
-                    $rules=[
-                        'widget_field_title_add' => ['label' => 'widget_field_title_add[]', 'rules' => 'required'],
-                        'widget_field_content_add' => ['label' => 'widget_field_content_add[]', 'rules' => 'required']
-                    ];
-                    if ($this->validate($rules) == FALSE) {
-                        echo '0~' . $this->validation->listErrors();
-                        exit;
-                    }
-			//redirect(base_url('admin/add_general_settings'),'refresh');
-		else
-		{
-			$total_widgets = count($this->request->getPost('widget_field_title_add[]'));
-
-			for ($i=0; $i < $total_widgets; $i++) { 
-				$footerdata = array(
-					'title' => $this->request->getPost('widget_field_title_add['.$i.']'),
-					'grid_column' => $this->request->getPost('widget_field_column_add['.$i.']'),
-					'content' => $this->request->getPost('widget_field_content_add['.$i.']'),
-				);
-				$this->adminModel->update_footer_setting($footerdata);
-			}
-			return;
-		}
-    
+        $rules = [
+            'widget_field_title_add' => ['label' => 'widget_field_title_add[]', 'rules' => 'required'],
+            'widget_field_content_add' => ['label' => 'widget_field_content_add[]', 'rules' => 'required']
+        ];
+        if ($this->validate($rules) == FALSE) {
+            echo '0~' . $this->validation->listErrors();
+            exit;
         }
+        //redirect(base_url('admin/add_general_settings'),'refresh');
+        else {
+            $total_widgets = count($this->request->getPost('widget_field_title_add[]'));
 
-    public function delete_footer_setting($id){
+            for ($i = 0; $i < $total_widgets; $i++) {
+                $footerdata = array(
+                    'title' => $this->request->getPost('widget_field_title_add[' . $i . ']'),
+                    'grid_column' => $this->request->getPost('widget_field_column_add[' . $i . ']'),
+                    'content' => $this->request->getPost('widget_field_content_add[' . $i . ']'),
+                );
+                $this->adminModel->update_footer_setting($footerdata);
+            }
+            return;
+        }
+    }
+
+    public function delete_footer_setting($id)
+    {
         $this->adminModel->delete_footer_setting($id);
         return redirect()->to(base_url('admin/add_general_settings'));
     }
