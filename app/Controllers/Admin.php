@@ -1308,6 +1308,7 @@ class Admin extends BaseController
     {    
         $get['gsetting'] = $this->adminModel->fetch_general_setting();
         $get['footer_settings'] = $this->adminModel->get_footer_settings();
+        $get['title'] = 'General Setting';
         //echo '<pre>';
         //print_r( $get);
         if ($this->request->getMethod() == 'post') {

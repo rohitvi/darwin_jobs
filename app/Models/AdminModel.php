@@ -540,7 +540,7 @@ class AdminModel extends Model
         return $query=$builder->insert($footerdata);
 	}
 
-    public function delete_footer_all_setting($id){
+    public function delete_footer_setting($id){
         return $this->db->table('footer_settings')->where('id', $id)->delete();
     }
     // Short listed candidate email
