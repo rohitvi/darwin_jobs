@@ -18,6 +18,7 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="<?= base_url('public/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
   <!-- JQVMap -->
+  
   <link rel="stylesheet" href="<?= base_url('public/admin/plugins/jqvmap/jqvmap.min.css') ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url('public/admin/dist/css/adminlte.min.css') ?>">
@@ -43,6 +44,9 @@
   <link rel="stylesheet" href="<?= base_url('public/admin/plugins/daterangepicker/daterangepicker.css') ?>">
   <!-- Toastr -->
   <link rel="stylesheet" href="<?= base_url('public/admin/plugins/toastr/toastr.min.css') ?>">
+
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js') ?>"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
