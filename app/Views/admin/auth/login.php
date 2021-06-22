@@ -47,11 +47,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-8">
+            <div class="col-7">
             </div>
             <!-- /.col -->
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <div class="col-5">
+              <button type="submit" class="btn btn-primary btn-block sign-in">Sign In</button>
             </div>
             <!-- /.col -->
           </div>
@@ -97,8 +97,13 @@
           if ($.trim(response[0]) == 2) {
             toastr.error(response[1]);
           }
+          $('.sign-in').html("Sign In");
+        },
+        beforeSend: function() {
+          $('.sign-in').html("Validating...");
         },
         error: function(jqXHR, exception) {
+          $('.sign-in').html("Sign In");
           console.log(jqXHR);
         }
       });

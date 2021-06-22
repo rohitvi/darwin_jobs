@@ -27,7 +27,19 @@ class Admin extends BaseController
 
     public function dashboard()
     {
+		$data['all_users'] = $this->adminModel->get_all_users();
+		$data['active_users'] = $this->adminModel->get_active_users();
+		$data['deactive_users'] = $this->adminModel->get_deactive_users();
+
+		$data['all_employers'] = $this->adminModel->get_all_employers();
+		$data['active_employers'] = $this->adminModel->get_active_employers();
+		$data['deactive_employers'] = $this->adminModel->get_deactive_employers();
+
+		$data['latest_users'] = $this->adminModel->get_latest_users();
+		$data['latest_jobs'] = $this->adminModel->get_latest_jobs();
+
         $data['title'] = 'Dashboard';
+        // pre($data);
         return view('admin/dashboard', $data);
     }
 
