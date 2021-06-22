@@ -6,11 +6,11 @@
 	    <div class="row">
 	        <div class="page-header">
 	            <div class="d-flex align-items-center">
-	                <h2 class="page-header-title">View Applicant List</h2>
+	                <h2 class="page-header-title">View Shortlisted Users</h2>
 	                <div>
 	                    <ul class="breadcrumb">
 	                        <li class="breadcrumb-item"><a href="<?= base_url('employer') ?>"><i class="ti ti-home"></i></a></li>
-	                        <li class="breadcrumb-item active">View Applicant List</li>
+	                        <li class="breadcrumb-item active">View Shortlisted Users</li>
 	                    </ul>
 	                </div>
 	            </div>
@@ -22,7 +22,7 @@
 	            <!-- Sorting -->
 	            <div class="widget has-shadow">
 	                <div class="widget-header bordered no-actions d-flex align-items-center">
-	                    <h4>Applicant List</h4>
+	                    <h4>Shortlisted Users List</h4>
 	                </div>
 	                <div class="widget-body">
 	                    <div class="table-responsive">
@@ -39,21 +39,21 @@
 	                            </thead>
 	                            <tbody>
 	                            	<?php $count = 0;
-                                        foreach ($applicants as $applicant) : ?>
-                                            <tr>
-                                                <td><img src="<?= $applicant['profile_picture'] ?>" alt="" height="50"></td>
-                                                <td><?= $applicant['firstname'] . ' ' . $applicant['lastname']; ?><small> (<?= $applicant['job_title']; ?>)</small></td>
-                                                <td><?= get_category_name($applicant['category']); ?></td>
-                                                <td><?= get_city_name($applicant['city']); ?>, <?= get_country_name($applicant['country']); ?></td>
-                                                <td><?= $applicant['email'] ?></td>
-                                                <?php $resume = ($applicant['resume'] != '') ? base_url($applicant['resume']) : '#'  ?>
-                                                <td>
-                                                    <a title="resume" class="btn btn-sm btn-info pull-right mb-3" href="<?= $resume; ?>"> Preview CV</a>
-                                                    <a title="email"  onclick="interview(<?= $applicant['id'] ?>)" id="inter<?= $applicant['id'] ?>" class="btn btn-sm btn-primary pull-right mb-3" href="#" data-toggle="modal" data-target="#modal-centered" data-message="<?= $applicant['email'] ?>"> Email Candidate</a>
-                                                    <a title="Shortlist" class="btn btn-sm btn-success pull-right" href="<?= base_url('employer/make_shortlist/' . $applicant['id'] . '/' . $applicant['job_id']); ?>">Shortlist Candidate</a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+										foreach ($applicants as $applicant) : ?>
+											<tr>
+												<td><img src="<?= $applicant['profile_picture'] ?>" alt="" height="50"></td>
+												<td><?= $applicant['firstname'] . ' ' . $applicant['lastname']; ?><small> (<?= $applicant['job_title']; ?>)</small></td>
+												<td><?= get_category_name($applicant['category']); ?></td>
+												<td><?= get_city_name($applicant['city']); ?>, <?= get_country_name($applicant['country']); ?></td>
+												<td><?= $applicant['email'] ?></td>
+												<?php $resume = ($applicant['resume'] != '') ? base_url($applicant['resume']) : '#'  ?>
+												<td>
+													<a title="resume" class="btn btn-sm btn-info pull-right mb-3" href="<?= $resume; ?>"> Preview CV</a>
+													<a title="email" class="btn btn-sm btn-primary pull-right  mb-3" href="#" data-toggle="modal" data-target="#emailModal" data-whatever="<?= $applicant['email']; ?>"> Email Candidate</a>
+													<a title="Shortlist" onclick="interview(<?= $applicant['id'] ?>)" id="inter<?= $applicant['id'] ?>" class="btn btn-sm btn-success pull-right" href="#" data-toggle="modal" data-target="#modal-centered" data-message="<?= $applicant['email'] ?>">Interview Message</a>
+												</td>
+											</tr>
+										<?php endforeach; ?>
 	                            </tbody>
 	                        </table>
 	                    </div>
@@ -65,6 +65,7 @@
 	    <!-- End Row -->
 	</div>
 	<!-- End Container -->
+
 	<!-- Begin Centered Modal -->
         <div id="modal-centered" class="modal fade">
 		    <div class="modal-dialog modal-dialog-centered">
@@ -101,7 +102,6 @@
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 
 <script>
-	/* ----------------- Email ------------------*/
 	function interview(id){
         event.preventDefault();
         var id = id;
@@ -150,5 +150,4 @@
             });
         });
     }
-        
 </script>
