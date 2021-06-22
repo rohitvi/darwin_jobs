@@ -14,7 +14,7 @@ class AuthModel extends Model
         $result = $builder->where(array('username' => $username))->get()->getResultArray();
         if (count($result) == 1) {
             if (password_verify($password, $result[0]['password'])) {
-                $array = array('id' => $result[0]['id']);
+                $array = array('id' => $result[0]['id'], 'status' => $result[0]['status']);
                 return $array;
             } else
                 return 0;
@@ -73,5 +73,50 @@ class AuthModel extends Model
         $builder->orderBy('id', 'asc');
         $query = $builder->get()->getResultArray();
         return $query;
+    }
+
+    //============ Check User Email ============
+    function check_user_mail($email)
+    {
+        $builder = $this->db->table('admin');
+        $result = $builder->getWhere(array('email' => $email))->getRowArray();
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    //============ Update Reset Code Function ===================
+    public function update_reset_code($reset_code, $user_id)
+    {
+        $builder = $this->db->table('admin');
+        $builder->where('id', $user_id);
+        $builder->update(array('password_reset_code' => $reset_code));
+    }
+
+    //============ Reset Password ===================
+    public function reset_password($id, $new_password)
+    {
+        $builder = $this->db->table('admin');
+        $data = array(
+            'password_reset_code' => '',
+            'password' => $new_password
+        );
+        $builder->where('password_reset_code', $id);
+        $builder->update($data);
+        return true;
+    }
+
+    //============ Activation code for Password Reset Function ===================
+    public function check_password_reset_code($code)
+    {
+        $builder = $this->db->table('admin');
+        $result = $builder->getWhere(array('password_reset_code' => $code))->getResultArray();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
