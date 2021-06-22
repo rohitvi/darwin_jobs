@@ -101,4 +101,25 @@ class EmployerAuthModel extends Model
     {
         return $this->db->table('companies')->insert($data);
     }
+
+    public function check_email($email)
+    {
+        return $this->db->table('employers')->where(array('email'=>$email))->get()->getResultArray();
+    }
+
+    public function update_reset_code($reset_code,$id)
+    {
+        $data = array('password_reset_code' => $reset_code);
+        return $this->db->table('employers')->where('id',$id)->update($data);
+    }
+
+    public function check_reset_code($reset_code)
+    {
+        return $this->db->table('employers')->where('password_reset_code',$reset_code)->get()->getResultArray();
+    }
+
+    public function update_reset_password($password,$id)
+    {
+        return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password));
+    }
 }

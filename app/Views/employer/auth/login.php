@@ -98,7 +98,7 @@ Author: SAEROX
                                         </div>
                                     </div>
                                     <div class="col text-right">
-                                        <a href="pages-forgot-password.html">Forgot Password ?</a>
+                                        <a href="<?= base_url('employer/password_reset') ?>">Forgot Password ?</a>
                                     </div>
                                 </div>
                                 <div class="sign-btn text-center">
@@ -184,7 +184,6 @@ Author: SAEROX
               var response = responses.split('~');
               if ($.trim(response[0]) == 0) {
                 $('#sign_in').trigger("reset");
-                // toastr.error(response[1]);
                 new Noty({
                     type: "error",
                     layout: "topRight",
