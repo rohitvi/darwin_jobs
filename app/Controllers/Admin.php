@@ -1316,28 +1316,25 @@ class Admin extends BaseController
         //print_r( $get);
         if ($this->request->getMethod() == 'post') {
 
-            $rules=[
-                'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
-                'logo' =>['uploaded[logo]','max_size[logo,1024]']
-            ];
+            // $rules=[
+            //     'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
+            //     'logo' =>['uploaded[logo]','max_size[logo,1024]']
+            // ];
 
-            $result = UploadFile($_FILES['favicon']);
-            if($result['status'] == true){
-                $favicon = $result['result']['file_url'];
-            }else{
-                echo '0~'.$result['message'];exit;
-                }
+            // $result = UploadFile($_FILES['favicon']);
+            // if($result['status'] == true){
+            //     $favicon = $result['result']['file_url'];
+            // }else{
+            //     echo '0~'.$result['message'];exit;
+            //     }
 
-            $result = UploadFile($_FILES['logo']);
-            if($result['status'] == true){
-                $logo = $result['result']['file_url'];
-            }else{
-                echo '0~'.$result['message'];exit;
-            }
+            // $result = UploadFile($_FILES['logo']);
+            // if($result['status'] == true){
+            //     $logo = $result['result']['file_url'];
+            // }else{
+            //     echo '0~'.$result['message'];exit;
+            // }
 
-            $data = array(
-                //'favicon' => $favicon,
-                //'logo' => $logo,
             $data = array(
                 'application_name' => $this->request->getPost('application_name'),
                 'copyright' => $this->request->getPost('copyright'),

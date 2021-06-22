@@ -144,11 +144,11 @@ class Employer extends BaseController
             exit();
         }
         $id = session('employer_id');
-
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->personal_info($id);
-        $get['cmpinfo'] = $this->EmployerAuthModel->cmp_info($id);
+         $get['cmpinfo'] = $this->EmployerAuthModel->cmp_info($id);
+        //pre( $get );
         return view('employer/auth/profile', $get);
     }
 
@@ -676,5 +676,37 @@ class Employer extends BaseController
         pre($data);
         exit;
         return view('employer/job/view_job_applicants',$data);
+    }
+
+    public function search(){
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['education'] = get_education_list();
+
+        if ($this->request->getMethod() ==  'post') {
+
+            // search job title, keyword
+            if(!empty($this->request->getPost('job_title')))
+                $search['job_title'] = $this->request->getPost('job_title');
+
+            if(!empty($this->request->getPost('category')))
+                $search['category'] = $this->request->getPost('category');
+            
+            if(!empty($this->request->getPost('country')))
+                $search['country'] = $this->request->getPost('country');
+            
+            if(!empty($this->request->getPost('expected_salary')))
+                $search['expected_salary'] = $this->request->getPost('expected_salary');
+
+            if(!empty($this->request->getPost('education_level')))
+                $search['education_level'] = $this->request->getPost('education_level');
+
+            if(!empty($this->request->getPost('experience')))
+                $search['experience'] = $this->request->getPost('experience');
+
+
+        }
+
+       return view('employer/cv_search/cv_search_page',$get);
     }
 }

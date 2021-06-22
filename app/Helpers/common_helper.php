@@ -131,6 +131,14 @@ function get_category_list()
     return $builder->get()->getResultArray();
 }
 
+// Get Education list
+function get_education_list()
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('education');
+    return $builder->get()->getResultArray();
+}
+
 // Get Industry list
 
 function get_industry_list()
