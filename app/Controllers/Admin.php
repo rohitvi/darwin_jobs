@@ -101,9 +101,9 @@ class Admin extends BaseController
                 'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/registeradmin'));
             }
             $data = [
                 'username' => $this->request->getPost('username'),
@@ -162,9 +162,9 @@ class Admin extends BaseController
                 'password' => ['label' => 'password', 'rules' => 'required'],
                 'cpassword' => ['label' => 'password', 'rules' => 'required|matches[password]'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/showadmin'));
             }
             $id = session('admin_id');
             $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
@@ -205,9 +205,9 @@ class Admin extends BaseController
                 'email' => ['label' => 'email', 'rules' => 'required'],
                 'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/editadmin'));
             }
             $data = [
                 'username' => $this->request->getPost('username'),
@@ -535,9 +535,9 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/job_type'));
             }
             $data = ['type' => $this->request->getPost('type')];
             $query = $this->adminModel->addjob($data);
@@ -566,9 +566,9 @@ class Admin extends BaseController
             $rules = [
                 'type' => ['label' => 'type', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/editjob'));
             }
             $data = ['type' => $this->request->getPost('type')];
             $query = $this->adminModel->updatejob($id, $data);
@@ -607,9 +607,9 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/addeducation'));
             }
             $data = ['type' => $this->request->getPost('type')];
             $query = $this->adminModel->addeducation($data);
@@ -638,9 +638,9 @@ class Admin extends BaseController
             $rules = [
                 'type' => ['label' => 'type', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/editeducation'));
             }
             $data = ['type' => $this->request->getPost('type')];
             $query = $this->adminModel->updateeducation($id, $data);
@@ -710,9 +710,9 @@ class Admin extends BaseController
             $rules = [
                 'type' => ['label' => 'type', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/editemployment'));
             }
             $data = ['type' => $this->request->getPost('type')];
             $query = $this->adminModel->updateemployment($id, $data);
@@ -777,9 +777,9 @@ class Admin extends BaseController
                 'website' => ['label' => 'website', 'rules' => 'required'],
                 'description' => ['label' => 'description', 'rules' => 'required|min_length[10]'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/addemployers'));
             }
             $emp = [
                 'firstname' => $this->request->getPost('firstname'),
@@ -848,9 +848,9 @@ class Admin extends BaseController
                 'city' => ['label' => 'city', 'rules' => 'required'],
                 'address' => ['label' => 'address', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/addemployers'));
             }
             $data = [
                 'firstname' => $this->request->getPost('firstname'),
@@ -892,8 +892,8 @@ class Admin extends BaseController
                 'postcode' => ['label' => 'postcode', 'rules' => 'required'],
                 'full_address' => ['label' => 'full_address', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
+            if ($this->validate($rules) == FALSE) {
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $result = UploadFile($_FILES['company_logo']);
@@ -950,9 +950,9 @@ class Admin extends BaseController
                 'password' => ['label' => 'password', 'rules' => 'required'],
                 'address' => ['label' => 'address', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/adduser'));
             }
             $data = [
                 'firstname' => $this->request->getPost('firstname'),
@@ -992,9 +992,9 @@ class Admin extends BaseController
                 'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
                 'is_active' => ['label' => 'is_active', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/edituser'));
             }
             $data = [
                 'firstname' => $this->request->getPost('firstname'),
@@ -1316,28 +1316,29 @@ class Admin extends BaseController
         //print_r( $get);
         if ($this->request->getMethod() == 'post') {
 
-            // $rules=[
-            //     'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
-            //     'logo' =>['uploaded[logo]','max_size[logo,1024]']
-            // ];
+            $rules=[
+                'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
+                'logo' =>['uploaded[logo]','max_size[logo,1024]']
+            ];
 
-            // $result = UploadFile($_FILES['favicon']);
-            // if($result['status'] == true){
-            //     $favicon = $result['result']['file_url'];
-            // }else{
-            //     echo '0~'.$result['message'];exit;
-            //     }
+            $result = UploadFile($_FILES['favicon']);
+            if($result['status'] == true){
+                $favicon = $result['result']['file_url'];
+            }else{
+                echo '0~'.$result['message'];exit;
+                }
 
-            // $result = UploadFile($_FILES['logo']);
-            // if($result['status'] == true){
-            //     $logo = $result['result']['file_url'];
-            // }else{
-            //     echo '0~'.$result['message'];exit;
-            // }
+            $result = UploadFile($_FILES['logo']);
+            if($result['status'] == true){
+                $logo = $result['result']['file_url'];
+            }else{
+                echo '0~'.$result['message'];exit;
+            }
 
             $data = array(
                 //'favicon' => $favicon,
                 //'logo' => $logo,
+            $data = array(
                 'application_name' => $this->request->getPost('application_name'),
                 'copyright' => $this->request->getPost('copyright'),
                 'email_from' => $this->request->getPost('email_from'),
@@ -1361,6 +1362,7 @@ class Admin extends BaseController
                 'x-secret' => $this->request->getPost('x-secret'),
                 'created_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s'),
+                'updated_date' => date('Y-m-d : h:m:s')
             );
 
             $result = $this->adminModel->update_general_settings($data);
@@ -1374,20 +1376,21 @@ class Admin extends BaseController
         return view('admin/settings/general_settings', $get);
     }
 
+
     public function add_footer_widget()
     {
-
         $rules = [
             'widget_field_title_add' => ['label' => 'widget_field_title_add[]', 'rules' => 'required'],
-            'widget_field_content_add' => ['label' => 'widget_field_content_add[]', 'rules' => 'required'],
+            'widget_field_content_add' => ['label' => 'widget_field_content_add[]', 'rules' => 'required']
         ];
-        if ($this->validate($rules) == false) {
-            echo '0~' . $this->validation->listErrors();
+        if ($this->validate($rules) == FALSE) {
+            $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+            return redirect()->to(base_url('admin/add_general_settings'));
         }
         //redirect(base_url('admin/add_general_settings'),'refresh');
         else {
             $total_widgets = count($this->request->getPost('widget_field_title_add[]'));
-            $this->adminModel->delete_footer_all_setting();
+
             for ($i = 0; $i < $total_widgets; $i++) {
                 $footerdata = array(
                     'title' => $this->request->getPost('widget_field_title_add[' . $i . ']'),
@@ -1398,13 +1401,7 @@ class Admin extends BaseController
             }
             return;
         }
-
     }
-
-    // public function delete_footer_setting($id){
-    //     $this->adminModel->delete_footer_setting($id);
-    //     return redirect()->to(base_url('admin/add_general_settings'));
-    // }
 
     // Sending Email to applicant
     public function send_interview_email()

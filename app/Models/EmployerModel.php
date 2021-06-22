@@ -148,4 +148,27 @@ class EmployerModel extends Model
     {
       return $this->db->table('job_post')->where('id',$id)->delete();
     }
+
+    public function get_applicants($job_id)
+    { 
+      $array = array('seeker_applied_job.job_id' => $job_id,'employer_id' => session('employer_id'));
+      $builder = $this->db->table('seeker_applied_job');
+      $builder->select('seeker_applied_job.id,
+        seeker_applied_job.job_id,
+        seeker_applied_job.applied_date as apply_date, 
+        users.firstname, 
+        users.lastname, 
+        users.job_title, 
+        users.email,
+        users.profile_picture,
+        users.category,
+        users.city,   
+        users.country, 
+        users.resume,
+        seeker_applied_job.*');
+      $builder->join('users', 'users.id = seeker_applied_job.seeker_id', 'left');
+      $builder->where($array);
+      $builder->orderBy("seeker_applied_job.applied_date", "DESC");
+      return $builder->get()->getResultArray();
+    }
 }
