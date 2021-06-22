@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\EmployerModel;
 use App\Models\auth\EmployerAuthModel;
 use App\Models\AdminModel;
+use App\Libraries\Mailer;
 
 
 class Employer extends BaseController
@@ -14,6 +15,7 @@ class Employer extends BaseController
         $this->EmployerModel = new EmployerModel();
         $this->EmployerAuthModel = new EmployerAuthModel();
         $this->adminModel = new AdminModel();
+        $this->mailer = new Mailer();
     }
 
     public function checklogin()
@@ -343,10 +345,12 @@ class Employer extends BaseController
     {
         if ($this->request->isAJAX()) {
             $education = $this->EmployerModel->get_seeker_education($id);
+            // pre($education);
             $experience = $this->EmployerModel->get_user_experience($id);
             $language = $this->EmployerModel->get_user_language($id);
             $query = $this->EmployerModel->userdetails($id);
-            $html = '<div class="row">
+            $html = '';
+            $html .= '<div class="row">
                         <div class="col-6">
                             <h4>Personal Details</h4>
                             <hr>
@@ -415,23 +419,31 @@ class Employer extends BaseController
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-6">
-                            <h4>Education</h4>
+                        <div class="col-6">';
+                        if ($education) {
+                            $html .=
+                            '<h4>Education</h4>
                             <hr>
                             <p>' . $education[0]["type"] . ',' . $education[0]["degree_title"] . '</p>
                             <p>' . $education[0]["institution"] . '</p>
                             <p>' . $education[0]["completion_year"] . '</p>
-                            <h4>Experience</h4>
+                            <h4>Experience</h4>';}
+                            if ($experience) {
+                            $html .= '
                             <hr>
                             <p>' . $experience[0]["job_title"] . '</p>
                             <p>' . $experience[0]["company"] . '</p>
                             <p>' . get_month($experience[0]["starting_month"]) . ' ' . $experience[0]["starting_year"] . ' - ' . $experience[0]["ending_month"] . ' ' . $experience[0]["ending_year"] . ' | ' . get_country_name($experience[0]["country"]) . '</p>
                             <p>' . $experience[0]["job_title"] . '</p>
                             <p>' . $experience[0]["description"] . '</p>
+                            ';}
+                            if ($language) {
+                            $html .= '
                             <h4>Languages</h4>
                             <hr>
                             <p>' . $language[0]["lang_name"] . '</p>
-                        </div>            
+                            ';}
+                        $html .= '</div>
                     </div>';
             return ($html);
         }
@@ -568,7 +580,7 @@ class Employer extends BaseController
                 '<a class="edit btn btn-sm btn-info mb-3" href=' . base_url("employer/view_job_applicants/" . $row['id']) . ' title="Applicants" > 
                  Applied [ ' . $row['cand_applied'] . ' ]
                 </a>
-                <a class="edit btn btn-sm btn-info" href=' . base_url("employer/shortlisted/" . $row['id']) . ' title="Applicants" > 
+                <a class="edit btn btn-sm btn-info" href=' . base_url("employer/shortlisted_applicants/" . $row['id']) . ' title="Applicants" > 
                  Shortlisted [ ' . $row['total_shortlisted'] . ' ]
                 </a>',
                 get_industry_name($row['industry']),  //  helper function
@@ -672,9 +684,8 @@ class Employer extends BaseController
 
     public function view_job_applicants($job_id)
     {   
-        $data['applicants'] = $this->adminModel->get_applicants($job_id);
-        pre($data);
-        exit;
+        $data['applicants'] = $this->EmployerModel->get_applicants($job_id);
+        $data['title'] = 'Job Applicants';
         return view('employer/job/view_job_applicants',$data);
     }
 
@@ -708,5 +719,74 @@ class Employer extends BaseController
         }
 
        return view('employer/cv_search/cv_search_page',$get);
+    }
+    public function make_shortlist($id,$job_id)
+    {
+        if ($this->EmployerModel->do_shortlist($id)) {
+            $user_email = $this->EmployerModel->get_applied_candidate_email($id);
+            $job = get_job_detail($job_id);
+            // sending shortlisted email 
+            $mail_data = array(
+                'job_title' => $job['title']
+            );
+            $this->mailer->mail_template($user_email, 'candidate-shortlisted', $mail_data);
+            $this->session->setFlashdata('success', 'Congratulation! Applicant Shortlisted successfully');
+            return redirect()->to(base_url('employer/shortlisted_applicants/' . $job_id));
+        }else {
+            $this->session->setFlashdata('error', 'Oops Somthing went wrong, please try gain letter');
+            return redirect()->to(base_url('employer/view_job_applicants/' . $job_id));
+        }
+    }
+
+    public function shortlisted_applicants($job_id)
+    {
+        $data['applicants'] = $this->EmployerModel->get_shortlisted_applicants($job_id);
+        $data['title'] = 'Shortlisted Applicants';
+        return view('employer/job/shortlist_applicants',$data);
+    }
+
+    // Sending Email to applicant
+    public function send_interview_email()
+    {
+        $email = trim($this->request->getPost('email'));
+        $title = trim($this->request->getPost('subject'));
+        $message = trim($this->request->getPost('message'));
+
+        $subject = 'Interview Message | Darwin Jobs';
+        $message =  '<p>Subject: ' . $title . '</p>
+        <p>Message: ' . $message . '</p>';
+
+        $mail_data['receiver_email'] = $email;
+        $mail_data['mail_subject'] = $subject;
+        $mail_data['mail_body'] = $message;
+
+        if (sendEmail($mail_data)) {
+            echo 'Email has been sent successfully !';exit;
+        } else {
+            echo 'There is a problem while sending email !';exit;
+        }
+    }
+
+    public function interview($id)
+    {
+        if ($this->request->isAJAX()) {
+            $email = trim($this->request->getPost('email'));
+            $title = trim($this->request->getPost('subject'));
+            $message = trim($this->request->getPost('message'));
+            
+            $subject = 'Interview Message | Darwin Jobs';
+            $message =  '<p>Subject: ' . $title . '</p>
+            <p>Message: ' . $message . '</p>';
+
+            $mail_data['receiver_email'] = $email;
+            $mail_data['mail_subject'] = $subject;
+            $mail_data['mail_body'] = $message;
+
+            if (sendEmail($mail_data)) {
+                echo '1~Email has been sent successfully !';
+            } else {
+                echo '0~There is a problem while sending email !';
+            }
+        }
     }
 }

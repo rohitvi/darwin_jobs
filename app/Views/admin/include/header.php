@@ -77,7 +77,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="<?= base_url(); ?>" class="brand-link">
         <img src="<?= base_url('public/admin/dist/img/AdminLTELogo.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light"><?= get_g_setting_val('application_name') ?></span>
       </a>
@@ -210,8 +210,8 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
+            <li class="nav-item menu <?= ($ap === 'list_industry' || $ap === 'add_industry') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= ($ap === 'list_industry' || $ap === 'add_industry') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-industry "></i>
                 <p>
                   Industry
@@ -220,21 +220,21 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link <?= ($ap === 'list_industry') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Industry List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_industry'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/add_industry'); ?>" class="nav-link <?= ($ap === 'add_industry') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Industry</p>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
+            <li class="nav-item menu <?= ($ap === 'list_packages' || $ap === 'add_packages') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= ($ap === 'list_packages' || $ap === 'add_packages') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-bars"></i>
                 <p>
                   Packages
@@ -243,13 +243,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link <?= ($ap === 'list_packages') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Packages List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_packages'); ?>" class="nav-link">
+                  <a href="<?= base_url('admin/add_packages'); ?>" class="nav-link <?= ($ap === 'add_packages') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Packages</p>
                   </a>
@@ -258,39 +258,17 @@
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= base_url('admin/list_newsletters'); ?>" class="nav-link <?= ($ap === 'list_newsletters') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-envelope"></i>
-                <p>
-                  Newsletters
-                  <i class="fas fa-angle-left right"></i>
-                </p>
+                <p>Newsletters</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<?= base_url('admin/list_newsletters'); ?>" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Newsletters</p>
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= base_url('admin/list_contact'); ?>" class="nav-link <?= ($ap === 'list_contact') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-envelope"></i>
-                <p>
-                  Contact Queries
-                  <i class="fas fa-angle-left right"></i>
-                </p>
+                <p>Contact Queries</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<?= base_url('admin/list_contact'); ?>" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>View Queries</p>
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <!-- separator -->
@@ -317,23 +295,14 @@
                 </li>
               </ul>
             </li>
+
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= base_url('admin/payments'); ?>" class="nav-link <?= ($ap === 'payments') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-book"></i>
-                <p>
-                  Payments
-                  <i class="fas fa-angle-left right"></i>
-                </p>
+                <p>View Payments</p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<?= base_url('admin/payments'); ?>" class="nav-link  <?= ($ap === 'payments') ? 'active' : '' ?>">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>View Payments</p>
-                  </a>
-                </li>
-              </ul>
             </li>
+
             <li class="nav-item">
               <a href="<?= base_url('admin/job_type'); ?>" class="nav-link <?= ($ap === 'job_type') ? 'active' : '' ?>">
                 <i class="nav-icon far fa fa-industry"></i>
@@ -359,7 +328,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('admin/add_general_settings'); ?>" class="nav-link <?= ($ap === 'education') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/add_general_settings'); ?>" class="nav-link <?= ($ap === 'add_general_settings') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-cogs"></i>
                 <p>
                 General Settings

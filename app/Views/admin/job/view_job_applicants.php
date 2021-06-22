@@ -108,6 +108,7 @@
     <!-- /.content -->
     </div>
     <?php include(VIEWPATH . 'admin/include/footer.php'); ?>
+    
 
     <script type="text/javascript">
         /* ----------------- Email ------------------*/
@@ -125,6 +126,9 @@
                     data: _form,
                     type: 'POST',
                     url: '<?= base_url('admin/send_interview_email') ?>',
+                    beforeSend: function() {
+                        $('.send_email').val('Sending...');
+                    },
                     success: function(response) {
                         toastr.info(response);
                         $(".email-from").trigger('reset');

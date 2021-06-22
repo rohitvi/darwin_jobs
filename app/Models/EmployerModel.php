@@ -171,4 +171,46 @@ class EmployerModel extends Model
       $builder->orderBy("seeker_applied_job.applied_date", "DESC");
       return $builder->get()->getResultArray();
     }
+
+    public function do_shortlist($id)
+    {
+      $builder = $this->db->table('seeker_applied_job');
+      $builder->where('id', $id);
+      if ($builder->update(array('is_shortlisted' => 1)))
+          return true;
+      else
+          return false;
+    }
+
+    // Short listed candidate email
+    public function get_applied_candidate_email($id)
+    {
+        $builder = $this->db->table('seeker_applied_job');
+        $builder->select('seeker_applied_job.seeker_id,users.email');
+        $builder->join('users', 'users.id = seeker_applied_job.seeker_id');
+        $builder->where('seeker_applied_job.id', $id);
+        return $builder->get()->getRowArray()['email'];
+    }
+
+    public function get_shortlisted_applicants($job_id)
+    {
+      $builder = $this->db->table('seeker_applied_job');
+      $builder->select('seeker_applied_job.id, 
+        seeker_applied_job.applied_date as apply_date,
+        users.firstname, users.lastname,
+        users.email,
+        users.profile_picture,
+        users.city,
+        users.country,
+        users.category,
+        users.job_title,
+        users.current_salary,
+        users.resume,
+        seeker_applied_job.*');
+      $builder->join('users', 'users.id = seeker_applied_job.seeker_id', 'left');
+      $builder->where(' seeker_applied_job.job_id', $job_id);
+      $builder->where(' seeker_applied_job.is_shortlisted', 1);
+      $builder->orderBy("seeker_applied_job.applied_date", "DESC");
+      return $builder->get()->getResultArray();
+    }
 }

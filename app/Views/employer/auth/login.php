@@ -168,6 +168,10 @@ Author: SAEROX
         <!-- End Container -->    
         <!-- Begin Vendor Js -->
         <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
+
+        <!-- Noty Js -->
+        <script src="<?= base_url('public/employer/assets/vendors/js/noty/noty.min.js')?>"></script>
+
         <script>
         $("#sign_in").on("submit", function() {
           event.preventDefault();
@@ -181,16 +185,34 @@ Author: SAEROX
               if ($.trim(response[0]) == 0) {
                 $('#sign_in').trigger("reset");
                 // toastr.error(response[1]);
+                new Noty({
+                    type: "error",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
               }
               if ($.trim(response[0]) == 1) {
                 $('#sign_in').trigger("reset");
                 setTimeout(function() {
                   window.location.href = 'dashboard';
                 }, 500);
-                // toastr.success(response[1]);
-              }
-              if ($.trim(response[0]) == 2) {
-                // toastr.error(response[1]);
+                new Noty({
+                    type: "success",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
               }
             },
             error: function(jqXHR, exception) {
