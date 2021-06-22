@@ -108,6 +108,7 @@
     <!-- /.content -->
     </div>
     <?php include(VIEWPATH . 'admin/include/footer.php'); ?>
+    
 
     <script type="text/javascript">
         /* ----------------- Email ------------------*/

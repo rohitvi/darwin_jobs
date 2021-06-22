@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Mailer;
 use App\Models\AdminModel;
 use App\Models\auth\AuthModel;
-use App\Libraries\Mailer;
 
 class Admin extends BaseController
 {
@@ -19,10 +19,12 @@ class Admin extends BaseController
     public function index()
     {
         // return view('admin/dashboard');
-        if (session('admin_logged_in'))
+        if (session('admin_logged_in')) {
             return redirect()->to('admin/dashboard');
-        else
+        } else {
             return redirect()->to('admin/login');
+        }
+
     }
 
     public function dashboard()
@@ -48,9 +50,9 @@ class Admin extends BaseController
         if ($this->request->isAJAX()) {
             $rules = [
                 'username' => ['label' => 'username', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required']
+                'password' => ['label' => 'password', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
@@ -63,8 +65,8 @@ class Admin extends BaseController
             } elseif ($logindata['id'] == 1) {
                 $admindata = [
                     'admin_id' => $logindata['id'],
-                    'admin_logged_in' => TRUE,
-                    'admin_username' => $username
+                    'admin_logged_in' => true,
+                    'admin_username' => $username,
                 ];
                 $this->session->set($admindata);
                 echo '1~ You Have Successfully Logged in';
@@ -82,7 +84,7 @@ class Admin extends BaseController
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
                 'username' => $this->request->getPost('username'),
-                'mobile_no' => $this->request->getPost('mobileno')
+                'mobile_no' => $this->request->getPost('mobileno'),
             ];
             $id = session('admin_id');
             $change = $this->adminAuthModel->account($data, $id);
@@ -170,7 +172,7 @@ class Admin extends BaseController
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'password', 'rules' => 'required|matches[password]']
+                'cpassword' => ['label' => 'password', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -213,7 +215,7 @@ class Admin extends BaseController
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
                 'lastname' => ['label' => 'lastname', 'rules' => 'required'],
                 'email' => ['label' => 'email', 'rules' => 'required'],
-                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required']
+                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -224,7 +226,7 @@ class Admin extends BaseController
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
-                'mobile_no' => $this->request->getPost('mobile_no')
+                'mobile_no' => $this->request->getPost('mobile_no'),
             ];
             $query = $this->adminAuthModel->account($data, $id);
             if ($query) {
@@ -320,7 +322,7 @@ class Admin extends BaseController
         $data = [];
         if ($this->request->getMethod() == 'post') {
             $input = $this->validate([
-                'industry' => 'required|min_length[5]'
+                'industry' => 'required|min_length[5]',
             ]);
             if ($input == true) {
                 $addindustrydata = [
@@ -389,7 +391,7 @@ class Admin extends BaseController
                 'detail' => 'required',
                 'no_of_days' => 'required',
                 'no_of_posts' => 'required',
-                'sort_order' => 'required'
+                'sort_order' => 'required',
             ]);
             if ($input == true) {
                 $addpackage = [
@@ -399,7 +401,7 @@ class Admin extends BaseController
                     'detail' => $this->request->getPost('detail'),
                     'no_of_days' => $this->request->getPost('no_of_days'),
                     'no_of_posts' => $this->request->getPost('no_of_posts'),
-                    'sort_order' => $this->request->getPost('sort_order')
+                    'sort_order' => $this->request->getPost('sort_order'),
                 ];
                 $addpack = $this->adminModel->add_packages($addpackage);
                 return redirect()->to('/admin/list_packages');
@@ -416,7 +418,7 @@ class Admin extends BaseController
                 'detail' => 'required',
                 'no_of_days' => 'required',
                 'no_of_posts' => 'required',
-                'sort_order' => 'required'
+                'sort_order' => 'required',
             ]);
             if ($input == true) {
                 $addpackage = [
@@ -426,7 +428,7 @@ class Admin extends BaseController
                     'detail' => $this->request->getPost('detail'),
                     'no_of_days' => $this->request->getPost('no_of_days'),
                     'no_of_posts' => $this->request->getPost('no_of_posts'),
-                    'sort_order' => $this->request->getPost('sort_order')
+                    'sort_order' => $this->request->getPost('sort_order'),
                 ];
                 $addpack = $this->adminModel->add_packages($addpackage);
                 $this->session->setFlashdata('status', 'Packages Added Successfully');
@@ -452,7 +454,7 @@ class Admin extends BaseController
                 'no_of_days' => 'required',
                 'no_of_posts' => 'required',
                 'sort_order' => 'required',
-                'status' => 'required'
+                'status' => 'required',
             ]);
             if ($input == true) {
                 $editpackage = [
@@ -463,7 +465,7 @@ class Admin extends BaseController
                     'no_of_days' => $this->request->getPost('no_of_days'),
                     'no_of_posts' => $this->request->getPost('no_of_posts'),
                     'sort_order' => $this->request->getPost('sort_order'),
-                    'is_active' => $this->request->getPost('status')
+                    'is_active' => $this->request->getPost('status'),
                 ];
                 $editpack = $this->adminModel->edit_packages($editpackage, $id);
                 return redirect()->to('/admin/list_packages');
@@ -483,7 +485,7 @@ class Admin extends BaseController
                 'no_of_days' => 'required',
                 'no_of_posts' => 'required',
                 'sort_order' => 'required',
-                'status' => 'required'
+                'status' => 'required',
             ]);
             if ($input == true) {
                 $editpackage = [
@@ -494,7 +496,7 @@ class Admin extends BaseController
                     'no_of_days' => $this->request->getPost('no_of_days'),
                     'no_of_posts' => $this->request->getPost('no_of_posts'),
                     'sort_order' => $this->request->getPost('sort_order'),
-                    'is_active' => $this->request->getPost('status')
+                    'is_active' => $this->request->getPost('status'),
                 ];
                 $editpack = $this->adminModel->edit_packages($editpackage, $id);
                 $this->session->setFlashdata('status', 'Packages Updated Successfully');
@@ -541,7 +543,6 @@ class Admin extends BaseController
         return view('admin/job_attributes/job_type', $data);
     }
 
-
     public function addjob()
     {
         if ($this->request->getMethod() == 'post') {
@@ -575,7 +576,7 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'type' => ['label' => 'type', 'rules' => 'required']
+                'type' => ['label' => 'type', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -647,7 +648,7 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'type' => ['label' => 'type', 'rules' => 'required']
+                'type' => ['label' => 'type', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -690,7 +691,7 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/employment'));
             }
@@ -719,7 +720,7 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'type' => ['label' => 'type', 'rules' => 'required']
+                'type' => ['label' => 'type', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -786,7 +787,7 @@ class Admin extends BaseController
                 'address' => ['label' => 'address', 'rules' => 'required'],
                 'phone_no' => ['label' => 'phone_no', 'rules' => 'required'],
                 'website' => ['label' => 'website', 'rules' => 'required'],
-                'description' => ['label' => 'description', 'rules' => 'required|min_length[10]']
+                'description' => ['label' => 'description', 'rules' => 'required|min_length[10]'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -796,7 +797,7 @@ class Admin extends BaseController
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT)
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name'),
@@ -810,7 +811,7 @@ class Admin extends BaseController
                 'address' => $this->request->getPost('address'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
-                'description' => $this->request->getPost('description')
+                'description' => $this->request->getPost('description'),
             ];
             $emp_id = $this->adminModel->insertemployer($emp);
             $cmpny['employer_id'] = $emp_id[0]->max_id;
@@ -857,7 +858,7 @@ class Admin extends BaseController
                 'country' => ['label' => 'country', 'rules' => 'required'],
                 'state' => ['label' => 'state', 'rules' => 'required'],
                 'city' => ['label' => 'city', 'rules' => 'required'],
-                'address' => ['label' => 'address', 'rules' => 'required']
+                'address' => ['label' => 'address', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -872,7 +873,7 @@ class Admin extends BaseController
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
-                'address' => $this->request->getPost('address')
+                'address' => $this->request->getPost('address'),
             ];
             $query = $this->adminModel->updateemployer($data, $id);
             if ($query == 1) {
@@ -889,7 +890,7 @@ class Admin extends BaseController
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'company_logo'  => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
+                'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
                 'company_name' => ['label' => 'company_name', 'rules' => 'required'],
                 'company_email' => ['label' => 'company_email', 'rules' => 'required'],
                 'phone_no' => ['label' => 'phone_no', 'rules' => 'required'],
@@ -934,7 +935,7 @@ class Admin extends BaseController
                 'facebook_link' => $this->request->getPost('facebook_link'),
                 'twitter_link' => $this->request->getPost('twitter_link'),
                 'youtube_link' => $this->request->getPost('youtube_link'),
-                'linkedin_link' => $this->request->getPost('linkedin_link')
+                'linkedin_link' => $this->request->getPost('linkedin_link'),
             ];
             $query = $this->adminModel->updatecompany($id, $cmpny);
             if ($query == 1) {
@@ -959,7 +960,7 @@ class Admin extends BaseController
                 'email' => ['label' => 'email', 'rules' => 'required'],
                 'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required'],
-                'address' => ['label' => 'address', 'rules' => 'required']
+                'address' => ['label' => 'address', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -971,7 +972,7 @@ class Admin extends BaseController
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                'address' => $this->request->getPost('address')
+                'address' => $this->request->getPost('address'),
             ];
             $query = $this->adminModel->adduser($data);
             if ($query->resultID == 1) {
@@ -1037,7 +1038,6 @@ class Admin extends BaseController
         }
     }
 
-
     // Jobs
     public function search()
     {
@@ -1059,7 +1059,7 @@ class Admin extends BaseController
 
         $data['categories'] = $this->adminModel->get_all_categories();
         $data['industries'] = $this->adminModel->get_all_industry();
-        $data['countries']  = $this->adminModel->get_countries_list();
+        $data['countries'] = $this->adminModel->get_countries_list();
 
         $data['title'] = 'Job List';
         return view('admin/job/job_list', $data);
@@ -1071,30 +1071,30 @@ class Admin extends BaseController
         $data = array();
 
         $i = 1;
-        foreach ($records['data']  as $row) {
+        foreach ($records['data'] as $row) {
             $buttoncontroll = '<a class="btn btn-xs btn-success" href=' . base_url("admin/edit_post/" . $row['id']) . ' title="View" >
 				 <i class="fa fa-eye"></i></a>&nbsp;&nbsp;
 
-				  <a class="edit btn btn-xs btn-primary" href=' . base_url("admin/edit_post/" . $row['id']) . ' title="Edit" > 
+				  <a class="edit btn btn-xs btn-primary" href=' . base_url("admin/edit_post/" . $row['id']) . ' title="Edit" >
 				 <i class="fa fa-edit"></i></a>&nbsp;&nbsp;
 
-				 <a class="btn-delete btn btn-xs btn-danger" href=' . base_url("admin/delete_post/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')"> 
+				 <a class="btn-delete btn btn-xs btn-danger" href=' . base_url("admin/delete_post/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
 				 <i class="fa fa-trash"></i></a>';
 
             $data[] = array(
                 $i++,
                 $row['title'],
-                '<a class="edit btn btn-xs btn-info mb-3" href=' . base_url("admin/view_job_applicants/" . $row['id']) . ' title="Applicants" > 
+                '<a class="edit btn btn-xs btn-info mb-3" href=' . base_url("admin/view_job_applicants/" . $row['id']) . ' title="Applicants" >
 				 Applied [ ' . $row['cand_applied'] . ' ]
 				</a>
-				<a class="edit btn btn-xs btn-info" href=' . base_url("admin/shortlisted/" . $row['id']) . ' title="Applicants" > 
+				<a class="edit btn btn-xs btn-info" href=' . base_url("admin/shortlisted/" . $row['id']) . ' title="Applicants" >
 				 Shortlisted [ ' . $row['total_shortlisted'] . ' ]
 				</a>',
-                get_industry_name($row['industry']),  //  helper function
+                get_industry_name($row['industry']), //  helper function
                 get_country_name($row['country']), // same as above
                 date_time($row['created_date']),
                 $row['is_status'],
-                $buttoncontroll
+                $buttoncontroll,
             );
         }
         $records['data'] = $data;
@@ -1107,7 +1107,7 @@ class Admin extends BaseController
         $final_job_url = '';
         $job_title = trim($job_title);
         $city = get_city_name($city);
-        $job_title_slug = make_slug($job_title) . '-job-in-' . make_slug($city);  // make slug is a helper function
+        $job_title_slug = make_slug($job_title) . '-job-in-' . make_slug($city); // make slug is a helper function
         $final_job_url = $job_title_slug;
         return $final_job_url;
     }
@@ -1117,72 +1117,74 @@ class Admin extends BaseController
     {
         $builder = $this->db->table('job_post');
         $builder->where('id', $id);
-        if ($query = $builder->delete())
+        if ($query = $builder->delete()) {
             $this->session->setFlashdata('success', 'Congratulation! Job has been Deleted successfully');
-        else
+        } else {
             $this->session->setFlashdata('error', 'Oops! Failed to Delete Job');
+        }
+
         return redirect()->to(base_url('admin/list_job'));
     }
 
     public function post()
     {
-        $admin_id  = session('admin_id');
+        $admin_id = session('admin_id');
         $data['categories'] = $this->adminModel->get_all_categories();
         $data['industries'] = $this->adminModel->get_all_industry();
-        $data['countries']  = $this->adminModel->get_countries_list();
-        $data['salaries']   = $this->adminModel->get_salary_list();
+        $data['countries'] = $this->adminModel->get_countries_list();
+        $data['salaries'] = $this->adminModel->get_salary_list();
         $data['educations'] = $this->adminModel->get_education_list();
-        $data['companies']  = $this->adminModel->getemployer();
+        $data['companies'] = $this->adminModel->getemployer();
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "employer_id"       => ["label" => "employer id", "rules" => "trim|required|min_length[3]"],
-                "job_title"         => ["label" => "job title", "rules" => "trim|required"],
-                "category"          => ["label" => "category", "rules" => "trim|required"],
-                "industry"          => ["label" => "industry", "rules" => "trim|required"],
-                "min_experience"    => ["label" => "min experience", "rules" => "trim|required"],
-                "max_experience"    => ["label" => "max experience", "rules" => "trim|required"],
-                "salary_period"     => ["label" => "salary period", "rules" => "trim|required"],
-                "min_salary"        => ["label" => "min salary", "rules" => "trim|required"],
-                "max_salary"        => ["label" => "max salary", "rules" => "trim|required"],
-                "skills"            => ["label" => "skills", "rules" => "trim|required"],
-                "description"       => ["label" => "description", "rules" => "trim|required|min_length[3]"],
-                "total_positions"   => ["label" => "total positions", "rules" => "trim|required"],
-                "gender"            => ["label" => "gender", "rules" => "trim|required"],
-                "employment_type"   => ["label" => "employment type", "rules" => "trim|required"],
-                "education"         => ["label" => "education", "rules" => "trim|required"],
-                "country"           => ["label" => "country", "rules" => "trim|required"],
-                "city"              => ["label" => "city", "rules" => "trim|required"],
-                "location"          => ["label" => "location", "rules" => "trim|required"],
+                "employer_id" => ["label" => "employer id", "rules" => "trim|required|min_length[3]"],
+                "job_title" => ["label" => "job title", "rules" => "trim|required"],
+                "category" => ["label" => "category", "rules" => "trim|required"],
+                "industry" => ["label" => "industry", "rules" => "trim|required"],
+                "min_experience" => ["label" => "min experience", "rules" => "trim|required"],
+                "max_experience" => ["label" => "max experience", "rules" => "trim|required"],
+                "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
+                "min_salary" => ["label" => "min salary", "rules" => "trim|required"],
+                "max_salary" => ["label" => "max salary", "rules" => "trim|required"],
+                "skills" => ["label" => "skills", "rules" => "trim|required"],
+                "description" => ["label" => "description", "rules" => "trim|required|min_length[3]"],
+                "total_positions" => ["label" => "total positions", "rules" => "trim|required"],
+                "gender" => ["label" => "gender", "rules" => "trim|required"],
+                "employment_type" => ["label" => "employment type", "rules" => "trim|required"],
+                "education" => ["label" => "education", "rules" => "trim|required"],
+                "country" => ["label" => "country", "rules" => "trim|required"],
+                "city" => ["label" => "city", "rules" => "trim|required"],
+                "location" => ["label" => "location", "rules" => "trim|required"],
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 // $this->session->setFlashdata('error', $this->validation->listErrors());
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
                 $data = array(
-                    'admin_id'      => $admin_id,
-                    'employer_id'   => get_direct_value('companies', 'employer_id', 'id', $this->request->getPost('employer_id')),
-                    'company_id'    => $this->request->getPost('employer_id'),
-                    'title'         => $this->request->getPost('job_title'),
-                    'job_type'      => $this->request->getPost('job_type'),
-                    'category'      => $this->request->getPost('category'),
-                    'industry'      => $this->request->getPost('industry'),
-                    'experience'    => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
-                    'min_salary'    => $this->request->getPost('min_salary'),
-                    'max_salary'    => $this->request->getPost('max_salary'),
+                    'admin_id' => $admin_id,
+                    'employer_id' => get_direct_value('companies', 'employer_id', 'id', $this->request->getPost('employer_id')),
+                    'company_id' => $this->request->getPost('employer_id'),
+                    'title' => $this->request->getPost('job_title'),
+                    'job_type' => $this->request->getPost('job_type'),
+                    'category' => $this->request->getPost('category'),
+                    'industry' => $this->request->getPost('industry'),
+                    'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
+                    'min_salary' => $this->request->getPost('min_salary'),
+                    'max_salary' => $this->request->getPost('max_salary'),
                     'salary_period' => $this->request->getPost('salary_period'),
-                    'description'   => $this->request->getPost('description'),
-                    'skills'        => $this->request->getPost('skills'),
+                    'description' => $this->request->getPost('description'),
+                    'skills' => $this->request->getPost('skills'),
                     'total_positions' => $this->request->getPost('total_positions'),
-                    'gender'        => $this->request->getPost('gender'),
-                    'education'     => $this->request->getPost('education'),
+                    'gender' => $this->request->getPost('gender'),
+                    'education' => $this->request->getPost('education'),
                     'employment_type' => $this->request->getPost('employment_type'),
-                    'country'       => $this->request->getPost('country'),
-                    'state'         => $this->request->getPost('state'),
-                    'city'          => $this->request->getPost('city'),
-                    'location'      => $this->request->getPost('location'),
-                    'created_date'  => date('Y-m-d : H:i:s'),
-                    'updated_date'  => date('Y-m-d : H:i:s')
+                    'country' => $this->request->getPost('country'),
+                    'state' => $this->request->getPost('state'),
+                    'city' => $this->request->getPost('city'),
+                    'location' => $this->request->getPost('location'),
+                    'created_date' => date('Y-m-d : H:i:s'),
+                    'updated_date' => date('Y-m-d : H:i:s'),
                 );
 
                 $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
@@ -1204,57 +1206,57 @@ class Admin extends BaseController
 
     public function edit_post($job_id = 0)
     {
-        $admin_id  = session('admin_id');
+        $admin_id = session('admin_id');
         $data['categories'] = $this->adminModel->get_all_categories();
         $data['industries'] = $this->adminModel->get_all_industry();
-        $data['countries']  = $this->adminModel->get_countries_list();
-        $data['salaries']   = $this->adminModel->get_salary_list();
+        $data['countries'] = $this->adminModel->get_countries_list();
+        $data['salaries'] = $this->adminModel->get_salary_list();
         $data['educations'] = $this->adminModel->get_education_list();
-        $data['companies']  = $this->adminModel->getemployer();
+        $data['companies'] = $this->adminModel->getemployer();
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "job_title"         => ["label" => "job title", "rules" => "trim|required|min_length[3]"],
-                "category"          => ["label" => "category", "rules" => "trim|required"],
-                "industry"          => ["label" => "industry", "rules" => "trim|required"],
-                "min_experience"    => ["label" => "min experience", "rules" => "trim|required"],
-                "max_experience"    => ["label" => "max experience", "rules" => "trim|required"],
-                "salary_period"     => ["label" => "salary period", "rules" => "trim|required"],
-                "min_salary"        => ["label" => "min salary", "rules" => "trim|required"],
-                "max_salary"        => ["label" => "max salary", "rules" => "trim|required"],
-                "skills"            => ["label" => "skills", "rules" => "trim|required"],
-                "description"       => ["label" => "description", "rules" => "trim|required|min_length[3]"],
-                "total_positions"   => ["label" => "total positions", "rules" => "trim|required"],
-                "gender"            => ["label" => "gender", "rules" => "trim|required"],
-                "employment_type"   => ["label" => "employment type", "rules" => "trim|required"],
-                "education"         => ["label" => "education", "rules" => "trim|required"],
-                "country"           => ["label" => "country", "rules" => "trim|required"],
-                "city"              => ["label" => "city", "rules" => "trim|required"],
-                "location"          => ["label" => "location", "rules" => "trim|required"],
+                "job_title" => ["label" => "job title", "rules" => "trim|required|min_length[3]"],
+                "category" => ["label" => "category", "rules" => "trim|required"],
+                "industry" => ["label" => "industry", "rules" => "trim|required"],
+                "min_experience" => ["label" => "min experience", "rules" => "trim|required"],
+                "max_experience" => ["label" => "max experience", "rules" => "trim|required"],
+                "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
+                "min_salary" => ["label" => "min salary", "rules" => "trim|required"],
+                "max_salary" => ["label" => "max salary", "rules" => "trim|required"],
+                "skills" => ["label" => "skills", "rules" => "trim|required"],
+                "description" => ["label" => "description", "rules" => "trim|required|min_length[3]"],
+                "total_positions" => ["label" => "total positions", "rules" => "trim|required"],
+                "gender" => ["label" => "gender", "rules" => "trim|required"],
+                "employment_type" => ["label" => "employment type", "rules" => "trim|required"],
+                "education" => ["label" => "education", "rules" => "trim|required"],
+                "country" => ["label" => "country", "rules" => "trim|required"],
+                "city" => ["label" => "city", "rules" => "trim|required"],
+                "location" => ["label" => "location", "rules" => "trim|required"],
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
                 $data = array(
-                    'title'         => $this->request->getPost('job_title'),
-                    'job_type'      => $this->request->getPost('job_type'),
-                    'category'      => $this->request->getPost('category'),
-                    'industry'      => $this->request->getPost('industry'),
-                    'experience'    => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
-                    'min_salary'    => $this->request->getPost('min_salary'),
-                    'max_salary'    => $this->request->getPost('max_salary'),
+                    'title' => $this->request->getPost('job_title'),
+                    'job_type' => $this->request->getPost('job_type'),
+                    'category' => $this->request->getPost('category'),
+                    'industry' => $this->request->getPost('industry'),
+                    'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
+                    'min_salary' => $this->request->getPost('min_salary'),
+                    'max_salary' => $this->request->getPost('max_salary'),
                     'salary_period' => $this->request->getPost('salary_period'),
-                    'description'   => $this->request->getPost('description'),
-                    'skills'        => $this->request->getPost('skills'),
+                    'description' => $this->request->getPost('description'),
+                    'skills' => $this->request->getPost('skills'),
                     'total_positions' => $this->request->getPost('total_positions'),
-                    'gender'        => $this->request->getPost('gender'),
-                    'education'     => $this->request->getPost('education'),
+                    'gender' => $this->request->getPost('gender'),
+                    'education' => $this->request->getPost('education'),
                     'employment_type' => $this->request->getPost('employment_type'),
-                    'country'       => $this->request->getPost('country'),
-                    'state'         => $this->request->getPost('state'),
-                    'city'          => $this->request->getPost('city'),
-                    'location'      => $this->request->getPost('location'),
-                    'updated_date'  => date('Y-m-d : H:i:s')
+                    'country' => $this->request->getPost('country'),
+                    'state' => $this->request->getPost('state'),
+                    'city' => $this->request->getPost('city'),
+                    'location' => $this->request->getPost('location'),
+                    'updated_date' => date('Y-m-d : H:i:s'),
                 );
 
                 $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
@@ -1301,9 +1303,9 @@ class Admin extends BaseController
 
             $job = get_job_detail($job_id);
 
-            // sending shortlisted email 
+            // sending shortlisted email
             $mail_data = array(
-                'job_title' => $job['title']
+                'job_title' => $job['title'],
             );
 
             $this->mailer->mail_template($user_email, 'candidate-shortlisted', $mail_data);
@@ -1321,9 +1323,30 @@ class Admin extends BaseController
         $get['gsetting'] = $this->adminModel->fetch_general_setting();
         $get['footer_settings'] = $this->adminModel->get_footer_settings();
         $get['title'] = 'General Setting';
+
         //echo '<pre>';
         //print_r( $get);
         if ($this->request->getMethod() == 'post') {
+
+            // $rules=[
+            //     'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
+            //     'logo' =>['uploaded[logo]','max_size[logo,1024]']
+            // ];
+
+            // $result = UploadFile($_FILES['favicon']);
+            // if($result['status'] == true){
+            //     $favicon = $result['result']['file_url'];
+            // }else{
+            //     echo '0~'.$result['message'];exit;
+            //     }
+
+            // $result = UploadFile($_FILES['logo']);
+            // if($result['status'] == true){
+            //     $logo = $result['result']['file_url'];
+            // }else{
+            //     echo '0~'.$result['message'];exit;
+            // }
+
             $data = array(
                 'application_name' => $this->request->getPost('application_name'),
                 'copyright' => $this->request->getPost('copyright'),
@@ -1347,6 +1370,7 @@ class Admin extends BaseController
                 'x-key' => $this->request->getPost('x-key'),
                 'x-secret' => $this->request->getPost('x-secret'),
                 'created_date' => date('Y-m-d : h:m:s'),
+                'updated_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s')
             );
 
@@ -1388,13 +1412,6 @@ class Admin extends BaseController
         }
     }
 
-    public function delete_footer_setting($id)
-    {
-        $this->adminModel->delete_footer_setting($id);
-        return redirect()->to(base_url('admin/add_general_settings'));
-    }
-
-
     // Sending Email to applicant
     public function send_interview_email()
     {
@@ -1403,7 +1420,7 @@ class Admin extends BaseController
         $message = trim($this->request->getPost('message'));
 
         $subject = 'Interview Message | Darwin Jobs';
-        $message =  '<p>Subject: ' . $title . '</p>
+        $message = '<p>Subject: ' . $title . '</p>
 		<p>Message: ' . $message . '</p>';
 
         $mail_data['receiver_email'] = $email;

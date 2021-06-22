@@ -19,6 +19,10 @@
         <!-- End Page Header -->
         <!-- Begin Row -->
         <div class="row flex-row">
+            <div class="">
+                <button id="example-success" type="button">success</button>
+                <button id="example-error" type="button">error</button>
+            </div>
             <?php foreach ($data as $value): ?>
             <div class="col-xl-3 col-md-6 col-sm-6">
                 <!-- Begin Widget 01 -->
@@ -35,7 +39,7 @@
                                 <button class="btn btn-sm btn-light mb-2" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large"><i class="la la-user animated swing"></i>User Profile</button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-sm btn-light mb-2" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered"><i class="la la-wechat animated swing"></i>Interview</button>
+                                <button class="btn btn-sm btn-light mb-2" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>"><i class="la la-wechat animated swing"></i>Interview</button>
                             </div>
                         </div>
                     </div>
@@ -74,35 +78,42 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Modal Title</h4>
+                <h4 class="modal-title md-title">New Message</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                     <span class="sr-only">close</span>
                 </button>
             </div>
             <div class="modal-body" id="interview-modal">
-                <p>
-                    Donec non lectus nec est porta eleifend. Morbi ut dictum augue, feugiat condimentum est. Pellentesque tincidunt justo nec aliquet tincidunt. Integer dapibus tellus non neque pulvinar mollis. Maecenas dictum laoreet diam, non convallis lorem sagittis nec. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc venenatis lacus arcu, nec ultricies dui vehicula vitae.
-                </p>
+                <?php echo form_open('/', 'class="email-form"') ?>
+                <input type="hidden" name="email" class="form-control" value="<?= $value['email'] ?>" id="email">
+                <div class="form-group">
+                    <label class="form-control-label">Subject:</label>
+                    <input class="form-control" type="text" name="subject" id="subject">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Message:</label>
+                    <textarea name="message" class="form-control" id="message"></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary send_email">Save</button>
+                <?php form_close(); ?>
             </div>
         </div>
     </div>
 </div>
 <!-- End Interview Modal -->
 
+<?php include(VIEWPATH.'employer/include/footer.php'); ?>
+
 <script>
     function userdetails(id){
         event.preventDefault();
         var id = id;
         $.ajax({
-            type: "POST",
-            data: {
-                user_id: id,
-            },
+            type: "GET",
             url: '<?= base_url();?>/employer/userdetails/'+id,
             cached: false,
             success: function(data) {
@@ -113,15 +124,49 @@
     function interview(id){
         event.preventDefault();
         var id = id;
-        $.ajax({
-            type: "POST",
-            data: {user_id: id,},
-            url: '<?= base_url();?>/employer/interview/'+id,
-            cached: false,
-            success: function(data) {
-                $('#interview-modal').html(data);
-            }
+        var button = document.getElementById('inter'+id); // Button that triggered the modal
+        var recipient = button.getAttribute('data-message') // Extract info from data-* attributes
+        var modaltitle = document.getElementsByClassName('md-title')[0].innerHTML = "New Message to " + recipient;
+        $('.send_email').click(function(e) {
+            event.preventDefault();
+            var _form = $(".email-form").serialize();
+            $.ajax({
+                data: _form,
+                type: 'POST',
+                url: '<?= base_url(''); ?>/employer/interview/'+id,
+                success: function(response) {
+                    $(".email-from").trigger('reset');
+                    var response = response.split('~');
+                    if ($.trim(response[0]) == 0) {
+                        new Noty({
+                            type: "error",
+                            layout: "topRight",
+                            text: response[1],
+                            progressBar: true,
+                            timeout: 2500,
+                            animation: {
+                                open: "animated bounceInRight",
+                                close: "animated bounceOutRight"
+                            }
+                        }).show();
+                    }
+                    else if ($.trim(response[0]) == 1) {
+                        new Noty({
+                            type: "success",
+                            layout: "topRight",
+                            text: response[1],
+                            progressBar: true,
+                            timeout: 2500,
+                            animation: {
+                                open: "animated bounceInRight",
+                                close: "animated bounceOutRight"
+                            }
+                        }).show();
+                    }
+
+                    $('.close').trigger('click');
+                }
+            });
         });
     }
 </script>
-<?php include(VIEWPATH.'employer/include/footer.php'); ?>

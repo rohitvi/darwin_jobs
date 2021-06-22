@@ -55,7 +55,7 @@ class EmployerAuthModel extends Model
     
     public function cmp_info($id){
         $builder = $this->db->table('companies');
-        return $builder->where('id',$id)->get()->getResultArray();
+        return $builder->where('employer_id',$id)->get()->getResultArray();
     }
 
     public function cmp_info_update($cmp_info,$id){
