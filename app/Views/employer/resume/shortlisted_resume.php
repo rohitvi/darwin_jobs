@@ -19,10 +19,6 @@
         <!-- End Page Header -->
         <!-- Begin Row -->
         <div class="row flex-row">
-            <div class="">
-                <button id="example-success" type="button">success</button>
-                <button id="example-error" type="button">error</button>
-            </div>
             <?php foreach ($data as $value): ?>
             <div class="col-xl-3 col-md-6 col-sm-6">
                 <!-- Begin Widget 01 -->
