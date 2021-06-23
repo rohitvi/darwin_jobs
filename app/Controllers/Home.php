@@ -14,6 +14,11 @@ class Home extends BaseController
         return view('user/index');
     }
 
+    public function login()
+    {
+        return view('user/auth/login');
+    }
+
     //Get States
     function get_country_states()
     {
