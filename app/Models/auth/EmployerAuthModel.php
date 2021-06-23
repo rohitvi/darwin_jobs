@@ -22,10 +22,7 @@ class EmployerAuthModel extends Model
 
     public function changepassword($id,$password)
     {
-    	$builder = $this->db->table('employers');
-    	$builder->where('id',$id);
-        $builder->set('password' , $password);
-        return $builder->update();
+    	return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password));
     }
 
     public function personal_info($id)
@@ -50,7 +47,7 @@ class EmployerAuthModel extends Model
             'address'=>$update_info['address']
         ];
         $builder->where('id',$id);
-        return $query=$builder->update($update_info_row);
+        return $builder->update($update_info_row);
     }
     
     public function cmp_info($id){
@@ -94,7 +91,7 @@ class EmployerAuthModel extends Model
     public function register($data)
     {
         $this->db->table('employers')->insert($data);
-        return $this->getlastid();
+        return $this->db->insertID();
     }
 
     public function registercmpny($data)

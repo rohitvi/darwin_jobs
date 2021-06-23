@@ -8,6 +8,11 @@ class EmployerModel extends Model
 {
     protected $table = null;
 
+    public function get_free_package()
+    {
+      return $this->db->table('packages')->where('price','0')->get()->getResultArray();
+    }
+
     public function getpackages()
     {
         return $this->db->table('packages')->get()->getResultArray();
@@ -89,7 +94,7 @@ class EmployerModel extends Model
 
     public function postjob($data)
     {
-        return $this->db->table('job_post')->insert($data);
+      return $this->db->table('job_post')->insert($data)->get()->insertID();
     }
 
     // public function list_jobs($id)
@@ -225,6 +230,36 @@ class EmployerModel extends Model
         return $builder->get()->getResultArray();
     }
 
+    public function user_packages_bought($id)
+    {
+      return $this->db->table('packages_bought')->where('employer_id',$id)->get()->getResultArray();
+    }
+
+    public function check_if_bought($emp_id,$pkg_id)
+    {
+      $builder = $this->db->table('packages_bought')->getWhere(array('employer_id'=>$emp_id,'package_id'=>$pkg_id,'is_active'=>1))->getResultArray();
+      if ($builder)
+        return 1;
+      else
+        return 0;
+    }
+
+    public function get_active_package()
+    {
+      return $this->db->table('packages_bought')->select('packages_bought.*,packages.title,packages.no_of_posts,packages.no_of_days,packages.price')->join('packages','packages.id = packages_bought.package_id')->where('package_for',1)->orderBy("packages_bought.buy_date", "DESC")->get()->getRowArray();
+    }
+
+    public function count_posted_jobs($pkg_id, $is_featured, $payment_id)
+    {
+      $where = ['package_id'=>$pkg_id,'payment_id'=>$payment_id,'is_featured'=>$is_featured];
+      return $this->db->table('job_post_featured')->where($where)->countAllResults();
+    }
+
+    public function add_featured_job($data)
+    {
+      $this->db->table('job_post_featured')->insert($data);
+      return true;
+    }
     //-------------------------------------------------------------------
     // All CV Search Result
     public function get_user_profiles($search)
