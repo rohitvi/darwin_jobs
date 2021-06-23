@@ -266,7 +266,6 @@ class EmployerModel extends Model
     public function get_user_profiles($search)
     {
         $builder = $this->db->table('users');
-
         // search URI parameters
         if (!empty($search['country'])) {
             $builder->where('country', $search['country']);
@@ -302,6 +301,19 @@ class EmployerModel extends Model
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('job_title');
         return $builder->get()->getResultArray();
+    }
+
+    public function candidates_shortlisted($emp_id,$user_id){
+         $builder = $this->db->table('cv_shortlisted');
+         $builder->where('user_id',$user_id);
+         $builder->where('employer_id',$emp_id);
+	    if($builder->countAllResults() > 0 ){
+	        return true;
+	    } 
+        else{
+            $data = ['employer_id' => $emp_id,'user_id'  => $user_id,];
+            return $this->db->table('cv_shortlisted')->insert($data);
+        }
     }
 
 }
