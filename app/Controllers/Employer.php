@@ -102,7 +102,13 @@ class Employer extends BaseController
             ];
             $id = session('employer_id');
             $update_per = $this->EmployerAuthModel->personal_info_update($update_per_info, $id);
-            return redirect()->to(base_url('employer/profile'));
+            if ($update_per == 1) {
+                $this->session->setFlashdata('success', 'Personal Information successfully Updated');
+                return redirect()->to(base_url('employer/profile'));
+            }else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('employer/profile'));
+            }
         }
     }
 
@@ -131,7 +137,7 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/profile'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                return redirect()->to(base_url('admin/changepassword'));
+                return redirect()->to(base_url('employer/changepassword'));
             }
         }
         return view('employer/auth/changepassword');
@@ -202,7 +208,13 @@ class Employer extends BaseController
             ];
             $id = session('employer_id');
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
-            return redirect()->to(base_url('employer/profile'));
+            if ($update_per == 1) {
+                $this->session->setFlashdata('success', 'Company Information Successfully Updated');
+                return redirect()->to(base_url('employer/profile'));
+            }else{
+                $this->session->setFlashdata('error', 'Password successfully Updated');
+                return redirect()->to(base_url('employer/profile'));
+            }
         }
     }
 
@@ -217,6 +229,10 @@ class Employer extends BaseController
     public function package_confirmation($id)
     {
         $get['data'] = $this->EmployerModel->package_confirmation($id);
+        if ($this->EmployerModel->check_if_bought(session('employer_id'),$id)) {
+            $this->session->setFlashdata('success','Package Already Purchased');
+            return redirect()->to(base_url('employer/mypackages'));
+        }
         return view('employer/packages/package_confirmation', $get);
     }
 
@@ -234,8 +250,8 @@ class Employer extends BaseController
                     'emp_id' => ['label' => 'emp_id', 'rules' => 'required']
                 ];
                 if ($this->validate($rules) == FALSE) {
-                    echo '0~' . $this->validation->listErrors();
-                    exit;
+                    $this->session->setFlashdata('error', $this->validation->listErrors());
+                    return redirect()->to(base_url('employer/packages'));
                 }
                 $data = [
                     'payment_method' => 'credit card',
@@ -250,7 +266,7 @@ class Employer extends BaseController
                 $query = $this->EmployerModel->payment($data);
                 if ($query == 0) {
                     $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                    return redirect()->to(base_url('admin/packages'));
+                    return redirect()->to(base_url('employer/packages'));
                 } elseif ($query['status'] == 1) {
                     $date = date("y-m-d G.i:s");
                     if ($this->request->getPost('package_days') == 45) {
@@ -273,11 +289,11 @@ class Employer extends BaseController
                     ];
                     $pay_query = $this->EmployerModel->packages_bought($package_info);
                     if ($pay_query->resultID == 1) {
-                        $this->session->setFlashdata('success', 'Package successfully purchased');
+                        $this->session->setFlashdata('success', 'Package Successfully Purchased');
                         return redirect()->to(base_url('employer'));
                     } else {
                         $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                        return redirect()->to(base_url('admin/packages'));
+                        return redirect()->to(base_url('employer/packages'));
                     }
                 }
             } else {
@@ -316,14 +332,23 @@ class Employer extends BaseController
             $user_details = [
                 'firstname' => $this->request->getPost('firstname'),
                 'email' => $this->request->getPost('email'),
-                'password' => $this->request->getPost('password')
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT)
             ];
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name')
             ];
-            $query = $this->EmployerAuthModel->register($user_details);
-            $cmpny['employer_id'] = $query[0]->max_id;
+            $cmpny['employer_id'] = $this->EmployerAuthModel->register($user_details);
             $result = $this->EmployerAuthModel->registercmpny($cmpny);
+            // Add Free Packages
+            $package_details = $this->EmployerModel->get_free_package();
+            $buyer_array = [
+                'employer_id' => $cmpny['employer_id'],
+                'package_id' => $package_details[0]['id'],
+                'user_id' => 0,                
+                'expire_date' => add_30_days($package_details[0]['no_of_days']),
+                'buy_date' => date('Y-m-d : h:m:s')
+            ];
+            $package_bought = $this->EmployerModel->packages_bought($buyer_array);
             if ($result->resultID == 1) {
                 $this->session->setFlashdata('success', 'Employer successfully registered');
                 return redirect()->to(base_url('employer'));
@@ -472,18 +497,27 @@ class Employer extends BaseController
 
     public function post()
     {
-        $get['companies'] = $this->EmployerModel->get_companies(session('employer_id'));
-        $get['job_type'] = get_job_type_list();
-        $get['job_category'] = get_category_list();
-        $get['industry'] = get_industry_list();
-        $get['employment'] = get_employment_type_list();
-        $get['educations'] = $this->EmployerModel->get_education();
-        $get['countries'] = $this->EmployerModel->get_countries_list();
-        return view('employer/job/post', $get);
-    }
+        $pkg = $this->EmployerModel->get_active_package();
+        $pkg_id = $pkg['package_id'];
+        if (empty($pkg['package_id'])) {
+            $this->session->setFlashdata('error','Package is Expired');
+            return redirect()->to(base_url('employer/packages'));
+        }
 
-    public function postjob()
-    {
+        // Free Job post
+        $total_free_jobs = $this->EmployerModel->count_posted_jobs($pkg_id,0,$pkg['payment_id']);
+        if ($total_free_jobs >= $pkg['no_of_posts']) {
+            $this->session->setFlashdata('error','Post Limit Exceeded');
+            return redirect()->to(base_url('employer/packages'));
+        }
+
+        //Featured Job Post
+        $total_featured_jobs = $this->EmployerModel->count_posted_jobs($pkg_id,1,$pkg['payment_id']);
+        if ($total_featured_jobs >= $pkg['no_of_posts']) {
+            $this->session->setFlashdata('error','Post Limit Exceeded');
+            return redirect()->to(base_url('employer/packages'));
+        }
+
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 "employer_id"       => ["label" => "employer_id", "rules" => "trim|required"],
@@ -536,8 +570,17 @@ class Employer extends BaseController
                 'updated_date'  => date('Y-m-d : H:i:s')
             );
             $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
-            $query = $this->EmployerModel->postjob($data);
-            if ($query->resultID == 1) {
+            $job_id = $this->EmployerModel->postjob($data);
+            // Featured Job Details
+            $featured_data = array(
+                'employer_id' => session('employer_id'),
+                'job_id' => $job_id,
+                'package_id' => $pkg['package_id'],
+                'payment_id' => $pkg['payment_id'],
+                'is_featured' => ($pkg['price'] == 0)? 0 : 1
+            );
+            $result = $this->EmployerModel->add_featured_job($featured_data);
+            if (result) {
                 $this->session->setFlashdata('success', 'Job successfully posted');
                 return redirect()->to(base_url('employer/list_jobs'));
             } else {
@@ -545,16 +588,19 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/post'));
             }
         }
+
+        $get['companies'] = $this->EmployerModel->get_companies(session('employer_id'));
+        $get['job_type'] = get_job_type_list();
+        $get['job_category'] = get_category_list();
+        $get['industry'] = get_industry_list();
+        $get['employment'] = get_employment_type_list();
+        $get['educations'] = $this->EmployerModel->get_education();
+        $get['countries'] = $this->EmployerModel->get_countries_list();
+        return view('employer/job/post', $get);
     }
 
     public function list_jobs()
     {
-        // if ($this->request->isAJAX()) {
-        //     $id = session('employer_id');
-        //     $get['data'] = $this->EmployerModel->list_jobs($id);
-        //     $get['industry'] = $this->EmployerModel->list_jobs($id);
-        //     return json_encode($get);
-        // }
         return view('employer/job/job_list');
     }
 
@@ -675,6 +721,7 @@ class Employer extends BaseController
     {
         $query = $this->EmployerModel->delete_job($id);
         if ($query->resultID == 1) {
+            $this->session->setFlashdata('success', 'Job successfully deleted');
             return redirect()->to(base_url('employer/list_jobs'));
         } else {
             $this->session->setFlashdata('error', 'Something went wrong, please try again');

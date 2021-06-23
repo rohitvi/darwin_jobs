@@ -25,7 +25,7 @@
 	                    <h4>Job Info</h4>
 	                </div>
 	                <div class="widget-body">
-	                    <form action="<?= base_url('employer/postjob'); ?>" method="post" class="needs-validation" novalidate>
+	                    <form action="<?= base_url('employer/post'); ?>" method="post" class="needs-validation" novalidate>
 	                        <input type="hidden" name="employer_id" value="<?= session('employer_id') ?>">
 	                        <input type="hidden" name="company_id" value="<?= session('employer_id') ?>">
 	                        <div class="form-group row d-flex align-items-center mb-5">

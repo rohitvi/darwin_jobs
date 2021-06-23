@@ -203,3 +203,8 @@ function sendEmail($mail_data)
         // pre($email->printDebugger(['headers']));
     }
 }
+
+function add_30_days($days)
+{
+    return date('Y-m-d', strtotime(' + '.$days.' days'));
+}
