@@ -45,7 +45,7 @@
                   </div>
                   <div class="form-group">
                    <label for="email">Email *</label>
-                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email', $data[0]['email']) ?>">
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email', $data[0]['eemail']) ?>">
                   </div>
                   <div class="form-group">
                    <label for="designation">Designation *</label>
@@ -59,28 +59,33 @@
                     <label for="country">Country *</label>
                     <select class="form-control" id="country" name="country">
                       <option selected="selected">Select Country</option>
-                      <?php
-                        foreach($countries as $key => $value) { ?>
+                      <?php foreach($countries as $value) : 
+                        if ($data[0]['ecountry'] == $value['id']) : ?>
+                          <option value="<?= $value['id']; ?>" selected> <?= $value['name']; ?></option>
+                        <?php else : ?>
                           <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                      <?php
-                        } ?>
+                      <?php endif; endforeach; ?>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="state">State *</label>
-                    <select class="form-control" id="state" name="state">
-                      <option selected="selected">Select State</option>
-                    </select>
+                    <?php
+                      $states = get_country_states($data[0]['country']);
+                            $options = array('' => 'Select State') + array_column($states, 'name', 'id');
+                            echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state" required');
+                        ?>
                   </div>
                   <div class="form-group">
                     <label for="city">City *</label>
-                    <select class="form-control" id="city" name="city">
-                      <option selected="selected">Select City</option>
-                    </select>
+                    <?php
+                      $cities = get_state_cities($data[0]['state']);
+                      $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
+                      echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" required');
+                    ?>
                   </div>
                   <div class="form-group">
                     <label for="address">Address *</label>
-                    <input type="text" class="form-control" id="address" name='address' placeholder="Address" value="<?= set_value('address', $data[0]['address']) ?>">
+                    <input type="text" class="form-control" id="address" name='address' placeholder="Address" value="<?= $data[0]['caddress'] ?>">
                   </div>
                   <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Update">
@@ -115,29 +120,32 @@
                   </div>
                   <div class="form-group">
                     <label for="company_name">Company Name *</label>
-                    <input type="text" class="form-control" id="company_name" name='company_name' placeholder="Enter Company Name">
+                    <input type="text" class="form-control" id="company_name" value="<?= set_value('company_name', $data[0]['company_name']) ?>" name='company_name' placeholder="Enter Company Name">
                   </div>
                   <div class="form-group">
                     <label for="company_email">Company Email *</label>
-                    <input type="email" class="form-control" id="company_email" name='company_email' placeholder="Enter Company Email">
+                    <input type="email" class="form-control" id="company_email" name='company_email' value="<?= set_value('email', $data[0]['eemail']) ?>" placeholder="Enter Company Email">
                   </div>
                   <div class="form-group">
                     <label for="phone_no">Phone No. *</label>
-                    <input type="text" class="form-control" id="phone_no" name='phone_no' placeholder="Phone Number">
+                    <input type="text" class="form-control" id="phone_no" name='phone_no' value="<?= set_value('phone_no', $data[0]['phone_no']) ?>" placeholder="Phone Number">
                   </div>
                   <div class="form-group">
                     <label for="website">Website *</label>
-                    <input type="text" class="form-control" id="website" name='website' placeholder="Website">
+                    <input type="text" class="form-control" id="website" name='website' value="<?= set_value('website', $data[0]['website']) ?>" placeholder="Website">
                   </div>
                   <div class="form-group">
                     <label for="category">Category *</label>
                     <select class="form-control" id="category" name="category">
                       <option selected="selected">Select Category</option>
                       <?php
-                        foreach($categories as $key => $value) { ?>
+                        foreach($categories as $key => $value) : 
+                           if ($data[0]['category'] == $value['id']) : ?>
+                              <option value="<?= $value['id'] ?>" selected><?= $value['name'] ?></option>
+                            <?php else : ?>
                           <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                      <?php
-                        } ?>
+                      <?php endif;
+                    endforeach; ?>
                     </select>
                   </div>
                   <div class="form-group">
@@ -166,54 +174,59 @@
                   </div>
                   <div class="form-group">
                     <label for="description">Company Description *</label>
-                    <textarea class="form-control" id="description" name='description'></textarea>
+                    <textarea class="form-control" id="description" name='description'><?= $data[0]['description'] ?></textarea>
                   </div>
                   <div class="form-group">
                     <label for="ccountry">Country *</label>
                     <select class="form-control" id="ccountry" name="country">
                       <option selected="selected">Select Country</option>
-                      <?php
-                        foreach($countries as $key => $value) { ?>
+                      <?php foreach($countries as $value) : 
+                        if ($data[0]['ccountry'] == $value['id']) : ?>
+                          <option value="<?= $value['id']; ?>" selected> <?= $value['name']; ?></option>
+                        <?php else : ?>
                           <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
-                      <?php
-                        } ?>
+                      <?php endif; endforeach; ?>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="cstate">State *</label>
-                    <select class="form-control" id="cstate" name="state">
-                      <option selected="selected">Select State</option>
-                    </select>
+                    <?php
+                      $states = get_country_states($data[0]['country']);
+                            $options = array('' => 'Select State') + array_column($states, 'name', 'id');
+                            echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 cstate" required');
+                        ?>
                   </div>
                   <div class="form-group">
                     <label for="ccity">City *</label>
-                    <select class="form-control" id="ccity" name="city">
-                      <option selected="selected">Select City</option>
-                    </select>
+                    <?php
+                      $cities = get_state_cities($data[0]['state']);
+                      $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
+                      echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 ccity" required');
+                    ?>
                   </div>
                   <div class="form-group">
                     <label for="postcode">Pin Code *</label>
-                    <input type="text" class="form-control" id="postcode" name='postcode' placeholder="Pin Code">
+                    <input type="text" class="form-control" id="postcode" name='postcode' value="<?= set_value('postcode', $data[0]['postcode']) ?>" placeholder="Pin Code">
                   </div>
                   <div class="form-group">
                     <label for="full_address">Full Address *</label>
-                    <input type="text" class="form-control" id="full_address" name='full_address' placeholder="Full Address">
+                    <input type="text" class="form-control" id="full_address" name='full_address' value="<?= $data[0]['eaddress'] ?>" placeholder="Full Address">
                   </div>
                   <div class="form-group">
                     <label for="facebook_link">Facebook</label>
-                    <input type="text" class="form-control" id="facebook_link" name='facebook_link' placeholder="Facebook Link">
+                    <input type="text" class="form-control" id="facebook_link" name='facebook_link' value="<?= set_value('facebook_link', $data[0]['facebook_link']) ?>" placeholder="Facebook Link">
                   </div>
                   <div class="form-group">
                     <label for="twitter_link">Twitter</label>
-                    <input type="text" class="form-control" id="twitter_link" name='twitter_link' placeholder="Twitter Link">
+                    <input type="text" class="form-control" id="twitter_link" name='twitter_link' value="<?= set_value('twitter_link', $data[0]['twitter_link']) ?>" placeholder="Twitter Link">
                   </div>
                   <div class="form-group">
                     <label for="youtube_link">Youtube</label>
-                    <input type="text" class="form-control" id="youtube_link" name='youtube_link' placeholder="Youtube Link">
+                    <input type="text" class="form-control" id="youtube_link" name='youtube_link' value="<?= set_value('youtube_link', $data[0]['youtube_link']) ?>" placeholder="Youtube Link">
                   </div>
                   <div class="form-group">
                     <label for="linkedin_link">LinkedIn</label>
-                    <input type="text" class="form-control" id="linkedin_link" name='linkedin_link' placeholder="LinkedIn Link">
+                    <input type="text" class="form-control" id="linkedin_link" name='linkedin_link' value="<?= set_value('linkedin_link', $data[0]['linkedin_link']) ?>" placeholder="LinkedIn Link">
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -234,76 +247,62 @@
   <!-- /.content-wrapper -->
 
   <script>
+    var csfr_token_name = '<?= csrf_token() ?>';
+    var csfr_token_value = '<?= csrf_hash() ?>';
     $(document).ready(function(){
       $('#country').on('change',function(){
-        var country_id = this.value;
+        var data = {country: this.value,}
+        data[csfr_token_name] = csfr_token_value;
         $.ajax({
-          url: '<?= base_url('admin/addemployer'); ?>',
+          url: '<?= base_url('home/get_country_states'); ?>',
           type: 'POST',
-          data: {
-            country_id: country_id
-          },
+          data: data,
+          dataType: 'json',
           cached: false,
-          success: function(result){
-            var json = JSON.parse(result);
-            var $state = $('#state');
-            for (var i = 0; i < json.length; i++) {
-              $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
-            }
-            // $('#state').html(result);
-            // $('#city').html('<option value="">Select State First!</option>');
+          success: function(obj){
+            $('.state').html(obj.msg);
           }
         });
       });
-      $('#state').on('change',function(){
-        var state_id = this.value;
+      $('.state').on('change',function(){
+        var data = {state: this.value,}
+        data[csfr_token_name] = csfr_token_value;
         $.ajax({
-          url: '<?= base_url('admin/getcities'); ?>',
+          url: '<?= base_url('home/get_state_cities'); ?>',
           type: 'POST',
-          data: {state_id:state_id},
+          data: data,
+          dataType: 'json',
           cached: false,
-          success: function(result){
-            var json = JSON.parse(result);
-            var $cities = $('#city');
-            for (var i = 0; i < json.length; i++) {
-              $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
-            }
+          success: function(obj){
+            $('.city').html(obj.msg);
           }
         });
       });
       $('#ccountry').on('change',function(){
-        var country_id = this.value;
+        var data = {country: this.value,}
+        data[csfr_token_name] = csfr_token_value;
         $.ajax({
-          url: '<?= base_url('employer/addemployer'); ?>',
+          url: '<?= base_url('home/get_country_states'); ?>',
           type: 'POST',
-          data: {
-            country_id: country_id
-          },
+          data: data,
+          dataType: 'json',
           cached: false,
-          success: function(result){
-            var json = JSON.parse(result);
-            var $state = $('#cstate');
-            for (var i = 0; i < json.length; i++) {
-              $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
-            }
-            // $('#state').html(result);
-            // $('#city').html('<option value="">Select State First!</option>');
+          success: function(obj){
+            $('.cstate').html(obj.msg);
           }
         });
       });
       $('#cstate').on('change',function(){
-        var state_id = this.value;
+        var data = {state: this.value,}
+        data[csfr_token_name] = csfr_token_value;
         $.ajax({
-          url: '<?= base_url('admin/getcities'); ?>',
+          url: '<?= base_url('home/get_state_cities'); ?>',
           type: 'POST',
-          data: {state_id:state_id},
+          data: data,
+          dataType: 'json',
           cached: false,
-          success: function(result){
-            var json = JSON.parse(result);
-            var $cities = $('#ccity');
-            for (var i = 0; i < json.length; i++) {
-              $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
-            }
+          success: function(obj){
+            $('.ccity').html(obj.msg);
           }
         });
       });
