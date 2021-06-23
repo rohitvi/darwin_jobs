@@ -11,7 +11,7 @@ class Home extends BaseController
 
     public function index()
     {
-        
+        return view('user/index');
     }
 
     //Get States
