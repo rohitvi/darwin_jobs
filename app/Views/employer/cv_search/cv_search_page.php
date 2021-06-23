@@ -8,6 +8,12 @@
 .ccard input,.select {
     border:1px solid #2c304d;
 }
+img{
+margin-left:auto;
+margin-right:auto;
+display:block;
+}
+
 </style>
 
                 <!-- End Left Sidebar -->
@@ -29,8 +35,12 @@
                             </div>
                         </div>
 
+<?php if(empty($profiles)): ?>
+		<p class="alert alert-danger">Sorry Profile not Found !</p>
+<?php endif; ?>
 <!-- card start -->
-<?php $attributes = array('id' => 'search_job', 'method' => 'post'); echo form_open('employers/search',$attributes);?>
+
+<form action='search' method='post'>
 <div class="row">
     <div class="col-xl-12">
         <div class="widget has-shadow ccard">
@@ -99,7 +109,60 @@
         </div>
     </div>
 </div>
-<?php echo form_close(); ?>
+</form>
+<br>
+
+
+<div class="row">
+<?php foreach ($profiles as $row): ?>
+<div class="col-xl-4">
+        <div class="widget has-shadow ccard">
+            <div class="widget-body">
+            <img src="<?= base_url('public/employer/assets/img/avatar/user.png')?>" height=60 alt="">
+                <table class='table table-bordered'>
+                <tr>
+                <td><b>Name :</b></td>
+                <td><h4><?= $row['firstname'].' '.$row['lastname']; ?></h4></td>
+                </tr>
+                <tr>
+                <td><b>Job Title</b></td>
+                <td><?= $row['job_title']; ?></td>
+                </tr>
+                <tr>
+                <td><b>Location</b></td>
+                <td><?= get_city_name($row['city']).','. get_country_name($row['country']); ?></td>
+                </tr>
+                <tr>
+                <td><b>Education</b></td>
+                <td><?= get_education_level($row['education_level']); ?></td>
+                </tr>
+                <tr>
+                <td><b>Experience</b></td>
+                <td><?= $row['experience']; ?> Years</td>
+                </tr>
+                <tr>
+                <td><b>Nationality</b></td>
+                <td><?= get_country_name($row['nationality']); ?></td>
+                </tr>
+                <tr>
+                <td><b>Current Salary</b></td>
+                <td>INR <?= $row['current_salary']; ?></td>
+                </tr>
+                <tr>
+                <td><b>Expected Salary</b></td>
+                <td>INR <?= $row['expected_salary']; ?></td>
+                </tr>
+                <tr>
+                <td><b>Category</b></td>
+                <td><?= get_category_name($row['category']); ?></td>
+                </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>	
+</div>
+
 <!-- card end  -->
 
 
