@@ -716,6 +716,7 @@ class Employer extends BaseController
 
         if(!empty($this->request->getPost('experience')))
             $search['experience'] = $this->request->getPost('experience');
+            
             $get['search_value'] = $search;
             $get['profiles']=$this->EmployerModel->get_user_profiles($search);
         }
@@ -851,6 +852,14 @@ class Employer extends BaseController
             } else {
                 echo '0~Something went wrong, please try again !';
             }
+        }
+    }
+
+    public function candidates_shortlisted($user_id){
+        $emp_id = session('employer_id');
+        $result = $this->EmployerModel->candidates_shortlisted($emp_id,$user_id);
+        if ($result) {
+           return redirect()->to('employer/shortlisted'); 
         }
     }
 }

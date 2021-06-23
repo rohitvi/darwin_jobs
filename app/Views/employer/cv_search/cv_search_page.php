@@ -35,8 +35,8 @@ display:block;
                             </div>
                         </div>
 
-<?php if(empty($profiles)): ?>
-		<p class="alert alert-danger">Sorry Profile not Found !</p>
+<?php if(isset($_POST['search']) && empty($profiles)): ?>
+		<p class="alert alert-danger" >Sorry Profile not Found !</p>
 <?php endif; ?>
 <!-- card start -->
 
@@ -129,6 +129,17 @@ display:block;
                 <td><?= $row['job_title']; ?></td>
                 </tr>
                 <tr>
+                <td><b>Skills</b></td>
+                <td><?php  $skills = explode("," , $row['skills']);?>
+						<ul class="tags">
+							<?php foreach($skills as $skill): ?>
+							<li>
+								<a href="#"><?= $skill; ?></a>
+							</li>
+							<?php endforeach; ?>
+						</ul></td>
+                </tr>
+                <tr>
                 <td><b>Location</b></td>
                 <td><?= get_city_name($row['city']).','. get_country_name($row['country']); ?></td>
                 </tr>
@@ -155,6 +166,10 @@ display:block;
                 <tr>
                 <td><b>Category</b></td>
                 <td><?= get_category_name($row['category']); ?></td>
+                </tr>
+                <tr>
+                <td><a href="<?= base_url('employer/candidates_shortlisted/'.$row['id']) ?>"><input type="submit" name="search" class="btn btn-primary btn-block mb-2" value="Shortlist"></a></td>
+                <td><input type="submit" name="search" class="btn btn-primary btn-block mb-2" value="Download CV"></td>
                 </tr>
                 </table>
             </div>
