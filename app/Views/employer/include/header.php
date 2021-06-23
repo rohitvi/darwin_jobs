@@ -1,3 +1,11 @@
+<?php $ap = basename($_SERVER['PHP_SELF'], ".php");
+    function is_Url($path)
+    {
+        if ($path == uri_string()) {
+            return 1;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -169,11 +177,11 @@
                 <nav class="side-navbar box-scroll sidebar-scroll">
                     <!-- Begin Main Navigation -->
                     <ul class="list-unstyled">
-                        <li><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
-                        <li><a href="#dropdown-app" aria-expanded="false" data-toggle="collapse"><i class="la la-plus-circle"></i><span>Job Posting</span></a>
-                            <ul id="dropdown-app" class="collapse list-unstyled pt-0">
-                                <li><a href="<?= base_url('employer/list_jobs') ?>">View Job</a></li>
-                                <li><a href="<?= base_url('employer/post') ?>">Add New Job</a></li>
+                        <li class="<?= (is_Url('employer/dashboard') ) ? 'active' : ''; ?>"><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
+                        <li><a href="#dropdown-app" <?= (is_Url('employer/list_jobs') || is_Url('employer/post')) ? "aria-expanded='true' class=''" : "aria-expanded='false'  class='collapsed'"; ?> data-toggle="collapse"><i class="la la-plus-circle"></i><span>Job Posting</span></a>
+                            <ul id="dropdown-app" class="collapse <?= (is_Url('employer/list_jobs') || is_Url('employer/post') ) ? 'show' : ''; ?> list-unstyled pt-0">
+                                <li><a class="<?= (is_Url('employer/list_jobs') ) ? 'active' : ''; ?>" href="<?= base_url('employer/list_jobs') ?>">View Job</a></li>
+                                <li><a class="<?= (is_Url('employer/post') ) ? 'active' : ''; ?>" href="<?= base_url('employer/post') ?>">Add New Job</a></li>
                             </ul>
                         </li>
                         <li><a href="<?= base_url('employer/shortlisted') ?>"><i class="la la-users"></i><span>Shortlisted Candidates</span></a></li>
