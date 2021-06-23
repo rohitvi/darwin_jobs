@@ -57,6 +57,15 @@ function get_state_name($id)
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
 }
 
+// Get Nationality by ID
+
+function get_education_level($id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('education');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
+}
+
 // -----------------------------------------------------------------------------
 // Get industry name by id
 function get_industry_name($id)

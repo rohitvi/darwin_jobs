@@ -690,36 +690,40 @@ class Employer extends BaseController
     }
 
     public function search(){
+        $search = array();
+        $get['profiles']=array();
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['education'] = get_education_list();
 
         if ($this->request->getMethod() ==  'post') {
 
-            // search job title, keyword
-            if(!empty($this->request->getPost('job_title')))
-                $search['job_title'] = $this->request->getPost('job_title');
+        // search job title, keyword
+        if(!empty($this->request->getPost('job_title')))
+            $search['job_title'] = $this->request->getPost('job_title');
 
-            if(!empty($this->request->getPost('category')))
-                $search['category'] = $this->request->getPost('category');
-            
-            if(!empty($this->request->getPost('country')))
-                $search['country'] = $this->request->getPost('country');
-            
-            if(!empty($this->request->getPost('expected_salary')))
-                $search['expected_salary'] = $this->request->getPost('expected_salary');
+        if(!empty($this->request->getPost('category')))
+            $search['category'] = $this->request->getPost('category');
+        
+        if(!empty($this->request->getPost('country')))
+            $search['country'] = $this->request->getPost('country');
+        
+        if(!empty($this->request->getPost('expected_salary')))
+            $search['expected_salary'] = $this->request->getPost('expected_salary');
 
-            if(!empty($this->request->getPost('education_level')))
-                $search['education_level'] = $this->request->getPost('education_level');
+        if(!empty($this->request->getPost('education_level')))
+            $search['education_level'] = $this->request->getPost('education_level');
 
-            if(!empty($this->request->getPost('experience')))
-                $search['experience'] = $this->request->getPost('experience');
-
-
+        if(!empty($this->request->getPost('experience')))
+            $search['experience'] = $this->request->getPost('experience');
+            $get['search_value'] = $search;
+            $get['profiles']=$this->EmployerModel->get_user_profiles($search);
         }
 
        return view('employer/cv_search/cv_search_page',$get);
     }
+
+
     public function make_shortlist($id,$job_id)
     {
         if ($this->EmployerModel->do_shortlist($id)) {
