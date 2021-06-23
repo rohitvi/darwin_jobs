@@ -906,7 +906,8 @@ class Employer extends BaseController
         $emp_id = session('employer_id');
         $result = $this->EmployerModel->candidates_shortlisted($emp_id,$user_id);
         if ($result) {
-           return redirect()->to('employer/shortlisted'); 
+           //return redirect()->to('employer/shortlisted'); 
+           return redirect()->to(base_url('employer/shortlisted'));
         }
     }
 }
