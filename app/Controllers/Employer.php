@@ -514,7 +514,7 @@ class Employer extends BaseController
         //Featured Job Post
         $total_featured_jobs = $this->EmployerModel->count_posted_jobs($pkg_id,1,$pkg['payment_id']);
         if ($total_featured_jobs >= $pkg['no_of_posts']) {
-            $this->session->setFlashdata('error','Post Limit Exceeded');
+            $this->session->setFlashdata('error','Package Expired');
             return redirect()->to(base_url('employer/packages'));
         }
 
@@ -580,7 +580,7 @@ class Employer extends BaseController
                 'is_featured' => ($pkg['price'] == 0)? 0 : 1
             );
             $result = $this->EmployerModel->add_featured_job($featured_data);
-            if (result) {
+            if ($result) {
                 $this->session->setFlashdata('success', 'Job successfully posted');
                 return redirect()->to(base_url('employer/list_jobs'));
             } else {
@@ -906,7 +906,8 @@ class Employer extends BaseController
         $emp_id = session('employer_id');
         $result = $this->EmployerModel->candidates_shortlisted($emp_id,$user_id);
         if ($result) {
-           return redirect()->to('employer/shortlisted'); 
+           //return redirect()->to('employer/shortlisted'); 
+           return redirect()->to(base_url('employer/shortlisted'));
         }
     }
 }
