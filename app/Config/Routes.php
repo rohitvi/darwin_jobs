@@ -32,9 +32,6 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Admin::index');
-$routes->get('/', 'Admin::add_category');
-$routes->post('/', 'Admin::add_category');
 // Admin Edit Routes
 $routes->add('admin/showadmin/(:num)','Admin::editadmin/$1');
 // Admin Update Routes
