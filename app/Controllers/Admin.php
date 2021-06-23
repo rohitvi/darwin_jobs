@@ -24,12 +24,23 @@ class Admin extends BaseController
         } else {
             return redirect()->to('admin/login');
         }
-
     }
 
     public function dashboard()
     {
+        $data['all_users'] = $this->adminModel->get_all_users();
+        $data['active_users'] = $this->adminModel->get_active_users();
+        $data['deactive_users'] = $this->adminModel->get_deactive_users();
+
+        $data['all_employers'] = $this->adminModel->get_all_employers();
+        $data['active_employers'] = $this->adminModel->get_active_employers();
+        $data['deactive_employers'] = $this->adminModel->get_deactive_employers();
+
+        $data['latest_users'] = $this->adminModel->get_latest_users();
+        $data['latest_jobs'] = $this->adminModel->get_latest_jobs();
+
         $data['title'] = 'Dashboard';
+        // pre($data);
         return view('admin/dashboard', $data);
     }
 
@@ -50,18 +61,102 @@ class Admin extends BaseController
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
-            } elseif ($logindata['id'] == 1) {
+            } elseif ($logindata['status'] == 1) {
                 $admindata = [
                     'admin_id' => $logindata['id'],
                     'admin_logged_in' => true,
                     'admin_username' => $username,
                 ];
                 $this->session->set($admindata);
-                echo '1~ You Have Successfully Logged in';
+                echo '1~You Have Successfully Logged in';
+                exit;
+            } else {
+                echo '2~Your Account is Blocked';
                 exit;
             }
         }
         return view('admin/auth/login');
+    }
+
+    public function forgot_password()
+    {
+        if (session('admin_logged_in')) {
+            return redirect()->to('admin/dashboard');
+        }
+
+        if ($this->request->isAJAX()) {
+            //checking server side validation
+            $rules = [
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . arrayToList($this->validation->getErrors());
+                exit;
+            }
+            $email = $this->request->getPost('email');
+            $response = $this->adminAuthModel->check_user_mail($email);
+            if ($response) {
+                $rand_no = rand(0, 1000);
+                $pwd_reset_code = md5($rand_no . $response['id']);
+                $this->adminAuthModel->update_reset_code($pwd_reset_code, $response['id']);
+
+                // --- sending email
+                $name = $response['firstname'] . ' ' . $response['lastname'];
+                $email = $response['email'];
+                $reset_link = base_url('admin/reset_password/' . $pwd_reset_code);
+                $mail_data['mail_body'] = $this->mailer->pwd_reset_link($name, $reset_link);
+                $mail_data['receiver_email'] = $email;
+                $mail_data['mail_subject'] = 'Reset your password';
+                if (sendEmail($mail_data)) {
+                    echo '1~We have sent instructions for resetting your password to your email';
+                    exit;
+                } else {
+                    echo '0~There is the problem on your email';
+                    exit;
+                }
+            } else {
+                echo '0~The Email that you provided are invalid';
+                exit;
+            }
+        } else {
+            $data['title'] = 'Forget Password';
+            return view('admin/auth/forget_password', $data);
+        }
+    }
+
+    //----------------------------------------------------------------		
+    public function reset_password($id = 0)
+    {
+        if (session('admin_logged_in')) {
+            return redirect()->to('admin/dashboard');
+        }
+        if ($this->request->isAJAX()) {
+            // check the activation code in database
+            $rules = [
+                'password' => ['label' => 'Password', 'rules' => 'trim|required|min_length[5]'],
+                'confirm_password' => ['label' => 'Password Confirmation', 'rules' => 'trim|required|matches[password]'],
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . arrayToList($this->validation->getErrors());
+                exit;
+            } else {
+                $new_password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+                $this->adminAuthModel->reset_password($id, $new_password);
+                $this->session->setFlashdata('success', 'New password has been Updated successfully.Please login below');
+                echo '1~New password has been Updated successfully.Please login below';
+                exit;
+            }
+        } else {
+            $result = $this->adminAuthModel->check_password_reset_code($id);
+            if ($result) {
+                $data['reset_code'] = $id;
+                $data['title'] = 'Reset Password';
+                return view('admin/auth/reset_password', $data);
+            } else {
+                $this->session->setFlashdata('error', 'Password Reset Code is either invalid or expired.');
+                return redirect()->to(base_url('admin/forgot_password'));
+            }
+        }
     }
 
     public function account()

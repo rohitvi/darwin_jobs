@@ -793,4 +793,64 @@ class Employer extends BaseController
             }
         }
     }
+
+    public function password_reset()
+    {
+        if($this->request->isAJAX()){
+            $email = trim($this->request->getPost('email'));
+            $response = $this->EmployerAuthModel->check_email($email);
+            if ($response) {
+                $rand_no = rand(0,1000);
+                $pwd_reset_code = md5($rand_no.$response[0]['id']);
+                $query = $this->EmployerAuthModel->update_reset_code($pwd_reset_code,$response[0]['id']);
+                // Sending Email
+                $name = $response[0]['firstname'].' '.$response[0]['lastname'];
+                $email = $response[0]['email'];
+                $reset_link = base_url('employer/reset_password/'.$pwd_reset_code);
+                $body = $this->mailer->pwd_reset_link($name,$reset_link);
+
+                $mail_data['receiver_email'] = $email;
+                $mail_data['mail_subject'] = 'Reset your password';
+                $mail_data['mail_body'] = $body;
+
+                if (sendEmail($mail_data)) {
+                    echo '1~Email has been sent successfully !';
+                    exit;
+                }
+            } else{
+                echo '0~Email does not exist!';
+                exit;
+            }
+        }
+        return view('employer/auth/password_reset');
+    }
+
+    public function reset_password($reset_code)
+    {
+        $check_reset['data'] = $this->EmployerAuthModel->check_reset_code($reset_code);
+        return view('employer/auth/reset_password',$check_reset);
+    }
+
+    public function update_reset_password()
+    {
+        if ($this->request->isAJAX()) {
+            $rules = [
+                'id' => ['label'=>'id','rules'=>'required'],
+                'password' => ['label'=>'password','rules'=>'required'],
+                'cpassword' => ['label'=>'cpassword','rules'=>'required|matches[password]'],
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . arrayToList($this->validation->getErrors());
+                exit;
+            }
+            $id = $this->request->getPost('id');
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            $query = $this->EmployerAuthModel->update_reset_password($password,$id);
+            if ($query) {
+                echo '1~Password changed successfully !';
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }
+    }
 }

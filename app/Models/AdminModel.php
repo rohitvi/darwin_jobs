@@ -9,13 +9,59 @@ class AdminModel extends Model
 {
     protected $table = NULL;
 
-    public function test()
+    // Dashboard
+    public function get_all_users()
     {
-        $builder = $this->db->table('admin');
-        $builder->orderBy('id', 'desc');
-        $result = $builder->get()->getResultArray();
-        return $result;
+        $builder = $this->db->table('users');
+        return $builder->countAll();
     }
+    public function get_active_users()
+    {
+        $builder = $this->db->table('users');
+        $builder->where('is_active', 1);
+        return $builder->countAll();
+    }
+    public function get_deactive_users()
+    {
+        $builder = $this->db->table('users');
+        $builder->where('is_active', 0);
+        return $builder->countAll();
+    }
+
+    public function get_all_employers()
+    {
+        $builder = $this->db->table('employers');
+        return $builder->countAll();
+    }
+    public function get_active_employers()
+    {
+        $builder = $this->db->table('employers');
+        $builder->where('is_active', 1);
+        return $builder->countAll();
+    }
+    public function get_deactive_employers()
+    {
+        $builder = $this->db->table('employers');
+        $builder->where('is_active', 0);
+        return $builder->countAll();
+    }
+
+    public function get_latest_users()
+    {
+        $builder = $this->db->table('users');
+        $builder->orderBy('created_date', 'desc');
+        $builder->limit(10, 0);
+        return $builder->get()->getResultArray();
+    }
+
+    public function get_latest_jobs()
+    {
+        $builder = $this->db->table('job_post');
+        $builder->select('job_post.*,companies.company_name')->join('companies', 'companies.id = job_post.company_id')->orderBy('job_post.created_date', 'desc')->limit(10, 0);
+        return $builder->get()->getResultArray();
+    }
+
+
     //===================Category Model Start==============================================================
     public function get_all_categories()
     {
@@ -516,29 +562,32 @@ class AdminModel extends Model
             return true;
         else
             return false;
-	}
-
-    public function update_general_settings($data){
-        $builder = $this->db->table('general_settings');
-        return $builder->where('id',1)->update($data);
     }
 
-    public function fetch_general_setting(){
+    public function update_general_settings($data)
+    {
+        $builder = $this->db->table('general_settings');
+        return $builder->where('id', 1)->update($data);
+    }
+
+    public function fetch_general_setting()
+    {
 
         $builder = $this->db->table('general_settings');
-        return $builder->where('id',1)->get()->getRowArray();
+        return $builder->where('id', 1)->get()->getRowArray();
     }
 
     public function get_footer_settings()
-	{  
+    {
         return $this->db->table('footer_settings')->get()->getResultArray();
-	}
+    }
 
-    public function update_footer_setting($footerdata){
+    public function update_footer_setting($footerdata)
+    {
 
-        $builder= $this->db->table('footer_settings');
-        return $query=$builder->insert($footerdata);
-	}
+        $builder = $this->db->table('footer_settings');
+        return $query = $builder->insert($footerdata);
+    }
 
 	//----------------------------------------------------
 	public function delete_footer_all_setting()

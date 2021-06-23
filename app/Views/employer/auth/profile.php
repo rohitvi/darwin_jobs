@@ -32,25 +32,10 @@
                                         <div class="em-separator separator-dashed"></div>
                                         <ul class="nav flex-column">
                                             <li class="nav-item">
+                                                <a class="nav-link" href="<?= base_url('employer/profile') ?>"><i class="la la-user la-2x align-middle pr-2"></i>Personal Information</a>
+                                            </li>
+                                            <li class="nav-item">
                                                 <a class="nav-link" href="<?= base_url('employer/mypackages') ?>"><i class="la la-bell la-2x align-middle pr-2"></i>My Packages</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-user la-2x align-middle pr-2"></i>Personal Information</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-comments la-2x align-middle pr-2"></i>Messages</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-bar-chart la-2x align-middle pr-2"></i>Statistics</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-clipboard la-2x align-middle pr-2"></i>Tasks</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-gears la-2x align-middle pr-2"></i>Settings</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="javascript:void(0)"><i class="la la-question-circle la-2x align-middle pr-2"></i>FAQ</a>
                                             </li>
                                         </ul>
                                     </div>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= get_g_setting_val('application_name') ?> | Admin Log in</title>
+  <title><?= get_g_setting_val('application_name') ?> | Forgot Password</title>
   <link rel="shortcut icon" href="<?= get_g_setting_val('favicon') ?>">
 
   <!-- Google Font: Source Sans Pro -->
@@ -21,49 +21,37 @@
 
 <body class="hold-transition login-page">
   <div class="login-box">
+    <div class="login-logo">
+      <b class="h1"><?= get_g_setting_val('application_name') ?></b>
+    </div>
     <!-- /.login-logo -->
-    <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-        <b class="h1"><?= get_g_setting_val('application_name') ?></b>
-      </div>
-      <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
 
-        <form action="<?= base_url('admin/login'); ?>" method="post" id="sign_in">
+        <form action="" id="sign_in" class="re_div" method="post">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" name="username" placeholder="Username">
+            <input type="email" name="email" class="form-control" placeholder="Email">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
           <div class="row">
-            <div class="col-7">
-              <p class="mb-1">
-                <a href="<?= base_url('admin/forgot_password') ?>">I forgot my password</a>
-              </p>
-            </div>
-            <!-- /.col -->
-            <div class="col-5">
-              <button type="submit" class="btn btn-primary btn-block sign-in">Sign In</button>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block sign-in">Request new password</button>
             </div>
             <!-- /.col -->
           </div>
         </form>
-        <!-- /.social-auth-links -->
+
+        <p class="mt-3 mb-1">
+          <a href="<?= base_url('admin/login') ?>">Login</a>
+        </p>
       </div>
-      <!-- /.card-body -->
+      <!-- /.login-card-body -->
     </div>
-    <!-- /.card -->
   </div>
   <!-- /.login-box -->
 
@@ -79,28 +67,23 @@
     $("#sign_in").on("submit", function() {
       event.preventDefault();
       var fields = $('form').serialize();
-      // console.log(fields);
       $.ajax({
-        url: "<?= base_url('admin/login') ?>",
+        url: "<?= base_url('admin/forgot_password') ?>",
         method: "POST",
         data: fields,
         success: function(responses) {
           var response = responses.split('~');
+          // console.log(responses);return false;
           if ($.trim(response[0]) == 0) {
             $('#sign_in').trigger("reset");
             toastr.error(response[1]);
           }
           if ($.trim(response[0]) == 1) {
+            $('.re_div').remove();
             $('#sign_in').trigger("reset");
-            setTimeout(function() {
-              window.location.href = 'dashboard';
-            }, 500);
             toastr.success(response[1]);
           }
-          if ($.trim(response[0]) == 2) {
-            toastr.error(response[1]);
-          }
-          $('.sign-in').html("Sign In");
+          $('.sign-in').html("Request new password");
         },
         beforeSend: function() {
           $('.sign-in').html("Validating...");
