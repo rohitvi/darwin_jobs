@@ -217,17 +217,10 @@ class AdminModel extends Model
         return $builder->join('companies', 'companies.employer_id = employers.id')->orderBy('employers.id', 'ASC')->get()->getResultArray();
     }
 
-    public function last_id()
-    {
-        $lastid = $this->db->query('SELECT MAX(id) as max_id FROM employers')->getResult();
-        return $lastid;
-    }
-
     public function insertemployer($emp)
     {
         $builder = $this->db->table('employers')->insert($emp);
-        $last_id = $this->last_id();
-        return $last_id;
+        return $this->db->insertID();
     }
 
     public function insertcmpny($cmpny)
@@ -238,6 +231,7 @@ class AdminModel extends Model
     public function editemployer($id)
     {
         $builder = $this->db->table('employers');
+        $builder->select('companies.city as ccity,companies.state as cstate,companies.country as ccountry,employers.country as ecountry,employers.state as estate,employers.city as eccity,employers.address as eaddress,companies.address as caddress,employers.email as eemail, companies.email as cemail,employers.*,companies.*');
         $builder->join('companies', 'companies.employer_id = employers.id');
         return $builder->where('employers.id', $id)->get()->getResultArray();
     }

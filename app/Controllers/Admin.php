@@ -896,8 +896,7 @@ class Admin extends BaseController
                 'website' => $this->request->getPost('website'),
                 'description' => $this->request->getPost('description'),
             ];
-            $emp_id = $this->adminModel->insertemployer($emp);
-            $cmpny['employer_id'] = $emp_id[0]->max_id;
+            $cmpny['employer_id'] = $this->adminModel->insertemployer($emp);
             $result = $this->adminModel->insertcmpny($cmpny);
             if ($result->resultID == 1) {
                 $this->session->setFlashdata('success', 'Employer and company successfully registered');
