@@ -94,7 +94,8 @@ class EmployerModel extends Model
 
     public function postjob($data)
     {
-      return $this->db->table('job_post')->insert($data)->get()->insertID();
+      $this->db->table('job_post')->insert($data);
+      return $this->db->insertID();
     }
 
     // public function list_jobs($id)
