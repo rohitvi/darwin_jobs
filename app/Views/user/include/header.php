@@ -75,7 +75,13 @@
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <?php if (session('user_logged_in')) : ?>
-                                        <a href="<?= base_url('home/logout') ?>" class="btn head-btn1">Logout</a>
+                                        <div class="dropdown">
+                                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></button>
+                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item my-2" href="#">Profile</a>
+                                            <a class="dropdown-item my-2" href="<?= base_url('home/logout') ?>"><i class="fas fa-power-off"></i> Logout</a>
+                                          </div>
+                                        </div>
                                     <?php else : ?>
                                         <a href="<?= base_url('home/login') ?>" class="btn head-btn1">Login / Registration</a>
                                     <?php endif; ?>
