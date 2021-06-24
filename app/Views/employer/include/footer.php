@@ -83,6 +83,8 @@
     <script src="<?= base_url('public/employer/assets/js/components/datepicker/datepicker.js')?>"></script>
     <script src="<?= base_url('public/employer/assets/js/app/contact/contact.min.js')?>"></script>
     <script src="<?= base_url('public/employer/assets/vendors/js/noty/noty.min.js')?>"></script>
+    <script src="<?= base_url('public/employer/assets/vendors/js/bootstrap-wizard/bootstrap.wizard.min.js') ?>"></script>
+    <script src="<?= base_url('public/employer/assets/js/components/wizard/form-wizard.min.js') ?>"></script>
     <!-- End Page Snippets -->
 
     <!-- End Custom -->
