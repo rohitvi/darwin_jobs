@@ -70,9 +70,11 @@ $routes->get('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 $routes->post('/Admin::edit_category/(:num)','Admin::edit_category/$1');
 
 // Job Add
-
 $routes->match(['get', 'post'], 'admin/post', 'Admin::post');
 
+
+// USER ROUTES
+$routes->get('profile', 'Home::profile');
 
 /*
  * --------------------------------------------------------------------
