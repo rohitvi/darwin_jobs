@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 // Admin Edit Routes
+$routes->add('login','Home::login');
 $routes->add('admin/showadmin/(:num)','Admin::editadmin/$1');
 // Admin Update Routes
 $routes->add('admin/updateadmin/(:num)','Admin::updateadmin/$1');

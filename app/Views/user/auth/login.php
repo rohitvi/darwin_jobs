@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Login</title>
+    <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/noty/noty.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/user/css/custom.css'); ?>">
@@ -11,16 +12,12 @@
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form id="register" action="" method="post">
-				<div class="social-container">
-					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				</div>
 				<input type="text" name="firstname" placeholder="Firstname" required />
 				<input type="text" name="lastname" placeholder="Lastname" required />
 				<input type="email" name="email" placeholder="Email" required />
 				<input type="password" name="password" placeholder="Password" required />
 				<input type="password" name="cpassword" placeholder="Confirm Password" required />
-				<input type="checkbox" class="check" name="termsncondition" required>
+				<input type="checkbox" class="check form-control" name="termsncondition" required>
 				<span class="checkspan">Terms & Conditions</span>
 				<button>Sign Up</button>
 			</form>
@@ -43,12 +40,12 @@
 			<div class="overlay">
 				<div class="overlay-panel overlay-left">
 					<h1>Create Account!</h1>
-					<p>To keep connected with us please login with your personal info</p>
+					<p>Enter your personal details and start journey with us</p>
 					<button class="ghost" id="signIn">Sign In</button>
 				</div>
 				<div class="overlay-panel overlay-right">
 					<h1>Hello, Friend!</h1>
-					<p>Enter your personal details and start journey with us</p>
+					<p>To stay connected with us please login with your personal info</p>
 					<button class="ghost" id="signUp">Sign Up</button>
 				</div>
 			</div>
@@ -57,8 +54,10 @@
 </body>
 <!-- Noty Js -->
 <script src="<?= base_url('public/user/noty/noty.js')?>"></script>
-<!-- Jquery -->
-<script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="<?= base_url(); ?>/public/user/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="<?= base_url(); ?>/public/user/js/popper.min.js"></script>
+<script src="<?= base_url(); ?>/public/user/js/bootstrap.min.js"></script>
 <script>
 	const signUpButton = document.getElementById('signUp');
 	const signInButton = document.getElementById('signIn');
@@ -75,7 +74,7 @@
         event.preventDefault();
 		var fields = $('#login').serialize();
 		$.ajax({
-			url: "<?= base_url('home/login') ?>",
+			url: "<?= base_url('login') ?>",
             method: "POST",
             data: fields,
             success: function(responses){
@@ -98,7 +97,7 @@
 	              if ($.trim(responses[0]) == 1) {
 	                $('#login').trigger("reset");
 	                setTimeout(function() {
-	                  window.location.href = 'dashboard';
+	                  window.location.href = 'home';
 	                }, 500);
 	                new Noty({
 	                    type: "success",

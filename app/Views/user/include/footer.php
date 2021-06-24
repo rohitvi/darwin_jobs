@@ -135,7 +135,6 @@
 <!-- All JS Custom Plugins Link Here here -->
 <script src="<?= base_url(); ?>/public/user/js/vendor/modernizr-3.5.0.min.js"></script>
 <!-- Jquery, Popper, Bootstrap -->
-<script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
 <script src="<?= base_url(); ?>/public/user/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="<?= base_url(); ?>/public/user/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/user/js/bootstrap.min.js"></script>

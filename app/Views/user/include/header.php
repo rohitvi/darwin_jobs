@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="<?=base_url(); ?>/public/user/img/favicon.ico">
 
     <!-- CSS here -->
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/bootstrap.min.css">
@@ -48,7 +48,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="<?= base_url(); ?>/public/user/img/logo/logo.png" alt=""></a>
+                                <a href="<?= base_url('home') ?>"><img src="<?= base_url(); ?>/public/user/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -57,7 +57,7 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="<?= base_url('home') ?>">Home</a></li>
                                             <li><a href="job_listing.html">Find a Jobs </a></li>
                                             <li><a href="about.html">About</a></li>
                                             <li><a href="#">Page</a>
@@ -76,14 +76,14 @@
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <?php if (session('user_logged_in')) : ?>
                                         <div class="dropdown">
-                                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></button>
+                                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user mx-1"></i> <?= session('username') ?></button>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item my-2" href="#">Profile</a>
                                             <a class="dropdown-item my-2" href="<?= base_url('home/logout') ?>"><i class="fas fa-power-off"></i> Logout</a>
                                           </div>
                                         </div>
                                     <?php else : ?>
-                                        <a href="<?= base_url('home/login') ?>" class="btn head-btn1">Login / Registration</a>
+                                        <a href="<?= base_url('login'); ?>" class="btn head-btn1">Login / Registration</a>
                                     <?php endif; ?>
                                 </div>
                             </div>
