@@ -167,8 +167,22 @@
 <script src="<?= base_url(); ?>/public/user/js/plugins.js"></script>
 <script src="<?= base_url(); ?>/public/user/js/main.js"></script>
 <!-- Noty Js -->
-<script src="<?= base_url('public/user/noty/noty.js')?>"></script>
-
+<script src="<?= base_url('public/user/noty/noty.js') ?>"></script>
+<script>
+    function Alert(etype,message) {
+        new Noty({
+            type: etype,
+            layout: "topRight",
+            text: message,
+            progressBar: true,
+            timeout: 2500,
+            animation: {
+                open: "animated bounceInRight",
+                close: "animated bounceOutRight"
+            }
+        }).show();
+    }
+</script>
 </body>
 
 </html>
