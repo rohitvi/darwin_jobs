@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/themify-icons.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/slick.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/nice-select.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/public/user/noty/noty.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/style.css">
 </head>
 
@@ -73,7 +74,11 @@
                                 </div>
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="<?= base_url('home/login') ?>" class="btn head-btn1">Login / Registration</a>
+                                    <?php if (session('user_logged_in')) : ?>
+                                        <a href="<?= base_url('home/logout') ?>" class="btn head-btn1">Logout</a>
+                                    <?php else : ?>
+                                        <a href="<?= base_url('home/login') ?>" class="btn head-btn1">Login / Registration</a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
