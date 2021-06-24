@@ -61,9 +61,9 @@
                                                             <div class="progress">
                                                                 <div class="progressbar" style="width: 33.3333%;"></div>
                                                             </div>
-                                                            <ul class="nav nav-pills">
+                                                            <ul>
                                                                 <li>
-                                                                    <a href="#tab1" data-toggle="tab" class="active show">
+                                                                    <a href="#tab1" data-toggle="tab">
                                                                         <span class="step">1</span>
                                                                         <span class="title">Step 1</span>
                                                                     </a>
@@ -92,39 +92,73 @@
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-12 mb-3">
                                                                     <label class="form-control-label"><b>Profile Picture</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-photo"></i>
+                                                                    </span>
                                                                     <input type="file" class="form-control"  name='profile_picture'>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>First Name</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-user"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $data[0]['firstname'];?>" name="fname">
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Last Name</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-user"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control"  value="<?= $data[0]['lastname'];?>" name="lastname">
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Email</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-envelope"></i>
+                                                                    </span>
                                                                     <input type="email" class="form-control"  value="<?= $data[0]['email'];?>" name="email">
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Designation</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti ti-briefcase"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control"  value="<?= $data[0]['designation'];?>" name="designation">
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Phone Number</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-phone"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control"  value="<?= $data[0]['mobile_no'];?>" name="phoneno">
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Country</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <select name="country" id="country" class="country form-control select">
                                                                     <option>Select Country</option>
                                                                     <?php foreach($countries as $country):?>
@@ -134,32 +168,48 @@
                                                                         <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
                                                                     <?php endif; endforeach; ?>
                                                                     </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>State</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <?php 
                                                                     $states = get_country_states($data[0]['country']);
                                                                     $options = array('' => 'Select State')+array_column($states, 'name','id');
                                                                     echo form_dropdown('state',$options,$data[0]['state'],'class="form-control state select" required');
                                                                     ?>
+                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>City</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <?php 
                                                                     $cities = get_state_cities($data[0]['state']);
                                                                     $options = array('' => 'Select City')+array_column($cities, 'name','id');
                                                                     echo form_dropdown('city',$options,$data[0]['city'],'class="form-control city select" required');
                                                                     ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-12 mb-3">
                                                                     <label class="form-control-label"><b>Address</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control"  value="<?= $data[0]['address'];?>" name="address">
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
@@ -184,36 +234,65 @@
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-12 mb-3">
                                                                     <label class="form-control-label"><b>Company Logo *</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-photo"></i>
+                                                                    </span>
                                                                     <input type="file" class="form-control" value="<?= $cmpinfo[0]['company_logo'];?>" name='company_logo'>
+                                                                </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Company Name</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-bank"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['company_name'];?>" name='company_name' placeholder="Enter Company Name">
+                                                                </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Company Email</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-envelope"></i>
+                                                                    </span>
                                                                     <input type="email" class="form-control" value="<?= $cmpinfo[0]['email'];?>" name='company_email' placeholder="Enter Company Email">
+                                                                </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Phone No.</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-phone   "></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['phone_no'];?>" name='phone_no' placeholder="Phone Number">
                                                                 </div>
+                                                                </div>  
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Website</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-link"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['website'];?>" name='website' placeholder="Website">
+                                                                </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Category</b></label>
-                                                                    <select class="form-control" name="category">
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-server"></i>
+                                                                    </span>
+                                                                    <select class="form-control select" name="category">
                                                                     <option value="">Select Category</option>
                                                                     <?php foreach($categories as $category):?>
                                                                         <?php if($cmpinfo[0]['category'] == $category['id']): ?>
@@ -222,26 +301,41 @@
                                                                                 <option value="<?= $category['id']; ?>"> <?= $category['name']; ?> </option>
                                                                             <?php endif; endforeach; ?>
                                                                     </select>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Founded Date</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-calendar-o"></i>
+                                                                    </span>
                                                                     <input type="date" class="form-control" value="<?= $cmpinfo[0]['founded_date'];?>" name='founded_date'>
+                                                                </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Organization Type</b></label>
-                                                                    <select name="org_type"  class="form-control" >
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-server"></i>
+                                                                    </span>
+                                                                    <select name="org_type"  class="form-control select" >
                                                                     <option value="Public" <?php if($cmpinfo[0]['org_type'] == 'Public'){ echo "selected";} ?>>public</option>
                                                                     <option value="Private" <?php if($cmpinfo[0]['org_type'] == 'Private'){ echo "selected";} ?>>private</option>
                                                                     <option value="Government" <?php if($cmpinfo[0]['org_type'] == 'Government'){ echo "selected";} ?>>government</option>
                                                                     <option value="NGO" <?php if($cmpinfo[0]['org_type'] == 'NGO'){ echo "selected";} ?>>ngo</option>
                                                                     </select>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>No. of Employers</b></label>
-                                                                    <select name="no_of_employers" class="form-control">
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-users"></i>
+                                                                    </span>
+                                                                    <select name="no_of_employers" class="form-control select">
                                                                     <option value="1-10" <?php if($cmpinfo[0]['no_of_employers'] == '1-10'){ echo "selected";} ?>>1-10</option>
                                                                     <option value="10-20" <?php if($cmpinfo[0]['no_of_employers'] == '10-20'){ echo "selected";} ?>>10-20</option>
                                                                     <option value="20-30" <?php if($cmpinfo[0]['no_of_employers'] == '20-30'){ echo "selected";} ?>>20-30</option>
@@ -250,16 +344,21 @@
                                                                     <option value="100+" <?php if($cmpinfo[0]['no_of_employers'] == '100+'){ echo "selected";} ?>>100+</option>
                                                                 </select>
                                                                 </div>
+                                                                </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Company Description</b></label>
-                                                                    <textarea class="form-control" name='description'><?= $cmpinfo[0]['description'];?></textarea>
+                                                                    <textarea class="form-control select" name='description'><?= $cmpinfo[0]['description'];?></textarea>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Country</b></label>
-                                                                    <select name="country" id="ccountry" name="country" class="country form-control">
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
+                                                                    <select name="country" id="ccountry" name="country" class="country form-control select">
                                                                     <option>Select Country</option>
                                                                     <?php foreach($countries as $country):?>
                                                                         <?php if($cmpinfo[0]['country'] == $country['id']): ?>
@@ -268,57 +367,99 @@
                                                                         <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
                                                                     <?php endif; endforeach; ?>
                                                                     </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>State</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <?php 
                                                                     $states = get_country_states($cmpinfo[0]['country']);
                                                                     $options = array('' => 'Select State')+array_column($states, 'name','id');
-                                                                    echo form_dropdown('state',$options,$cmpinfo[0]['state'],'class="form-control state" required');
+                                                                    echo form_dropdown('state',$options,$cmpinfo[0]['state'],'class="form-control state select" required');
                                                                     ?>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>City</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <?php 
                                                                     $cities = get_state_cities($cmpinfo[0]['state']);
                                                                     $options = array('' => 'Select City')+array_column($cities, 'name','id');
-                                                                    echo form_dropdown('city',$options,$cmpinfo[0]['city'],'class="form-control city" required');
+                                                                    echo form_dropdown('city',$options,$cmpinfo[0]['city'],'class="form-control city select" required');
                                                                     ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Pin Code</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['postcode'];?>" name='postcode' placeholder="Pin Code">
+                                                                </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Full Address</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="ti-location-pin"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['address'];?>" name='full_address' placeholder="Full Address">
+                                                                </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Facebook</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-facebook"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['facebook_link'];?>" name='facebook_link' placeholder="Facebook Link">
+                                                                </div>
                                                                 </div>
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>Twitter</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-twitter"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['twitter_link'];?>" name='twitter_link' placeholder="Twitter Link">
+                                                                </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row mb-3">
                                                                 <div class="col-xl-6 mb-3">
                                                                     <label class="form-control-label"><b>Youtube</b></label>
-                                                                    <input type="text" class="form-control" value="<?= $cmpinfo[0]['youtube_link'];?>" name='youtube_link' placeholder="Youtube Link">                                                                </div>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-youtube"></i>
+                                                                    </span>
+                                                                    <input type="text" class="form-control" value="<?= $cmpinfo[0]['youtube_link'];?>" name='youtube_link' placeholder="Youtube Link">     
+                                                                    </div>
+                                                                </div>                                                          
                                                                 <div class="col-xl-6">
                                                                     <label class="form-control-label"><b>LinkedIn</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-linkedin"></i>
+                                                                    </span>
                                                                     <input type="text" class="form-control" value="<?= $cmpinfo[0]['linkedin_link'];?>" name='linkedin_link' placeholder="LinkedIn Link">
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                             </form>
@@ -340,102 +481,33 @@
                                                             <div class="section-title mt-5 mb-5">
                                                                 <h4>Change Password</h4>
                                                             </div>
-                                                            <div id="accordion-icon-right" class="accordion">
-                                                                <div class="widget has-shadow">
-                                                                    <a class="card-header collapsed d-flex align-items-center" data-toggle="collapse" href="#IconRightCollapseOne" aria-expanded="true">
-                                                                        <div class="card-title w-100">1. Client Informations</div>
-                                                                    </a>
-                                                                    <div id="IconRightCollapseOne" class="card-body collapse show" data-parent="#accordion-icon-right">
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Name</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">David Green</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Email</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">dgreen@elisyam.com</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Phone</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">+00 987 654 32</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Occupation</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">UX Designer</div>
-                                                                        </div>
+                                                            <form action="<?= base_url('employer/changepassword') ?>" method="post" class="form-horizontal">
+                                                            <div class="form-group row mb-3">
+                                                                <div class="col-xl-6 mb-3">
+                                                                    <label class="form-control-label"><b>Password</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-lock"></i>
+                                                                    </span>
+                                                                    <input type="password" name="password" class="form-control" placeholder="Enter Password">
                                                                     </div>
-                                                                    <a class="card-header collapsed d-flex align-items-center" data-toggle="collapse" href="#IconRightCollapseTwo">
-                                                                        <div class="card-title w-100">2. Address</div>
-                                                                    </a>
-                                                                    <div id="IconRightCollapseTwo" class="card-body collapse" data-parent="#accordion-icon-right">
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Address</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">123 Century Blvd</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Country</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">Country</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">City</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">Los Angeles</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">State</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">CA</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Zip</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">90045</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <a class="card-header collapsed d-flex align-items-center" data-toggle="collapse" href="#IconRightCollapseThree">
-                                                                        <div class="card-title w-100">3. Account Details</div>
-                                                                    </a>
-                                                                    <div id="IconRightCollapseThree" class="card-body collapse" data-parent="#accordion-icon-right">
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Username</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">Saerox</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Password</div>
-                                                                            <div class="col-sm-8 form-control-plaintext"><span class="la-2x">*********</span></div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Url</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">http://mywebsite.com</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <a class="card-header collapsed d-flex align-items-center" data-toggle="collapse" href="#IconRightCollapseFour">
-                                                                        <div class="card-title w-100">4. Billing Information</div>
-                                                                    </a>
-                                                                    <div id="IconRightCollapseFour" class="card-body collapse" data-parent="#accordion-icon-right">
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Card Number</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">98765432145698547</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Exp Month</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">06</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">Exp Year</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">2023</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-sm-3 form-control-label d-flex align-items-center">CVV</div>
-                                                                            <div class="col-sm-8 form-control-plaintext">651</div>
-                                                                        </div>
-                                                                        <div class="form-group row mb-5">
-                                                                            <div class="col-xl-12">
-                                                                                <div class="styled-checkbox">
-                                                                                    <input type="checkbox" name="checkbox" id="agree">
-                                                                                    <label for="agree">I Accept <a href="#">Terms and Conditions</a></label>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                </div>
+                                                                <div class="col-xl-6">
+                                                                    <label class="form-control-label"><b>Confirm Password</b></label>
+                                                                    <div class="input-group">
+                                                                    <span class="input-group-addon addon-primary">
+                                                                        <i class="la la-lock"></i>
+                                                                    </span>
+                                                                    <input type="password" name="cpassword" class="form-control" placeholder="Confirm Password">
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="text-left">
+                                                            <button class="btn btn-gradient-01" type="submit">Update</button>
+                                                            </div>
+                                                            </form>
+                                         
                                                             <ul class="pager wizard text-right">
                                                                 <li class="previous d-inline-block disabled">
                                                                     <a href="javascript:void(0)" class="btn btn-secondary ripple">Previous</a>
