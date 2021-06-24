@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/slick.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/nice-select.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/style.css">
+    <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
 </head>
 
 <body>

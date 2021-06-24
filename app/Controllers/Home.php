@@ -1,12 +1,14 @@
 <?php
 namespace App\Controllers;
 use App\Models\HomeModel;
+use App\Models\auth\HomeAuthModel;
 
 class Home extends BaseController
 {
     public function __construct()
     {
         $this->HomeModel = new HomeModel();
+        $this->HomeAuthModel = new HomeAuthModel();
     }
 
     public function index()
@@ -16,6 +18,32 @@ class Home extends BaseController
 
     public function login()
     {
+        if ($this->request->isAJAX()) {
+            $rules = [
+                'email' => ['label'=>'email','rules'=>'required'],
+                'password' => ['label'=>'password','rules'=>'required']
+            ];
+            if ($this->validate($rules) == FALSE) {
+                echo '0~'.$this->validation->getErrors();
+                exit;
+            }
+            $email = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
+            $logindata = $this->HomeAuthModel->login_validate($email,$password);
+            if ($logindata == 0) {
+                echo '0~Invalid email or password';
+                exit;
+            } else {
+                $employerdata = [
+                    'user_id' => $logindata['id'],
+                    'user_logged_in' => true,
+                    'username' => $logindata['username'],
+                ];
+                $this->session->set($employerdata);
+                echo '1~ You Have Successfully Logged in';
+                exit;
+            }
+        }
         return view('user/auth/login');
     }
 
@@ -40,6 +68,43 @@ class Home extends BaseController
         $html = form_dropdown('city',$options,'','class="form-control select2" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
+    }
+
+    // User Register
+
+    public function register()
+    {
+        if ($this->request->isAJAX()) {
+            $rules = [
+                'firstname' => ['label'=>'firstname','rules'=>'required'],
+                'lastname' => ['label'=>'lastname','rules'=>'required'],
+                'email' => ['label'=>'email','rules'=>'required'],
+                'password' => ['label'=>'password','rules'=>'required'],
+                'cpassword' => ['label'=>'cpassword','rules'=>'required|matches[password]'],
+                'termsncondition' => ['label'=>'termsncondition','rules'=>'required']
+            ];
+            if ($this->validate($rules) == FALSE) {
+                echo '0~'.$this->validation->getErrors();
+                exit;
+            }
+            $data = [
+                'firstname' => $this->request->getPost('firstname'),
+                'lastname' => $this->request->getPost('lastname'),
+                'email' => $this->request->getPost('email'),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+                'is_verify' => 0,
+                'token' => md5(rand(0,1000)),
+                'created_date' => date('Y-m-d : h:m:s'),
+                'updated_date' => date('Y-m-d : h:m:s')
+            ];
+            $query = $this->HomeAuthModel->register($data);
+            if($query->resultID == 1){
+                echo '1~User Successfully Registered  !';
+                exit;
+            }else
+                echo '0~Something Went Wrong, Please Try Again !';
+                exit;
+        }
     }
 
 }
