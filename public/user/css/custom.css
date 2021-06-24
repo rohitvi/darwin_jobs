@@ -12,7 +12,7 @@ body {
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 95vh;
+	height: 100vh;
 	margin: -20px 0 50px;
 }
 
@@ -249,4 +249,8 @@ footer i {
 footer a {
     color: #3c97bf;
     text-decoration: none;
+}
+
+.check, .checkspan{
+	display: inline;
 }
