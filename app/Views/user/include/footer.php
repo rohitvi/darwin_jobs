@@ -55,15 +55,16 @@
                             </div>
                             <!-- Form -->
                             <div class="footer-form">
-                                <div id="mc_embed_signup">
-                                    <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part">
-                                        <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address" class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = ' Email Address '">
+                                <!-- <div id="mc_embed_signup"> -->
+                                    <form action="<?= base_url('home/add_subscriber') ?>" method="post" >
+                                        <input type="email" name="subscriber_email" placeholder="Email Address" class="placeholder hide-on-focus" required>
                                         <div class="form-icon">
-                                            <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm"><img src="<?= base_url(); ?>/public/user/img/icon/form.png" alt=""></button>
+                                            <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm" ><img src="<?= base_url(); ?>/public/user/img/icon/form.png" alt=""></button>
+                                            <!-- <button class="btn btn-primary" type="submit">Update</button> -->
                                         </div>
-                                        <div class="mt-10 info"></div>
+                                        <!-- <div class="mt-10 info"></div> -->
                                     </form>
-                                </div>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
