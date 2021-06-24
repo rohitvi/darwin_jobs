@@ -11,7 +11,21 @@ class Home extends BaseController
         $this->HomeAuthModel = new HomeAuthModel();
     }
 
+    public function checklogin()
+    {
+        if (session('user_logged_in')) {
+            return redirect()->to('home/dashboard');
+        } else {
+            return redirect()->to('home/login');
+        }
+    }
+
     public function index()
+    {
+        return $this->dashboard();
+    }
+
+    public function dashboard()
     {
         return view('user/index');
     }
@@ -105,6 +119,12 @@ class Home extends BaseController
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
         }
+    }
+
+    public function logout()
+    {
+        $this->session->destroy();
+        return redirect()->to(base_url('home'));
     }
 
 }

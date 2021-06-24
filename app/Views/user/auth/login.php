@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<title>Login</title>
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/public/user/noty/noty.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('public/user/css/custom.css'); ?>">
-    <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
 </head>
 <body>
 	<div class="container" id="container">
@@ -56,7 +56,9 @@
 	</div>
 </body>
 <!-- Noty Js -->
-<script src="<?= base_url('public/employer/assets/vendors/js/noty/noty.min.js')?>"></script>
+<script src="<?= base_url('public/user/noty/noty.js')?>"></script>
+<!-- Jquery -->
+<script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
 <script>
 	const signUpButton = document.getElementById('signUp');
 	const signInButton = document.getElementById('signIn');
