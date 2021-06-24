@@ -118,6 +118,7 @@ class Home extends BaseController
             ];
             $query = $this->HomeAuthModel->register($data);
             if($query->resultID == 1){
+                $this->
                 echo '1~User Successfully Registered  !';
                 exit;
             }else
