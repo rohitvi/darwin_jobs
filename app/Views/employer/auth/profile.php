@@ -214,7 +214,7 @@
                                                             </div>
 
                                                             <div class="text-left">
-                                                            <button class="btn btn-gradient-01" type="submit">Update</button>
+                                                            <button class="btn btn-primary" type="submit">Update</button>
                                                             </div>
                                                             </form>
                                                             <ul class="pager wizard text-right">
@@ -462,11 +462,11 @@
                                                                 </div>
                                                                 </div>
                                                             </div>
-                                                            </form>
+                                                           
                                                             <div class="text-left">
-                                                            <button class="btn btn-gradient-01" type="submit">Update</button>
+                                                            <button class="btn btn-primary" type="submit">Update</button>
                                                             </div>
-  
+                                                            </form>
                                                 
                                                             <ul class="pager wizard text-right">
                                                                 <li class="previous d-inline-block disabled">
@@ -504,7 +504,7 @@
                                                             </div>
 
                                                             <div class="text-left">
-                                                            <button class="btn btn-gradient-01" type="submit">Update</button>
+                                                            <button class="btn btn-primary" type="submit">Update</button>
                                                             </div>
                                                             </form>
                                          

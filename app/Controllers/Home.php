@@ -118,7 +118,6 @@ class Home extends BaseController
             ];
             $query = $this->HomeAuthModel->register($data);
             if($query->resultID == 1){
-                $this->
                 echo '1~User Successfully Registered  !';
                 exit;
             }else
@@ -131,6 +130,27 @@ class Home extends BaseController
     {
         $this->session->destroy();
         return redirect()->to(base_url('home'));
+    }
+
+    public function add_subscriber()
+    {
+       if ($this->request->getMethod('post')) {
+        
+        $data = [       
+                'email' => $this->request->getPost('subscriber_email'),
+                'created_at' => date('Y-m-d h:i:s')      
+            ];
+        $query = $this->HomeModel->add_subscriber($data);
+        if ($query == true) {
+            $this->session->setFlashdata('success','Congratulations! You have been Subscribed');
+            return redirect()->to(base_url('home'));
+        }else{
+            $this->session->setFlashdata('error','Something Went Wrong, Please Try Again !');
+            }
+
+
+
+       }
     }
 
 }
