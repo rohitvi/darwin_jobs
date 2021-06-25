@@ -108,18 +108,32 @@
                     <form action="#">
                         <div class="row mt-10">
                             <div class="col-md-6">
-                                <input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required class="single-input">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" required class="single-input">
                             </div>
                             <div class="col-md-6">
-                                <input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required class="single-input">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" required class="single-input">
                             </div>
                         </div>
                         <div class="row mt-10">
                             <div class="col-md-6">
-                                <input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required class="single-input">
+                                <label>Email</label>
+                                <input type="email" name="email" required class="single-input">
                             </div>
                             <div class="col-md-6">
-                                <input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required class="single-input">
+                                <label>Phone</label>
+                                <input type="text" name="phone" required class="single-input">
+                            </div>
+                        </div>
+                        <div class="row mt-10">
+                            <div class="col-md-6">
+                                <label>Date Of Birth</label>
+                                <input type="date" name="dob" required class="single-input">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Age</label>
+                                <input type="number" name="age" required class="single-input">
                             </div>
                         </div>
                     </form>
