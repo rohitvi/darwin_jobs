@@ -101,7 +101,7 @@ class Mailer
         }
 
         if ($type == 'user' || $type == '') {
-            $builder = $this->db->table('employers');
+            $builder = $this->db->table('users');
         }
         $user = $builder->getWhere(array('id' => $id))->getRowArray();
         $token = $user['token'];
@@ -110,7 +110,7 @@ class Mailer
             $varification_link = base_url('employer/auth/verify/' . $token);
 
         if ($type == 'user' || $type == '')
-            $varification_link = base_url('auth/verify/' . $token);
+            $varification_link = base_url('home/verify/' . $token);
 
         // Get Email Template
         $builder = $this->db->table('email_templates');

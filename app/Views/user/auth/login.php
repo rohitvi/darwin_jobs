@@ -122,6 +122,8 @@
             method: "POST",
             data: fields,
             success: function(responses){
+            	console.log(responses);
+            	return false;
             	var response = responses.split('~');
             	if ($.trim(response[0]) == 0) {
                 $('#register').trigger("reset");

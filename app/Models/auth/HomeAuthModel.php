@@ -23,6 +23,18 @@ class HomeAuthModel extends Model
 
     public function register($data)
     {
-        return $this->db->table('users')->insert($data);
+        $this->db->table('users')->insert($data);
+        return $this->db->insertID();
+    }
+
+    public function email_verification($token)
+    {
+        $builder = $this->db->table('users')->where('token',$token)->get()->getRowArray();
+        if (count($builder) > 0) {
+            $this->db->table('users')->where('token',$token)->update(array('is_verify'=>1,'token'=>''));
+            return $builder;
+        }else{
+            return false;
+        }
     }
 }

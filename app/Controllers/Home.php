@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\HomeModel;
 use App\Models\auth\HomeAuthModel;
+use App\Libraries\Mailer;
 
 class Home extends BaseController
 {
@@ -11,6 +12,7 @@ class Home extends BaseController
     {
         $this->HomeModel = new HomeModel();
         $this->HomeAuthModel = new HomeAuthModel();
+        $this->mailer = new Mailer();
     }
 
     public function checklogin()
@@ -141,13 +143,14 @@ class Home extends BaseController
                 'created_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
-            $query = $this->HomeAuthModel->register($data);
-            if ($query->resultID == 1) {
+            $user_id = $this->HomeAuthModel->register($data);
+            if($user_id == ''){
+                echo '0~Something Went Wrong, Please Try Again !';
+                exit;
+            }else
+                $this->mailer->send_verification_email($user_id,'user');
                 echo '1~User Successfully Registered  !';
                 exit;
-            } else
-                echo '0~Something Went Wrong, Please Try Again !';
-            exit;
         }
     }
 
@@ -155,6 +158,23 @@ class Home extends BaseController
     {
         $this->session->destroy();
         return redirect()->to(base_url('home'));
+    }
+
+    public function verify($token)
+    {
+        $result = $this->HomeAuthModel->email_verification($token);
+        if (count($result) > 0) {
+            // Send Mail Data
+            $mail_data = array(
+                'fullname' => $result['firstname'].' '.$result['lastname'],
+            );
+            $this->mailer->mail_template($result['email'],'welcome',$mail_data);
+            $this->session->setFlashdata('success','Email Successfully Verified!');
+            return redirect()->to(base_url('login'));
+        }else{
+            $this->session->setFlashdata('error','Somethiung Went Wrong Try Again!');
+            return redirect()->to(base_url('home'));
+        }
     }
 
     public function add_subscriber()
