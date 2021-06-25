@@ -462,10 +462,11 @@
                                         </div>
                                         </div>
                                     </div>
-                                    </form>
+                                    
                                     <div class="text-left">
                                     <button class="btn btn-gradient-01" type="submit">Update</button>
                                     </div>
+                                    </form>
 
                         
                                     <ul class="pager wizard text-right">

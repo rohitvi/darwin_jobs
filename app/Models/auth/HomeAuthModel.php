@@ -37,4 +37,10 @@ class HomeAuthModel extends Model
             return false;
         }
     }
+
+    public function change_password($id,$password)
+    {
+    	return $this->db->table('users')->where('id',$id)->update(array('password'=>$password));
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\HomeModel;
 use App\Models\auth\HomeAuthModel;
+use App\Models\AdminModel;
 use App\Libraries\Mailer;
 
 class Home extends BaseController
@@ -12,6 +13,7 @@ class Home extends BaseController
     {
         $this->HomeModel = new HomeModel();
         $this->HomeAuthModel = new HomeAuthModel();
+        $this->adminModel = new AdminModel();
         $this->mailer = new Mailer();
     }
 
@@ -63,11 +65,6 @@ class Home extends BaseController
             }
         }
         return view('user/auth/login');
-    }
-
-    public function profile()
-    {
-        return view('user/profile');
     }
 
     public function updateProfileImage()
@@ -212,5 +209,40 @@ class Home extends BaseController
         $data['jobs'] = $this->HomeModel->matching_jobs($skills);
         return view('user/auth/matching_jobs');
     }
+
+    public function change_password()
+    {
+        if ($this->request->getMethod() =='post') {
+            $rules= [
+                'password' => ['label' => 'password','rules' => 'required'],
+                'cpassword' => ['label' => 'cpassword','rules' => 'required|matches[password]']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $id = session('user_id');
+            $password =  password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            $query = $this->HomeAuthModel->change_password($id, $password);
+            if ($query == 1){
+                $this->session->setFlashdata('success', 'Password successfully Updated');
+                return redirect()->to(base_url('home/change_password'));
+            }else{
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                exit;
+            }
+        }
+        return view('user/auth/change_password');
+    }
+
+    public function profile()
+    {
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        return view('user/userprofile',$get);
+    }
+
+
+    
 
 }

@@ -168,8 +168,8 @@
 <script src="<?= base_url(); ?>/public/user/js/main.js"></script>
 <!-- Noty Js -->
 <script src="<?= base_url('public/user/noty/noty.js') ?>"></script>
-<script>
 
+<script>
 $('#subscriber').on('submit',function(){
     event.preventDefault();
     var fields = $('#subscriber').serialize();
@@ -211,9 +211,5 @@ $('#subscriber').on('submit',function(){
 
 });
 </script>
-
-
-
 </body>
-
 </html>
