@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Models\HomeModel;
 use App\Models\auth\HomeAuthModel;
 use App\Libraries\Mailer;
@@ -36,16 +38,16 @@ class Home extends BaseController
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'email' => ['label'=>'email','rules'=>'required'],
-                'password' => ['label'=>'password','rules'=>'required']
+                'email' => ['label' => 'email', 'rules' => 'required'],
+                'password' => ['label' => 'password', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
-                echo '0~'.$this->validation->getErrors();
+                echo '0~' . $this->validation->getErrors();
                 exit;
             }
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
-            $logindata = $this->HomeAuthModel->login_validate($email,$password);
+            $logindata = $this->HomeAuthModel->login_validate($email, $password);
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
@@ -68,13 +70,36 @@ class Home extends BaseController
         return view('user/profile');
     }
 
+    public function updateProfileImage()
+    {
+        if ($this->request->isAJAX()) {
+            if ($_FILES['profile_picture']['name'] == '') {
+                echo '0~Select Profile Picture';
+                exit;
+            }
+            $result = UploadFile($_FILES['profile_picture']);
+            if ($result['status'] == true) {
+                $url = $result['result']['file_url'];
+                $builder = $this->db->table('users');
+                $builder->where('id', session('user_id'));
+                if ($builder->update(array('profile_picture' => $url))) {
+                    echo '1~' . $url;
+                    exit;
+                }
+            } else {
+                echo '0~' . $result['message'];
+                exit;
+            }
+        }
+    }
+
     //Get States
     function get_country_states()
     {
         $builder = $this->db->table('states');
-        $states = $builder->where('country_id',$this->request->getPost('country'))->get()->getResultArray();
-        $options = array('' => 'Select State') + array_column($states,'name','id');
-        $html = form_dropdown('state',$options,'','class="form-control select2" required');
+        $states = $builder->where('country_id', $this->request->getPost('country'))->get()->getResultArray();
+        $options = array('' => 'Select State') + array_column($states, 'name', 'id');
+        $html = form_dropdown('state', $options, '', 'class="form-control select2" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -83,10 +108,10 @@ class Home extends BaseController
     function get_state_cities()
     {
         $builder = $this->db->table('cities');
-        $cities = $builder->where('state_id',$this->request->getPost('state'))->get()->getResultArray();
+        $cities = $builder->where('state_id', $this->request->getPost('state'))->get()->getResultArray();
 
-        $options = array('' => 'Select City') + array_column($cities,'name','id');
-        $html = form_dropdown('city',$options,'','class="form-control select2" required');
+        $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
+        $html = form_dropdown('city', $options, '', 'class="form-control select2" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -97,15 +122,15 @@ class Home extends BaseController
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'firstname' => ['label'=>'firstname','rules'=>'required'],
-                'lastname' => ['label'=>'lastname','rules'=>'required'],
-                'email' => ['label'=>'email','rules'=>'required'],
-                'password' => ['label'=>'password','rules'=>'required'],
-                'cpassword' => ['label'=>'cpassword','rules'=>'required|matches[password]'],
-                'termsncondition' => ['label'=>'termsncondition','rules'=>'required']
+                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
+                'email' => ['label' => 'email', 'rules' => 'required'],
+                'password' => ['label' => 'password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+                'termsncondition' => ['label' => 'termsncondition', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
-                echo '0~'.$this->validation->getErrors();
+                echo '0~' . $this->validation->getErrors();
                 exit;
             }
             $data = [
@@ -114,7 +139,7 @@ class Home extends BaseController
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'is_verify' => 0,
-                'token' => md5(rand(0,1000)),
+                'token' => md5(rand(0, 1000)),
                 'created_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
