@@ -240,11 +240,11 @@ class Home extends BaseController
     {
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
+        $id = session('user_id');
+        $get['data'] = $this->HomeModel->perinfo_by_id($id);
+        //pre($get);
         return view('user/userprofile',$get);
     }
-
-
-    
 
     public function saved_jobs()
     {   

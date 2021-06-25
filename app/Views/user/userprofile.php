@@ -120,36 +120,39 @@
                                     <div class="form-group row mb-3">
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>First Name *</b></label>
-                                            <input type="text" name="firstname" class="form-control">
+                                            <input type="text" name="firstname" value="<?= $data[0]['firstname'];?>" class="form-control">
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Last Name *</b></label>
-                                            <input type="text" name="lastname" class="form-control">
+                                            <input type="text" name="lastname" value="<?= $data[0]['lastname'];?>" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-3">
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Email *</b></label>
-                                            <input type="email" name="email" class="form-control">
+                                            <input type="email" name="email" value="<?= $data[0]['email'];?>" class="form-control">
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Phone *</b></label>
-                                            <input type="text" name="mobile_no" class="form-control">
+                                            <input type="text" name="mobile_no" value="<?= $data[0]['mobile_no'];?>" class="form-control">
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-3">
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Date of Birth:</b></label>
-                                            <input type="date" name="dob" class="form-control">
+                                            <input type="date" name="dob" value="<?= $data[0]['dob'];?>" class="form-control">
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Age *</b></label><br>
                                             <select name="age" class="form-control">
                                             <?php for($i=11; $i<80; $i++): ?>
+                                            <?php if($data[0]['age'] == $i): ?>
+                                            <option selected><?= $i; ?></option>
+                                            <?php else: ?>
                                             <option><?= $i; ?></option>
-                                            <?php  endfor; ?>
+                                            <?php endif;  endfor; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -160,13 +163,16 @@
                                             <select class="form-control select" name="category">
                                             <option value="">Select Category</option>
                                             <?php foreach($categories as $category):?>
+                                                <?php if($data[0]['category'] == $category['id']): ?>
+                                                    <option value="<?= $category['id']; ?>" selected> <?= $category['name']; ?> </option>
+                                                    <?php else: ?>
                                                         <option value="<?= $category['id']; ?>"> <?= $category['name']; ?> </option>
-                                                    <?php endforeach; ?>
+                                                    <?php endif; endforeach; ?>
                                             </select>
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Job Title *</b></label>
-                                            <input type="text" name="job_title" class="form-control">
+                                            <input type="text" name="job_title" value="<?= $data[0]['job_title'];?>" class="form-control">
                                         </div>
                                     </div>
 
@@ -174,18 +180,18 @@
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Experience *</b></label><br>
                                             <select name="experience" class="form-control">
-                                                <option value="0-1">0-1 Years</option>
-                                                <option value="1-2">1-2 Years</option>
-                                                <option value="2-5">2-5 Years</option>
-                                                <option value="5-10">5-10 Years</option>
-                                                <option value="10-15">10-15 Years</option>
-                                                <option value="15+">15+ Years</option>
+                                                <option value="0-1" <?php if($data[0]['experience'] == '0-1'){ echo "selected";} ?>>0-1 Years</option>
+                                                <option value="1-2" <?php if($data[0]['experience'] == '1-2'){ echo "selected";} ?>>1-2 Years</option>
+                                                <option value="2-5" <?php if($data[0]['experience'] == '2-5'){ echo "selected";} ?>>2-5 Years</option>
+                                                <option value="5-10" <?php if($data[0]['experience'] == '5-10'){ echo "selected";} ?>>5-10 Years</option>
+                                                <option value="10-15" <?php if($data[0]['experience'] == '10-15'){ echo "selected";} ?>>10-15 Years</option>
+                                                <option value="15+" <?php if($data[0]['experience'] == '15+'){ echo "selected";} ?>>15+ Years</option>
                                             </select>
                                            
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Skills  *</b></label>
-                                            <input type="text" name="skills" class="form-control">
+                                            <input type="text" name="skills" value="<?= $data[0]['skills'];?>" class="form-control">
                                         </div>
                                     </div>
 
@@ -193,17 +199,23 @@
                                     <div class="col-xl-5">
                                             <label class="form-control-label"><b>Current Salary(INR) *</b></label>
                                             <select name="current_salary" class="form-control">
-                                            <?php for($i=500; $i<10000; $i=$i+500): ?>
-                                            <option><?= $i; ?></option>
-                                            <?php  endfor; ?>
+                                                <?php for($i=500; $i<10000; $i=$i+500): ?>
+                                                <?php if($data[0]['current_salary'] == $i): ?>
+                                                <option value="<?= $i; ?>" selected> <?= $i; ?> </option>
+                                                <?php else: ?>
+                                                <option><?= $i; ?></option>
+                                                <?php endif; endfor; ?>
                                             </select>
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Expected Salary(INR) *</b></label>
                                             <select name="expected_salary" class="form-control">
-                                            <?php for($i=500; $i<10000; $i=$i+500): ?>
-                                            <option><?= $i; ?></option>
-                                            <?php  endfor; ?>
+                                                <?php for($i=500; $i<10000; $i=$i+500): ?>
+                                                <?php if($data[0]['expected_salary'] == $i): ?>
+                                                <option value="<?= $i; ?>" selected> <?= $i; ?> </option>
+                                                <?php else: ?>
+                                                <option><?= $i; ?></option>
+                                                <?php endif; endfor; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -212,19 +224,25 @@
                                     <div class="col-xl-5">
                                             <label class="form-control-label"><b>Nationality  *</b></label>
                                             <select class="form-control select" name="nationality">
-                                            <option value="">Select Category</option>
-                                            <?php foreach($countries as $country):?>
-                                                        <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                                    <?php endforeach; ?>
+                                            <option value="">Select Nationality</option>
+                                                <?php foreach($countries as $country):?>
+                                                <?php if($data[0]['nationality'] == $country['id']): ?>
+                                                <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
+                                                <?php else: ?>
+                                                <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                                                <?php endif; endforeach; ?>
                                             </select>
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Country *</b></label>
                                             <select class="form-control select" name="country">
-                                            <option value="">Select Category</option>
+                                            <option value="">Select Country</option>
                                             <?php foreach($countries as $country):?>
-                                                        <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                                    <?php endforeach; ?>
+                                                <?php if($data[0]['country'] == $country['id']): ?>
+                                                <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
+                                                <?php else: ?>
+                                                <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                                                <?php endif; endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -232,7 +250,7 @@
                                     <div class="form-group row mb-3">
                                         <div class="col-xl-10">
                                             <label class="form-control-label"><b>Full Address</b></label>
-                                            <input type="text" name="address" class="form-control">
+                                            <input type="text" name="address" value="<?= $data[0]['address'];?>" class="form-control">
                                         </div>
                                     </div>
 
