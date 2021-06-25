@@ -97,7 +97,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="" class="genric-btn default large mt-15 text-left">
+                            <a href="<?= base_url('change_password'); ?>" class="genric-btn default large mt-15 text-left">
                                 <div class="icon"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;&nbsp; Change Password</div>
                             </a>
                         </div>

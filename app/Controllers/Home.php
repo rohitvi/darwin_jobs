@@ -203,4 +203,8 @@ class Home extends BaseController
        }
     }
 
+    public function change_password()
+    {
+    }
+
 }
