@@ -224,3 +224,17 @@ function get_user_skills($user_id)
     $builder = $db->table('users');
     return $builder->getWhere(array('id' => $user_id))->getRowArray()['skills'];
 }
+// Get Company Name
+function get_company_name($company_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('companies');
+    return $builder->getWhere(array('id' => $company_id))->getRowArray()['company_name'];
+}
+// Get Company Logo by id
+function get_company_logo($company_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('companies');
+    return $builder->getWhere(array('id' => $company_id))->getRowArray()['company_logo'];
+}
