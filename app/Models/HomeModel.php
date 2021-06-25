@@ -12,9 +12,10 @@ class HomeModel extends Model
         if ($builder->countAllResults() > 0) {
             return true;
         }
-        else{
+        else
+        {
             return $this->db->table('subscribers')->insert($data);
-            }
+        }
     }
 
     public function matching_jobs($skills)

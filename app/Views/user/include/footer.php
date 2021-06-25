@@ -56,13 +56,12 @@
                             <!-- Form -->
                             <div class="footer-form">
                                 <!-- <div id="mc_embed_signup"> -->
-                                    <form action="<?= base_url('home/add_subscriber') ?>" method="post" >
+                                    <form action="" id="subscriber" method="post">
                                         <input type="email" name="subscriber_email" placeholder="Email Address" class="placeholder hide-on-focus" required>
                                         <div class="form-icon">
-                                            <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm" ><img src="<?= base_url(); ?>/public/user/img/icon/form.png" alt=""></button>
+                                            <button class="email_icon newsletter-submit button-contactForm" ><img src="<?= base_url(); ?>/public/user/img/icon/form.png" alt=""></button>
                                             <!-- <button class="btn btn-primary" type="submit">Update</button> -->
                                         </div>
-                                        <!-- <div class="mt-10 info"></div> -->
                                     </form>
                                 <!-- </div> -->
                             </div>
@@ -170,20 +169,51 @@
 <!-- Noty Js -->
 <script src="<?= base_url('public/user/noty/noty.js') ?>"></script>
 <script>
-    function Alert(etype,message) {
-        new Noty({
-            type: etype,
-            layout: "topRight",
-            text: message,
-            progressBar: true,
-            timeout: 2500,
-            animation: {
-                open: "animated bounceInRight",
-                close: "animated bounceOutRight"
-            }
-        }).show();
-    }
+
+$('#subscriber').on('submit',function(){
+    event.preventDefault();
+    var fields = $('#subscriber').serialize();
+    $.ajax({
+        url: "<?= base_url('home/add_subscriber'); ?>",
+        method: "POST",
+        data: fields,
+         success:function(responses){
+            var response = responses.split('~');
+            $('#subscriber').trigger("reset");
+              if ($.trim(response[0]) == 0) {
+                new Noty({
+                    type: "error",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+              }
+              if ($.trim(response[0]) == 1) {
+                new Noty({
+                    type: "success",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+              }
+         }
+    });
+
+});
 </script>
+
+
+
 </body>
 
 </html>
