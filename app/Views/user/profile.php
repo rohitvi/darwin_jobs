@@ -78,27 +78,27 @@
                         </div>
                         <div>
                             <a href="" class="genric-btn success large mt-15 text-left">
-                                <div class="icon"><i class="fa fa-user" aria-hidden="true"></i> &nbsp;&nbsp; My Profile</div>
+                                <div class="icon"><i class="fas fa-user" aria-hidden="true"></i> &nbsp;&nbsp; My Profile</div>
                             </a>
                         </div>
                         <div>
                             <a href="" class="genric-btn default large mt-15 text-left">
-                                <div class="icon"><i class="fa fa-file-word" aria-hidden="true"></i> &nbsp;&nbsp; My Applications</div>
+                                <div class="icon"><i class="fas fa-file-word" aria-hidden="true"></i> &nbsp;&nbsp; My Applications</div>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="<?= base_url('home/matching_jobs') ?>" class="genric-btn default large mt-15 text-left">
+                                <div class="icon"><i class="fas fa-briefcase" aria-hidden="true"></i> &nbsp;&nbsp; Matching Jobs</div>
                             </a>
                         </div>
                         <div>
                             <a href="" class="genric-btn default large mt-15 text-left">
-                                <div class="icon"><i class="fa fa-briefcase" aria-hidden="true"></i> &nbsp;&nbsp; My Jobs</div>
+                                <div class="icon"><i class="fas fa-heart" aria-hidden="true"></i> &nbsp;&nbsp; Saved Jobs</div>
                             </a>
                         </div>
                         <div>
                             <a href="" class="genric-btn default large mt-15 text-left">
-                                <div class="icon"><i class="fa fa-heart" aria-hidden="true"></i> &nbsp;&nbsp; Saved Jobs</div>
-                            </a>
-                        </div>
-                        <div>
-                            <a href="<?= base_url('change_password'); ?>" class="genric-btn default large mt-15 text-left">
-                                <div class="icon"><i class="fa fa-lock" aria-hidden="true"></i> &nbsp;&nbsp; Change Password</div>
+                                <div class="icon"><i class="fas fa-lock" aria-hidden="true"></i> &nbsp;&nbsp; Change Password</div>
                             </a>
                         </div>
                     </div>

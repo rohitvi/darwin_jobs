@@ -18,4 +18,9 @@ class HomeModel extends Model
         }
     }
 
+    public function matching_jobs($skills)
+    {
+        return $this->db->table('job_post')->select('id, title, company_id, job_slug, job_type, description, country, city,expiry_date, created_date, industry')->where(array('curdate() < expiry_date','is_status'=>1))->get()->getResultArray();
+    }
+
 }

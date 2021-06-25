@@ -217,3 +217,10 @@ function add_30_days($days)
 {
     return date('Y-m-d', strtotime(' + '.$days.' days'));
 }
+// get_user_skills
+function get_user_skills($user_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('users');
+    return $builder->getWhere(array('id' => $user_id))->getRowArray()['skills'];
+}

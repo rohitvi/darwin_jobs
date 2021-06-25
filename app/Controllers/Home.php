@@ -203,8 +203,14 @@ class Home extends BaseController
        }
     }
 
-    public function change_password()
+    public function matching_jobs()
     {
+        $this->checklogin();
+        $user_id = session('user_id');
+        $skills = get_user_skills($user_id); // helper function
+
+        $data['jobs'] = $this->HomeModel->matching_jobs($skills);
+        return view('user/auth/matching_jobs');
     }
 
 }
