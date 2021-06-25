@@ -13,6 +13,7 @@ class Home extends BaseController
         $this->HomeModel = new HomeModel();
         $this->HomeAuthModel = new HomeAuthModel();
         $this->mailer = new Mailer();
+        $helpers = ['date'];
     }
 
     public function checklogin()
@@ -210,7 +211,18 @@ class Home extends BaseController
         $skills = get_user_skills($user_id); // helper function
 
         $data['jobs'] = $this->HomeModel->matching_jobs($skills);
-        return view('user/auth/matching_jobs');
+        return view('user/auth/matching_jobs',$data);
     }
 
+    public function saved_jobs()
+    {   
+        $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
+        return view('user/auth/saved_jobs',$get);
+    }
+
+    public function jobdetails($id)
+    {   
+        $get['data'] = $this->HomeModel->jobdetails($id);
+        return view('user/job_details',$get);
+    }
 }

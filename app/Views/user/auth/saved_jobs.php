@@ -106,25 +106,25 @@
                         </div>
                         <!-- Count of Job list End -->
                         <!-- single-job-content -->
-                        <?php foreach ($jobs as $key => $value) : ?>
+                        <?php foreach ($data as $key => $value) : ?>
                         <div class="single-job-items mb-30">
                             <div class="job-items">
                                 <div class="company-img">
-                                    <a href="#"><img height="50" width="50" src="<?= $value['company_logo']; ?>" alt=""></a>
+                                    <a href="#"><img height="50" width="50" src="<?= get_company_logo($value['company_id'])?>" alt=""></a>
                                 </div>
                                 <div class="job-tittle job-tittle2">
                                     <a href="#">
                                         <h4><?= $value['title'] ?></h4>
                                     </a>
                                     <ul>
-                                        <li><?= $value['company_name'] ?></li>
+                                        <li><?= get_company_name($value['company_id']) ?></li>
                                         <li><i class="fas fa-map-marker-alt"></i><?= get_city_name($value['city']); ?>, <?= get_country_name($value['country']); ?></li>
                                         <li>₹<?= $value['min_salary'] ?> - ₹<?= $value['max_salary'] ?></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="items-link items-link2 f-right">
-                                <a href="<?= base_url('home/jobdetails/'.$value['id']) ?>">Details</a>
+                                <a href="job_details.html">Details</a>
                                 <span><?= time_ago($value['created_date']); ?></span>
                             </div>
                         </div>

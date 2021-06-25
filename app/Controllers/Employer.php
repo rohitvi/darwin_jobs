@@ -583,6 +583,7 @@ class Employer extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'location' => $this->request->getPost('location'),
+                'expiry_date' => $pkg['expire_date'],
                 'created_date' => date('Y-m-d : H:i:s'),
                 'updated_date' => date('Y-m-d : H:i:s'),
             );

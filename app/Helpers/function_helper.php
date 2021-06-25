@@ -262,9 +262,9 @@ function year_dropdown($field_name, $earliest_year, $selected_value){
 // -----------------------------------------------------------------------------
 function time_ago($date) {
     if(empty($date)) {
-        return trans('no_date');
+        return 'no_date';
     }
-    $periods = array(trans('second'),trans('minute'), trans('hour'), trans('day'), trans('week'), trans('month'), trans('year'), trans('decade'));
+    $periods = array('second','minute','hour','day','week','month','year','decade');
     $lengths = array("60","60","24","7","4.35","12","10");
     $now = time();
     $unix_date = strtotime($date);
@@ -275,10 +275,10 @@ function time_ago($date) {
     // is it future date or past date
     if($now > $unix_date) {
         $difference = $now - $unix_date;
-        $tense = trans('ago');
+        $tense = 'ago';
     } else {
         $difference = $unix_date - $now;
-        $tense = trans('from_now');
+        $tense = 'from_now';
     }
     for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
         $difference /= $lengths[$j];
