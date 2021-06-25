@@ -159,19 +159,27 @@ class Home extends BaseController
 
     public function add_subscriber()
     {
-       if ($this->request->getMethod('post')) {
+       if ($this->request->isAJAX()) {
         
+        $rules = [
+            'subscriber_email' =>['label' => 'subscriber_email', 'rules' => 'required']
+        ];
+        if ($this->validate($rules) == FALSE) {
+            echo '0~' . $this->validation->getErrors();
+            exit;
+        }
         $data = [       
                 'email' => $this->request->getPost('subscriber_email'),
                 'created_at' => date('Y-m-d h:i:s')      
             ];
         $query = $this->HomeModel->add_subscriber($data);
-        if ($query == true) {
-            $this->session->setFlashdata('success','Congratulations! You have been Subscribed');
-            return redirect()->to(base_url('home'));
+        if ($query) {
+            echo '1~ Congratulations! You have been Subscribed';
+            exit;
         }else{
-            $this->session->setFlashdata('error','Something Went Wrong, Please Try Again !');
-            }
+            echo '0~ Something Went Wrong, Please Try Again !';
+            exit;
+        }
        }
     }
 
