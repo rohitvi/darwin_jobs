@@ -177,4 +177,22 @@ class Home extends BaseController
         }
     }
 
+    public function add_subscriber()
+    {
+       if ($this->request->getMethod('post')) {
+        
+        $data = [       
+                'email' => $this->request->getPost('subscriber_email'),
+                'created_at' => date('Y-m-d h:i:s')      
+            ];
+        $query = $this->HomeModel->add_subscriber($data);
+        if ($query == true) {
+            $this->session->setFlashdata('success','Congratulations! You have been Subscribed');
+            return redirect()->to(base_url('home'));
+        }else{
+            $this->session->setFlashdata('error','Something Went Wrong, Please Try Again !');
+            }
+       }
+    }
+
 }
