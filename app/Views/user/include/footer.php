@@ -169,6 +169,54 @@
 <!-- Noty Js -->
 <script src="<?= base_url('public/user/noty/noty.js')?>"></script>
 
+<script>
+    <?php if (session()->getFlashdata('denied')) { ?>
+    <script type="text/javascript">
+             new Noty({
+                type: 'warning',
+                layout: 'topRight',
+                text: 'Access Denied.',
+                progressBar: true,
+                timeout: 2500,
+                animation: {
+                    open: 'animated bounceInRight', // Animate.css class names
+                    close: 'animated bounceOutRight' // Animate.css class names
+                }
+            }).show();
+    </script>
+    <?php } ?>
+    <?php if (session()->getFlashdata('error')) { ?>
+    <script type="text/javascript">
+             new Noty({
+                type: 'error',
+                layout: 'topRight',
+                text: '<?= session()->getFlashdata('error') ?>',
+                progressBar: true,
+                timeout: 2500,
+                animation: {
+                    open: 'animated bounceInRight', // Animate.css class names
+                    close: 'animated bounceOutRight' // Animate.css class names
+                }
+            }).show();
+    </script>
+    <?php } ?>
+    <?php if (session()->getFlashdata('success')) { ?>
+    <script type="text/javascript">
+             new Noty({
+                type: 'success',
+                layout: 'topRight',
+                text: '<?= session()->getFlashdata('success') ?>',
+                progressBar: true,
+                timeout: 2500,
+                animation: {
+                    open: 'animated bounceInRight', // Animate.css class names
+                    close: 'animated bounceOutRight' // Animate.css class names
+                }
+            }).show();
+    </script>
+    <?php } ?>
+</script>
+
 </body>
 
 </html>
