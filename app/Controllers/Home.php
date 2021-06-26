@@ -97,7 +97,17 @@ class Home extends BaseController
         $builder = $this->db->table('states');
         $states = $builder->where('country_id', $this->request->getPost('country'))->get()->getResultArray();
         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-        $html = form_dropdown('state', $options, '', 'class="form-control select2" required');
+        $html = form_dropdown('state', $options, '', 'class="form-control select state" required');
+        $error =  array('msg' => $html);
+        echo json_encode($error);
+    }
+
+    // user get states
+    function get_states($country_id)
+    {
+        $builder = $this->db->table('states')->where('country_id',$country_id)->get()->getResultArray();
+        $options = array('' => 'Select State') + array_column($states, 'name', 'id');
+        $html = form_dropdown('state', $options, '', ' required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -109,7 +119,7 @@ class Home extends BaseController
         $cities = $builder->where('state_id', $this->request->getPost('state'))->get()->getResultArray();
 
         $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-        $html = form_dropdown('city', $options, '', 'class="form-control select2" required');
+        $html = form_dropdown('city', $options, '', 'class="form-control select2 city" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -142,7 +152,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $user_id = $this->HomeAuthModel->register($data);
-            if($user_id == ''){
+            if(!$user_id){
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             }else
@@ -256,5 +266,59 @@ class Home extends BaseController
     {   
         $get['data'] = $this->HomeModel->jobdetails($id);
         return view('user/job_details',$get);
+    }
+
+    public function applied_jobs()
+    {
+        $user_id = session('user_id');
+        $get['data'] = $this->HomeModel->applied_jobs($user_id);
+        return view('user/auth/applied_jobs',$get);
+    }
+
+    public function apply_job()
+    {
+        if ($this->request->isAJAX()) {
+            $rules = [
+                'job_id' => ['label'=>'job_id','rules'=>'required'],
+                'cover_letter' => ['label'=>'cover_letter','rules'=>'required'],
+                'username' => ['label'=>'username','rules'=>'required'],
+                'email' => ['label'=>'email','rules'=>'required'],
+                'job_title' => ['label'=>'job_title','rules'=>'required'],
+                'job_actual_link' => ['label'=>'job_actual_link','rules'=>'required'],
+            ];
+            if ($this->validate($rules) == FALSE) {
+                echo '0~' . $this->validation->getErrors();
+                exit;
+            }
+            $data = [
+                'user_id' => session('user_id'),
+                'emp_id' => $this->request->getPost('emp_id'),
+                'job_id' => $this->request->getPost('job_id'),
+                'cover_letter' => $this->request->getPost('cover_letter'),
+                'applied_date' => date('Y-m-d : h:m:s')
+            ];
+            $result = $this->HomeModel->apply_job($data);
+            if ($result->resultID == 1) {
+                $emp = get_employer_by_id($data['emp_id']);
+                $job = get_job_detail($data['job_id']);
+                $emp_to = $emp['email'];
+
+                $user_to = get_user_email($data['user_id']);
+
+                // Send Email to Employer
+                $mail_data = ['job_title'=>$job['title']];
+
+                // Job Seeker
+                $this->mailer->mail_template($user_to,'job-applied',$mail_data);
+
+                // Employer Alert
+                $this->mailer->mail_template($emp_to,'applicant-applied',$mail_data);
+                echo '1~ You Have Successfully Applied for Job';
+                exit;
+            }else{
+                echo '0~Something Went Wrong, Please Try Again !';
+                exit;
+            }
+        }
     }
 }

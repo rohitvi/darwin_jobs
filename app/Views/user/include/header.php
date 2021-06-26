@@ -80,7 +80,7 @@
                                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-user mx-1"></i> <?= session('username') ?></button>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a class="dropdown-item my-2" href="<?= base_url('home/profile') ?>"><i class="fas fa-user" aria-hidden="true"></i> &nbsp;&nbsp; My Profile</a>
-                                            <a class="dropdown-item my-2" href="<?= base_url('home/profile') ?>"><i class="fas fa-file-word" aria-hidden="true"></i> &nbsp;&nbsp; My Applications</a>
+                                            <a class="dropdown-item my-2" href="<?= base_url('home/applied_jobs') ?>"><i class="fas fa-file-word" aria-hidden="true"></i> &nbsp;&nbsp; My Applications</a>
                                             <a class="dropdown-item my-2" href="<?= base_url('home/matching_jobs') ?>"><i class="fas fa-briefcase" aria-hidden="true"></i> &nbsp;&nbsp; Maatching Jobs</a>
                                             <a class="dropdown-item my-2" href="<?= base_url('home/saved_jobs') ?>"><i class="fas fa-heart" aria-hidden="true"></i> &nbsp;&nbsp; Saved jobs</a>
                                             <a class="dropdown-item my-2" href="<?= base_url('home/change_password') ?>"><i class="fas fa-lock" aria-hidden="true"></i> &nbsp;&nbsp; Change Password</a>

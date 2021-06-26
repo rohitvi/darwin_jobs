@@ -238,3 +238,17 @@ function get_company_logo($company_id)
     $builder = $db->table('companies');
     return $builder->getWhere(array('id' => $company_id))->getRowArray()['company_logo'];
 }
+// Get Employer By ID
+function get_employer_by_id($employer_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('employers');
+    return $builder->getWhere(array('id' => $employer_id))->getRowArray();
+}
+// Get User Email
+function get_user_email($user_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('users');
+    return $builder->getWhere(array('id' => $user_id))->getRowArray()['email'];
+}

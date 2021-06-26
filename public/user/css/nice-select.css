@@ -26,6 +26,7 @@
           user-select: none;
   white-space: nowrap;
   width: auto; }
+  .list{height: 335px !important; overflow-y: scroll !important;}
   .nice-select:hover {
     border-color: #dbdbdb; }
   .nice-select:active, .nice-select.open, .nice-select:focus {
