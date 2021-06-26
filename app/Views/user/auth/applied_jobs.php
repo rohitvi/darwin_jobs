@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="hero-cap text-center">
-                        <h2>Change Password</h2>
+                        <h2>Candidate Profile</h2>
                     </div>
                 </div>
             </div>
@@ -63,12 +63,12 @@
                         </a>
                    </div>
                    <div class="single-listing mt-3 text-left">
-                        <a href="" class="ahref mt-3">
+                        <a href="<?= base_url('home/matching_jobs'); ?>" class="ahref mt-3">
                             <div class="icon"><i class="fas fa-briefcase ml-3" aria-hidden="true"></i> &nbsp;&nbsp; Matching Jobs</div>
                         </a>
                    </div>
                    <div class="single-listing mt-3 text-left">
-                        <a href="" class="ahref mt-3">
+                        <a href="<?= base_url('home/saved_jobs'); ?>" class="ahref mt-3">
                             <div class="icon"><i class="fas fa-heart ml-3" aria-hidden="true"></i> &nbsp;&nbsp; Saved Jobs</div>
                         </a>
                    </div>
@@ -86,10 +86,11 @@
                 <section class="featured-job-area">
                     <div class="container">
                         <!-- Count of Job list Start -->
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="col-lg-12">
                                 <div class="count-job mb-35">
                                     <span>39, 782 Jobs found</span>
+                                    <!-- Select job items start -->
                                     <div class="select-job-items">
                                         <span>Sort by</span>
                                         <select name="select">
@@ -99,41 +100,36 @@
                                             <option value="">job list</option>
                                         </select>
                                     </div>
+                                    <!--  Select job items End-->
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <!-- Count of Job list End -->
                         <!-- single-job-content -->
-                        <h3>Change Password</h3>
-                        <hr>
-                        <form action="<?= base_url('home/change_password');?>" method="post" class="form-horizontal ">
-                                    <div class="form-group row mb-3">
-                                        <div class="col-xl-6 mb-3">
-                                            <label class="form-control-label"><b>Password</b></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon addon-primary">
-                                                <i class="la la-lock"></i>
-                                            </span>
-                                            <input type="password" name="password" class="form-control" placeholder="Enter Password">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <label class="form-control-label"><b>Confirm Password</b></label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon addon-primary">
-                                                <i class="la la-lock"></i>
-                                            </span>
-                                            <input type="password" name="cpassword" class="form-control" placeholder="Confirm Password">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-left">
-                                    <button class="btn btn-gradient-01" type="submit">Update</button>
-                                    </div>
-                        </form>
-
-
+                        <?php foreach ($data as $key => $value) : ?>
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="#"><img height="50" width="50" src="<?= get_company_logo($value['employer_id']); ?>" alt=""></a>
+                                </div>
+                                <div class="job-tittle job-tittle2">
+                                    <a href="#">
+                                        <h4><?= $value['title']; ?></h4>
+                                    </a>
+                                    <ul>
+                                        <li><?= get_company_name($value['company_id']) ?></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><?= get_city_name($value['city']); ?>, <?= get_country_name($value['country']); ?></li>
+                                        <li>₹<?= $value['min_salary'] ?> - ₹<?= $value['max_salary'] ?></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link items-link2 f-right">
+                                <button class="btn" disabled >Applied</button>
+                                <span><?= time_ago($value['created_date']); ?></span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                        <!-- single-job-content -->
                     </div>
                 </section>
                 <!-- Featured_job_end -->

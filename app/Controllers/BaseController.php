@@ -27,7 +27,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ["function","common","form","date"];
+	protected $helpers = ["function","common","form","date","url"];
 
 	/**
 	 * Constructor.
@@ -48,6 +48,7 @@ class BaseController extends Controller
         $this->session 	= \Config\Services::session();
         $this->db 		= \Config\Database::connect();
 		$this->validation =  \Config\Services::validation();
+		$this->uri = service('uri');
 		// **Test Eaxmpe**
 		// $this->session->set('item', 'value');
 		// $this->session->remove('item');
