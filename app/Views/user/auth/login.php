@@ -12,12 +12,12 @@
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form id="register" action="" method="post">
-				<input type="text" name="firstname" placeholder="Firstname" required />
-				<input type="text" name="lastname" placeholder="Lastname" required />
-				<input type="email" name="email" placeholder="Email" required />
-				<input type="password" name="password" placeholder="Password" required />
-				<input type="password" name="cpassword" placeholder="Confirm Password" required />
-				<input type="checkbox" class="check form-control" name="termsncondition" required>
+				<input type="text" class="rounded" name="firstname" placeholder="Firstname" required />
+				<input type="text" class="rounded" name="lastname" placeholder="Lastname" required />
+				<input type="email" class="rounded" name="email" placeholder="Email" required />
+				<input type="password" class="rounded" name="password" placeholder="Password" required />
+				<input type="password" class="rounded" name="cpassword" placeholder="Confirm Password" required />
+				<input type="checkbox" class="rounded" class="checkspan" name="termsncondition" required>
 				<span class="checkspan">Terms & Conditions</span>
 				<button>Sign Up</button>
 			</form>
@@ -30,8 +30,8 @@
 					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 				</div>
 				<span>or use your account</span>
-				<input type="email" name="email" placeholder="Email" required />
-				<input type="password" name="password" placeholder="Password" required />
+				<input class="rounded" type="email" name="email" placeholder="Email" required />
+				<input class="rounded" type="password" name="password" placeholder="Password" required />
 				<a href="#">Forgot your password?</a>
 				<button>Sign In</button>
 			</form>
