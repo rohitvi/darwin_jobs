@@ -1,6 +1,10 @@
 <?php include(VIEWPATH . 'user/include/header.php'); ?>
 <style>
     .nice-select,.list{width: 100%;}
+    a {
+    color: #2561b9;
+    outline: medium none;
+}
 </style>
 <!-- Hero Area Start-->
 <div class="slider-area ">
@@ -109,11 +113,11 @@
                         <!-- single-job-content -->
                         <h3>Personal Information</h3>
                         <hr>
-                        <form action="<?= base_url('home/change_password');?>" method="post" class="form-horizontal">
+                        <form action="<?= base_url('home/profile');?>" method="post" class="form-horizontal">
                                     <div class="form-group row mb-3">
                                         <div class="col-xl-10">
                                             <label class="form-control-label"><b>Profile Picture</b></label>
-                                            <input type="file" name="cpassword" class="form-control" placeholder="Confirm Password">
+                                            <input type="file" name="profile_picture" class="form-control" placeholder="Confirm Password">
                                         </div>
                                     </div>
 
@@ -235,7 +239,7 @@
                                         </div>
                                         <div class="col-xl-5">
                                             <label class="form-control-label"><b>Country *</b></label>
-                                            <select class="form-control select" name="country">
+                                            <select class="form-control select" id="country" name="country">
                                             <option value="">Select Country</option>
                                             <?php foreach($countries as $country):?>
                                                 <?php if($data[0]['country'] == $country['id']): ?>
@@ -244,6 +248,26 @@
                                                 <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
                                                 <?php endif; endforeach; ?>
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mb-3">
+                                        <div class="col-xl-5">
+                                            <label for="state">State *</label>
+                                            <?php
+                                                $states = get_country_states($data[0]['country']);
+                                                $options = array('' => 'Select State') + array_column($states, 'name', 'id');
+                                                echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state" required');
+                                            ?>
+                                        </div>
+
+                                        <div class="col-xl-5">
+                                        <label for="city">City *</label>
+                                        <?php
+                                            $cities = get_state_cities($data[0]['state']);
+                                            $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
+                                            echo form_dropdown('city', $options, $data[0]['city'], 'class="city" required');
+                                        ?>
                                         </div>
                                     </div>
 
@@ -259,6 +283,112 @@
                                     </div>
                         </form>
 
+                        <hr>
+                        <div class='row'>
+                        <div class='col-md-9'> <h3>Experience</h3></div>      
+                        <div class='col-md-1'><h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-experience"></i></span></h3></div>                       
+                        </div>
+
+                        <div class='row'>
+                        <?php foreach($experiences as $exp): ?>
+                            <div class='col-md-12'>
+                            <h4><?= $exp['job_title'] ?> at <?= $exp['company'] ?></h4>
+                            <p><?= get_nth_month($exp['starting_month']) .' '.$exp['starting_year']?> - <?= (!$exp['currently_working_here']) ? get_nth_month($exp['ending_month']) .' '.$exp['ending_year'] : 'Present ' ?> | <?= get_country_name($exp['country']) ?></p>
+                            <p class="overflow-ellipsis"><?= $exp['description'] ?></p>
+
+                            <p class="overflow-ellipsis">
+                            <a href="javascript:void(0)" class="edit-experience" data-exp_id="<?= $exp['id'] ?>"><i class="fa fa-trash"></i> Edit</a>&nbsp;
+                            <a href="<?= base_url('profile/delete_experience/'.$exp['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i> Delete</a>&nbsp;
+                            </p>
+                
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <!-- /collapse -->
+                        <div id="user-experience" class="collapse">
+                            <form id="experience" method='post'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Job Title</label>
+                                    <input class="form-control valid" name="job_title" type="text" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Company</label>         
+                                    <input class="form-control valid" name="company" type="text" required>        
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Country</label>
+                                    <select class="form-control select" id="country" name="country" required=''>
+                                            <option value="">Select Country</option>
+                                            <?php foreach($countries as $country):?>
+                                                <?php if($data[0]['country'] == $country['id']): ?>
+                                                <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
+                                                <?php else: ?>
+                                                <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                                                <?php endif; endforeach; ?>
+                                            </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Start Month</label>         
+                                    <?php 
+                                    $options = get_months_list();
+                                    echo form_dropdown('starting_month',$options,'','class="form-control" required');
+                                    ?>    
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Start Year</label>         
+                                    <?php 
+                                    $options = get_years_list();
+                                    echo form_dropdown('starting_year',$options,'','class="form-control" required');
+                                    ?> 
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>End  Month</label>         
+                                    <?php 
+                                    $options = get_months_list();
+                                    echo form_dropdown('ending_month',$options,'','class="form-control " required');
+                                    ?>        
+                                </div>
+                                <div class="col-md-3">
+                                    <label>End  Year</label>         
+                                    <?php 
+                                $options = get_years_list();
+                                echo form_dropdown('ending_year',$options,'','class="form-control " required');
+                                ?>        
+                                </div>
+                                <div class="col-md-6">
+                                <label>Currently Working Here</label><br>
+                                <input type="checkbox" name="currently_working_here" class="currently_working_here" value="1">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                <h5>Description</h5>
+                                <textarea name="description" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-12">
+                                <div class="submit-field">
+                                <!-- <input type="submit" class="genric-btn danger circle"value="Submit"> -->
+                                <button class='genric-btn danger circle'>Submit</button>
+                                <button type="button" class="genric-btn danger circle close_all_collapse">Cancel</button>
+                                </div>
+                            </div>
+                            </div>
+                        </form>                         
+                        </div>
+                        <!-- /collapse -->
 
                     </div>
                 </section>
@@ -267,5 +397,85 @@
         </div>
     </div>
 </div>
+
 <!-- Job List Area End -->
 <?php include(VIEWPATH . 'user/include/footer.php'); ?>
+
+<script>
+    var csfr_token_name = '<?= csrf_token() ?>';
+    var csfr_token_value = '<?= csrf_hash() ?>';
+    $(document).ready(function(){
+      $('#country').on('change',function(){
+        var data = {country: this.value,}
+        data[csfr_token_name] = csfr_token_value;
+        $.ajax({
+          url: '<?= base_url('home/get_country_states'); ?>',
+          type: 'POST',
+          data: data,
+          dataType: 'json',
+          cached: false,
+          success: function(obj){
+            $('.state').html(obj.msg);
+          }
+        });
+      });
+      $('.state').on('change',function(){
+          var state = this.value;
+        var data = {state: this.value,}
+        data[csfr_token_name] = csfr_token_value;
+        // console.log(data);return false;
+        $.ajax({
+          url: '<?= base_url('home/get_state_cities'); ?>',
+          type: 'POST',
+          data: data,
+          dataType: 'json',
+          cached: false,
+          success: function(obj){
+            $('.city').html(obj.msg);
+          }
+        });
+      });
+    });
+
+    $('#experience').on('submit',function(){
+    event.preventDefault();
+    var fields = $('#experience').serialize();
+    //console.log(fields);
+    $.ajax({
+        url: "<?= base_url('home/experience'); ?>",
+        method: "POST",
+        data: fields,
+         success:function(responses){
+            var response = responses.split('~');
+            $('#experience').trigger("reset");
+              if ($.trim(response[0]) == 0) {
+                new Noty({
+                    type: "error",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+              }
+              if ($.trim(response[0]) == 1) {
+                new Noty({
+                    type: "success",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+              }
+         }
+    });
+
+});
+  </script>

@@ -97,7 +97,7 @@ class Home extends BaseController
         $builder = $this->db->table('states');
         $states = $builder->where('country_id', $this->request->getPost('country'))->get()->getResultArray();
         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-        $html = form_dropdown('state', $options, '', 'class="form-control select2" required');
+        $html = form_dropdown('state', $options, '', 'class="form-control select2 state" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -109,7 +109,7 @@ class Home extends BaseController
         $cities = $builder->where('state_id', $this->request->getPost('state'))->get()->getResultArray();
 
         $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-        $html = form_dropdown('city', $options, '', 'class="form-control select2" required');
+        $html = form_dropdown('city', $options, '', 'class="form-control select2 city" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -242,7 +242,8 @@ class Home extends BaseController
         $get['countries'] = $this->adminModel->get_countries_list();
         $id = session('user_id');
         $get['data'] = $this->HomeModel->perinfo_by_id($id);
-        //pre($get);
+        $get['experiences'] = $this->HomeModel->get_user_experience($id);
+
         return view('user/userprofile',$get);
     }
 
@@ -257,4 +258,47 @@ class Home extends BaseController
         $get['data'] = $this->HomeModel->jobdetails($id);
         return view('user/job_details',$get);
     }
+
+
+    public function experience(){
+        if ($this->request->isAJAX()) {
+        
+            $rules = [
+                'job_title'     =>['label' => 'job_title', 'rules' => 'required'],
+                'company'       =>['label' => 'company', 'rules' => 'required'],
+                'country'       =>['label' => 'country', 'rules' => 'required'],
+                'starting_month'=>['label' => 'starting_month', 'rules' => 'required'],
+                'starting_year' =>['label' => 'starting_year', 'rules' => 'required'],
+                'ending_month' =>['label' => 'ending_month', 'rules' => 'required'],
+                'ending_year'    =>['label' => 'ending_year', 'rules' => 'required'],
+                'description'    =>['label' => 'description', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == FALSE) {
+                echo '0~' . $this->validation->getErrors();
+                exit;
+            }
+            $id = session('user_id');
+            $data = [       
+                    'user_id' => $id,
+                    'job_title' => $this->request->getPost('job_title'),
+                    'company' => $this->request->getPost('company'),
+                    'country' => $this->request->getPost('country'),
+                    'starting_month' => $this->request->getPost('starting_month'),
+                    'starting_year' => $this->request->getPost('starting_year'),
+                    'ending_month' => $this->request->getPost('ending_month'),
+                    'ending_year' => $this->request->getPost('ending_year'),
+                    'description' => $this->request->getPost('description'),
+                    'updated_date' => date('Y-m-d : h:m:s')
+                ];
+            $query = $this->HomeModel->update_user_experience($data,$id);
+            if ($query == 1) {
+                echo '1~ Experience Updated';
+                exit;
+            }else{
+                echo '0~ Something Went Wrong, Please Try Again !';
+                exit;
+            }
+           }
+    }
+
 }

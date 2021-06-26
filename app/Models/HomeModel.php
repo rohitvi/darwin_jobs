@@ -52,4 +52,25 @@ class HomeModel extends Model
         return $this->db->table('users')->where('id',$id)->get()->getResultArray();
     }
 
+    public function get_user_experience($id)
+    {
+        return $this->db->table('seeker_experience')->where('user_id',$id)->get()->getResultArray();
+    }
+
+    public function update_user_experience($data,$id)
+    {
+        $builder = $this->db->table('seeker_experience');
+        $builder->where('id',$id);
+        if ($builder->countAllResults() > 0) {
+
+            $this->db->table('seeker_experience')->insert($data);
+           
+        }
+        else
+        {
+            return $this->db->table('seeker_experience')->where('id', $id)->update($data);
+        }
+        return true;
+    }
+
 }
