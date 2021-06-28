@@ -34,7 +34,7 @@ class Home extends BaseController
 
     public function dashboard()
     {
-        return view('user/index');
+        return view('users/index');
     }
 
     public function login()
