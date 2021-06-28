@@ -20,6 +20,7 @@
 <link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 
@@ -85,7 +86,7 @@
 										</li>
 										
 										<li>
-											<a href="edit-password.html">Change password</a>
+											<a href="<?= base_url('home/changepassword'); ?>">Change password</a>
 										</li>
 										<li>
 											<a href="registration.html">Registration</a>
