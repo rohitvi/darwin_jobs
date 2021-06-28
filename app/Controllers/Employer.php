@@ -371,7 +371,7 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                return redirect()->to(base_url('admin/login'));
+                return redirect()->to(base_url('employer/login'));
             }
         }
     }

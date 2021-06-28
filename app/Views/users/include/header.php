@@ -31,7 +31,7 @@
 			<div class="container">
 				<div class="header_top">
 					<div class="logo">
-						<a href="index.html">
+						<a href="<?= base_url('home') ?>">
 							<img  alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
 						</a>
 					</div>
@@ -162,26 +162,46 @@
 						</nav>
 						<div class="ac_nav">
 							<!--Not logedin-->
+							<?php if (session('user_logged_in')) : ?>
+								<div class="login_pop">
+									<div class="dropdown">
+									  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome <?= session('username') ?></button>
+									  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									    <a class="dropdown-item" href="<?= base_url('home/profile') ?>"><i class="fas fa-user" aria-hidden="true"></i> &nbsp;&nbsp;My Profile</a>
+									    <a class="dropdown-item" href="<?= base_url('home/logout') ?>"><i class="fas fa-power-off"></i> &nbsp;&nbsp;Logout</a>
+									  </div>
+									</div>
+								</div>
+							<?php else : ?>
 								<div class="login_pop">
 									<button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
 									<div class="login_pop_box">
 										<span class="twobtn_cont">
 											<a class=" signjs_btn" href="registration.html">				 
 											<span>Job seekers</span> Sign up
-											<i class="far fa-user"></i>
+												<i class="far fa-user"></i>
 											</a>
-										<a class=" signrs_btn" href="emp-registration.html">	<span>EMPLOYERS</span> Sign up
-											<i class="fas fa-landmark"></i>
-										</a>
+											<a class=" signrs_btn" href="emp-registration.html">
+											<span>EMPLOYERS</span> Sign up
+												<i class="fas fa-landmark"></i>
+											</a>
 										</span>
 										<div>
 											<span class="member_btn">Already a member?</span>
-											<a class="lgin_btn btn btn-primary" href="login.html"> 
-											   	Login
+											<span class="twobtn_cont">
+											<a class=" signjs_btn" href="<?= base_url('login') ?>">				 
+											<span>Job seekers</span> Login In
+												<i class="far fa-user"></i>
 											</a>
+											<a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
+											<span>EMPLOYERS</span> Login In
+												<i class="fas fa-landmark"></i>
+											</a>
+										</span>
 										</div>
 									</div>
 								</div>
+							<?php endif ; ?>
 							<!--end logedin-->
 						</div>
 					</div>
