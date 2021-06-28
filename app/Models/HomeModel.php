@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Models;
+
 use CodeIgniter\Model;
+
 class HomeModel extends Model
 {
     protected $table = NULL;
@@ -8,48 +11,93 @@ class HomeModel extends Model
     public function add_subscriber($data)
     {
         $builder = $this->db->table('subscribers');
-        $builder->where('email',$data['email']);
+        $builder->where('email', $data['email']);
         if ($builder->countAllResults() > 0) {
             return true;
-        }
-        else
-        {
+        } else {
             return $this->db->table('subscribers')->insert($data);
         }
     }
 
     public function matching_jobs($skills)
     {
-        $builder =  $this->db->table('job_post')->select('job_post.id, job_post.title, job_post.company_id, job_post.job_slug, job_post.job_type, job_post.description, job_post.country, job_post.city,job_post.expiry_date, job_post.created_date, job_post.industry,job_post.min_salary,job_post.max_salary,companies.company_name,companies.company_logo')->join('companies','companies.id = job_post.company_id');
+        $builder =  $this->db->table('job_post')->select('job_post.id, job_post.title, job_post.company_id, job_post.job_slug, job_post.job_type, job_post.description, job_post.country, job_post.city,job_post.expiry_date, job_post.created_date, job_post.industry,job_post.min_salary,job_post.max_salary,companies.company_name,companies.company_logo')->join('companies', 'companies.id = job_post.company_id');
         $builder->where('curdate() <  expiry_date');
-        $builder->where('is_status','active');
+        $builder->where('is_status', 'active');
 
-        if(!empty($skills)){
+        if (!empty($skills)) {
             $skills = explode(',', trim($skills));
-            foreach($skills as $skill){
+            foreach ($skills as $skill) {
                 $builder->orLike('title', $skill);
                 $builder->orLike('skills', $skill);
             }
         }
 
-        $builder->orderBy('created_date','desc');
+        $builder->orderBy('created_date', 'desc');
         $builder->groupBy('title');
         return $builder->get()->getResultArray();
     }
 
     public function saved_jobs($user_id)
     {
-        return $this->db->table('saved_jobs')->join('job_post','job_post.id = saved_jobs.job_id')->where('seeker_id',$user_id)->get()->getResultArray();
+        return $this->db->table('saved_jobs')->join('job_post', 'job_post.id = saved_jobs.job_id')->where('seeker_id', $user_id)->get()->getResultArray();
     }
 
     public function jobdetails($id)
     {
-        return $this->db->table('job_post')->select('job_post.*,companies.company_logo,companies.company_name,companies.description as cdescription,companies.website,companies.email')->join('companies','job_post.company_id = companies.id')->where('job_post.id ='.$id)->get()->getRowArray();
+        return $this->db->table('job_post')->select('job_post.*,companies.company_logo,companies.company_name,companies.description as cdescription,companies.website,companies.email')->join('companies', 'job_post.company_id = companies.id')->where('job_post.id =' . $id)->get()->getRowArray();
     }
 
     public function perinfo_by_id($id)
     {
-        return $this->db->table('users')->where('id',$id)->get()->getResultArray();
+        return $this->db->table('users')->where('id', $id)->get()->getResultArray();
+    }
+
+    // Get All Jobs
+    public function get_all_jobs($search)
+    {
+        $builder = $this->table('job_post');
+
+        $builder->select('id, title, company_id, job_slug, job_type, description, country, city, expiry_date, created_date, industry');
+
+        // search URI parameters
+        unset($search['p']); //unset pagination parameter form search
+
+        if (!empty($search['country']))
+            $builder->where('country', $search['country']);
+
+        if (!empty($search['city']))
+            $builder->where('city', $search['city']);
+
+        if (!empty($search['category']))
+            $builder->where('category', $search['category']);
+
+        if (!empty($search['experience']))
+            $builder->where('experience', $search['experience']);
+
+        if (!empty($search['job_type']))
+            $builder->where('job_type', $search['job_type']);
+
+        if (!empty($search['employment_type']))
+            $builder->where('employment_type', $search['employment_type']);
+
+        if (!empty($search['title'])) {
+            $search_text = explode('-', $search['title']);
+            foreach ($search_text as $search) {
+                $builder->groupStart();
+                $builder->orLike('title', $search);
+                $builder->orLike('skills', $search);
+                $builder->groupEnd();
+            }
+        }
+
+
+        $builder->where('is_status', 'active');
+        $builder->where('curdate() <  expiry_date');
+        $builder->orderBy('created_date', 'desc');
+        $builder->groupBy('id');
+        $result = $builder->paginate(12);
+        return $result;
     }
 
     public function get_user_experience($id)

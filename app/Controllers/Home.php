@@ -16,6 +16,7 @@ class Home extends BaseController
         $this->adminModel = new AdminModel();
         $this->mailer = new Mailer();
         $helpers = ['date'];
+        $this->uri = service('uri');
     }
 
     public function checklogin()
@@ -156,10 +157,10 @@ class Home extends BaseController
             if(!$user_id){
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
-            }else
-                $this->mailer->send_verification_email($user_id,'user');
-                echo '1~User Successfully Registered  !';
-                exit;
+            } else
+                $this->mailer->send_verification_email($user_id, 'user');
+            echo '1~User Successfully Registered  !';
+            exit;
         }
     }
 
@@ -175,41 +176,95 @@ class Home extends BaseController
         if (count($result) > 0) {
             // Send Mail Data
             $mail_data = array(
-                'fullname' => $result['firstname'].' '.$result['lastname'],
+                'fullname' => $result['firstname'] . ' ' . $result['lastname'],
             );
-            $this->mailer->mail_template($result['email'],'welcome',$mail_data);
-            $this->session->setFlashdata('success','Email Successfully Verified!');
+            $this->mailer->mail_template($result['email'], 'welcome', $mail_data);
+            $this->session->setFlashdata('success', 'Email Successfully Verified!');
             return redirect()->to(base_url('login'));
-        }else{
-            $this->session->setFlashdata('error','Somethiung Went Wrong Try Again!');
+        } else {
+            $this->session->setFlashdata('error', 'Somethiung Went Wrong Try Again!');
             return redirect()->to(base_url('home'));
         }
     }
 
+    // Advance Search functionality 
+    public function search()
+    {
+        $search = array();
+        if ($this->request->getMethod() == 'search') {
+
+            // search job title
+            if (!empty($this->request->getPost('job_title')))
+                $search['title'] = make_slug($this->request->getPost('job_title'));
+
+            // search job country
+            if (!empty($this->request->getPost('country')))
+                $search['country'] = $this->request->getPost('country');
+
+            // search catagory
+            if (!empty($this->request->getPost('category')))
+                $search['category'] = $this->request->getPost('category');
+
+            // search experience
+            if (!empty($this->request->getPost('experience')))
+                $search['experience'] = $this->request->getPost('experience');
+
+            // search job type
+            if (!empty($this->request->getPost('job_type')))
+                $search['job_type'] = $this->request->getPost('job_type');
+
+            // search employment type
+            if (!empty($this->request->getPost('employment_type')))
+                $search['employment_type'] = $this->request->getPost('employment_type');
+
+            $query = $this->uri->assoc_to_uri($search);
+
+            redirect(base_url('search/' . $query), 'refresh');
+        }
+        $search_array = $this->uri->getSegment(3);
+        // $search_query = $this->uri->assoc_to_uri($search_array);
+        echo $search_array ;exit;
+        $Jobs = new HomeModel();
+        $Jobs->setTable('job_post');
+        $data = [
+            'search_value' => $search_array,
+            'jobs' => $Jobs->get_all_jobs($search_array),
+            'countries' => $this->adminModel->get_countries_list(),
+            'categories' => $this->adminModel->get_categories_list(),
+            'title' => 'Search Results',
+            'meta_description' => 'your meta description here',
+            'keywords' => 'meta tags here',
+            'pager' => $Jobs->pager
+        ];
+
+        return view('user/job_listing', $data);
+    }
+
+
     public function add_subscriber()
     {
-       if ($this->request->isAJAX()) {
-        
-        $rules = [
-            'subscriber_email' =>['label' => 'subscriber_email', 'rules' => 'required']
-        ];
-        if ($this->validate($rules) == FALSE) {
-            echo '0~' . $this->validation->getErrors();
-            exit;
-        }
-        $data = [       
-                'email' => $this->request->getPost('subscriber_email'),
-                'created_at' => date('Y-m-d h:i:s')      
+        if ($this->request->isAJAX()) {
+
+            $rules = [
+                'subscriber_email' => ['label' => 'subscriber_email', 'rules' => 'required']
             ];
-        $query = $this->HomeModel->add_subscriber($data);
-        if ($query) {
-            echo '1~ Congratulations! You have been Subscribed';
-            exit;
-        }else{
-            echo '0~ Something Went Wrong, Please Try Again !';
-            exit;
+            if ($this->validate($rules) == FALSE) {
+                echo '0~' . $this->validation->getErrors();
+                exit;
+            }
+            $data = [
+                'email' => $this->request->getPost('subscriber_email'),
+                'created_at' => date('Y-m-d h:i:s')
+            ];
+            $query = $this->HomeModel->add_subscriber($data);
+            if ($query) {
+                echo '1~ Congratulations! You have been Subscribed';
+                exit;
+            } else {
+                echo '0~ Something Went Wrong, Please Try Again !';
+                exit;
+            }
         }
-       }
     }
 
     public function matching_jobs()
@@ -219,15 +274,15 @@ class Home extends BaseController
         $skills = get_user_skills($user_id); // helper function
 
         $data['jobs'] = $this->HomeModel->matching_jobs($skills);
-        return view('user/auth/matching_jobs',$data);
+        return view('user/auth/matching_jobs', $data);
     }
 
     public function change_password()
     {
-        if ($this->request->getMethod() =='post') {
-            $rules= [
-                'password' => ['label' => 'password','rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword','rules' => 'required|matches[password]']
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'password' => ['label' => 'password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
@@ -236,10 +291,10 @@ class Home extends BaseController
             $id = session('user_id');
             $password =  password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $query = $this->HomeAuthModel->change_password($id, $password);
-            if ($query == 1){
+            if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
                 return redirect()->to(base_url('home/change_password'));
-            }else{
+            } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
                 exit;
             }
@@ -259,15 +314,15 @@ class Home extends BaseController
     }
 
     public function saved_jobs()
-    {   
+    {
         $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
-        return view('user/auth/saved_jobs',$get);
+        return view('user/auth/saved_jobs', $get);
     }
 
     public function jobdetails($id)
-    {   
+    {
         $get['data'] = $this->HomeModel->jobdetails($id);
-        return view('user/job_details',$get);
+        return view('user/job_details', $get);
     }
 
 
