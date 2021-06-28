@@ -76,7 +76,7 @@ $routes->match(['get', 'post'], 'admin/post', 'Admin::post');
 
 // USER ROUTES
 $routes->get('profile', 'Home::profile');
-
+$routes->match(['get', 'post'], 'search', 'Home::search');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

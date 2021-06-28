@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/noty/noty.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/style.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/user/css/styles.css">
+    <script src="<?= base_url(); ?>/public/user/js/vendor/jquery-1.12.4.min.js"></script>
 </head>
 
 <body>

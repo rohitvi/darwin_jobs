@@ -238,6 +238,41 @@ function get_company_logo($company_id)
     $builder = $db->table('companies');
     return $builder->getWhere(array('id' => $company_id))->getRowArray()['company_logo'];
 }
+
+function get_months_list()
+    {
+        return array(
+        '' => 'Month',
+        '1' => 'Jan',
+        '2' => 'Feb',
+        '3' => 'Mar',
+        '4' => 'Apr',
+        '5' => 'May',
+        '6' => 'Jun',
+        '7' => 'Jul',
+        '8' => 'Aug',
+        '9' => 'Sep',
+        '10' => 'Oct',
+        '11' => 'Nov',
+        '12' => 'Dec',
+      );
+    }
+
+    function get_years_list()
+    {
+        $years = [];
+        $years[''] = 'Year';
+        for ($i=0; $i < 50; $i++) { 
+            $year = date('Y',strtotime('- '.$i.' years'));
+            $years[$year] = $year;
+        }
+        return $years;
+    }
+
+    function get_nth_month($nth)
+    {
+        return date('M',strtotime($nth.' month'));
+    }
 // Get Employer By ID
 function get_employer_by_id($employer_id)
 {
