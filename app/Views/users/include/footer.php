@@ -153,9 +153,11 @@ $('#subscriber').on('submit',function(){
 <!-- Scripts
 ================================================== -->
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/aos.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
 </body>
 </html>

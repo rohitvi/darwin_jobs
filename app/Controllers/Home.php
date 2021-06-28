@@ -66,7 +66,7 @@ class Home extends BaseController
                 exit;
             }
         }
-        return view('user/auth/login');
+        return view('users/auth/login');
     }
 
     public function updateProfileImage()
@@ -305,7 +305,7 @@ class Home extends BaseController
                 exit;
             }
         }
-        return view('users/auth/changepassword');
+        return view('users/auth/change_password');
     }
 
     public function profile()
@@ -316,7 +316,7 @@ class Home extends BaseController
         $get['data'] = $this->HomeModel->perinfo_by_id($id);
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
 
-        return view('user/userprofile',$get);
+        return view('users/auth/profile');
     }
 
     public function saved_jobs()

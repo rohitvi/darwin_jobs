@@ -7,19 +7,19 @@
 <title>JoDice</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="icon" href="assets/images/fav.png" type="image/gif" sizes="64x64">
+<link rel="icon" href="<?= base_url(); ?>/public/users/images/fav.png" type="image/gif" sizes="64x64">
 
 <!-- CSS
 ================================================== -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700&display=swap&subset=latin-ext" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/all.min.css">
-<link href="assets/css/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/all.min.css">
+<link href="<?= base_url(); ?>/public/users/css/aos.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link href="assets/css/select2.min.css" rel="stylesheet" />
-<link href="assets/css/owl.carousel.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/color-1.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/bootstrap.min.css">
+<link href="<?= base_url(); ?>/public/users/css/select2.min.css" rel="stylesheet" />
+<link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
         <div class="header_top">
           <div class="logo">
             <a href="index.html">
-              <img alt="JoDice" class="img-fluid" src="assets/images/dice-logo.png">
+              <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
             </a>
           </div>
           <div class="navigation">
@@ -165,19 +165,27 @@
                   <button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
                   <div class="login_pop_box">
                     <span class="twobtn_cont">
-                      <a class=" signjs_btn" href="registration.html">         
+                      <a class=" signjs_btn" href="<?= base_url('register') ?>">         
                       <span>Job seekers</span> Sign up
-                      <i class="far fa-user"></i>
+                        <i class="far fa-user"></i>
                       </a>
-                    <a class=" signrs_btn" href="emp-registration.html"> <span>EMPLOYERS</span> Sign up
-                      <i class="fas fa-landmark"></i>
-                    </a>
+                      <a class=" signrs_btn" href="<?= base_url('employer/register') ?>">
+                      <span>EMPLOYERS</span> Sign up
+                        <i class="fas fa-landmark"></i>
+                      </a>
                     </span>
                     <div>
                       <span class="member_btn">Already a member?</span>
-                      <a class="lgin_btn btn btn-primary" href="login.html"> 
-                          Login
+                      <span class="twobtn_cont">
+                      <a class=" signjs_btn" href="<?= base_url('login') ?>">        
+                      <span>Job seekers</span> Login In
+                        <i class="far fa-user"></i>
                       </a>
+                      <a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
+                      <span>EMPLOYERS</span> Login In
+                        <i class="fas fa-landmark"></i>
+                      </a>
+                    </span>
                     </div>
                   </div>
                 </div>
@@ -188,7 +196,7 @@
       </div>
     </div>
     <div class="header_btm">
-      <h2>Login</h2>
+      <h2>Job Seeker Login</h2>
     </div>
   </div> 
 </header>
@@ -206,22 +214,22 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-        	<div class="only-form-box">		
-    				<form>
-    					<div class="com_class_form">
-    						<div class="form-group">
-    					
-    							<input class="form-control" type="text" name="name" size="40" placeholder=" Username or email address * ">
-    						</div>
-    						<div class="form-group">
-    							
-    							<input class="form-control" type="password" name="email" placeholder=" Password * ">
-    						</div>
-    						
-    						
-    						<div class="form-group">
-    							<input class="btn btn-primary" type="submit" value="Login">
-    						</div>
+          <div class="only-form-box">   
+            <form method="post" id="login">
+              <div class="com_class_form">
+                <div class="form-group">
+              
+                  <input class="form-control" type="text" name="email" size="40" placeholder="Email address * ">
+                </div>
+                <div class="form-group">
+                  
+                  <input class="form-control" type="password" name="password" placeholder=" Password * ">
+                </div>
+                
+                
+                <div class="form-group">
+                  <input class="btn btn-primary" type="submit" value="Login">
+                </div>
                 <div class="form-group form-check">
                   <label class="form-check-label">
                     <input class="form-check-input" type="checkbox"> Remember me
@@ -230,14 +238,14 @@
                 <div>
                     <a class="lost_password" href="lost-password.html"> Lost your password?</a>
                 </div>
-    					</div>
-    				</form>
+              </div>
+            </form>
             <div class="social_login">
               <p class="or_span"><span>or</span></p>
               <button class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Log In via Facebook</button>
               <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button>
             </div>
-			     </div>
+           </div>
         </div>
       </div>
     </div>
@@ -327,17 +335,17 @@
             </ul>
           </div>
           <div class="footer_widget_box">
-						<form class="newsletter">
-			                  <h2>Newsletter</h2>
-			                  <div class="d-flex">
+            <form class="newsletter">
+                        <h2>Newsletter</h2>
+                        <div class="d-flex">
 
-			                    <input class="form-control" type="email" placeholder="Enter your email ">
-			                    <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
-			                   
-			                  </div>
-		                   
-		                </form>
-		            </div>
+                          <input class="form-control" type="email" placeholder="Enter your email ">
+                          <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+                         
+                        </div>
+                       
+                    </form>
+                </div>
         </div>
         <div class="col-md-12">
           <div class="footer_widget_box">
@@ -356,10 +364,57 @@
 
 <!-- Scripts
 ================================================== -->
-<script src="assets/js/jquery-3.4.1.min.js"></script>
-<script src="assets/js/select2.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/custom.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
+<script>
+  $('#login').on('submit',function(){
+        event.preventDefault();
+    var fields = $('#login').serialize();
+    $.ajax({
+      url: "<?= base_url('login') ?>",
+            method: "POST",
+            data: fields,
+            success: function(responses){
+              console.log(responses);
+              var response = responses.split('~');
+              if ($.trim(response[0]) == 0) {
+                $('#login').trigger("reset");
+                  new Noty({
+                      type: "error",
+                      layout: "topRight",
+                      text: response[1],
+                      progressBar: true,
+                      timeout: 2500,
+                      animation: {
+                          open: "animated bounceInRight",
+                          close: "animated bounceOutRight"
+                      }
+                  }).show();
+                }
+                if ($.trim(responses[0]) == 1) {
+                  $('#login').trigger("reset");
+                  setTimeout(function() {
+                    window.location.href = 'home';
+                  }, 500);
+                  new Noty({
+                      type: "success",
+                      layout: "topRight",
+                      text: response[1],
+                      progressBar: true,
+                      timeout: 2500,
+                      animation: {
+                          open: "animated bounceInRight",
+                          close: "animated bounceOutRight"
+                      }
+                  }).show();
+              }
+            }
+    });
+  });
+</script>
 </body>
 </html>

@@ -26,8 +26,7 @@
 												  <option value="1">Concierge</option>
 												  <option value="2">Event Planner</option>
 												  <option value="3">Executive Chef</option>
-												   <option value="4">General Manager</option>
-
+												  <option value="4">General Manager</option>
 												</select>
 											</div>
 											<div class="fild-wrap fw-job-location">
