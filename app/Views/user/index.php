@@ -18,22 +18,22 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <!-- form -->
-                            <form action="#" class="search-box">
+                            <form action="<?= base_url('home/search'); ?>" method="get" class="search-box">
                                 <div class="input-form">
-                                    <input type="text" placeholder="Job Tittle or keyword">
+                                    <input type="text" name="address" placeholder="Job Tittle or keyword">
                                 </div>
                                 <div class="select-form">
                                     <div class="select-itms">
                                         <select name="select" id="select1">
-                                            <option value="">Location BD</option>
-                                            <option value="">Location PK</option>
-                                            <option value="">Location US</option>
-                                            <option value="">Location UK</option>
+                                            <option value="BD">Location BD</option>
+                                            <option value="PK">Location PK</option>
+                                            <option value="US">Location US</option>
+                                            <option value="UK">Location UK</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="search-form">
-                                    <a href="#">Find job</a>
+                                    <a href="#" type="submit">Find job</a>
                                 </div>	
                             </form>	
                         </div>

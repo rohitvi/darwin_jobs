@@ -65,17 +65,17 @@
                         </a>
                    </div>
                    <div class="single-listing mt-3 text-left">
-                        <a href="" class="ahref mt-3">
+                        <a href="<?= base_url('home/applied_jobs'); ?>" class="ahref mt-3">
                             <div class="icon"><i class="fas fa-file-word ml-3" aria-hidden="true"></i> &nbsp;&nbsp; My Applications</div>
                         </a>
                    </div>
                    <div class="single-listing mt-3 text-left">
-                        <a href="" class="ahref mt-3">
+                        <a href="<?= base_url('home/matching_jobs'); ?>" class="ahref mt-3">
                             <div class="icon"><i class="fas fa-briefcase ml-3" aria-hidden="true"></i> &nbsp;&nbsp; Matching Jobs</div>
                         </a>
                    </div>
                    <div class="single-listing mt-3 text-left">
-                        <a href="" class="ahref mt-3">
+                        <a href="<?= base_url('home/saved_jobs'); ?>" class="ahref mt-3">
                             <div class="icon"><i class="fas fa-heart ml-3" aria-hidden="true"></i> &nbsp;&nbsp; Saved Jobs</div>
                         </a>
                    </div>
@@ -224,20 +224,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mb-3">
-                                    <div class="col-xl-5">
-                                            <label class="form-control-label"><b>Nationality  *</b></label>
-                                            <select class="form-control select" name="nationality">
-                                            <option value="">Select Nationality</option>
-                                                <?php foreach($countries as $country):?>
-                                                <?php if($data[0]['nationality'] == $country['id']): ?>
-                                                <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
-                                                <?php else: ?>
-                                                <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                                <?php endif; endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-xl-5">
+                                    <div class="row mb-3">
+                                        <div class="col-xl-5 form-group">
                                             <label class="form-control-label"><b>Country *</b></label>
                                             <select class="form-control select" id="country" name="country">
                                             <option value="">Select Country</option>
@@ -247,7 +235,23 @@
                                                 <?php else: ?>
                                                 <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
                                                 <?php endif; endforeach; ?>
-                                            </select>
+                                            </select> -->
+                                        </div>
+                                        <div class="col-xl-5 form-group">
+                                            <label class="form-control-label"><b>State *</b></label>
+                                            <?php
+                                                $states = get_country_states($data[0]['country']);
+                                                $options = array('' => 'Select State') + array_column($states, 'name', 'id');
+                                                echo form_dropdown('state', $options, $data[0]['state'], 'class="state" required');
+                                            ?>
+                                        </div>
+                                        <div class="col-xl-5 form-group">
+                                            <label><b>City *</b></label>
+                                            <?php
+                                            $cities = get_state_cities($data[0]['state']);
+                                            $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
+                                            echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" required');
+                                            ?>
                                         </div>
                                     </div>
 

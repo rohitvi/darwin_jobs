@@ -72,5 +72,15 @@ class HomeModel extends Model
         }
         return true;
     }
+    
+    public function applied_jobs($user_id)
+    {
+        return $this->db->table('seeker_applied_job')->select('seeker_applied_job.seeker_id,seeker_applied_job.employer_id,job_post.title,job_post.*')->join('job_post','job_post.id = seeker_applied_job.job_id')->where('seeker_applied_job.id',$user_id)->get()->getResultArray();
+    }
+
+    public function apply_job($data)
+    {
+        return $this->db->table('seeker_applied_job')->insert($data);
+    }
 
 }

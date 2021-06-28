@@ -58,7 +58,7 @@
                         </a>
                    </div>
                    <div class="single-listing mt-3 text-left">
-                        <a href="" class="ahref mt-3">
+                        <a href="<?= base_url('home/applied_jobs') ?>" class="ahref mt-3">
                             <div class="icon"><i class="fas fa-file-word ml-3" aria-hidden="true"></i> &nbsp;&nbsp; My Applications</div>
                         </a>
                    </div>
