@@ -110,13 +110,11 @@ class HomeModel extends Model
         $builder = $this->db->table('seeker_experience');
         $builder->where('id',$id);
         if ($builder->countAllResults() > 0) {
-
-            $this->db->table('seeker_experience')->insert($data);
-           
+            return $this->db->table('seeker_experience')->where('id', $id)->update($data);
         }
         else
         {
-            return $this->db->table('seeker_experience')->where('id', $id)->update($data);
+            $this->db->table('seeker_experience')->insert($data);
         }
         return true;
     }
@@ -129,6 +127,11 @@ class HomeModel extends Model
     public function apply_job($data)
     {
         return $this->db->table('seeker_applied_job')->insert($data);
+    }
+
+    public function delete_experience($id)
+    {
+        $this->db->table('seeker_experience')->where('id',$id)->delete();
     }
 
 }

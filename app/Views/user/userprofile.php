@@ -302,7 +302,7 @@
 
                             <p class="overflow-ellipsis">
                             <a href="javascript:void(0)" class="edit-experience" data-exp_id="<?= $exp['id'] ?>"><i class="fa fa-trash"></i> Edit</a>&nbsp;
-                            <a href="<?= base_url('profile/delete_experience/'.$exp['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i> Delete</a>&nbsp;
+                            <a href="<?= base_url('home/delete_experience/'.$exp['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i> Delete</a>&nbsp;
                             </p>
                 
                             </div>

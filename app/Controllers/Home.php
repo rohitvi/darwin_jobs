@@ -340,7 +340,7 @@ class Home extends BaseController
                 'description'    =>['label' => 'description', 'rules' => 'required']
             ];
             $id = session('user_id');
-            $data = [       
+            $data = [        
                     'user_id' => $id,
                     'job_title' => $this->request->getPost('job_title'),
                     'company' => $this->request->getPost('company'),
@@ -414,6 +414,18 @@ class Home extends BaseController
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             }
+        }
+    }
+
+    public function delete_experience($id)
+	{
+        $query = $this->HomeModel->delete_experience($id);
+        if ($query == 1) {
+            $this->session->setFlashdata('success', 'Experience successfully deleted');
+            return redirect()->to(base_url('home/profile'));
+        } else {
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('home/profile'));
         }
     }
 }
