@@ -230,13 +230,13 @@
                 <div class="form-group">
                   <input class="btn btn-primary" type="submit" value="Login">
                 </div>
-                <div class="form-group form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox"> Remember me
-                  </label>
-                </div>
                 <div>
-                    <a class="lost_password" href="lost-password.html"> Lost your password?</a>
+                    <div class="d-inline-block">
+                      <a class="lost_password" href="lost-password.html"> Lost your password?</a>
+                    </div>
+                    <div class="float-right d-inline-block">
+                      <a class="lost_password" href="<?= base_url('home/register') ?>"> New User?</a>
+                    </div>
                 </div>
               </div>
             </form>
@@ -366,10 +366,11 @@
 ================================================== -->
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
-<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.js"></script>
 <script>
   $('#login').on('submit',function(){
         event.preventDefault();

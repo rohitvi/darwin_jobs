@@ -67,6 +67,10 @@ a:hover, a:focus {
 button:focus, button:hover,  select, a, select:focus  {
 	outline: none!important
 }
+.mt1 {
+	margin-top: 100px!important;
+}
+
 .btn , button {
 	font-size: 14px;
 	font-weight: 500;

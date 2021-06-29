@@ -1,195 +1,359 @@
-<?php $ap = basename($_SERVER['PHP_SELF'], ".php");
-    function is_Url($path)
-    {
-        if ($path == uri_string()) {
-            return 1;
-        }
-    }
-?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?= get_g_setting_val('application_name') ?></title>
-    <meta name="description" content="Elisyam is a Web App and Admin Dashboard Template built with Bootstrap 4">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Google Fonts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <script>
-        WebFont.load({
-            google: {
-                "families": ["Montserrat:400,500,600,700", "Noto+Sans:400,700"]
-            },
-            active: function() {
-                sessionStorage.fonts = true;
-            }
-        });
-    </script>
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('public/employer/assets/img/apple-touch-icon.png') ?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('public/employer/assets/img/favicon-32x32.png') ?>">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('public/employer/assets/img/favicon-16x16.png') ?>">
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/vendors/css/base/bootstrap.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/bootstrap-select/bootstrap-select.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/vendors/css/base/elisyam-1.5.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/owl-carousel/owl.carousel.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/owl-carousel/owl.theme.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/datatables/datatables.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/animate/animate.min.css') ?>">
-    <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
-    <link rel="stylesheet" type="text/css" href="<?= base_url('public/employer/assets/css/custom.css') ?>">
-</head>
 
-<body id="page-top">
-    <!-- Begin Preloader -->
-    <div id="preloader">
-        <div class="canvas">
-            <img src="<?= base_url('public/employer/assets/img/logo.png') ?>" alt="logo" class="loader-logo">
-            <div class="spinner"></div>
-        </div>
-    </div>
-    <!-- End Preloader -->
-    <div class="page">
-        <!-- Begin Header -->
-        <header class="header">
-            <nav class="navbar fixed-top">
-                <!-- Begin Topbar -->
-                <div class="navbar-holder d-flex align-items-center align-middle justify-content-between">
-                    <!-- Begin Logo -->
-                    <div class="navbar-header">
-                        <a href="<?= base_url('employer') ?>" class="navbar-brand">
-                            <div class="brand-image brand-big">
-                                <img src="<?= base_url('public/employer/assets/img/logo-big.png') ?>" alt="logo" class="logo-big">
-                            </div>
-                            <div class="brand-image brand-small">
-                                <img src="<?= base_url('public/employer/assets/img/logo.png') ?>" alt="logo" class="logo-small">
-                            </div>
+<!-- Basic Page Needs
+================================================== -->
+<title>JoDice</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="icon" href="<?= base_url(); ?>/public/images/fav.png" type="image/gif" sizes="64x64">
+
+<!-- CSS
+================================================== -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700&display=swap&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/all.min.css">
+<link href="<?= base_url(); ?>/public/users/css/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/bootstrap.min.css">
+<link href="<?= base_url(); ?>/public/users/css/select2.min.css" rel="stylesheet" />
+<link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
+</head>
+<body>
+
+<!-- Header 01
+================================================== -->
+<header class="header_01">
+    <div class="header_main">
+        <div class="header_menu fixed-top">
+            <div class="container">
+                <div class="header_top">
+                    <div class="logo">
+                        <a href="<?= base_url('home') ?>">
+                            <img  alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
                         </a>
-                        <!-- Toggle Button -->
-                        <a id="toggle-btn" href="#" class="menu-btn active">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </a>
-                        <!-- End Toggle -->
                     </div>
-                    <!-- End Logo -->
-                    <!-- Begin Navbar Menu -->
-                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center pull-right">
-                        <!-- Begin Notifications -->
-                        <li class="nav-item dropdown"><a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="la la-bell animated infinite swing"></i><span class="badge-pulse"></span></a>
-                            <ul aria-labelledby="notifications" class="dropdown-menu notification">
-                                <li>
-                                    <div class="notifications-header">
-                                        <div class="title">Notifications (4)</div>
-                                        <div class="notifications-overlay"></div>
-                                        <img src="<?= base_url('public/employer/assets/img/notifications/01.jpg') ?>" alt="..." class="img-fluid">
+                    <div class="navigation">
+                        <nav>
+                            <div class="hamburger hamburger--spring js-hamburger ">
+                                <div class="hamburger-box">
+                                  <div class="hamburger-inner"></div>
+                                </div>
+                              </div>
+                            <ul>
+                                <li class="has-sub-menu current_page">
+                                    <a href="index.html" >Home</a>
+                                    <ul class="sub-menu">
+                                        <li class="current_page">
+                                            <a href="index.html">Homepage 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="home-page-2.html">Homepage 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="home-page-3.html">Homepage 3</a>
+                                        </li>
+                                        <li>
+                                            <a href="home-page-4.html">Homepage 4</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="has-sub-menu">
+                                    <a href="index.html">Job Seekers</a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="<?= base_url('employer') ?>">Job dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="browse-jobs.html">Browse jobs</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a href="job-single.html">Job single</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a href="my-stared-jobs.html">My stared jobs</a>
+                                        </li>
+                                        <li>
+                                            <a href="staff-profile-single.html">Job seeker profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="edit-profile.html">Update my profile</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a href="edit-password.html">Change password</a>
+                                        </li>
+                                        <li>
+                                            <a href="registration.html">Registration</a>
+                                        </li>
+                                        <li>
+                                            <a href="browse-companies.html">Browse companies</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+
+                                <li class="has-sub-menu">
+                                    <a href="#">For employers</a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="<?= base_url('employer') ?>">Job dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="post-a-job.html">Post a job</a>
+                                        </li>
+                                        <li>
+                                            <a href="my-job-listing.html">My Jobs listing</a>
+                                        </li>
+                                        <li>
+                                            <a href="find-staff.html">Find staff</a>
+                                        </li>
+                                        <li>
+                                            <a href="compnay-profile-single.html">Company profile</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a href="emp-edit-profile.html">Update profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="emp-edit-password.html">Change password</a>
+                                        </li>
+                                        <li>
+                                            <a href="emp-registration.html">Employer registration</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-sub-menu">
+                                    <a href="#">Pages</a>
+                                    <ul class="sub-menu">
+
+                                        <li>
+                                            <a href="blog.html">blog</a>
+                                        </li>
+                                        <li>
+                                            <a href="blog-single.html">Blog single</a>
+                                        </li>
+                                        <li>
+                                            <a href="contact-us.html">Contact us</a>
+                                        </li>
+                                        <li>
+                                            <a href="plan-page.html">Membership Plans</a>
+                                        </li>
+                                        <li>
+                                            <a href="login.html">Login</a>
+                                        </li>
+                                        <li>
+                                            <a href="lost-password.html">Lost password</a>
+                                        </li>
+                                        <li>
+                                            <a href="user-interface-elements.html">User interface elements</a>
+                                        </li>
+                                        <li>
+                                            <a href="404.html">404</a>
+                                        </li>   
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="ac_nav">
+                            <!--Not logedin-->
+                            <?php if (session('employer_logged_in')) : ?>
+                                <div class="login_pop">
+                                    <div class="dropdown">
+                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome <?= session('employer_username') ?></button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="<?= base_url('employer/profile'); ?>"><i class="fas fa-user" aria-hidden="true"></i> &nbsp;&nbsp;My Profile</a>
+                                        <a class="dropdown-item" href="<?= base_url('employer/logout'); ?>"><i class="fas fa-power-off"></i> &nbsp;&nbsp;Logout</a>
+                                      </div>
                                     </div>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="message-icon">
-                                            <i class="la la-user"></i>
+                                </div>
+                            <?php else : ?>
+                                <div class="login_pop">
+                                    <button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
+                                    <div class="login_pop_box">
+                                        <span class="twobtn_cont">
+                                            <a class=" signjs_btn" href="<?= base_url('home/register') ?>">
+                                            <span>Job seekers</span> Sign up
+                                                <i class="far fa-user"></i>
+                                            </a>
+                                            <a class=" signrs_btn" href="<?= base_url('employer/register') ?>">
+                                            <span>EMPLOYERS</span> Sign up
+                                                <i class="fas fa-landmark"></i>
+                                            </a>
+                                        </span>
+                                        <div>
+                                            <span class="member_btn">Already a member?</span>
+                                            <span class="twobtn_cont">
+                                            <a class=" signjs_btn" href="<?= base_url('login') ?>">
+                                            <span>Job seekers</span> Login In
+                                                <i class="far fa-user"></i>
+                                            </a>
+                                            <a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
+                                            <span>EMPLOYERS</span> Login In
+                                                <i class="fas fa-landmark"></i>
+                                            </a>
+                                        </span>
                                         </div>
-                                        <div class="message-body">
-                                            <div class="message-body-heading">
-                                                New user registered
-                                            </div>
-                                            <span class="date">2 hours ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="message-icon">
-                                            <i class="la la-calendar-check-o"></i>
-                                        </div>
-                                        <div class="message-body">
-                                            <div class="message-body-heading">
-                                                New event added
-                                            </div>
-                                            <span class="date">7 hours ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="message-icon">
-                                            <i class="la la-history"></i>
-                                        </div>
-                                        <div class="message-body">
-                                            <div class="message-body-heading">
-                                                Server rebooted
-                                            </div>
-                                            <span class="date">7 hours ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="message-icon">
-                                            <i class="la la-twitter"></i>
-                                        </div>
-                                        <div class="message-body">
-                                            <div class="message-body-heading">
-                                                You have 3 new followers
-                                            </div>
-                                            <span class="date">10 hours ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">View All Notifications</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- End Notifications -->
-                        <!-- User -->
-                        <li class="nav-item dropdown"><a id="user" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><img src="<?= base_url('public/employer/assets/img/avatar/avatar-01.jpg') ?>" alt="..." class="avatar rounded-circle"></a>
-                            <ul aria-labelledby="user" class="user-size dropdown-menu">
-                                <li class="welcome">
-                                    <a href="#" class="edit-profil"><i class="la la-gear"></i></a>
-                                    <img src="<?= base_url('public/employer/assets/img/avatar/avatar-01.jpg') ?>" alt="..." class="rounded-circle">
-                                </li>
-                                <li>
-                                    <a href="<?= base_url('employer/profile') ?>" class="dropdown-item">
-                                        Profile
-                                    </a>
-                                </li>
-                                <li><a rel="nofollow" href="<?= base_url('employer/logout') ?>" class="dropdown-item logout text-center"><i class="ti-power-off"></i></a></li>
-                            </ul>
-                        </li>
-                        <!-- End User -->
-                    </ul>
-                    <!-- End Navbar Menu -->
+                                    </div>
+                                </div>
+                            <?php endif ; ?>
+                            <!--end logedin-->
+                        </div>
+                    </div>
                 </div>
-                <!-- End Topbar -->
-            </nav>
-        </header>
-        <!-- End Header -->
-        <!-- Begin Page Content -->
-        <div class="page-content d-flex align-items-stretch">
-            <div class="default-sidebar">
-                <!-- Begin Side Navbar -->
-                <nav class="side-navbar box-scroll sidebar-scroll">
-                    <!-- Begin Main Navigation -->
-                    <ul class="list-unstyled">
-                        <li class="<?= (is_Url('employer/dashboard') ) ? 'active' : ''; ?>"><a href="<?= base_url('employer') ?>"><i class="la la-map"></i><span>Dashboard</span></a></li>
-                        <li><a href="#dropdown-app" <?= (is_Url('employer/list_jobs') || is_Url('employer/post')) ? "aria-expanded='true' class=''" : "aria-expanded='false'  class='collapsed'"; ?> data-toggle="collapse"><i class="la la-plus-circle"></i><span>Job Posting</span></a>
-                            <ul id="dropdown-app" class="collapse <?= (is_Url('employer/list_jobs') || is_Url('employer/post') ) ? 'show' : ''; ?> list-unstyled pt-0">
-                                <li><a class="<?= (is_Url('employer/list_jobs') ) ? 'active' : ''; ?>" href="<?= base_url('employer/list_jobs') ?>">View Job</a></li>
-                                <li><a class="<?= (is_Url('employer/post') ) ? 'active' : ''; ?>" href="<?= base_url('employer/post') ?>">Add New Job</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="<?= base_url('employer/shortlisted') ?>"><i class="la la-users"></i><span>Shortlisted Candidates</span></a></li>
-                        <li><a href="<?= base_url('employer/search') ?>"><i class="la la-search-plus"></i><span>Search CV</span></a></li>
-                        <li><a href="<?= base_url('employer/packages') ?>"><i class="la la-tasks"></i><span>Packages</span></a></li>
-                    </ul>
-                    <!-- End Main Navigation -->
-                </nav>
-                <!-- End Side Navbar -->
             </div>
-            <!-- End Left Sidebar -->
+        </div>
+        <div class="header_btm">
+      <h2>Update My Profile</h2>
+    </div>
+  </div> 
+</header>
+
+
+<!-- End Header 02
+================================================== -->
+
+
+
+<!-- Main 
+================================================== -->
+<main>
+  <div class="job_container">
+    <div class="container">
+      <div class="row job_main">
+        <div class="sidebar">
+
+          <ul class="user_navigation">
+            <li  >
+              <a href="find-staff.html"><i class="fas fa-search"></i> Find Staff </a>
+              <a class="filter_btn" href="#sidebar_filter_option"> 
+                <i class="fas fa-filter"></i>
+                <i class="fas fa-times"></i>
+              </a>
+            </li>
+            <li>
+            <form id="#sidebar_filter_option" class="filter_option">
+              <div class="form-group">
+                <label>Location</label>
+                <div class="field">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <select class="js-example-basic-single" name="state">
+                      <option value="AL">ALABAMA</option>
+                      <option value="WY">WYOMING</option>
+                    </select>
+                </div>
+              </div>  
+              <div class="form-group">
+                <label>Keywords</label>
+                <div class="field">
+                    <i class="fas fa-briefcase"></i>
+                    <select class="js-example-basic-single" name="state">
+                      <option value="AL">e.g. job title</option>
+                      <option value="WY">Title 1</option>
+                      <option value="WY">Title 2</option>
+                      <option value="WY">Title 3</option>
+                    </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>Category</label>
+                <div class="field">
+                    <i class="fas fa-briefcase"></i>
+                    <select class="js-example-basic-single" name="state">
+                      <option>Admin Support</option>
+                      <option>Customer Service</option>
+                      <option>Data Analytics</option>
+                      <option>Design &amp; Creative</option>
+                      <option>Legal</option>
+                      <option>Software Developing</option>
+                      <option>IT &amp; Networking</option>
+                      <option>Writing</option>
+                      <option>Translation</option>
+                      <option>Sales &amp; Marketing</option>
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Salary</label>
+                <div class="field">
+                  <input type="text" placeholder="e.g. 10k" class="form-control">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Tags</label>
+                <div class="field">
+                  <div class="form-group custom_checkboxes">
+                    <label class="custom_checkbox" for="tag-1">
+                      <input type="checkbox" name="usertype" id="tag-1" value="job seeker">
+                      <span><i class="fas fa-check"></i>PHP</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-2">
+                      <input type="checkbox" name="usertype" id="tag-2" value="employer">
+                      <span><i class="fas fa-check"></i> MySQL</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-3">
+                      <input type="checkbox" name="usertype" id="tag-3" value="employer">
+                      <span><i class="fas fa-check"></i> API</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-4">
+                      <input type="checkbox" name="usertype" id="tag-4" value="employer">
+                      <span><i class="fas fa-check"></i> react</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-5">
+                      <input type="checkbox" name="usertype" id="tag-5" value="employer">
+                      <span><i class="fas fa-check"></i> design</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+            </li>
+            <li  >
+              <a href="<?= base_url('employer') ?>">
+                <i class="fas fa-border-all"></i> Job Dashboard </a>
+              </li>
+          </ul>
+          <h5>Packages</h5>
+          <ul class="user_navigation">
+              <li >
+              <a href="<?= base_url('employer/packages') ?>"><i class="fas fa-money-bill"></i>Buy Packages</a>
+              </li>
+              
+              
+          </ul>
+          <h5>Organize and Manage</h5>
+          <ul class="user_navigation">
+              <li >
+              <a href="post-a-job.html"><i class="fas fa-paper-plane"></i> Post Job</a>
+              </li>
+              <li >
+                <a href="my-job-listing.html"><i class="far fa-list-alt"></i> My job listings</a>
+              </li>
+              
+              
+          </ul>
+          <h5>Account</h5>
+          <ul class="user_navigation">
+            <li class="is-active">
+                <a href="<?= base_url('employer/profile') ?>"><i class="fas fa-user"></i> Update My Profile</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-list"></i> My packages</a>
+            </li>
+            <li >
+                <a href="emp-edit-password.html"><i class="fas fa-key"></i>Change Password</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-power-off"></i> Logout</a>
+            </li>
+          </ul>
+        </div>

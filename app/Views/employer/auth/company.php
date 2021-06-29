@@ -5,8 +5,8 @@
   <div class="row job_section">
     <div class="col-sm-12">
       <div class="jm_headings">
-        <h5>Update My Profile</h5>
-        <a class="btn btn-primary mypbtn" href="<?= base_url('employer/cmp_info_update') ?>">Company profile</a>
+        <h5>Update My Company</h5>
+        <a class="btn btn-primary mypbtn" href="<?= base_url('employer/profile') ?>">Personal profile</a>
       </div>
       <div class="section-divider">
       </div>
@@ -16,38 +16,85 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group ">
-                <label>Profile Picture</label>
+                <label>Comapany Logo *</label>
                 <input name="profile_picture" type="file" class="form-control">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
-                <label>First Name</label>
-                <input name="firstname" type="text" class="form-control" placeholder="Enter First Name" value="<?= $data[0]['firstname'] ?>">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group ">
-                <label>Last Name</label>
-                <input name="lastname" type="text" class="form-control" placeholder="Enter Last Name" value="<?= $data[0]['lastname'] ?>">
+                <label>Company Name</label>
+                <input name="company_name" type="text" class="form-control" placeholder="Enter Company Name" value="<?= $data[0]['firstname'] ?>">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Email</label>
-                <input name="email" type="email" class="form-control" placeholder="Enter Email" value="<?= $data[0]['email'] ?>">
+                <input name="email" type="email" class="form-control" placeholder="Enter Email" value="<?= $data[0]['lastname'] ?>">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
-                <label>Designation</label>
-                <input name="designation" type="text" class="form-control" placeholder="Enter Designation" value="<?= $data[0]['designation'] ?>">
+                <label>Company Email</label>
+                <input name="email" type="email" class="form-control" placeholder="Enter Company Email" value="<?= $data[0]['email'] ?>">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
-                <label>Phone Number</label>
-                <input name="mobile_no" type="number" class="form-control" placeholder="Enter phone Number" value="<?= $data[0]['mobile_no'] ?>">
+                <label>Phone No</label>
+                <input name="phone_no" type="number" class="form-control" placeholder="Enter Phone Number" value="<?= $data[0]['phone_no'] ?>">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>Company Website</label>
+                <input name="website" type="text" class="form-control" placeholder="Enter Company Website" value="<?= $data[0]['mobile_no'] ?>">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label  >Skills</label>
+                <select name="category" class="form-control">
+                  <option>Select Category</option>
+                  <?php foreach($categories as $value) : ?>
+                    <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>Founded Date</label>
+                <input name="founded_date" type="date" class="form-control" placeholder="Enter Company Website" value="<?= $data[0]['mobile_no'] ?>">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>Skills</label>
+                <select name="org_type" class="form-control">
+                  <option <?php ($data[0]['org_type'] == 'Public'){echo 'selected'} ?>>Public</option>
+                  <option <?php ($data[0]['org_type'] == 'Private'){echo 'selected'} ?>>Private</option>
+                  <option <?php ($data[0]['org_type'] == 'Government'){echo 'selected'} ?>>Government</option>
+                  <option <?php ($data[0]['org_type'] == 'Ngo'){echo 'selected'} ?>>Ngo</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>No. of Employers</label>
+                <select name="no_of_employers" class="form-control select">
+                  <option value="1-10" <?php if($data[0]['no_of_employers'] == '1-10'){ echo "selected";} ?>>1-10</option>
+                  <option value="10-20" <?php if($data[0]['no_of_employers'] == '10-20'){ echo "selected";} ?>>10-20</option>
+                  <option value="20-30" <?php if($data[0]['no_of_employers'] == '20-30'){ echo "selected";} ?>>20-30</option>
+                  <option value="30-50" <?php if($data[0]['no_of_employers'] == '30-50'){ echo "selected";} ?>>30-50</option>
+                  <option value="50-100" <?php if($data[0]['no_of_employers'] == '50-100'){ echo "selected";} ?>>50-100</option>
+                  <option value="100+" <?php if($data[0]['no_of_employers'] == '100+'){ echo "selected";} ?>>100+</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>Comapany Description</label>
+                <input name="description" type="text" class="form-control" placeholder="Enter Company Description" value="<?= $data[0]['description'] ?>">
               </div>
             </div>
             <div class="col-md-6">

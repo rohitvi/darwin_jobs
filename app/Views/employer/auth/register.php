@@ -7,19 +7,19 @@
 <title>JoDice</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="icon" href="assets/images/fav.png" type="image/gif" sizes="64x64">
+<link rel="icon" href="<?= base_url(); ?>/public/users/images/fav.png" type="image/gif" sizes="64x64">
 
 <!-- CSS
 ================================================== -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700&display=swap&subset=latin-ext" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/all.min.css">
-<link href="assets/css/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/all.min.css">
+<link href="<?= base_url(); ?>/public/users/css/aos.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link href="assets/css/select2.min.css" rel="stylesheet" />
-<link href="assets/css/owl.carousel.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/color-1.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/bootstrap.min.css">
+<link href="<?= base_url(); ?>/public/users/css/select2.min.css" rel="stylesheet" />
+<link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
         <div class="header_top">
           <div class="logo">
             <a href="index.html">
-              <img alt="JoDice" class="img-fluid" src="assets/images/dice-logo.png">
+              <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
             </a>
           </div>
           <div class="navigation">
@@ -209,51 +209,43 @@
         	<div class="only-form-box">		
             <div class="welcome-text text-center mb-5">
               <h5 class="mb-0">Create an account!</h5>
-              <span>Already have an account? <a href="login.html">Log In!</a></span>
+              <span>Already have an account? <a href="<?= base_url('employer/login'); ?>">Log In!</a></span>
             </div>
-				<form>
+				<form id="register">
 					<div class="com_class_form">
 						<div class="form-group user_type_cont">
               <label class="user_type" for="usertype-1">
-                <input type="radio"  name="usertype" id="usertype-1" value="job seeker" >
-                <span><i class="far fa-user"></i> Job Seeker</span>
-              </label>
-              <label class="user_type" for="usertype-2">
-                <input type="radio" checked="" name="usertype" id="usertype-2" value="employer" >
-                <span><i class="fas fa-landmark"></i> Employer</span>
+                <span><i class="far fa-user"></i> Employer</span>
               </label>
             </div>
             <div class="form-group">
-							<input class="form-control" type="email" size="40" placeholder="Email address* ">
+							<input class="form-control" name="firstname" type="text" size="40" placeholder="Firstname * ">
 						</div>
             <div class="form-group">
-              <input class="form-control" type="text"  size="40" placeholder="User name ">
+              <input class="form-control" name="company_name" type="text"  size="40" placeholder="Company Name * ">
             </div>
 						<div class="form-group">
-							<input class="form-control" type="password" placeholder=" Password * ">
+							<input class="form-control" name="email" type="email" placeholder="Email * ">
 						</div>
             <div class="form-group">
-              <input class="form-control" type="password" placeholder="Re-enter Password * ">
+              <input class="form-control" name="password" type="password" placeholder="Password * ">
+            </div>
+            <div class="form-group">
+              <input class="form-control" name="cpassword" type="password" placeholder="Re-enter Password * ">
+            </div>
+            <div class="form-group form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" name="checkbox" type="checkbox"> Terms & Conditions
+              </label>
             </div>
 
 						
 						<div class="form-group">
 							<input class="btn btn-primary" type="submit" value="Register">
 						</div>
-            <div class="form-group form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox"> Remember me
-              </label>
-            </div>
             
 					</div>
 				</form>
-        <div class="social_login">
-              <p class="or_span"><span>or</span></p>
-              <button class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Log In via Facebook</button>
-              <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button>
-            </div>
-			</div>
         </div>
       </div>
     </div>
@@ -372,10 +364,60 @@
 
 <!-- Scripts
 ================================================== -->
-<script src="assets/js/jquery-3.4.1.min.js"></script>
-<script src="assets/js/select2.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/custom.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/aos.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.js"></script>
+<script>
+  $('#register').on('submit',function(){
+    event.preventDefault();
+    var fields = $('#register').serialize();
+    $.ajax({
+      url: "<?= base_url('employer/register') ?>",
+            method: "POST",
+            data: fields,
+            success: function(responses){
+              console.log(JSON.parse(responses));
+              return false;
+              var response = responses.split('~');
+              if ($.trim(response[0]) == 0) {
+                $('#register').trigger("reset");
+                  new Noty({
+                      type: "error",
+                      layout: "topRight",
+                      text: response[1],
+                      progressBar: true,
+                      timeout: 2500,
+                      animation: {
+                          open: "animated bounceInRight",
+                          close: "animated bounceOutRight"
+                      }
+                  }).show();
+                }
+                if ($.trim(responses[0]) == 1) {
+                  $('#register').trigger("reset");
+                  setTimeout(function() {
+                    window.location.href = 'login';
+                  }, 500);
+                  new Noty({
+                      type: "success",
+                      layout: "topRight",
+                      text: response[1],
+                      progressBar: true,
+                      timeout: 2500,
+                      animation: {
+                          open: "animated bounceInRight",
+                          close: "animated bounceOutRight"
+                      }
+                  }).show();
+              }
+            }
+    });
+  });
+</script>
 </body>
 </html>

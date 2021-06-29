@@ -157,11 +157,13 @@ class Home extends BaseController
             if(!$user_id){
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
-            } else
+            } else {
                 $this->mailer->send_verification_email($user_id, 'user');
-            echo '1~User Successfully Registered  !';
-            exit;
+                echo '1~User Successfully Registered  !';
+                exit;
+            }
         }
+        return view('users/auth/registration');
     }
 
     public function logout()
