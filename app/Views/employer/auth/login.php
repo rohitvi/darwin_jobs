@@ -31,7 +31,7 @@
       <div class="container">
         <div class="header_top">
           <div class="logo">
-            <a href="index.html">
+            <a href="<?= base_url('employer') ?>">
               <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
             </a>
           </div>
@@ -161,32 +161,11 @@
             </nav>
             <div class="ac_nav">
               <!--Not logedin-->
-                <div class="login_pop">
-                  <button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
-                  <div class="login_pop_box">
-                    <span class="twobtn_cont">
-                      <a class=" signjs_btn" href="<?= base_url('register') ?>">         
-                      <span>Job seekers</span> Sign up
-                        <i class="far fa-user"></i>
-                      </a>
-                      <a class=" signrs_btn" href="<?= base_url('employer/register') ?>">
-                      <span>EMPLOYERS</span> Sign up
-                        <i class="fas fa-landmark"></i>
-                      </a>
-                    </span>
-                    <div>
-                      <span class="member_btn">Already a member?</span>
-                      <span class="twobtn_cont">
-                      <a class=" signjs_btn" href="<?= base_url('login') ?>">        
-                      <span>Job seekers</span> Login In
-                        <i class="far fa-user"></i>
-                      </a>
-                      <a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
-                      <span>EMPLOYERS</span> Login In
-                        <i class="fas fa-landmark"></i>
-                      </a>
-                    </span>
-                    </div>
+                <div class="dropdown login_pop">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Register</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="<?= base_url('home/register'); ?>">Job Seeker Register</a>
+                    <a class="dropdown-item" href="<?= base_url('employer/register'); ?>">Employer Register</a>
                   </div>
                 </div>
               <!--end logedin-->
@@ -232,10 +211,10 @@
                 </div>
                 <div>
                     <div class="d-inline-block">
-                      <a class="lost_password" href="lost-password.html"> Lost your password?</a>
+                      <a class="lost_password" href="<?= base_url('employer/password_reset') ?>"> Lost your password?</a>
                     </div>
                     <div class="float-right d-inline-block">
-                      <a class="lost_password" href="<?= base_url('home/register') ?>"> New User?</a>
+                      <a class="lost_password" href="<?= base_url('employer/register') ?>"> New User?</a>
                     </div>
                 </div>
               </div>

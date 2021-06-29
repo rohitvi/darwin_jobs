@@ -120,5 +120,6 @@
 <script src="<?= base_url(); ?>/public/users/js/aos.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/datatables/datatables.min.js"></script>
 </body>
 </html>

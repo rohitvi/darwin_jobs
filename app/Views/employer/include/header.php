@@ -20,6 +20,7 @@
 <link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/datatables/datatables.min.css">
 </head>
 <body>
 
@@ -104,10 +105,10 @@
                                             <a href="<?= base_url('employer') ?>">Job dashboard</a>
                                         </li>
                                         <li>
-                                            <a href="post-a-job.html">Post a job</a>
+                                            <a href="<?= base_url('employer/post') ?>">Post a job</a>
                                         </li>
                                         <li>
-                                            <a href="my-job-listing.html">My Jobs listing</a>
+                                            <a href="<?= base_url('employer/list_jobs') ?>">My Jobs listing</a>
                                         </li>
                                         <li>
                                             <a href="find-staff.html">Find staff</a>
@@ -174,7 +175,7 @@
                                 </div>
                             <?php else : ?>
                                 <div class="login_pop">
-                                    <button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
+                                    <button class="btn btn-primary">Login<i class="fas fa-caret-down"></i></button>
                                     <div class="login_pop_box">
                                         <span class="twobtn_cont">
                                             <a class=" signjs_btn" href="<?= base_url('home/register') ?>">
@@ -327,16 +328,14 @@
               <li >
               <a href="<?= base_url('employer/packages') ?>"><i class="fas fa-money-bill"></i>Buy Packages</a>
               </li>
-              
-              
           </ul>
           <h5>Organize and Manage</h5>
           <ul class="user_navigation">
               <li >
-              <a href="post-a-job.html"><i class="fas fa-paper-plane"></i> Post Job</a>
+              <a href="<?= base_url('employer/post') ?>"><i class="fas fa-paper-plane"></i> Post Job</a>
               </li>
               <li >
-                <a href="my-job-listing.html"><i class="far fa-list-alt"></i> My job listings</a>
+                <a href="<?= base_url('employer/list_jobs') ?>"><i class="far fa-list-alt"></i> My job listings</a>
               </li>
               
               
@@ -347,13 +346,16 @@
                 <a href="<?= base_url('employer/profile') ?>"><i class="fas fa-user"></i> Update My Profile</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-list"></i> My packages</a>
-            </li>
-            <li >
-                <a href="emp-edit-password.html"><i class="fas fa-key"></i>Change Password</a>
+                <a href="<?= base_url('employer/cmp_info_update') ?>"><i class="fas fa-user"></i> Update My Company</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-power-off"></i> Logout</a>
+                <a href="<?= base_url('employer/mypackages') ?>"><i class="fas fa-list"></i> My packages</a>
+            </li>
+            <li >
+                <a href="<?= base_url('employer/changepassword') ?>"><i class="fas fa-key"></i>Change Password</a>
+            </li>
+            <li>
+                <a href="<?= base_url('employer/logout') ?>"><i class="fas fa-power-off"></i> Logout</a>
             </li>
           </ul>
         </div>

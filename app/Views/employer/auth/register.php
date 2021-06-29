@@ -161,27 +161,13 @@
             </nav>
             <div class="ac_nav">
               <!--Not logedin-->
-                <div class="login_pop">
-                  <button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
-                  <div class="login_pop_box">
-                    <span class="twobtn_cont">
-                      <a class=" signjs_btn" href="registration.html">         
-                      <span>Job seekers</span> Sign up
-                      <i class="far fa-user"></i>
-                      </a>
-                    <a class=" signrs_btn" href="emp-registration.html"> <span>EMPLOYERS</span> Sign up
-                      <i class="fas fa-landmark"></i>
-                    </a>
-                    </span>
-                    <div>
-                      <span class="member_btn">Already a member?</span>
-                      <a class="lgin_btn btn btn-primary" href="login.html"> 
-                          Login
-                      </a>
-                    </div>
-                  </div>
+              <div class="dropdown login_pop">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="">Job Seeker Login</a>
+                  <a class="dropdown-item" href="">Employer Login</a>
                 </div>
-              <!--end logedin-->
+              </div>
             </div>
           </div>
         </div>
