@@ -279,23 +279,29 @@ class Home extends BaseController
         return view('user/auth/matching_jobs', $data);
     }
 
-    public function change_password()
+    public function changepassword()
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]']
+                'old_password' => ['label' => 'old_password', 'rules' => 'required'],
+                'new_password' => ['label' => 'new_password', 'rules' => 'required'],
+                'confirm_password' => ['label' => 'confirm_password', 'rules' => 'required|matches[new_password]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
                 exit;
             }
             $id = session('user_id');
-            $password =  password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-            $query = $this->HomeAuthModel->change_password($id, $password);
+            $data = array(
+                'id' => $id,
+                'old_password' => $this->request->getPost('old_password'),
+                'password' =>  password_hash($this->request->getPost('new_password'), PASSWORD_DEFAULT)
+            );
+           // $password =  password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            $query = $this->HomeAuthModel->change_password($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
-                return redirect()->to(base_url('home/change_password'));
+                return redirect()->to(base_url('home/changepassword'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
                 exit;

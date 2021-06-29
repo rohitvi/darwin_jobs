@@ -85,7 +85,7 @@
 										</li>
 										
 										<li>
-											<a href="edit-password.html">Change password</a>
+											<a href="<?= base_url('home/changepassword'); ?>">Change password</a>
 										</li>
 										<li>
 											<a href="registration.html">Registration</a>
