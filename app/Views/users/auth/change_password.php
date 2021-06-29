@@ -1,12 +1,10 @@
 <?php include(VIEWPATH.'users/include/header.php'); ?>
-
-<div class="header_btm">
+<div class='header_inner '>
+  <div class="header_btm">
       <h2>Change Password</h2>
     </div>
   </div> 
-</header>
-
-
+  </div>
 <!-- End Header 02
 ================================================== -->
 
@@ -113,6 +111,7 @@
               <a href="job-dashboard.html">
                 <i class="fas fa-border-all"></i> Job Dashboard </a>
               </li>
+            <li><a href="<?= base_url('home/matching_jobs')?>"><i class="fas fa-border-all"></i> MatchingJobs </a></li>
           </ul>
           <h5>Organize and Manage</h5>
           <ul class="user_navigation">
@@ -127,14 +126,14 @@
           </ul>
           <h5>Account</h5>
           <ul class="user_navigation">
-            <li >
-                <a href="emp-edit-profile.html"><i class="fas fa-user"></i> Update My Profile</a>
+            <li class="is-active">
+                <a href="<?= base_url('home/profile') ?>"><i class="fas fa-user"></i> Update My Profile</a>
               </li>
-              <li class="is-active">
-                <a href="emp-edit-password.html"><i class="fas fa-key"></i>Change Password</a>
+              <li >
+                <a href="<?= base_url('home/change_password') ?>"><i class="fas fa-key"></i>Change Password</a>
               </li>
               <li>
-                <a href="#"><i class="fas fa-power-off"></i> Logout</a>
+                <a href="<?= base_url('home/logout') ?>"><i class="fas fa-power-off"></i> Logout</a>
               </li>
           </ul>
         </div>
@@ -146,13 +145,13 @@
               </div>
               <div class="section-divider">
           </div>
-               <form>
+          <form action="<?= base_url('home/change_password');?>" method="post">
                 <div class="form-group row">
                   <div class="col-md-3">
                       <label for="current-password">Current password</label>
                   </div>
                   <div class="col-md-9">
-                    <input type="password" class="form-control" placeholder="" id="current-password">
+                    <input type="password" class="form-control" name="old_password">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -160,7 +159,7 @@
                     <label for="new-password">New password</label>
                   </div>
                   <div class="col-md-9">
-                    <input type="password" class="form-control" placeholder="" id="new-password">
+                    <input type="password" class="form-control" name="new_password">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -168,7 +167,7 @@
                     <label for="confirm-new-password">Confirm new password</label>
                   </div>
                   <div class="col-md-9">
-                    <input type="password" class="form-control" placeholder="" id="confirm-new-password">
+                    <input type="password" class="form-control" name="confirm_password">
                   </div>
                 </div>
                 <div class="form-group row">
