@@ -1,232 +1,400 @@
-<!DOCTYPE html>
-<!--
-Item Name: Elisyam - Web App & Admin Dashboard Template
-Version: 1.5
-Author: SAEROX
-
-** A license must be purchased in order to legally use this template for your project **
--->
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Elisyam - Login</title>
-        <meta name="description" content="Elisyam is a Web App and Admin Dashboard Template built with Bootstrap 4">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Google Fonts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-        <script>
-          WebFont.load({
-            google: {"families":["Montserrat:400,500,600,700","Noto+Sans:400,700"]},
-            active: function() {
-                sessionStorage.fonts = true;
-            }
-          });
-        </script>
-        <!-- Favicon -->
-        <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('public/employer/assets/img/apple-touch-icon.png') ?>">
-        <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('public/employer/assets/img/favicon-32x32.png') ?>">
-        <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('public/employer/assets/img/favicon-16x16.png') ?>">
-        <!-- Stylesheet -->
-        <link rel="stylesheet" href="<?= base_url('public/employer/assets/vendors/css/base/bootstrap.min.css') ?>">
-        <link rel="stylesheet" href="<?= base_url('public/employer/assets/vendors/css/base/elisyam-1.5.min.css') ?>">
-        <link rel="stylesheet" href="<?= base_url('public/employer/assets/css/animate/animate.min.css') ?>">
-        <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-    </head>
-    <body class="bg-white">
-        <!-- Begin Preloader -->
-        <div id="preloader">
-            <div class="canvas">
-                <img src="<?= base_url('public/employer/assets/img/logo.png') ?>" alt="logo" class="loader-logo">
-                <div class="spinner"></div>   
+<head>
+
+<!-- Basic Page Needs
+================================================== -->
+<title>JoDice</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="icon" href="<?= base_url(); ?>/public/users/images/fav.png" type="image/gif" sizes="64x64">
+
+<!-- CSS
+================================================== -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700&display=swap&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/all.min.css">
+<link href="<?= base_url(); ?>/public/users/css/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/bootstrap.min.css">
+<link href="<?= base_url(); ?>/public/users/css/select2.min.css" rel="stylesheet" />
+<link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
+</head>
+<body>
+
+<!-- Header 01
+================================================== -->
+<header class="header_01 header_inner">
+  <div class="header_main">
+    <div class="header_menu fixed-top">
+      <div class="container">
+        <div class="header_top">
+          <div class="logo">
+            <a href="<?= base_url('employer') ?>">
+              <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
+            </a>
+          </div>
+          <div class="navigation">
+            <nav>
+              <div class="hamburger hamburger--spring js-hamburger ">
+                    <div class="hamburger-box">
+                      <div class="hamburger-inner"></div>
+                    </div>
+                  </div>
+              <ul>
+                <li class="has-sub-menu ">
+                  <a href="index.html" >Home</a>
+                  <ul class="sub-menu">
+                    <li >
+                      <a href="index.html">Homepage 1</a>
+                    </li>
+                    <li>
+                      <a href="home-page-2.html">Homepage 2</a>
+                    </li>
+                    <li>
+                      <a href="home-page-3.html">Homepage 3</a>
+                    </li>
+                    <li>
+                      <a href="home-page-4.html">Homepage 4</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="has-sub-menu">
+                  <a href="index.html">Job Seekers</a>
+                  <ul class="sub-menu">
+                    <li>
+                      <a href="job-seeker-dashboard.html">Job dashboard</a>
+                    </li>
+                    <li> 
+                      <a href="browse-jobs.html">Browse jobs</a>
+                    </li>
+                    
+                    <li>
+                      <a href="job-single.html">Job single</a>
+                    </li>
+                    <li>
+                      <a href="my-stared-jobs.html">My stared jobs</a>
+                    </li>
+                    <li>
+                      <a href="staff-profile-single.html">Job seeker profile</a>
+                    </li>
+                    <li>
+                      <a href="edit-profile.html">Update my profile</a>
+                    </li>
+                    
+                    <li>
+                      <a href="edit-password.html">Change password</a>
+                    </li>
+                    <li>
+                      <a href="registration.html">Registration</a>
+                    </li>
+                    <li>
+                      <a href="browse-companies.html">Browse companies</a>
+                    </li>
+                  </ul>
+                </li>
+
+
+                <li class="has-sub-menu">
+                  <a href="#">For employers</a>
+                  <ul class="sub-menu">
+                    <li>
+                      <a href="job-dashboard.html">Job dashboard</a>
+                    </li>
+                    <li>
+                      <a href="post-a-job.html">Post a job</a>
+                    </li>
+                    <li>
+                      <a href="my-job-listing.html">My Jobs listing</a>
+                    </li>
+                    <li>
+                      <a href="find-staff.html">Find staff</a>
+                    </li>
+                    <li>
+                      <a href="compnay-profile-single.html">Company profile</a>
+                    </li>
+                    
+                    <li>
+                      <a href="emp-edit-profile.html">Update profile</a>
+                    </li>
+                    <li>
+                      <a href="emp-edit-password.html">Change password</a>
+                    </li>
+                    <li>
+                      <a href="emp-registration.html">Employer registration</a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="has-sub-menu ">
+                  <a href="#">Pages</a>
+                  <ul class="sub-menu">
+
+                    <li >
+                      <a href="blog.html">blog</a>
+                    </li>
+                    <li>
+                      <a href="blog-single.html">Blog single</a>
+                    </li>
+                    <li>
+                      <a href="contact-us.html">Contact us</a>
+                    </li>
+                    <li>
+                      <a href="plan-page.html">Membership Plans</a>
+                    </li>
+                    <li>
+                      <a href="login.html">Login</a>
+                    </li>
+                    <li>
+                      <a href="lost-password.html">Lost password</a>
+                    </li>
+                    <li>
+                      <a href="user-interface-elements.html">User interface elements</a>
+                    </li>
+                    <li>
+                      <a href="404.html">404</a>
+                    </li> 
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+            <div class="ac_nav">
+              <!--Not logedin-->
+                <div class="dropdown login_pop">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Register</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="<?= base_url('home/register'); ?>">Job Seeker Register</a>
+                    <a class="dropdown-item" href="<?= base_url('employer/register'); ?>">Employer Register</a>
+                  </div>
+                </div>
+              <!--end logedin-->
             </div>
+          </div>
         </div>
-        <!-- End Preloader -->
-        <!-- Begin Container -->
-        <div class="container-fluid no-padding h-100">
-            <div class="row flex-row h-100 bg-white">
-                <!-- Begin Left Content -->
-                <div class="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12 no-padding">
-                    <div class="elisyam-bg background-03">
-                        <div class="elisyam-overlay overlay-08"></div>
-                        <div class="authentication-col-content-2 mx-auto text-center">
-                            <div class="logo-centered">
-                                <a href="db-default.html">
-                                    <img src="<?= base_url('public/employer/assets/img/logo.png') ?>" alt="logo">
-                                </a>
-                            </div>
-                            <h1>Join Our Community</h1>
-                            <span class="description">
-                                Etiam consequat urna at magna bibendum, in tempor arcu fermentum vitae mi massa egestas. 
-                            </span>
-                            <ul class="login-nav nav nav-tabs mt-5 justify-content-center" role="tablist" id="animate-tab">
-                                <li><a class="active" data-toggle="tab" href="#singin" role="tab" id="singin-tab" data-easein="zoomInUp">Sign In</a></li>
-                                <li><a data-toggle="tab" href="#signup" role="tab" id="signup-tab" data-easein="zoomInRight">Sign Up</a></li>
-                            </ul>
-                        </div>
+      </div>
+    </div>
+    <div class="header_btm">
+      <h2>Job Seeker Login</h2>
+    </div>
+  </div> 
+</header>
+
+
+<!-- End Header 02
+================================================== -->
+
+
+
+<!-- Main 
+================================================== -->
+<main>
+  <div class="only-form-pages">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="only-form-box">   
+            <form method="post" id="login">
+              <div class="com_class_form">
+                <div class="form-group">
+              
+                  <input class="form-control" type="text" name="email" size="40" placeholder="Email address * ">
+                </div>
+                <div class="form-group">
+                  
+                  <input class="form-control" type="password" name="password" placeholder=" Password * ">
+                </div>
+                
+                
+                <div class="form-group">
+                  <input class="btn btn-primary" type="submit" value="Login">
+                </div>
+                <div>
+                    <div class="d-inline-block">
+                      <a class="lost_password" href="<?= base_url('employer/password_reset') ?>"> Lost your password?</a>
+                    </div>
+                    <div class="float-right d-inline-block">
+                      <a class="lost_password" href="<?= base_url('employer/register') ?>"> New User?</a>
                     </div>
                 </div>
-                <!-- End Left Content -->
-                <!-- Begin Right Content -->
-                <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 col-12 my-auto no-padding">
-                    <!-- Begin Form -->
-                    <div class="authentication-form-2 mx-auto">
-                        <div class="tab-content" id="animate-tab-content">
-                            <!-- Begin Sign In -->
-                            <div role="tabpanel" class="tab-pane show active" id="singin" aria-labelledby="singin-tab">
-                                <h3>Sign In For Employer</h3>
-                                <form action="<?= base_url('employer/login') ?>" method="post" id="sign_in">
-                                    <div class="group material-input">
-        							    <input type="text" name="email" required>
-        							    <span class="highlight"></span>
-        							    <span class="bar"></span>
-        							    <label>Email</label>
-                                    </div>
-                                    <div class="group material-input">
-        							    <input type="password" name="password" required>
-        							    <span class="highlight"></span>
-        							    <span class="bar"></span>
-        							    <label>Password</label>
-                                    </div>
-                                <div class="row">
-                                    <div class="col text-left">
-                                        <div class="styled-checkbox">
-                                            <input type="checkbox" name="checkbox" id="remeber">
-                                            <label for="remeber">Remember me</label>
-                                        </div>
-                                    </div>
-                                    <div class="col text-right">
-                                        <a href="<?= base_url('employer/password_reset') ?>">Forgot Password ?</a>
-                                    </div>
-                                </div>
-                                <div class="sign-btn text-center">
-                                    <button type="submit" class="btn btn-lg btn-gradient-01">
-                                        Sign In
-                                    </button>
-                                </div>
-                                </form> 
-                            </div>
-                            <!-- End Sign In -->
-                            <!-- Begin Sign Up -->
-                            <div role="tabpanel" class="tab-pane" id="signup" aria-labelledby="signup-tab">
-                                <h3>Create An Account</h3>
-                                <form action="<?= base_url('employer/register') ?>" method="post">
-                                    <div class="group material-input">
-                                        <input type="text" name="firstname" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Firstname</label>
-                                    </div>
-                                    <div class="group material-input">
-                                        <input type="text" name="company_name" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Company Name</label>
-                                    </div>
-                                    <div class="group material-input">
-                                        <input type="email" name="email" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="group material-input">
-                                        <input type="password" name="password" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Password</label>
-                                    </div>
-                                    <div class="group material-input">
-                                        <input type="password" name="cpassword" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Confirm Password</label>
-                                    </div>
-                                <div class="row">
-                                    <div class="col text-left">
-                                        <div class="styled-checkbox">
-                                            <input type="checkbox" name="checkbox" id="agree">
-                                            <label for="agree">I Accept <a href="#">Terms and Conditions</a></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sign-btn text-center">
-                                    <input class="btn btn-lg btn-gradient-01" type="submit" value="Sign Up">
-                                </div>
-                            </div>
-                            </form>
-                            <!-- End Sign Up -->
-                        </div>
-                    </div>
-                    <!-- End Form -->                        
-                </div>
-                <!-- End Right Content -->
+              </div>
+            </form>
+            <div class="social_login">
+              <p class="or_span"><span>or</span></p>
+              <button class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Log In via Facebook</button>
+              <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button>
             </div>
-            <!-- End Row -->
+           </div>
         </div>
-        <!-- End Container -->    
-        <!-- Begin Vendor Js -->
-        <script src="<?= base_url('public/employer/assets/vendors/js/base/jquery.min.js') ?>"></script>
+      </div>
+    </div>
+  </div>
+</main>
 
-        <!-- Noty Js -->
-        <script src="<?= base_url('public/employer/assets/vendors/js/noty/noty.min.js')?>"></script>
 
-        <script>
-        $("#sign_in").on("submit", function() {
-          event.preventDefault();
-          var fields = $('#sign_in').serialize();
-          $.ajax({
-            url: "<?= base_url('employer/login') ?>",
+<!-- Footer Container
+================================================== -->
+<footer id="colophon" class="site-footer custom_footer dark_footer">
+  <div class="container">
+    <div class="row footer_widget">
+        <div class="col-md-3">
+          <div class="footer_widget_box">
+            <h2>Job seekers</h2>
+            <ul>
+              <li>
+                <a href="browse-jobs.html">Browse jobs</a>
+              </li>
+              <li>
+                <a href="job-single.html">Job single</a>
+              </li>
+              <li>
+                <a href="my-stared-jobs.html">My stared jobs</a>
+              </li>
+              <li>
+                <a href="edit-profile.html">Update my profile</a>
+              </li>
+              <li>
+                <a href="edit-password.html">Change password</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="footer_widget_box">
+            <h2>Employers</h2>
+            <ul>
+              <li>
+                <a href="emp-registration.html">Get a FREE Employer Account</a> 
+              </li>
+              <li>
+                <a href="post-a-job.html">Post a job</a>
+              </li>
+              <li>
+                <a href="find-staff.html">Find staff</a>
+              </li>
+              <li>
+                <a href="job-dashboard.html">Job dashboard</a>
+              </li>
+              <li>
+                <a href="emp-edit-profile.html">Update profile</a>
+              </li>
+              <li>
+                <a href="emp-edit-password.html">Change password</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="footer_widget_box">
+            <h2>Community</h2>
+            <ul>
+              <li> <a href="contact-us.html">Help / Contact Us</a> 
+              </li>
+              <li> <a href="content-page.html">Guidelines</a> 
+              </li>
+              <li> <a href="content-page.html">Terms of Use</a> 
+              </li>
+              <li> <a href="content-page.html">Privacy &amp; Cookies </a> 
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="footer_widget_box">
+            <h2>Get In Touch</h2>
+            <ul class="social_list">
+              <li> <a href="#"><i class="fab fa-twitter"></i></a> 
+              </li>
+              <li> <a href="#"><i class="fab fa-facebook"></i></a> 
+              </li>
+              <li> <a href="#"><i class="fab fa-linkedin"></i></a> 
+              </li>
+              <li> <a href="#"><i class="fab fa-youtube"></i></a> 
+              </li>
+            </ul>
+          </div>
+          <div class="footer_widget_box">
+            <form class="newsletter">
+                        <h2>Newsletter</h2>
+                        <div class="d-flex">
+
+                          <input class="form-control" type="email" placeholder="Enter your email ">
+                          <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+                         
+                        </div>
+                       
+                    </form>
+                </div>
+        </div>
+        <div class="col-md-12">
+          <div class="footer_widget_box">
+            <p class="copyright-text">© Copyright 2020 by JoDice. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- .site-info -->
+  </div>
+</footer>
+
+
+<!-- End Footer Container
+================================================== -->
+
+<!-- Scripts
+================================================== -->
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.js"></script>
+<script>
+  $('#login').on('submit',function(){
+        event.preventDefault();
+    var fields = $('#login').serialize();
+    $.ajax({
+      url: "<?= base_url('employer/login') ?>",
             method: "POST",
             data: fields,
-            success: function(responses) {
+            success: function(responses){
+              console.log(responses);
               var response = responses.split('~');
               if ($.trim(response[0]) == 0) {
-                $('#sign_in').trigger("reset");
-                new Noty({
-                    type: "error",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
+                $('#login').trigger("reset");
+                  new Noty({
+                      type: "error",
+                      layout: "topRight",
+                      text: response[1],
+                      progressBar: true,
+                      timeout: 2500,
+                      animation: {
+                          open: "animated bounceInRight",
+                          close: "animated bounceOutRight"
+                      }
+                  }).show();
+                }
+                if ($.trim(responses[0]) == 1) {
+                  $('#login').trigger("reset");
+                  setTimeout(function() {
+                    window.location.href = 'dashboard';
+                  }, 500);
+                  new Noty({
+                      type: "success",
+                      layout: "topRight",
+                      text: response[1],
+                      progressBar: true,
+                      timeout: 2500,
+                      animation: {
+                          open: "animated bounceInRight",
+                          close: "animated bounceOutRight"
+                      }
+                  }).show();
               }
-              if ($.trim(response[0]) == 1) {
-                $('#sign_in').trigger("reset");
-                setTimeout(function() {
-                  window.location.href = 'dashboard';
-                }, 500);
-                new Noty({
-                    type: "success",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
-              }
-            },
-            error: function(jqXHR, exception) {
-              console.log(jqXHR);
             }
-          });
-        });
-        </script>
-        <script src="<?= base_url('public/employer/assets/vendors/js/base/core.min.js') ?>"></script>
-        <!-- End Vendor Js -->
-        <!-- Begin Page Vendor Js -->
-        <script src="<?= base_url('public/employer/assets/vendors/js/app/app.min.js') ?>"></script>
-        <!-- End Page Vendor Js -->
-        <!-- Begin Page Snippets -->
-        <script src="<?= base_url('public/employer/assets/js/components/tabs/animated-tabs.min.js') ?>"></script>
-        <!-- End Page Snippets -->
-    </body>
+    });
+  });
+</script>
+</body>
 </html>

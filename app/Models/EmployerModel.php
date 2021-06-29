@@ -47,14 +47,14 @@ class EmployerModel extends Model
         return $this->db->table('packages_bought')->insert($data);
     }
 
-    public function mypackages($id)
+    public function mypackages($employer_id)
     {
-        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('employer_id', $id)->get()->getResultArray();
+        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('employer_id', $employer_id)->get()->getResultArray();
     }
 
     public function mypackagedetails($id)
     {
-        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('payment_id', $id)->get()->getResultArray();
+        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('packages_bought.package_id', $id)->where('packages_bought.employer_id',session('employer_id'))->get()->getResultArray();
     }
 
     public function shortlisted($id)

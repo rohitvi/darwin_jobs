@@ -161,32 +161,11 @@
             </nav>
             <div class="ac_nav">
               <!--Not logedin-->
-                <div class="login_pop">
-                  <button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
-                  <div class="login_pop_box">
-                    <span class="twobtn_cont">
-                      <a class=" signjs_btn" href="<?= base_url('register') ?>">         
-                      <span>Job seekers</span> Sign up
-                        <i class="far fa-user"></i>
-                      </a>
-                      <a class=" signrs_btn" href="<?= base_url('employer/register') ?>">
-                      <span>EMPLOYERS</span> Sign up
-                        <i class="fas fa-landmark"></i>
-                      </a>
-                    </span>
-                    <div>
-                      <span class="member_btn">Already a member?</span>
-                      <span class="twobtn_cont">
-                      <a class=" signjs_btn" href="<?= base_url('login') ?>">        
-                      <span>Job seekers</span> Login In
-                        <i class="far fa-user"></i>
-                      </a>
-                      <a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
-                      <span>EMPLOYERS</span> Login In
-                        <i class="fas fa-landmark"></i>
-                      </a>
-                    </span>
-                    </div>
+              <div class="dropdown login_pop">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Register</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="<?= base_url('home/register'); ?>">Job Seeker Register</a>
+                    <a class="dropdown-item" href="<?= base_url('employer/register'); ?>">Employer Register</a>
                   </div>
                 </div>
               <!--end logedin-->
@@ -230,13 +209,13 @@
                 <div class="form-group">
                   <input class="btn btn-primary" type="submit" value="Login">
                 </div>
-                <div class="form-group form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox"> Remember me
-                  </label>
-                </div>
                 <div>
-                    <a class="lost_password" href="lost-password.html"> Lost your password?</a>
+                    <div class="d-inline-block">
+                      <a class="lost_password" href="<?= base_url(''); ?>"> Lost your password?</a>
+                    </div>
+                    <div class="float-right d-inline-block">
+                      <a class="lost_password" href="<?= base_url('home/register') ?>"> New User?</a>
+                    </div>
                 </div>
               </div>
             </form>
@@ -366,10 +345,11 @@
 ================================================== -->
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
-<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.js"></script>
 <script>
   $('#login').on('submit',function(){
         event.preventDefault();

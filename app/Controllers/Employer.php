@@ -76,7 +76,7 @@ class Employer extends BaseController
 
     public function personal_info_update()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             if ($_FILES['profile_picture']['name'] != '') {
                 $rules = [
                     'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
@@ -128,10 +128,10 @@ class Employer extends BaseController
 
     public function changepassword()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             $rules = [
                 'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'matches[password]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
@@ -163,8 +163,7 @@ class Employer extends BaseController
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->personal_info($id);
-        $get['cmpinfo'] = $this->EmployerAuthModel->cmp_info($id);
-        //pre( $get );
+        // pre( $get['data'] );
         return view('employer/auth/profile', $get);
     }
 
@@ -180,7 +179,7 @@ class Employer extends BaseController
 
     public function cmp_info_update()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             
             if ($_FILES['company_logo']['name'] !='') {
                 $rules = [
@@ -201,7 +200,7 @@ class Employer extends BaseController
 
             $cmp_info_update = array(
                 'company_name' => $this->request->getPost('company_name'),
-                'email' => $this->request->getPost('company_email'),
+                'email' => $this->request->getPost('email'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
                 'category' => $this->request->getPost('category'),
@@ -213,7 +212,7 @@ class Employer extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'postcode' => $this->request->getPost('postcode'),
-                'address' => $this->request->getPost('full_address'),
+                'address' => $this->request->getPost('address'),
                 'facebook_link' => $this->request->getPost('facebook_link'),
                 'twitter_link' => $this->request->getPost('twitter_link'),
                 'youtube_link' => $this->request->getPost('youtube_link'),
@@ -227,12 +226,24 @@ class Employer extends BaseController
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
             if ($update_per == 1) {
                 $this->session->setFlashdata('success', 'Company Information Successfully Updated');
-                return redirect()->to(base_url('employer/profile'));
+                return redirect()->to(base_url('employer/cmp_info_update'));
             } else {
-                $this->session->setFlashdata('error', 'Password successfully Updated');
-                return redirect()->to(base_url('employer/profile'));
+                $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again!');
+                return redirect()->to(base_url('employer/cmp_info_update'));
             }
         }
+        if ($this->request->isAJAX()) {
+            $country_id = $this->request->getPost('country_id');
+            $states = $this->adminModel->get_states_list($country_id);
+            return json_encode($states);
+            exit();
+        }
+        $id = session('employer_id');
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['data'] = $this->EmployerAuthModel->cmp_info($id);
+        // pre($get['data']);exit;
+        return view('employer/auth/company',$get);
     }
 
     // Packages Part
@@ -307,7 +318,7 @@ class Employer extends BaseController
                     $pay_query = $this->EmployerModel->packages_bought($package_info);
                     if ($pay_query->resultID == 1) {
                         $this->session->setFlashdata('success', 'Package Successfully Purchased');
-                        return redirect()->to(base_url('employer'));
+                        return redirect()->to(base_url('employer/mypackages'));
                     } else {
                         $this->session->setFlashdata('error', 'Something went wrong, please try again');
                         return redirect()->to(base_url('employer/packages'));
@@ -326,15 +337,15 @@ class Employer extends BaseController
         return view('employer/packages/my_packages', $get);
     }
 
-    public function mypackagedetails($id)
+    public function my_package_details($package_id)
     {
-        $get['data'] = $this->EmployerModel->mypackagedetails($id);
+        $get['data'] = $this->EmployerModel->mypackagedetails($package_id);
         return view('employer/packages/my_package_details', $get);
     }
 
     public function register()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->isAJAX()) {
             $rules = [
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
                 'company_name' => ['label' => 'company_name', 'rules' => 'required'],
@@ -367,13 +378,14 @@ class Employer extends BaseController
             ];
             $package_bought = $this->EmployerModel->packages_bought($buyer_array);
             if ($result->resultID == 1) {
-                $this->session->setFlashdata('success', 'Employer successfully registered');
-                return redirect()->to(base_url('employer'));
+                echo '1~Employer Successfully Registered !';
+                exit;
             } else {
-                $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                return redirect()->to(base_url('employer/login'));
+                echo '0~Something Went Wrong, Please Try Again !';
+                exit;
             }
         }
+        return view('employer/auth/register');
     }
 
     public function shortlisted()
@@ -673,7 +685,7 @@ class Employer extends BaseController
 
     public function updatejob($id)
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             $rules = [
                 "employer_id" => ["label" => "employer_id", "rules" => "trim|required"],
                 "company_id" => ["label" => "company_id", "rules" => "trim|required"],
