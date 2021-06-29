@@ -9,8 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon" href="<?= base_url(); ?>/public/images/fav.png" type="image/gif" sizes="64x64">
 
-<!-- CSS
-================================================== -->
+<!-- CSS================================================== -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700&display=swap&subset=latin-ext" rel="stylesheet">
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/all.min.css">
 <link href="<?= base_url(); ?>/public/users/css/aos.css" rel="stylesheet">
@@ -174,34 +173,13 @@
                                     </div>
                                 </div>
                             <?php else : ?>
-                                <div class="login_pop">
-                                    <button class="btn btn-primary">Login<i class="fas fa-caret-down"></i></button>
-                                    <div class="login_pop_box">
-                                        <span class="twobtn_cont">
-                                            <a class=" signjs_btn" href="<?= base_url('home/register') ?>">
-                                            <span>Job seekers</span> Sign up
-                                                <i class="far fa-user"></i>
-                                            </a>
-                                            <a class=" signrs_btn" href="<?= base_url('employer/register') ?>">
-                                            <span>EMPLOYERS</span> Sign up
-                                                <i class="fas fa-landmark"></i>
-                                            </a>
-                                        </span>
-                                        <div>
-                                            <span class="member_btn">Already a member?</span>
-                                            <span class="twobtn_cont">
-                                            <a class=" signjs_btn" href="<?= base_url('login') ?>">
-                                            <span>Job seekers</span> Login In
-                                                <i class="far fa-user"></i>
-                                            </a>
-                                            <a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
-                                            <span>EMPLOYERS</span> Login In
-                                                <i class="fas fa-landmark"></i>
-                                            </a>
-                                        </span>
-                                        </div>
-                                    </div>
+                                <div class="dropdown login_pop">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="<?= base_url('login'); ?>">Job Seeker Login</a>
+                                  <a class="dropdown-item" href="<?= base_url('employer/login'); ?>">Employer Login</a>
                                 </div>
+                              </div>
                             <?php endif ; ?>
                             <!--end logedin-->
                         </div>
@@ -322,11 +300,14 @@
               <a href="<?= base_url('employer') ?>">
                 <i class="fas fa-border-all"></i> Job Dashboard </a>
               </li>
+              <li >
+                <a href="<?= base_url('employer/search') ?>"><i class="fas fa-money-bill"></i>Find Candidates</a>
+              </li>
           </ul>
           <h5>Packages</h5>
           <ul class="user_navigation">
               <li >
-              <a href="<?= base_url('employer/packages') ?>"><i class="fas fa-money-bill"></i>Buy Packages</a>
+                <a href="<?= base_url('employer/packages') ?>"><i class="fas fa-money-bill"></i>Buy Packages</a>
               </li>
           </ul>
           <h5>Organize and Manage</h5>

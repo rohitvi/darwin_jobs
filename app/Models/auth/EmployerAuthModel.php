@@ -80,6 +80,6 @@ class EmployerAuthModel extends Model
 
     public function update_reset_password($password,$id)
     {
-        return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password));
+        return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password,'password_reset_code'=>''));
     }
 }

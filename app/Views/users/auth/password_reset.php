@@ -31,7 +31,7 @@
       <div class="container">
         <div class="header_top">
           <div class="logo">
-            <a href="index.html">
+            <a href="<?= base_url('home') ?>">
               <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
             </a>
           </div>
@@ -161,7 +161,7 @@
             </nav>
             <div class="ac_nav">
               <!--Not logedin-->
-              <div class="dropdown login_pop">
+                <div class="dropdown login_pop">
                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Register</button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="<?= base_url('home/register'); ?>">Job Seeker Register</a>
@@ -175,7 +175,7 @@
       </div>
     </div>
     <div class="header_btm">
-      <h2>Job Seeker Login</h2>
+      <h2>Password Recovery</h2>
     </div>
   </div> 
 </header>
@@ -194,36 +194,16 @@
       <div class="row">
         <div class="col-md-12">
           <div class="only-form-box">   
-            <form method="post" id="login">
+            <form method="post" id="reset">
               <div class="com_class_form">
                 <div class="form-group">
-              
-                  <input class="form-control" type="text" name="email" size="40" placeholder="Email address * ">
+                  <input class="form-control" type="email" name="email" size="40" placeholder="Email address * ">
                 </div>
                 <div class="form-group">
-                  
-                  <input class="form-control" type="password" name="password" placeholder=" Password * ">
-                </div>
-                
-                
-                <div class="form-group">
-                  <input class="btn btn-primary" type="submit" value="Login">
-                </div>
-                <div>
-                    <div class="d-inline-block">
-                      <a class="lost_password" href="<?= base_url('home/password_reset') ?>"> Lost your password?</a>
-                    </div>
-                    <div class="float-right d-inline-block">
-                      <a class="lost_password" href="<?= base_url('home/register') ?>"> New User?</a>
-                    </div>
+                  <input class="btn btn-primary reset-pass" type="submit" value="Reset Password">
                 </div>
               </div>
             </form>
-            <div class="social_login">
-              <p class="or_span"><span>or</span></p>
-              <button class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Log In via Facebook</button>
-              <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button>
-            </div>
            </div>
         </div>
       </div>
@@ -351,50 +331,45 @@
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/noty/noty.js"></script>
 <script>
-  $('#login').on('submit',function(){
-        event.preventDefault();
-    var fields = $('#login').serialize();
+  $('.reset-pass').click(function(e){
+    event.preventDefault();
+    var _form = $("#reset").serialize();
     $.ajax({
-      url: "<?= base_url('login') ?>",
-            method: "POST",
-            data: fields,
-            success: function(responses){
-              console.log(responses);
-              var response = responses.split('~');
-              if ($.trim(response[0]) == 0) {
-                $('#login').trigger("reset");
-                  new Noty({
-                      type: "error",
-                      layout: "topRight",
-                      text: response[1],
-                      progressBar: true,
-                      timeout: 2500,
-                      animation: {
-                          open: "animated bounceInRight",
-                          close: "animated bounceOutRight"
-                      }
-                  }).show();
-                }
-                if ($.trim(responses[0]) == 1) {
-                  $('#login').trigger("reset");
-                  setTimeout(function() {
-                    window.location.href = 'home';
-                  }, 500);
-                  new Noty({
-                      type: "success",
-                      layout: "topRight",
-                      text: response[1],
-                      progressBar: true,
-                      timeout: 2500,
-                      animation: {
-                          open: "animated bounceInRight",
-                          close: "animated bounceOutRight"
-                      }
-                  }).show();
-              }
+        data: _form,
+        type: 'POST',
+        url: '<?= base_url("home/password_reset"); ?>',
+        success: function(response){
+          console.log(response);
+            $("#reset").trigger('reset');
+            var response = response.split('~');
+            if ($.trim(response[0]) == 0) {
+                new Noty({
+                    type: "error",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2000,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+            }else if ($.trim(response[0]) == 1) {
+                new Noty({
+                    type: "success",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2000,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
             }
+        }
     });
-  });
+});
 </script>
 </body>
 </html>
