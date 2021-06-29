@@ -134,4 +134,19 @@ class HomeModel extends Model
         $this->db->table('seeker_experience')->where('id',$id)->delete();
     }
 
+    public function user_info_update($update_user_info,$id)
+    {
+        return $this->db->table('users')->where('id', $id)->update($update_user_info);
+    }
+
+    public function get_experience_by_id($id)
+    {
+        return $this->db->table('seeker_experience')->where('id',$id)->get()->getRowArray();
+    }
+
+    public function update_user_resume($update_resume, $id)
+    {
+        return $this->db->table('users')->where('id', $id)->update(array('resume' => $update_resume));
+    }
+
 }

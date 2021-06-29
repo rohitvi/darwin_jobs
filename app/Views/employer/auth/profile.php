@@ -342,7 +342,7 @@
                                             <option value="30-50" <?php if($cmpinfo[0]['no_of_employers'] == '30-50'){ echo "selected";} ?>>30-50</option>
                                             <option value="50-100" <?php if($cmpinfo[0]['no_of_employers'] == '50-100'){ echo "selected";} ?>>50-100</option>
                                             <option value="100+" <?php if($cmpinfo[0]['no_of_employers'] == '100+'){ echo "selected";} ?>>100+</option>
-                                        </select>
+                                            </select>
                                         </div>
                                         </div>
                                     </div>
