@@ -152,6 +152,7 @@ $('#subscriber').on('submit',function(){
 
 <!-- Scripts
 ================================================== -->
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
