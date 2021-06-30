@@ -128,10 +128,10 @@ class Employer extends BaseController
 
     public function changepassword()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             $rules = [
                 'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'matches[password]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
@@ -179,7 +179,7 @@ class Employer extends BaseController
 
     public function cmp_info_update()
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             
             if ($_FILES['company_logo']['name'] !='') {
                 $rules = [
@@ -200,7 +200,7 @@ class Employer extends BaseController
 
             $cmp_info_update = array(
                 'company_name' => $this->request->getPost('company_name'),
-                'email' => $this->request->getPost('company_email'),
+                'email' => $this->request->getPost('email'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
                 'category' => $this->request->getPost('category'),
@@ -212,7 +212,7 @@ class Employer extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'postcode' => $this->request->getPost('postcode'),
-                'address' => $this->request->getPost('full_address'),
+                'address' => $this->request->getPost('address'),
                 'facebook_link' => $this->request->getPost('facebook_link'),
                 'twitter_link' => $this->request->getPost('twitter_link'),
                 'youtube_link' => $this->request->getPost('youtube_link'),
@@ -226,10 +226,10 @@ class Employer extends BaseController
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
             if ($update_per == 1) {
                 $this->session->setFlashdata('success', 'Company Information Successfully Updated');
-                return redirect()->to(base_url('employer/profile'));
+                return redirect()->to(base_url('employer/cmp_info_update'));
             } else {
-                $this->session->setFlashdata('error', 'Password successfully Updated');
-                return redirect()->to(base_url('employer/profile'));
+                $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again!');
+                return redirect()->to(base_url('employer/cmp_info_update'));
             }
         }
         if ($this->request->isAJAX()) {
@@ -242,8 +242,8 @@ class Employer extends BaseController
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->cmp_info($id);
-        pre($get['data']);exit;
-        return view('employer/auth/company');
+        // pre($get['data']);exit;
+        return view('employer/auth/company',$get);
     }
 
     // Packages Part
@@ -685,7 +685,7 @@ class Employer extends BaseController
 
     public function updatejob($id)
     {
-        if ($this->request->getMethod() == 'post') {
+        if ($this->request->getMethod() == 'put') {
             $rules = [
                 "employer_id" => ["label" => "employer_id", "rules" => "trim|required"],
                 "company_id" => ["label" => "company_id", "rules" => "trim|required"],

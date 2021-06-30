@@ -99,7 +99,6 @@ class Home extends BaseController
         $states = $builder->where('country_id', $this->request->getPost('country'))->get()->getResultArray();
         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
         $html = form_dropdown('state', $options, '', 'class="form-control select2 state" required');
-        $html = form_dropdown('state', $options, '', 'class="form-control select state" required');
         $error =  array('msg' => $html);
         echo json_encode($error);
     }
@@ -276,10 +275,10 @@ class Home extends BaseController
         $skills = get_user_skills($user_id); // helper function
 
         $data['jobs'] = $this->HomeModel->matching_jobs($skills);
-        return view('user/auth/matching_jobs', $data);
+        return view('users/matching_jobs', $data);
     }
 
-    public function changepassword()
+    public function change_password()
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
@@ -301,7 +300,7 @@ class Home extends BaseController
             $query = $this->HomeAuthModel->change_password($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
-                return redirect()->to(base_url('home/changepassword'));
+                return redirect()->to(base_url('home/change_password'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
                 exit;
@@ -318,13 +317,62 @@ class Home extends BaseController
         $get['data'] = $this->HomeModel->perinfo_by_id($id);
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
 
-        return view('users/auth/profile');
+        if ($this->request->getMethod() == 'post') {
+            if ($_FILES['profile_picture']['name'] != '') {
+                $rules = [
+                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
+                ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('home/profile'));
+                }
+                $result = UploadFile($_FILES['profile_picture']);
+                if ($result['status'] == true) {
+                    $url = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('home/profile'));
+                }
+            }
+            $update_user_info =array(
+                'firstname' => $this->request->getPost('firstname'),
+                'lastname' => $this->request->getPost('lastname'),
+                'email' => $this->request->getPost('email'),
+                'mobile_no' => $this->request->getPost('mobile_no'),
+                'dob' => $this->request->getPost('dob'),
+                'age' => $this->request->getPost('age'),
+                'category' => $this->request->getPost('category'),
+                'job_title' => $this->request->getPost('job_title'),
+                'experience' => $this->request->getPost('experience'),
+                'skills' => $this->request->getPost('skills'),
+                'current_salary' => $this->request->getPost('current_salary'),
+                'expected_salary' => $this->request->getPost('expected_salary'),
+                'country' => $this->request->getPost('country'),
+                'state' => $this->request->getPost('state'),
+                'city' => $this->request->getPost('city'),
+                'address' => $this->request->getPost('address'),
+            );
+            if ($_FILES['profile_picture']['name'] != '') {
+                $update_user_info['profile_picture'] = $url;
+            }
+            $id = session('user_id');
+            $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
+            if ($update_per == 1) {
+                $this->session->setFlashdata('success', 'Personal Information successfully Updated');
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('home/profile'));
+            }
+        }
+
+        return view('users/auth/profile',$get);
     }
 
     public function saved_jobs()
     {
         $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
-        return view('user/auth/saved_jobs', $get);
+        return view('users/saved_jobs', $get);
     }
 
     public function jobdetails($id)
@@ -374,7 +422,7 @@ class Home extends BaseController
     {
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
-        return view('user/auth/applied_jobs',$get);
+        return view('users/applied_jobs',$get);
     }
 
     public function apply_job()
@@ -434,6 +482,113 @@ class Home extends BaseController
         } else {
             $this->session->setFlashdata('error', 'Something went wrong, please try again');
             return redirect()->to(base_url('home/profile'));
+        }
+    }
+
+    public function get_experience_by_id()
+    {
+        if ($this->request->getPost('exp_id')) {
+            $exp_id = $this->request->getPost('exp_id');
+            $data['expedit'] = $this->HomeModel->get_experience_by_id($exp_id);
+            $data['countries'] = $this->adminModel->get_countries_list();
+            //pre($data);
+            return view('users/auth/user_experience_edit',$data);
+            //return json_encode($data);
+            //return $data;
+        }
+    }
+
+    public function resume()
+    {
+        if ($this->request->getMethod() == 'post') {
+        if ($_FILES['user_resume']['name'] != '') {
+            $rules = [
+                'user_resume' => ['uploaded[user_resume]', 'max_size[user_resume,1024]'],
+            ];
+        }
+        if ($this->validate($rules) == false) {
+            $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+            return redirect()->to(base_url('home/profile'));
+        }
+        $result = UploadFile($_FILES['user_resume']);
+        if ($result['status'] == true) {
+            $url = $result['result']['file_url'];
+        } else {
+            $this->session->setFlashdata('error', $result['message']);
+            return redirect()->to(base_url('home/profile'));
+        }
+        if ($_FILES['user_resume']['name'] != '') {
+            $update_resume['user_resume'] = $url;
+        }
+        $id = session('user_id');
+        $userresume = $this->HomeModel->update_user_resume($update_resume, $id);
+            if ($userresume == 1) {
+                $this->session->setFlashdata('success', 'Update Success');
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('home/profile'));
+            } 
+     }
+    }
+
+    public function password_reset()
+    {
+        if ($this->request->isAJAX()) {
+            $email = trim($this->request->getPost('email'));
+            $response = $this->HomeAuthModel->check_email($email);
+            if ($response) {
+                $rand_no = rand(0, 1000);
+                $pwd_reset_code = md5($rand_no . $response[0]['id']);
+                $query = $this->HomeAuthModel->update_reset_code($pwd_reset_code, $response[0]['id']);
+                // Sending Email
+                $name = $response[0]['firstname'] . ' ' . $response[0]['lastname'];
+                $email = $response[0]['email'];
+                $reset_link = base_url('home/reset_password/' . $pwd_reset_code);
+                $body = $this->mailer->pwd_reset_link($name, $reset_link);
+
+                $mail_data['receiver_email'] = $email;
+                $mail_data['mail_subject'] = 'Reset your password';
+                $mail_data['mail_body'] = $body;
+
+                if (sendEmail($mail_data)) {
+                    echo '1~Email has been sent successfully !';
+                    exit;
+                }
+            } else {
+                echo '0~Email does not exist!';
+                exit;
+            }
+        }
+        return view('users/auth/password_reset');
+    }
+
+    public function reset_password($reset_code)
+    {
+        $check_reset['data'] = $this->HomeAuthModel->check_reset_code($reset_code);
+        return view('users/auth/reset_password', $check_reset);
+    }
+
+    public function update_reset_password()
+    {
+        if ($this->request->isAJAX()) {
+            $rules = [
+                'id' => ['label' => 'id', 'rules' => 'required'],
+                'password' => ['label' => 'password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . arrayToList($this->validation->getErrors());
+                exit;
+            }
+            $id = $this->request->getPost('id');
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            $query = $this->HomeAuthModel->update_reset_password($password, $id);
+            if ($query) {
+                echo '1~Password changed successfully !';
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
         }
     }
 }

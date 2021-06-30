@@ -235,7 +235,7 @@
                                                 <?php else: ?>
                                                 <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
                                                 <?php endif; endforeach; ?>
-                                            </select> -->
+                                            </select> 
                                         </div>
                                         <div class="col-xl-5 form-group">
                                             <label class="form-control-label"><b>State *</b></label>
@@ -289,8 +289,8 @@
 
                         <hr>
                         <div class='row'>
-                        <div class='col-md-9'> <h3>Experience</h3></div>      
-                        <div class='col-md-1'><h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-experience"></i></span></h3></div>                       
+                            <div class='col-md-9'> <h3>Experience</h3></div>      
+                            <div class='col-md-1'><h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-experience"></i></span></h3></div>                       
                         </div>
 
                         <div class='row'>
@@ -390,7 +390,7 @@
                                 </div>
                             </div>
                             </div>
-                        </form>                         
+                            </form>                         
                         </div>
                         <!-- /collapse -->
 
@@ -480,6 +480,5 @@
               }
          }
     });
-
 });
   </script>

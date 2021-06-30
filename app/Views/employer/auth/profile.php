@@ -94,7 +94,7 @@
         </div>
         <div class="form-group row">
           <div class="col-md-12 text-right">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Update</button>
           </div>
         </div>
 
