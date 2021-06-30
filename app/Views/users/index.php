@@ -1,4 +1,4 @@
-<?php include(VIEWPATH.'users/include/user_header.php'); ?>
+<?php include(VIEWPATH.'users/include/header.php'); ?>
 		<div class="header_btm">
 			<!-- <div class="bg-v" >
 				<div class="bg-v-2 bg-b-r">
@@ -727,4 +727,4 @@
 		</div>
 	</div>
 </main>
-<?php include(VIEWPATH.'users/include/user_footer.php'); ?>
+<?php include(VIEWPATH.'users/include/footer.php'); ?>

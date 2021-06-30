@@ -12,7 +12,7 @@ class HomeAuthModel extends Model
         $result = $builder->where(array('email' => $email))->get()->getResultArray();
         if (count($result) == 1) {
             if (password_verify($password, $result[0]['password'])) {
-               $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname']);
+               $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname'],'profile_completed' => $result[0]['profile_completed']);
                return $array; 
             } else 
                 return 0;

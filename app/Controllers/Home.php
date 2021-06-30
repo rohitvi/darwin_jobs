@@ -45,7 +45,7 @@ class Home extends BaseController
                 'email' => ['label' => 'email', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->getErrors();
                 exit;
             }
@@ -60,6 +60,7 @@ class Home extends BaseController
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'username' => $logindata['username'],
+                    'profile_completed' => $logindata['profile_completed']
                 ];
                 $this->session->set($employerdata);
                 echo '1~ You Have Successfully Logged in';
@@ -67,6 +68,13 @@ class Home extends BaseController
             }
         }
         return view('users/auth/login');
+    }
+
+    public function checkProfileCompleted()
+    {
+        if (session('profile_completed') == 0) {
+            return redirect()->to(base_url('home/profile'));
+        }
     }
 
     public function updateProfileImage()
@@ -93,7 +101,7 @@ class Home extends BaseController
     }
 
     //Get States
-    function get_country_states()
+    public function get_country_states()
     {
         $builder = $this->db->table('states');
         $states = $builder->where('country_id', $this->request->getPost('country'))->get()->getResultArray();
@@ -104,9 +112,9 @@ class Home extends BaseController
     }
 
     // user get states
-    function get_states($country_id)
+    public function get_states($country_id)
     {
-        $builder = $this->db->table('states')->where('country_id',$country_id)->get()->getResultArray();
+        $builder = $this->db->table('states')->where('country_id', $country_id)->get()->getResultArray();
         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
         $html = form_dropdown('state', $options, '', ' required');
         $error =  array('msg' => $html);
@@ -114,7 +122,7 @@ class Home extends BaseController
     }
 
     //Get Cities
-    function get_state_cities()
+    public function get_state_cities()
     {
         $builder = $this->db->table('cities');
         $cities = $builder->where('state_id', $this->request->getPost('state'))->get()->getResultArray();
@@ -138,7 +146,7 @@ class Home extends BaseController
                 'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
                 'termsncondition' => ['label' => 'termsncondition', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->getErrors();
                 exit;
             }
@@ -153,7 +161,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $user_id = $this->HomeAuthModel->register($data);
-            if(!$user_id){
+            if (!$user_id) {
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             } else {
@@ -188,35 +196,41 @@ class Home extends BaseController
         }
     }
 
-    // Advance Search functionality 
+    // Advance Search functionality
     public function search()
     {
         $search = array();
         if ($this->request->getMethod() == 'search') {
 
             // search job title
-            if (!empty($this->request->getPost('job_title')))
+            if (!empty($this->request->getPost('job_title'))) {
                 $search['title'] = make_slug($this->request->getPost('job_title'));
+            }
 
             // search job country
-            if (!empty($this->request->getPost('country')))
+            if (!empty($this->request->getPost('country'))) {
                 $search['country'] = $this->request->getPost('country');
+            }
 
             // search catagory
-            if (!empty($this->request->getPost('category')))
+            if (!empty($this->request->getPost('category'))) {
                 $search['category'] = $this->request->getPost('category');
+            }
 
             // search experience
-            if (!empty($this->request->getPost('experience')))
+            if (!empty($this->request->getPost('experience'))) {
                 $search['experience'] = $this->request->getPost('experience');
+            }
 
             // search job type
-            if (!empty($this->request->getPost('job_type')))
+            if (!empty($this->request->getPost('job_type'))) {
                 $search['job_type'] = $this->request->getPost('job_type');
+            }
 
             // search employment type
-            if (!empty($this->request->getPost('employment_type')))
+            if (!empty($this->request->getPost('employment_type'))) {
                 $search['employment_type'] = $this->request->getPost('employment_type');
+            }
 
             $query = $this->uri->assoc_to_uri($search);
 
@@ -224,7 +238,8 @@ class Home extends BaseController
         }
         $search_array = $this->uri->getSegment(3);
         // $search_query = $this->uri->assoc_to_uri($search_array);
-        echo $search_array ;exit;
+        echo $search_array;
+        exit;
         $Jobs = new HomeModel();
         $Jobs->setTable('job_post');
         $data = [
@@ -245,11 +260,10 @@ class Home extends BaseController
     public function add_subscriber()
     {
         if ($this->request->isAJAX()) {
-
             $rules = [
                 'subscriber_email' => ['label' => 'subscriber_email', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->getErrors();
                 exit;
             }
@@ -275,7 +289,7 @@ class Home extends BaseController
         $skills = get_user_skills($user_id); // helper function
 
         $data['jobs'] = $this->HomeModel->matching_jobs($skills);
-        return view('users/matching_jobs', $data);
+        return view('users/auth/matching_jobs', $data);
     }
 
     public function change_password()
@@ -296,7 +310,7 @@ class Home extends BaseController
                 'old_password' => $this->request->getPost('old_password'),
                 'password' =>  password_hash($this->request->getPost('new_password'), PASSWORD_DEFAULT)
             );
-           // $password =  password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+            // $password =  password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $query = $this->HomeAuthModel->change_password($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
@@ -318,6 +332,10 @@ class Home extends BaseController
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
         $get['languages'] = $this->HomeModel->get_user_language($id);
 
+        // if (session('profile_completed') == 0) {
+        //     print_r('please complete profile');exit;
+        // }
+
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['profile_picture']['name'] != '') {
                 $rules = [
@@ -336,7 +354,7 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
-            $update_user_info =array(
+            $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
@@ -360,6 +378,7 @@ class Home extends BaseController
             $id = session('user_id');
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
             if ($update_per == 1) {
+                $this->session->set('profile_completed',1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
                 return redirect()->to(base_url('home/profile'));
             } else {
@@ -368,13 +387,13 @@ class Home extends BaseController
             }
         }
 
-        return view('users/auth/profile',$get);
+        return view('users/auth/profile', $get);
     }
 
     public function saved_jobs()
     {
         $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
-        return view('users/saved_jobs', $get);
+        return view('users/auth/saved_jobs', $get);
     }
 
     public function jobdetails($id)
@@ -424,25 +443,25 @@ class Home extends BaseController
     {
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
-        return view('users/applied_jobs',$get);
+        return view('users/auth/applied_jobs', $get);
     }
 
     public function apply_job()
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'job_id' => ['label'=>'job_id','rules'=>'required'],
-                'cover_letter' => ['label'=>'cover_letter','rules'=>'required'],
-                'username' => ['label'=>'username','rules'=>'required'],
-                'email' => ['label'=>'email','rules'=>'required'],
-                'job_title' => ['label'=>'job_title','rules'=>'required'],
-                'job_actual_link' => ['label'=>'job_actual_link','rules'=>'required'],
+                'job_id' => ['label' => 'job_id', 'rules' => 'required'],
+                'cover_letter' => ['label' => 'cover_letter', 'rules' => 'required'],
+                'username' => ['label' => 'username', 'rules' => 'required'],
+                'email' => ['label' => 'email', 'rules' => 'required'],
+                'job_title' => ['label' => 'job_title', 'rules' => 'required'],
+                'job_actual_link' => ['label' => 'job_actual_link', 'rules' => 'required'],
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->getErrors();
                 exit;
             }
-            
+
             $data = [
                 'user_id' => session('user_id'),
                 'emp_id' => $this->request->getPost('emp_id'),
@@ -459,16 +478,16 @@ class Home extends BaseController
                 $user_to = get_user_email($data['user_id']);
 
                 // Send Email to Employer
-                $mail_data = ['job_title'=>$job['title']];
+                $mail_data = ['job_title' => $job['title']];
 
                 // Job Seeker
-                $this->mailer->mail_template($user_to,'job-applied',$mail_data);
+                $this->mailer->mail_template($user_to, 'job-applied', $mail_data);
 
                 // Employer Alert
-                $this->mailer->mail_template($emp_to,'applicant-applied',$mail_data);
+                $this->mailer->mail_template($emp_to, 'applicant-applied', $mail_data);
                 echo '1~ You Have Successfully Applied for Job';
                 exit;
-            }else{
+            } else {
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             }
@@ -476,7 +495,7 @@ class Home extends BaseController
     }
 
     public function delete_experience($id)
-	{
+    {
         $query = $this->HomeModel->delete_experience($id);
         if ($query == 1) {
             $this->session->setFlashdata('success', 'Experience successfully deleted');
@@ -494,7 +513,7 @@ class Home extends BaseController
             $data['expedit'] = $this->HomeModel->get_experience_by_id($exp_id);
             $data['countries'] = $this->adminModel->get_countries_list();
             //pre($data);
-            return view('users/auth/user_experience_edit',$data);
+            return view('users/auth/user_experience_edit', $data);
             //return json_encode($data);
             //return $data;
         }
@@ -503,35 +522,35 @@ class Home extends BaseController
     public function resume()
     {
         if ($this->request->getMethod() == 'post') {
-        if ($_FILES['user_resume']['name'] != '') {
-            $rules = [
-                'user_resume' => ['uploaded[user_resume]', 'max_size[user_resume,1024]'],
-            ];
-        }
-        if ($this->validate($rules) == false) {
-            $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-            return redirect()->to(base_url('home/profile'));
-        }
-        $result = UploadFile($_FILES['user_resume']);
-        if ($result['status'] == true) {
-            $url = $result['result']['file_url'];
-        } else {
-            $this->session->setFlashdata('error', $result['message']);
-            return redirect()->to(base_url('home/profile'));
-        }
-        if ($_FILES['user_resume']['name'] != '') {
-            $update_resume['user_resume'] = $url;
-        }
-        $id = session('user_id');
-        $userresume = $this->HomeModel->update_user_resume($update_resume, $id);
+            if ($_FILES['user_resume']['name'] != '') {
+                $rules = [
+                    'user_resume' => ['uploaded[user_resume]', 'max_size[user_resume,1024]'],
+                ];
+            }
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
+            }
+            $result = UploadFile($_FILES['user_resume']);
+            if ($result['status'] == true) {
+                $url = $result['result']['file_url'];
+            } else {
+                $this->session->setFlashdata('error', $result['message']);
+                return redirect()->to(base_url('home/profile'));
+            }
+            if ($_FILES['user_resume']['name'] != '') {
+                $update_resume['user_resume'] = $url;
+            }
+            $id = session('user_id');
+            $userresume = $this->HomeModel->update_user_resume($update_resume, $id);
             if ($userresume == 1) {
                 $this->session->setFlashdata('success', 'Update Success');
                 return redirect()->to(base_url('home/profile'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
                 return redirect()->to(base_url('home/profile'));
-            } 
-     }
+            }
+        }
     }
 
 

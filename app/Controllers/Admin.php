@@ -40,7 +40,6 @@ class Admin extends BaseController
         $data['latest_jobs'] = $this->adminModel->get_latest_jobs();
 
         $data['title'] = 'Dashboard';
-        // pre($data);
         return view('admin/dashboard', $data);
     }
 
