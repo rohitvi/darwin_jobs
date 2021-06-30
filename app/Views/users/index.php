@@ -34,9 +34,9 @@
 									<div class="fild-wrap fw-job-location">
 										<i class="fas fa-map-marker-alt"></i>
 										<select class="js-example-basic-single" name="state">
-										<?php foreach($states as $key=>$state) : ?>
-											<option value="<?= $state['id'] ?>"><?= $state['name'] ?></option>
-											<?php endforeach ; ?>
+											<?php foreach ($states as $key => $state) : ?>
+												<option value="<?= $state['id'] ?>"><?= $state['name'] ?></option>
+											<?php endforeach; ?>
 										</select>
 									</div>
 									<div class="fild-wrap fw-submit">

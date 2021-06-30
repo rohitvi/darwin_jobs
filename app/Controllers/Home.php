@@ -27,7 +27,7 @@ class Home extends BaseController
             return redirect()->to('home/login');
         }
     }
-    
+
     public function checkProfileCompleted()
     {
         if (session('profile_completed') == 0) {
@@ -43,7 +43,7 @@ class Home extends BaseController
     public function dashboard()
     {
         $data['states'] = $this->adminModel->get_states_list(101);
-        return view('users/index',$data);
+        return view('users/index', $data);
         $this->checkProfileCompleted();
         return view('users/index');
     }
@@ -204,6 +204,7 @@ class Home extends BaseController
     // Advance Search functionality
     public function search()
     {
+        // pre($_POST);
         $search = array();
         if ($this->request->getMethod() == 'post') {
             // search job title
@@ -657,10 +658,10 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'language' => $this->request->getPost('language'),
-                    'proficiency' => $this->request->getPost('lang_level'),
-                    'updated_date' => date('Y-m-d'),
+                'user_id' => $user_id,
+                'language' => $this->request->getPost('language'),
+                'proficiency' => $this->request->getPost('lang_level'),
+                'updated_date' => date('Y-m-d'),
             ];
             $query = $this->HomeModel->add_user_language($data);
             if ($query == true) {
@@ -706,12 +707,12 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'language' => $this->request->getPost('language'),
-                    'proficiency' => $this->request->getPost('lang_level'),
-                    'updated_date' => date('Y-m-d'),
+                'user_id' => $user_id,
+                'language' => $this->request->getPost('language'),
+                'proficiency' => $this->request->getPost('lang_level'),
+                'updated_date' => date('Y-m-d'),
             ];
-            $id= $this->request->getPost('lang_id');
+            $id = $this->request->getPost('lang_id');
             $query = $this->HomeModel->update_language($data, $id);
             if ($query == true) {
                 echo '1~ Language Update !';
@@ -739,14 +740,14 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'degree' => $this->request->getPost('level'),
-                    'degree_title' => $this->request->getPost('title'),
-                    'major_subjects' => $this->request->getPost('majors'),
-                    'institution' => $this->request->getPost('institution'),
-                    'country' => $this->request->getPost('country'),
-                    'completion_year' => $this->request->getPost('year'),
-                    'updated_date' => date('Y-m-d')
+                'user_id' => $user_id,
+                'degree' => $this->request->getPost('level'),
+                'degree_title' => $this->request->getPost('title'),
+                'major_subjects' => $this->request->getPost('majors'),
+                'institution' => $this->request->getPost('institution'),
+                'country' => $this->request->getPost('country'),
+                'completion_year' => $this->request->getPost('year'),
+                'updated_date' => date('Y-m-d')
             ];
             $query = $this->HomeModel->add_education($data);
             if ($query == true) {
@@ -797,17 +798,17 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'degree' => $this->request->getPost('level'),
-                    'degree_title' => $this->request->getPost('title'),
-                    'major_subjects' => $this->request->getPost('majors'),
-                    'institution' => $this->request->getPost('institution'),
-                    'country' => $this->request->getPost('country'),
-                    'completion_year' => $this->request->getPost('year'),
-                    'updated_date' => date('Y-m-d')
+                'user_id' => $user_id,
+                'degree' => $this->request->getPost('level'),
+                'degree_title' => $this->request->getPost('title'),
+                'major_subjects' => $this->request->getPost('majors'),
+                'institution' => $this->request->getPost('institution'),
+                'country' => $this->request->getPost('country'),
+                'completion_year' => $this->request->getPost('year'),
+                'updated_date' => date('Y-m-d')
             ];
             $id = $this->request->getPost('edu_id');
-            $query = $this->HomeModel->update_education($data,$id);
+            $query = $this->HomeModel->update_education($data, $id);
             if ($query == true) {
                 echo '1~ Education Updated !';
                 return redirect()->to(base_url('home/profile'));
