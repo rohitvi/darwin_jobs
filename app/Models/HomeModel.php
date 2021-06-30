@@ -97,7 +97,7 @@ class HomeModel extends Model
         $builder->where('curdate() <  expiry_date');
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('id');
-        $result = $builder->paginate(15);
+        $result = $builder->paginate(1);
         // pre($this->db->getLastQuery());
         return $result;
     }

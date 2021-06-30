@@ -249,7 +249,7 @@ class Home extends BaseController
             'keywords' => 'meta tags here',
             'pager' => $Jobs->pager
         ];
-        return view('user/job_listing', $data);
+        return view('users/job_listing', $data);
     }
 
 
