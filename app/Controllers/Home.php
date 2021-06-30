@@ -27,6 +27,13 @@ class Home extends BaseController
             return redirect()->to('home/login');
         }
     }
+    
+    public function checkProfileCompleted()
+    {
+        if (session('profile_completed') == 0) {
+            return redirect()->to(base_url('home/profile'));
+        }
+    }
 
     public function index()
     {
@@ -35,6 +42,7 @@ class Home extends BaseController
 
     public function dashboard()
     {
+        $this->checkProfileCompleted();
         return view('users/index');
     }
 
@@ -68,13 +76,6 @@ class Home extends BaseController
             }
         }
         return view('users/auth/login');
-    }
-
-    public function checkProfileCompleted()
-    {
-        if (session('profile_completed') == 0) {
-            return redirect()->to(base_url('home/profile'));
-        }
     }
 
     public function updateProfileImage()
@@ -330,11 +331,6 @@ class Home extends BaseController
         $id = session('user_id');
         $get['data'] = $this->HomeModel->perinfo_by_id($id);
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
-
-        // if (session('profile_completed') == 0) {
-        //     print_r('please complete profile');exit;
-        // }
-
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['profile_picture']['name'] != '') {
                 $rules = [
@@ -370,6 +366,7 @@ class Home extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'address' => $this->request->getPost('address'),
+                'profile_completed' => 1,
             );
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_user_info['profile_picture'] = $url;
@@ -377,6 +374,7 @@ class Home extends BaseController
             $id = session('user_id');
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
             if ($update_per == 1) {
+                $this->session->set('profile_completed = 1');
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
                 return redirect()->to(base_url('home/profile'));
             } else {
@@ -401,40 +399,40 @@ class Home extends BaseController
     }
 
 
-    public function insert_user_experience(){
-        if ($this->request->isAJAX()) 
-        {
-                    $rules = [
-                        'job_title'     =>['label' => 'job_title', 'rules' => 'required'],
-                        'company'       =>['label' => 'company', 'rules' => 'required'],
-                        'country'       =>['label' => 'country', 'rules' => 'required'],
-                        'starting_month'=>['label' => 'starting_month', 'rules' => 'required'],
-                        'starting_year' =>['label' => 'starting_year', 'rules' => 'required'],
-                        'ending_month' =>['label' => 'ending_month', 'rules' => 'required'],
-                        'ending_year'    =>['label' => 'ending_year', 'rules' => 'required'],
-                        'description'    =>['label' => 'description', 'rules' => 'required']
-                    ];
-                    $id = session('user_id');
-                    $data = [        
-                            'user_id' => $id,
-                            'job_title' => $this->request->getPost('job_title'),
-                            'company' => $this->request->getPost('company'),
-                            'country' => $this->request->getPost('country'),
-                            'starting_month' => $this->request->getPost('starting_month'),
-                            'starting_year' => $this->request->getPost('starting_year'),
-                            'ending_month' => $this->request->getPost('ending_month'),
-                            'ending_year' => $this->request->getPost('ending_year'),
-                            'description' => $this->request->getPost('description'),
-                            'updated_date' => date('Y-m-d : h:m:s')
-                        ];
-                    $query = $this->HomeModel->insert_user_experience($data,$id);
-                    if ($query == 1) {
-                        echo '1~ Experience Updated';
-                        exit;
-                    }else{
-                        echo '0~ Something Went Wrong, Please Try Again !';
-                        exit;
-                    }
+    public function insert_user_experience()
+    {
+        if ($this->request->isAJAX()) {
+            $rules = [
+                'job_title'     =>['label' => 'job_title', 'rules' => 'required'],
+                'company'       =>['label' => 'company', 'rules' => 'required'],
+                'country'       =>['label' => 'country', 'rules' => 'required'],
+                'starting_month'=>['label' => 'starting_month', 'rules' => 'required'],
+                'starting_year' =>['label' => 'starting_year', 'rules' => 'required'],
+                'ending_month' =>['label' => 'ending_month', 'rules' => 'required'],
+                'ending_year'    =>['label' => 'ending_year', 'rules' => 'required'],
+                'description'    =>['label' => 'description', 'rules' => 'required']
+            ];
+            $id = session('user_id');
+            $data = [
+                    'user_id' => $id,
+                    'job_title' => $this->request->getPost('job_title'),
+                    'company' => $this->request->getPost('company'),
+                    'country' => $this->request->getPost('country'),
+                    'starting_month' => $this->request->getPost('starting_month'),
+                    'starting_year' => $this->request->getPost('starting_year'),
+                    'ending_month' => $this->request->getPost('ending_month'),
+                    'ending_year' => $this->request->getPost('ending_year'),
+                    'description' => $this->request->getPost('description'),
+                    'updated_date' => date('Y-m-d : h:m:s')
+                ];
+            $query = $this->HomeModel->insert_user_experience($data, $id);
+            if ($query == 1) {
+                echo '1~ Experience Updated';
+                exit;
+            } else {
+                echo '0~ Something Went Wrong, Please Try Again !';
+                exit;
+            }
         }
     }
     public function applied_jobs()
@@ -554,9 +552,8 @@ class Home extends BaseController
 
     public function user_experience_update()
     {
-        if ($this->request->getMethod() == 'post') 
-        {
-                    $rules = [
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
                         'job_title'     =>['label' => 'job_title', 'rules' => 'required'],
                         'company'       =>['label' => 'company', 'rules' => 'required'],
                         'country'       =>['label' => 'country', 'rules' => 'required'],
@@ -566,8 +563,8 @@ class Home extends BaseController
                         'ending_year'    =>['label' => 'ending_year', 'rules' => 'required'],
                         'description'    =>['label' => 'description', 'rules' => 'required']
                     ];
-                    $user_id = session('user_id');
-                    $data = [        
+            $user_id = session('user_id');
+            $data = [
                             'user_id' => $user_id,
                             'job_title' => $this->request->getPost('job_title'),
                             'company' => $this->request->getPost('company'),
@@ -579,16 +576,15 @@ class Home extends BaseController
                             'description' => $this->request->getPost('description'),
                             'updated_date' => date('Y-m-d : h:m:s')
                         ];
-                    $id= $this->request->getPost('exp_id');
-                    $query = $this->HomeModel->update_user_experience($data,$id);
-                    if ($query == 1) {
-                        echo '1~ Experience Updated';
-                        return redirect()->to(base_url('home/profile'));
-                    }else{
-                        echo '0~ Something Went Wrong, Please Try Again !';
-                        exit;
-                    }
-        
+            $id= $this->request->getPost('exp_id');
+            $query = $this->HomeModel->update_user_experience($data, $id);
+            if ($query == 1) {
+                echo '1~ Experience Updated';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~ Something Went Wrong, Please Try Again !';
+                exit;
+            }
         }
     }
     public function password_reset()
