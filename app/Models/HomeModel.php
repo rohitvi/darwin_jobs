@@ -155,4 +155,29 @@ class HomeModel extends Model
         return $this->db->table('seeker_experience')->where('id',$id)->update($data);
     }
 
+    public function get_user_language($id)
+    {
+        return $this->db->table('seeker_languages')->where('user_id',$id)->get()->getResultArray();
+    }
+
+    public function add_user_language($data)
+    {
+        return $this->db->table('seeker_languages')->insert($data);
+    }
+
+    public function delete_language($id)
+    {
+        return $this->db->table('seeker_languages')->where('id',$id)->delete();
+    }
+
+    public function get_language_by_id($id)
+    {
+        return $this->db->table('seeker_languages')->where('id',$id)->get()->getRowArray();
+    }
+
+    public function update_language($data,$id)
+    {
+        return $this->db->table('seeker_languages')->where('id',$id)->update($data);
+    }
+
 }

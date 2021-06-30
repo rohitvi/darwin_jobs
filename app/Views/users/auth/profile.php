@@ -6,7 +6,7 @@
   </div>
 </div>
 </header>
-<!-- Main 
+<!-- Main
 ================================================== -->
 <main>
   <div class="job_container">
@@ -431,7 +431,7 @@
     var fields = $('#experience').serialize();
     //console.log(fields);
     $.ajax({
-        url: "<?= base_url('home/insert_user_experience'); ?>",
+        url: "<?=base_url('home/insert_user_experience');?>",
         method: "POST",
         data: fields,
          success:function(responses){
@@ -485,6 +485,25 @@
       }
     });
   });
+
+
+// Edit user language
+$(document).on('click','.edit-language',function(){
+  var data = {
+    lang_id : $(this).data('lang_id'),
+  }
+  data[csfr_token_name] = csfr_token_value;
+   $.ajax({
+    type: 'POST',
+    url: "<?=base_url('home/get_language_by_id');?>",
+    data: data,
+    success: function (response) {
+      $('#user-language-edit').html(response);
+      $('#user-language-edit').collapse('show');
+    }
+
+  });
+});
 
 
 // current working or not

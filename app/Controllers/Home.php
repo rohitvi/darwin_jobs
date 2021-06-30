@@ -648,4 +648,82 @@ class Home extends BaseController
             }
         }
     }
+
+    public function add_language()
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'language' =>  ['label' => 'language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $user_id = session('user_id');
+            $data = [
+                    'user_id' => $user_id,
+                    'language' => $this->request->getPost('language'),
+					'proficiency' => $this->request->getPost('lang_level'),
+					'updated_date' => date('Y-m-d'),
+            ];
+            $query = $this->HomeModel->add_user_language($data);
+            if ($query == true) {
+                echo '1~ Language Update !';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }   
+    }
+
+    public function delete_language($id)
+    {
+        $query = $this->HomeModel->delete_language($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Language successfully deleted');
+            return redirect()->to(base_url('home/profile'));
+        } else {
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('home/profile'));
+        }
+    }
+
+    public function get_language_by_id()
+    {
+        if ($this->request->getPost('lang_id')) {
+            $lang_id = $this->request->getPost('lang_id');
+            $data['userlang'] = $this->HomeModel->get_language_by_id($lang_id);
+            return view('users/auth/user_language_edit',$data);
+        }
+    }
+
+    public function update_language()
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'language' =>  ['label' => 'language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $user_id = session('user_id');
+            $data = [
+                    'user_id' => $user_id,
+                    'language' => $this->request->getPost('language'),
+					'proficiency' => $this->request->getPost('lang_level'),
+					'updated_date' => date('Y-m-d'),
+            ];
+            $id= $this->request->getPost('lang_id');
+            $query = $this->HomeModel->update_language($data,$id);
+            if ($query == true) {
+                echo '1~ Language Update !';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }   
+    }
 }
