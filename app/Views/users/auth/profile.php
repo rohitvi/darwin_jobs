@@ -147,7 +147,7 @@
                   <div class="col-md-12">
                       <div class="form-group ">
                         <label  >Profile Picture</label>
-                        <input type="file" name="profile_picture" class="form-control" placeholder="Confirm Password">
+                        <input type="file" name="profile_picture" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -410,7 +410,7 @@
 
                             <div class="row">
                                 <div class="col-md-3">
-                                  <div class=exp-end-field">
+                                  <div class="exp-end-field">
                                     <label>End  Month</label>         
                                     <?php 
                                     $options = get_months_list();
@@ -457,7 +457,6 @@
 
                           <!-- /collapse edit-->
                           <div id="user-experience-edit" class="collapse">
-                            
                           </div>
                         <!-- /collapse edit-->
 
@@ -465,8 +464,20 @@
                         <hr>
                         <div class='row'>
                             <div class='col-md-9'> <h3>Languages</h3></div>      
-                            <div class='col-md-1'><h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-experience"></i></span></h3></div>                       
+                            <div class='col-md-1'><h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-language"></i></span></h3></div>                       
                         </div>
+
+                        <!-- add user languages collapse -->
+                        <div class='row'>
+                            <div class='col-md-6'>
+                                <label for="Language">Language</label>
+                              
+                            </div>
+
+                            <div class='col-md-6'>
+                            </div>
+                        </div>
+                        <!-- add user languages collapse -->
 
                         
                       <!-- Languages end -->
@@ -537,12 +548,13 @@
     var fields = $('#experience').serialize();
     //console.log(fields);
     $.ajax({
-        url: "<?= base_url('home/experience'); ?>",
+        url: "<?= base_url('home/insert_user_experience'); ?>",
         method: "POST",
         data: fields,
          success:function(responses){
             var response = responses.split('~');
             $('#experience').trigger("reset");
+            $('#user-experience').collapse('hide');
               if ($.trim(response[0]) == 0) {
                 new Noty({
                     type: "error",
@@ -595,8 +607,8 @@ $(document).on('click','.edit-experience',function(){
 $(document).on('click','.currently_working_here',function(){
   $this = $(this);
   if($this.is(':checked'))
-    $('.exp-end-field').addClass('hidden');
+    $('.exp-end-field').hide();
   else
-    $('.exp-end-field').removeClass('hidden');
+    $('.exp-end-field').show();
 });
 </script>

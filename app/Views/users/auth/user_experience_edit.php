@@ -1,5 +1,6 @@
-<form id="experience" method='post'>
+<form action="user_experience_update" method="post">
     <div class="row">
+        <input type="test" name="exp_id" value="<?= $expedit['id'] ?>">
         <div class="col-md-6">
             <label>Job Title</label>
             <input class="form-control valid" name="job_title" type="text" value="<?= $expedit['job_title'] ?>" placeholder='test' required>
@@ -72,7 +73,7 @@
     <div class="col-md-12">
         <div class="submit-field">
         <!-- <input type="submit" class="genric-btn danger circle"value="Submit"> -->
-        <button class='genric-btn danger circle'>Submit</button>
+        <button class='genric-btn danger circle' type='submit'>Submit</button>
         <button type="button" class="genric-btn danger circle close_all_collapse">Cancel</button>
         </div>
     </div>

@@ -105,7 +105,7 @@ class HomeModel extends Model
         return $this->db->table('seeker_experience')->where('user_id',$id)->get()->getResultArray();
     }
 
-    public function update_user_experience($data,$id)
+    public function insert_user_experience($data,$id)
     {
         $builder = $this->db->table('seeker_experience');
         $builder->where('id',$id);
@@ -147,6 +147,12 @@ class HomeModel extends Model
     public function update_user_resume($update_resume, $id)
     {
         return $this->db->table('users')->where('id', $id)->update(array('resume' => $update_resume));
+    }
+
+    public function update_user_experience($data,$id)
+    {
+        //return $this->db->table('users')->where('id', $id)->update($update_user_info);
+        return $this->db->table('seeker_experience')->where('id',$id)->update($data);
     }
 
 }
