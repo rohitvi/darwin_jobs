@@ -68,7 +68,8 @@ class Home extends BaseController
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'username' => $logindata['username'],
-                    'profile_completed' => $logindata['profile_completed']
+                    'profile_completed' => $logindata['profile_completed'],
+                    'is_verify' => $logindata['is_verify']
                 ];
                 $this->session->set($employerdata);
                 echo '1~ You Have Successfully Logged in';
@@ -188,6 +189,7 @@ class Home extends BaseController
             $mail_data = array(
                 'fullname' => $result['firstname'] . ' ' . $result['lastname'],
             );
+            $this->session->set('is_verify', 1);
             $this->mailer->mail_template($result['email'], 'welcome', $mail_data);
             $this->session->setFlashdata('success', 'Email Successfully Verified!');
             return redirect()->to(base_url('login'));
@@ -374,7 +376,7 @@ class Home extends BaseController
             $id = session('user_id');
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
             if ($update_per == 1) {
-                $this->session->set('profile_completed',1);
+                $this->session->set('profile_completed', 1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
                 return redirect()->to(base_url('home/profile'));
             } else {
