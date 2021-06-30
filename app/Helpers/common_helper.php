@@ -287,3 +287,6 @@ function get_user_email($user_id)
     $builder = $db->table('users');
     return $builder->getWhere(array('id' => $user_id))->getRowArray()['email'];
 }
+
+// get languages
+

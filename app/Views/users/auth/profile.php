@@ -36,8 +36,8 @@
 
                     <div class="col-md-12">
                       <div class="form-group ">
-                        <label>Profile Picture</label>
-                        <input type="file" name="profile_picture" class="form-control" placeholder="Confirm Password">
+                        <label  >Profile Picture</label>
+                        <input type="file" name="profile_picture" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -460,39 +460,40 @@
     var fields = $('#experience').serialize();
     //console.log(fields);
     $.ajax({
-      url: "<?= base_url('home/experience'); ?>",
-      method: "POST",
-      data: fields,
-      success: function(responses) {
-        var response = responses.split('~');
-        $('#experience').trigger("reset");
-        if ($.trim(response[0]) == 0) {
-          new Noty({
-            type: "error",
-            layout: "topRight",
-            text: response[1],
-            progressBar: true,
-            timeout: 2500,
-            animation: {
-              open: "animated bounceInRight",
-              close: "animated bounceOutRight"
-            }
-          }).show();
-        }
-        if ($.trim(response[0]) == 1) {
-          new Noty({
-            type: "success",
-            layout: "topRight",
-            text: response[1],
-            progressBar: true,
-            timeout: 2500,
-            animation: {
-              open: "animated bounceInRight",
-              close: "animated bounceOutRight"
-            }
-          }).show();
-        }
-      }
+        url: "<?= base_url('home/insert_user_experience'); ?>",
+        method: "POST",
+        data: fields,
+         success:function(responses){
+            var response = responses.split('~');
+            $('#experience').trigger("reset");
+            $('#user-experience').collapse('hide');
+              if ($.trim(response[0]) == 0) {
+                new Noty({
+                    type: "error",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+              }
+              if ($.trim(response[0]) == 1) {
+                new Noty({
+                    type: "success",
+                    layout: "topRight",
+                    text: response[1],
+                    progressBar: true,
+                    timeout: 2500,
+                    animation: {
+                        open: "animated bounceInRight",
+                        close: "animated bounceOutRight"
+                    }
+                }).show();
+              }
+         }
     });
   });
 
@@ -514,12 +515,13 @@
     });
   });
 
-  // current working or not
-  $(document).on('click', '.currently_working_here', function() {
-    $this = $(this);
-    if ($this.is(':checked'))
-      $('.exp-end-field').addClass('hidden');
-    else
-      $('.exp-end-field').removeClass('hidden');
-  });
+
+// current working or not
+$(document).on('click','.currently_working_here',function(){
+  $this = $(this);
+  if($this.is(':checked'))
+    $('.exp-end-field').hide();
+  else
+    $('.exp-end-field').show();
+});
 </script>

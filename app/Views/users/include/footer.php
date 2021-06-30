@@ -104,7 +104,7 @@
 		<!-- .site-info -->
 	</div>
 </footer>
-
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
 <script>
 $('#subscriber').on('submit',function(){
     event.preventDefault();
