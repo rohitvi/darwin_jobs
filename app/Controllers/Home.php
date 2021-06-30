@@ -348,7 +348,7 @@ class Home extends BaseController
                 'description'    =>['label' => 'description', 'rules' => 'required']
             ];
             $id = session('user_id');
-            $data = [        
+            $data = [
                     'user_id' => $id,
                     'job_title' => $this->request->getPost('job_title'),
                     'company' => $this->request->getPost('company'),
