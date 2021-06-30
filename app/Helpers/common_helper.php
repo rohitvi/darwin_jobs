@@ -290,4 +290,37 @@ function get_user_email($user_id)
 
 
 // get languages
+function get_languages_list()
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('languages');
+    return $builder->get()->getResultArray();
+}
+
+function get_language_levels()
+{
+        return array(
+        '' => 'Select Option',
+        '1' => 'Beginner',
+        '2' => 'Intermediate',
+        '3' => 'Expert',
+      );
+}
+
+function get_language_name($id)
+{
+        $db = \Config\Database::connect();
+        $builder = $db->table('languages');
+        return $builder->getWhere(array('lang_id' => $id))->getRowArray()['lang_name'];
+}
+
+function get_lang_proficiency_name($id)
+{
+        if($id == '1')
+            return 'Beginner';
+        if($id == '2')
+            return 'Intermediate';
+        if($id == '3')
+            return 'Expert';
+}
 

@@ -6,7 +6,7 @@
   </div>
 </div>
 </header>
-<!-- Main 
+<!-- Main
 ================================================== -->
 <main>
   <div class="job_container">
@@ -208,27 +208,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="big_form_group">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group ">
-                        <label  >Skills</label>
-                        <select class="form-control">
-                          <option>
-                            PHP
-                          </option>
-                          <option>
-                            MySQL
-                          </option>
-                          <option>
-                            API Development
-                          </option>
-
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
                 <div class="form-group row">
                   <div class="col-md-9 ">
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -409,7 +388,6 @@
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
 
 <script>
-  $('.alert').alert()
   var csfr_token_name = '<?= csrf_token() ?>';
   var csfr_token_value = '<?= csrf_hash() ?>';
   $(document).ready(function() {
@@ -453,7 +431,7 @@
     var fields = $('#experience').serialize();
     //console.log(fields);
     $.ajax({
-        url: "<?= base_url('home/insert_user_experience'); ?>",
+        url: "<?=base_url('home/insert_user_experience');?>",
         method: "POST",
         data: fields,
          success:function(responses){
@@ -507,6 +485,25 @@
       }
     });
   });
+
+
+// Edit user language
+$(document).on('click','.edit-language',function(){
+  var data = {
+    lang_id : $(this).data('lang_id'),
+  }
+  data[csfr_token_name] = csfr_token_value;
+   $.ajax({
+    type: 'POST',
+    url: "<?=base_url('home/get_language_by_id');?>",
+    data: data,
+    success: function (response) {
+      $('#user-language-edit').html(response);
+      $('#user-language-edit').collapse('show');
+    }
+
+  });
+});
 
 
 // current working or not

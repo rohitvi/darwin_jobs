@@ -27,6 +27,13 @@ class Home extends BaseController
             return redirect()->to('home/login');
         }
     }
+    
+    public function checkProfileCompleted()
+    {
+        if (session('profile_completed') == 0) {
+            return redirect()->to(base_url('home/profile'));
+        }
+    }
 
     public function index()
     {
@@ -37,6 +44,8 @@ class Home extends BaseController
     {
         $data['states'] = $this->adminModel->get_states_list(101);
         return view('users/index',$data);
+        $this->checkProfileCompleted();
+        return view('users/index');
     }
 
     public function login()
@@ -61,7 +70,8 @@ class Home extends BaseController
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'username' => $logindata['username'],
-                    'profile_completed' => $logindata['profile_completed']
+                    'profile_completed' => $logindata['profile_completed'],
+                    'is_verify' => $logindata['is_verify']
                 ];
                 $this->session->set($employerdata);
                 echo '1~ You Have Successfully Logged in';
@@ -69,13 +79,6 @@ class Home extends BaseController
             }
         }
         return view('users/auth/login');
-    }
-
-    public function checkProfileCompleted()
-    {
-        if (session('profile_completed') == 0) {
-            return redirect()->to(base_url('home/profile'));
-        }
     }
 
     public function updateProfileImage()
@@ -188,6 +191,7 @@ class Home extends BaseController
             $mail_data = array(
                 'fullname' => $result['firstname'] . ' ' . $result['lastname'],
             );
+            $this->session->set('is_verify', 1);
             $this->mailer->mail_template($result['email'], 'welcome', $mail_data);
             $this->session->setFlashdata('success', 'Email Successfully Verified!');
             return redirect()->to(base_url('login'));
@@ -322,11 +326,6 @@ class Home extends BaseController
         $id = session('user_id');
         $get['data'] = $this->HomeModel->perinfo_by_id($id);
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
-
-        // if (session('profile_completed') == 0) {
-        //     print_r('please complete profile');exit;
-        // }
-
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['profile_picture']['name'] != '') {
                 $rules = [
@@ -362,6 +361,7 @@ class Home extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'address' => $this->request->getPost('address'),
+                'profile_completed' => 1,
             );
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_user_info['profile_picture'] = $url;
@@ -640,5 +640,83 @@ class Home extends BaseController
                 echo '0~Something went wrong, please try again !';
             }
         }
+    }
+
+    public function add_language()
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'language' =>  ['label' => 'language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $user_id = session('user_id');
+            $data = [
+                    'user_id' => $user_id,
+                    'language' => $this->request->getPost('language'),
+					'proficiency' => $this->request->getPost('lang_level'),
+					'updated_date' => date('Y-m-d'),
+            ];
+            $query = $this->HomeModel->add_user_language($data);
+            if ($query == true) {
+                echo '1~ Language Update !';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }   
+    }
+
+    public function delete_language($id)
+    {
+        $query = $this->HomeModel->delete_language($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Language successfully deleted');
+            return redirect()->to(base_url('home/profile'));
+        } else {
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('home/profile'));
+        }
+    }
+
+    public function get_language_by_id()
+    {
+        if ($this->request->getPost('lang_id')) {
+            $lang_id = $this->request->getPost('lang_id');
+            $data['userlang'] = $this->HomeModel->get_language_by_id($lang_id);
+            return view('users/auth/user_language_edit',$data);
+        }
+    }
+
+    public function update_language()
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'language' =>  ['label' => 'language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $user_id = session('user_id');
+            $data = [
+                    'user_id' => $user_id,
+                    'language' => $this->request->getPost('language'),
+					'proficiency' => $this->request->getPost('lang_level'),
+					'updated_date' => date('Y-m-d'),
+            ];
+            $id= $this->request->getPost('lang_id');
+            $query = $this->HomeModel->update_language($data,$id);
+            if ($query == true) {
+                echo '1~ Language Update !';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }   
     }
 }

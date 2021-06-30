@@ -1,6 +1,6 @@
 <form action="user_experience_update" method="post">
     <div class="row">
-        <input type="test" name="exp_id" value="<?= $expedit['id'] ?>">
+        <input type="hidden" name="exp_id" value="<?= $expedit['id'] ?>">
         <div class="col-md-6">
             <label>Job Title</label>
             <input class="form-control valid" name="job_title" type="text" value="<?= $expedit['job_title'] ?>" placeholder='test' required>
