@@ -342,3 +342,15 @@ function decode($input)
 {
     return base64_decode(urldecode($input) );
 }
+
+function assoc_to_uri($array)
+{
+    $temp = array();
+    foreach ((array) $array as $key => $val)
+    {
+        $temp[] = $key;
+        $temp[] = $val;
+    }
+
+    return implode('/', $temp);
+}

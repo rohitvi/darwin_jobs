@@ -58,13 +58,13 @@ class HomeModel extends Model
     {
         $builder = $this->table('job_post');
 
-        $builder->select('id, title, company_id, job_slug, job_type, description, country, city, expiry_date, created_date, industry');
+        $builder->select('id, title, company_id, job_slug, job_type, description, state, city, expiry_date, created_date, industry');
 
         // search URI parameters
         unset($search['p']); //unset pagination parameter form search
 
-        if (!empty($search['country']))
-            $builder->where('country', $search['country']);
+        if (!empty($search['state']))
+            $builder->where('state', $search['state']);
 
         if (!empty($search['city']))
             $builder->where('city', $search['city']);
@@ -83,20 +83,22 @@ class HomeModel extends Model
 
         if (!empty($search['title'])) {
             $search_text = explode('-', $search['title']);
+            // pre($search_text);
             foreach ($search_text as $search) {
                 $builder->groupStart();
                 $builder->orLike('title', $search);
                 $builder->orLike('skills', $search);
+                $builder->orLike('job_slug', $search);
                 $builder->groupEnd();
             }
         }
-
 
         $builder->where('is_status', 'active');
         $builder->where('curdate() <  expiry_date');
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('id');
-        $result = $builder->paginate(12);
+        $result = $builder->paginate(15);
+        // pre($this->db->getLastQuery());
         return $result;
     }
 

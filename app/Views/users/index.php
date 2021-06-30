@@ -1,93 +1,96 @@
-<?php include(VIEWPATH.'users/include/header.php'); ?>
-		<div class="header_btm">
-			<!-- <div class="bg-v" >
+<?php include(VIEWPATH . 'users/include/header.php'); ?>
+<style>
+	.fild-wrap input {
+		width: 100%;
+		padding: 0 17px;
+		height: 58px;
+		line-height: 58px;
+		border: none;
+	}
+</style>
+<div class="header_btm">
+	<!-- <div class="bg-v" >
 				<div class="bg-v-2 bg-b-r">
 				</div>
 			</div> -->
-			<div class="container">
-				<div class="banner_slider ">
-					<div class="">	
-						<div class="row align-items-center">
-							<div class="col-lg-4" data-aos="fade-down" data-aos-delay="200">
-								<h2>Find the  most exciting<br> starup jobs</h2>
-								<p>Most complete 2020 template for Job board sites.</p>
-								<a class="btn btn-primary" href="browse-jobs.html">Know more
-									<i class="material-icons">arrow_right_alt</i>
-								</a>
-							</div>
-							<div class="col-lg-8" >
-								<div class="banner_form_cont" >
-									<form action="browse-jobs.html">
-										<div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
-											<div class="fild-wrap fw-job-title">
-												<i class="fas fa-briefcase"></i>
-												<select class="js-example-basic-multiple" name="state">
-												  <option value="AL"> JOB TITLE, SKILL, INDUSTRY</option>
-												  <option value="1">Concierge</option>
-												  <option value="2">Event Planner</option>
-												  <option value="3">Executive Chef</option>
-												  <option value="4">General Manager</option>
-												</select>
-											</div>
-											<div class="fild-wrap fw-job-location">
-												<i class="fas fa-map-marker-alt"></i>
-												<select class="js-example-basic-single" name="state">
-												  <option value="AL">ALABAMA</option>
-												  <option value="WY">WYOMING</option>
-												</select>
-											</div>
-											<div class="fild-wrap fw-submit">
-												<button type="submit" class="btn btn-primary" value="">
-													 <i class="material-icons">search</i> SEARCH JOBS
-												</button>
-											</div>
+	<div class="container">
+		<div class="banner_slider ">
+			<div class="">
+				<div class="row align-items-center">
+					<div class="col-lg-4" data-aos="fade-down" data-aos-delay="200">
+						<h2>Find the most exciting<br> starup jobs</h2>
+						<p>Most complete 2020 template for Job board sites.</p>
+						<a class="btn btn-primary" href="browse-jobs.html">Know more
+							<i class="material-icons">arrow_right_alt</i>
+						</a>
+					</div>
+					<div class="col-lg-8">
+						<div class="banner_form_cont">
+							<form action="<?= base_url('search') ?>" method="POST">
+								<div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
+									<div class="fild-wrap fw-job-title">
+										<input class="form-control" type="text" name="job_title" placeholder="Job Title" required>
+									</div>
+									<div class="fild-wrap fw-job-location">
+										<i class="fas fa-map-marker-alt"></i>
+										<select class="js-example-basic-single" name="state">
+										<?php foreach($states as $key=>$state) : ?>
+											<option value="<?= $state['id'] ?>"><?= $state['name'] ?></option>
+											<?php endforeach ; ?>
+										</select>
+									</div>
+									<div class="fild-wrap fw-submit">
+										<button type="submit" class="btn btn-primary" value="">
+											<i class="material-icons">search</i> SEARCH JOBS
+										</button>
+									</div>
+								</div>
+							</form>
+							<div class="user_type">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="user_type_inner  user_type_seeker">
+											<a href="browse-jobs.html">
+												<div class="usertype_img">
+													<img alt="" src="<?= base_url(); ?>/public/users/images/usertype-2.png">
+													<img alt="" class="usertype-addon" src="<?= base_url(); ?>/public/users/images/usertype-2-addon.png">
+												</div>
+												<div>
+													<h3>I'm looking for a job</h3>
+													<p>Post CV and apply job you love</p>
+													<i class="fas fa-long-arrow-alt-right"></i>
+												</div>
+											</a>
 										</div>
-									</form>
-									<div class="user_type">
-										<div class="row">
-											<div class="col-md-6" >
-												<div class="user_type_inner  user_type_seeker" >
-													<a href="browse-jobs.html">
-														<div class="usertype_img">
-															<img alt="" src="<?= base_url(); ?>/public/users/images/usertype-2.png">
-															<img alt="" class="usertype-addon" src="<?= base_url(); ?>/public/users/images/usertype-2-addon.png">
-														</div>
-														<div>
-															<h3>I'm looking for a job</h3>
-															<p>Post CV and apply job you love</p>
-															<i class="fas fa-long-arrow-alt-right"></i>
-														</div>
-													</a>
+									</div>
+									<div class="col-md-6">
+										<div class="user_type_inner user_type_post">
+											<a href="post-a-job.html">
+												<div class="usertype_img">
+													<img alt="" src="<?= base_url(); ?>/public/users/images/usertype-1.png">
+													<img alt="" class="usertype-addon" src="<?= base_url(); ?>/public/users/images/usertype-1-addon.png">
 												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="user_type_inner user_type_post" >
-													<a href="post-a-job.html">
-														<div class="usertype_img">
-															<img alt=""  src="<?= base_url(); ?>/public/users/images/usertype-1.png">
-															<img alt=""  class="usertype-addon" src="<?= base_url(); ?>/public/users/images/usertype-1-addon.png">
-														</div>
-														<div>
-															<h3>I want to post job</h3>
-															<p>Post jobs & hire porfessionls</p>
-															<i class="fas fa-long-arrow-alt-right"></i>
-														</div>
-													</a>
+												<div>
+													<h3>I want to post job</h3>
+													<p>Post jobs & hire porfessionls</p>
+													<i class="fas fa-long-arrow-alt-right"></i>
 												</div>
-											</div>
+											</a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
-					
 				</div>
-					
-			</div>	
+			</div>
+
+
 		</div>
-	</div> 
+
+	</div>
+</div>
+</div>
 </header>
 
 
@@ -125,10 +128,10 @@
 		<div class="container">
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Popular Job Categories</h2>
 			<div class="row">
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-code.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-code.png">
 							<span class="job_count">363</span>
 						</div>
 						<div class="cb_bottom">
@@ -137,10 +140,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-server.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-server.png">
 							<span class="job_count">572</span>
 						</div>
 						<div class="cb_bottom">
@@ -149,10 +152,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-calculator.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-calculator.png">
 							<span class="job_count">252</span>
 						</div>
 						<div class="cb_bottom">
@@ -161,10 +164,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-pan.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-pan.png">
 							<span class="job_count">523</span>
 						</div>
 						<div class="cb_bottom">
@@ -173,10 +176,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-chart.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-chart.png">
 							<span class="job_count">98</span>
 						</div>
 						<div class="cb_bottom">
@@ -185,10 +188,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-graphic.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-graphic.png">
 							<span class="job_count">53</span>
 						</div>
 						<div class="cb_bottom">
@@ -197,10 +200,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-digital.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-digital.png">
 							<span class="job_count">75</span>
 						</div>
 						<div class="cb_bottom">
@@ -209,10 +212,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6" >
-					<div class="category_box" >
+				<div class="col-lg-3 col-md-6">
+					<div class="category_box">
 						<div class="cb_header">
-							<img alt=""  src="<?= base_url(); ?>/public/users/images/i-education.png">
+							<img alt="" src="<?= base_url(); ?>/public/users/images/i-education.png">
 							<span class="job_count">366</span>
 						</div>
 						<div class="cb_bottom">
@@ -221,7 +224,7 @@
 						</div>
 					</div>
 				</div>
-			</div>   
+			</div>
 		</div>
 	</div>
 
@@ -235,14 +238,14 @@
 		<div class="container">
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Featured Jobs</h2>
 			<div class="row two_col featured_box_outer">
-				<div class="col-sm-6" >
+				<div class="col-sm-6">
 					<div class="featured_box ">
-						<div class="fb_image" >
+						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-01.webp">
+								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-01.webp">
 							</a>
 						</div>
-						<div class='fb_content' >
+						<div class='fb_content'>
 							<h4>
 								<a href="job-single.html">2000 Words English to German</a>
 							</h4>
@@ -267,7 +270,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="fb_action" >
+						<div class="fb_action">
 							<a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
 							<a class="btn btn-third" href="job-single.html">Apply Now</a>
 							<ul class="tags">
@@ -278,14 +281,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6" >
+				<div class="col-sm-6">
 					<div class="featured_box ">
-						<div class="fb_image" >
+						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-02.webp">
+								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-02.webp">
 							</a>
 						</div>
-						<div class='fb_content' >
+						<div class='fb_content'>
 							<h4>
 								<a href="job-single.html">Fix Python Selenium Code</a>
 							</h4>
@@ -310,7 +313,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="fb_action"  >
+						<div class="fb_action">
 							<a title="add to favourite" href="#"><i class="fas fa-heart"></i></a>
 							<a class="btn btn-third" href="job-single.html">Apply Now</a>
 							<ul class="tags">
@@ -323,9 +326,9 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="featured_box ">
-						<div class="fb_image" >
+						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-03.webp">
+								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-03.webp">
 							</a>
 						</div>
 						<div class='fb_content'>
@@ -344,7 +347,7 @@
 										<i class="fas fa-map-marker-alt"></i>
 										New York
 									</a>
-								</li>	
+								</li>
 								<li>
 									<a href="#">
 										<i class="far fa-clock"></i>
@@ -353,7 +356,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="fb_action" >
+						<div class="fb_action">
 							<a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
 							<a class="btn btn-third disabled" href="job-single.html">Applied</a>
 							<ul class="tags">
@@ -364,14 +367,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6" >
+				<div class="col-sm-6">
 					<div class="featured_box ">
-						<div class="fb_image" >
+						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-05.webp">
+								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-05.webp">
 							</a>
 						</div>
-						<div class='fb_content' >
+						<div class='fb_content'>
 							<h4>
 								<a href="job-single.html">PHP Core Website Fixes</a>
 							</h4>
@@ -396,7 +399,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="fb_action" >
+						<div class="fb_action">
 							<a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
 							<a class="btn btn-third" href="job-single.html">Apply Now</a>
 							<ul class="tags">
@@ -407,14 +410,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6"  >
-					<div class="featured_box "> 
-						<div class="fb_image" >
+				<div class="col-sm-6">
+					<div class="featured_box ">
+						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-05.webp">
+								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-05.webp">
 							</a>
 						</div>
-						<div class='fb_content' >
+						<div class='fb_content'>
 							<h4>
 								<a href="job-single.html">Restaurant General Manager</a>
 							</h4>
@@ -439,7 +442,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="fb_action" >
+						<div class="fb_action">
 							<a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
 							<a class="btn btn-third" href="job-single.html">Apply Now</a>
 							<ul class="tags">
@@ -450,14 +453,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6" >
+				<div class="col-sm-6">
 					<div class="featured_box ">
-						<div class="fb_image" >
+						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-05.webp">
+								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-05.webp">
 							</a>
 						</div>
-						<div class='fb_content' >
+						<div class='fb_content'>
 							<h4>
 								<a href="job-single.html">Food Delviery Mobile App</a>
 							</h4>
@@ -482,7 +485,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="fb_action" >
+						<div class="fb_action">
 							<a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
 							<a class="btn btn-third" href="job-single.html">Apply Now</a>
 							<ul class="tags">
@@ -494,13 +497,13 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12 text-right" > 
+				<div class="col-md-12 text-right">
 					<a data-aos="fade-down" data-aos-delay="400" class="btn btn-primary" href="browse-jobs.html">Browse All Jobs <i class="fas fa-long-arrow-alt-right"></i></a>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="section  paln_section">
 		<div class="bg-v">
 			<div class="bg-v-1 bg-t-l">
@@ -512,10 +515,10 @@
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Membership Plans</h2>
 			<div class="planduration" data-aos="fade-in" data-aos-delay="400">
 				<div class="custom-control custom-switch text-center">
-				  <label class="before-custom-control-label" for="customSwitch1"> <span>Billed Monthly</span></label>
-				  <input type="checkbox" class="custom-control-input" id="customSwitch1">
-				  <label class="custom-control-label" for="customSwitch1"> <span>Billed Yearly</span> </label>
-				 <div class="small-alert alert-success"> Save 21%  </div>
+					<label class="before-custom-control-label" for="customSwitch1"> <span>Billed Monthly</span></label>
+					<input type="checkbox" class="custom-control-input" id="customSwitch1">
+					<label class="custom-control-label" for="customSwitch1"> <span>Billed Yearly</span> </label>
+					<div class="small-alert alert-success"> Save 21% </div>
 				</div>
 			</div>
 			<div class="row">
@@ -535,7 +538,7 @@
 							<li><i class="fas fa-check"></i> 30 Days Visibility</li>
 							<li><i class="fas fa-check"></i> Highlighted in Search Results</li>
 							<li><i class="fas fa-check"></i>Fraud protection</li>
-          					<li><i class="fas fa-check"></i>Featured Listing</li>
+							<li><i class="fas fa-check"></i>Featured Listing</li>
 						</ul>
 						<a class="btn btn-third" href="#">Buy Now</a>
 					</div>
@@ -559,7 +562,7 @@
 							<li><i class="fas fa-check"></i> 65 Days Visibility</li>
 							<li><i class="fas fa-check"></i> Highlighted in Search Results</li>
 							<li><i class="fas fa-check"></i>Fraud protection</li>
-          					<li><i class="fas fa-check"></i>Featured Listing</li>
+							<li><i class="fas fa-check"></i>Featured Listing</li>
 						</ul>
 						<a class="btn btn-third" href="#">Buy Now</a>
 					</div>
@@ -581,7 +584,7 @@
 							<li><i class="fas fa-check"></i> 100 Days Visibility</li>
 							<li><i class="fas fa-check"></i> Highlighted in Search Results</li>
 							<li><i class="fas fa-check"></i>Fraud protection</li>
-          					<li><i class="fas fa-check"></i>Featured Listing</li>
+							<li><i class="fas fa-check"></i>Featured Listing</li>
 						</ul>
 						<a class="btn btn-third" href="#">Buy Now</a>
 					</div>
@@ -600,9 +603,9 @@
 		<div class="container">
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Featured Posts</h2>
 			<div class="row">
-				<div class="col-md-4" >
+				<div class="col-md-4">
 					<div class="post_box">
-						<img  alt="" src="<?= base_url(); ?>/public/users/images/blog1.jpg" class="img-responsive">
+						<img alt="" src="<?= base_url(); ?>/public/users/images/blog1.jpg" class="img-responsive">
 						<div class="post_content">
 							<h6>
 								<a href="blog-single.html">4 Secrets To Be Strategic About Your Job Search</a>
@@ -614,7 +617,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="post_box">
-						<img   alt="" src="<?= base_url(); ?>/public/users/images/blog2.jpg" class="img-responsive">
+						<img alt="" src="<?= base_url(); ?>/public/users/images/blog2.jpg" class="img-responsive">
 						<div class="post_content">
 							<h6>
 								<a href="blog-single.html">Why Long-Term Unemployment Isn’t As Bad As You Think</a>
@@ -624,10 +627,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4" >
+				<div class="col-md-4">
 					<div class="post_box">
-						<img  alt="" src="<?= base_url(); ?>/public/users/images/blog3.jpg" class="img-responsive">
-						<div class="post_content">	
+						<img alt="" src="<?= base_url(); ?>/public/users/images/blog3.jpg" class="img-responsive">
+						<div class="post_content">
 							<h6>
 								<a href="blog-single.html">6 Ways Your Job is Losing You Future Earnings</a>
 							</h6>
@@ -637,7 +640,7 @@
 					</div>
 				</div>
 			</div>
-		</div> 
+		</div>
 	</div>
 	<div class="section status_section">
 		<div class="bg-v">
@@ -648,11 +651,11 @@
 		</div>
 		<div class="container">
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">JoDice Status</h2>
-			
+
 			<div class="row justify-content-center">
 				<div class="col-auto">
 					<div class="status_box" data-aos="fade-in" data-aos-delay="600">
-						<img alt=""  data-aos="fade-up" data-aos-delay="1000" src="<?= base_url(); ?>/public/users/images/i-paper-plane.png">
+						<img alt="" data-aos="fade-up" data-aos-delay="1000" src="<?= base_url(); ?>/public/users/images/i-paper-plane.png">
 
 						<h3>83</h3>
 						<p>Job Posted.</p>
@@ -660,22 +663,22 @@
 				</div>
 				<div class="col-auto">
 					<div class="status_box" data-aos="fade-in" data-aos-delay="800">
-						<img alt=""  data-aos="fade-up" data-aos-delay="1200" src="<?= base_url(); ?>/public/users/images/i-doctor.png">
-						
+						<img alt="" data-aos="fade-up" data-aos-delay="1200" src="<?= base_url(); ?>/public/users/images/i-doctor.png">
+
 						<h3>16</h3>
 						<p>Job Filled.</p>
 					</div>
 				</div>
 				<div class="col-auto">
 					<div class="status_box" data-aos="fade-in" data-aos-delay="1000">
-						<img alt=""  data-aos="fade-up" data-aos-delay="1400" src="<?= base_url(); ?>/public/users/images/i-company.png">
+						<img alt="" data-aos="fade-up" data-aos-delay="1400" src="<?= base_url(); ?>/public/users/images/i-company.png">
 						<h3>36</h3>
 						<p>Companies</p>
 					</div>
 				</div>
 				<div class="col-auto">
 					<div class="status_box" data-aos="fade-in" data-aos-delay="1200">
-						<img alt=""  data-aos="fade-up" data-aos-delay="1600" src="<?= base_url(); ?>/public/users/images/i-mamber.png">
+						<img alt="" data-aos="fade-up" data-aos-delay="1600" src="<?= base_url(); ?>/public/users/images/i-mamber.png">
 						<h3>175</h3>
 						<p>Members</p>
 					</div>
@@ -694,37 +697,37 @@
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Our Partners</h2>
 			<ul class="partner_carousel owl-carousel owl-theme">
 				<li>
-					<a href="#"><img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-1.svg"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-1.svg"></a>
 				</li>
 				<li>
-					<a href="#"><img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-2.svg"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-2.svg"></a>
 				</li>
 				<li>
-					<a href="#"><img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-3.svg"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-3.svg"></a>
 				</li>
 				<li>
-					<a href="#"><img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-4.png"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-4.png"></a>
 				</li>
 				<li>
-					<a href="#"><img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-5.png"></a>
-				</li>	
-				<li>
-					<a href="#"><img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-1.svg"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-5.png"></a>
 				</li>
 				<li>
-					<a href="#"><img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-2.svg"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-1.svg"></a>
 				</li>
 				<li>
-					<a href="#"><img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-3.svg"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-2.svg"></a>
 				</li>
 				<li>
-					<a href="#"><img   alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-4.png"></a>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-3.svg"></a>
 				</li>
 				<li>
-					<a href="#"><img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-5.png"></a>
-				</li>	
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-4.png"></a>
+				</li>
+				<li>
+					<a href="#"><img alt="brand logo" src="<?= base_url(); ?>/public/users/images/company-logo-5.png"></a>
+				</li>
 			</ul>
 		</div>
 	</div>
 </main>
-<?php include(VIEWPATH.'users/include/footer.php'); ?>
+<?php include(VIEWPATH . 'users/include/footer.php'); ?>
