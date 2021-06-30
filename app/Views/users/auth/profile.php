@@ -528,7 +528,6 @@
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
 
 <script>
-  $('.alert').alert()
   var csfr_token_name = '<?= csrf_token() ?>';
   var csfr_token_value = '<?= csrf_hash() ?>';
   $(document).ready(function() {

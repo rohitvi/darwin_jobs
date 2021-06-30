@@ -209,7 +209,7 @@
 							<input class="form-control" name="firstname" type="text" size="40" placeholder="Firstname * " required>
 						</div>
             <div class="form-group">
-              <input class="form-control" name="company_name" type="text"  size="40" placeholder="Company Name * " required>
+              <input class="form-control" name="lastname" type="text"  size="40" placeholder="Lastname * " required>
             </div>
 						<div class="form-group">
 							<input class="form-control" name="email" type="email" placeholder="Email * " required>
