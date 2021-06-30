@@ -11,14 +11,7 @@
 <main>
   <div class="job_container">
     <div class="container">
-    <?php if (session('profile_completed') == 0) : ?>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>Please Complete Your Profile!</strong> Click <a href="<?= base_url('home/profile'); ?>">here</a> to update.
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <?php endif; ?>
+    <?php include(VIEWPATH . 'users/include/profile_info.php'); ?>
       <div class="row job_main">
         <?php include(VIEWPATH . 'users/include/sidebar.php'); ?>
         <div class=" job_main_right">
