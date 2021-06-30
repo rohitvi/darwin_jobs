@@ -177,34 +177,13 @@
 									</div>
 								</div>
 							<?php else : ?>
-								<div class="login_pop">
-									<button class="btn btn-primary">Login / Sign up <i class="fas fa-caret-down"></i></button>
-									<div class="login_pop_box">
-										<span class="twobtn_cont">
-											<a class=" signjs_btn" href="<?= base_url('home/register') ?>">				 
-											<span>Job seekers</span> Sign up
-												<i class="far fa-user"></i>
-											</a>
-											<a class=" signrs_btn" href="<?= base_url('employer/register') ?>">
-											<span>EMPLOYERS</span> Sign up
-												<i class="fas fa-landmark"></i>
-											</a>
-										</span>
-										<div>
-											<span class="member_btn">Already a member?</span>
-											<span class="twobtn_cont">
-											<a class=" signjs_btn" href="<?= base_url('login') ?>">				 
-											<span>Job seekers</span> Login In
-												<i class="far fa-user"></i>
-											</a>
-											<a class=" signrs_btn" href="<?= base_url('employer/login') ?>">
-											<span>EMPLOYERS</span> Login In
-												<i class="fas fa-landmark"></i>
-											</a>
-										</span>
-										</div>
-									</div>
-								</div>
+								<div class="dropdown login_pop">
+				                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>
+				                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				                  <a class="dropdown-item" href="<?= base_url('login'); ?>">Job Seeker Login</a>
+				                  <a class="dropdown-item" href="<?= base_url('employer/login'); ?>">Employer Login</a>
+				                </div>
+				              </div>
 							<?php endif ; ?>
 							<!--end logedin-->
 						</div>
@@ -212,3 +191,136 @@
 				</div>
 			</div>
 		</div>
+		<div class="header_btm">
+      <h2>Change Password</h2>
+    </div>
+  </div> 
+</header>
+
+
+<!-- End Header 02
+================================================== -->
+
+
+
+<!-- Main 
+================================================== -->
+<main>
+  <div class="job_container">
+    <div class="container">
+      <div class="row job_main">
+        <div class="sidebar">
+          <ul class="user_navigation">
+            <li >
+              <a href="browse-jobs.html"><i class="fas fa-search"></i> Browse Jobs </a>
+              <a class="filter_btn" href="#sidebar_filter_option"> 
+                <i class="fas fa-filter"></i>
+                <i class="fas fa-times"></i>
+              </a>
+            </li>
+            <li>
+            <form id="#sidebar_filter_option" class="filter_option">
+              <div class="form-group">
+                <label>Location</label>
+                <div class="field">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <select class="js-example-basic-single" name="state">
+                      <option value="AL">ALABAMA</option>
+                      <option value="WY">WYOMING</option>
+                    </select>
+                </div>
+              </div>  
+              <div class="form-group">
+                <label>Keywords</label>
+                <div class="field">
+                    <i class="fas fa-briefcase"></i>
+                    <select class="js-example-basic-single" name="state">
+                      <option value="AL">e.g. job title</option>
+                      <option value="WY">Title 1</option>
+                      <option value="WY">Title 2</option>
+                      <option value="WY">Title 3</option>
+                    </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>Category</label>
+                <div class="field">
+                    <i class="fas fa-briefcase"></i>
+                    <select class="js-example-basic-single" name="state">
+                      <option>Admin Support</option>
+                      <option>Customer Service</option>
+                      <option>Data Analytics</option>
+                      <option>Design &amp; Creative</option>
+                      <option>Legal</option>
+                      <option>Software Developing</option>
+                      <option>IT &amp; Networking</option>
+                      <option>Writing</option>
+                      <option>Translation</option>
+                      <option>Sales &amp; Marketing</option>
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Salary</label>
+                <div class="field">
+                  <input type="text" placeholder="e.g. 10k" class="form-control">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Tags</label>
+                <div class="field">
+                  <div class="form-group custom_checkboxes">
+                    <label class="custom_checkbox" for="tag-1">
+                      <input type="checkbox" name="usertype" id="tag-1" value="job seeker">
+                      <span><i class="fas fa-check"></i>PHP</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-2">
+                      <input type="checkbox" name="usertype" id="tag-2" value="employer">
+                      <span><i class="fas fa-check"></i> MySQL</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-3">
+                      <input type="checkbox" name="usertype" id="tag-3" value="employer">
+                      <span><i class="fas fa-check"></i> API</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-4">
+                      <input type="checkbox" name="usertype" id="tag-4" value="employer">
+                      <span><i class="fas fa-check"></i> react</span>
+                    </label>
+                    <label class="custom_checkbox" for="tag-5">
+                      <input type="checkbox" name="usertype" id="tag-5" value="employer">
+                      <span><i class="fas fa-check"></i> design</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+            </li>
+            <li >
+              <a href="job-seeker-dashboard.html">
+                <i class="fas fa-border-all"></i> Job Dashboard
+              </a>
+            </li>
+        </ul>
+        <h5>Organize and Manage</h5>
+        <ul class="user_navigation">
+            <li >
+              <a href="my-stared-jobs.html"><i class="fas fa-star"></i> View My Stared Jobs</a>
+            </li>
+        </ul>
+        <h5>Account</h5>
+        <ul class="user_navigation">    
+            <li >
+              <a href="edit-profile.html"><i class="fas fa-user"></i> Update My Profile</a>
+            </li>
+            <li class="is-active">
+              <a href="edit-password.html"><i class="fas fa-key"></i>Change Password</a>
+            </li>
+            <li>
+              <a href="edit-password.html"><i class="fas fa-power-off"></i> Logout</a>
+            </li>
+          </ul>
+        </div>

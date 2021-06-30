@@ -83,12 +83,13 @@
 					</div>
 					
           <div class="footer_widget_box">
-		  				<form action="" id="subscriber" method="post" class='newsletter'>
+						<form class="newsletter">
 			                  <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
 			                  <div data-aos="fade-in" data-aos-delay="200" class="d-flex">
-							  	<form action="" id="subscriber" method="post">
-			                    <input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
+
+			                    <input class="form-control" type="email" placeholder="Enter your email ">
 			                    <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+			                   
 			                  </div>
 		                   
 		                </form>
@@ -104,49 +105,8 @@
 		<!-- .site-info -->
 	</div>
 </footer>
-<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
-<script>
-$('#subscriber').on('submit',function(){
-    event.preventDefault();
-    var fields = $('#subscriber').serialize();
-    $.ajax({
-        url: "<?= base_url('home/add_subscriber'); ?>",
-        method: "POST",
-        data: fields,
-         success:function(responses){
-            var response = responses.split('~');
-            $('#subscriber').trigger("reset");
-              if ($.trim(response[0]) == 0) {
-                new Noty({
-                    type: "error",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
-              }
-              if ($.trim(response[0]) == 1) {
-                new Noty({
-                    type: "success",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
-              }
-         }
-    });
 
-});
-</script>
+
 <!-- End Footer Container
 ================================================== -->
 
@@ -154,11 +114,9 @@ $('#subscriber').on('submit',function(){
 ================================================== -->
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
-<script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/aos.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
-<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
 </body>
 </html>

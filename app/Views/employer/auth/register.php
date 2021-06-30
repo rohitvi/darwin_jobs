@@ -164,8 +164,8 @@
               <div class="dropdown login_pop">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="">Job Seeker Login</a>
-                  <a class="dropdown-item" href="">Employer Login</a>
+                  <a class="dropdown-item" href="<?= base_url('login') ?>">Job Seeker Login</a>
+                  <a class="dropdown-item" href="<?= base_url('employer/login') ?>">Employer Login</a>
                 </div>
               </div>
             </div>
