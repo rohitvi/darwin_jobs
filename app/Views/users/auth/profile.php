@@ -208,27 +208,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="big_form_group">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group ">
-                        <label  >Skills</label>
-                        <select class="form-control">
-                          <option>
-                            PHP
-                          </option>
-                          <option>
-                            MySQL
-                          </option>
-                          <option>
-                            API Development
-                          </option>
-
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
                 <div class="form-group row">
                   <div class="col-md-9 ">
                     <button type="submit" class="btn btn-primary">Update</button>
