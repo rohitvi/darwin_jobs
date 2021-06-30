@@ -44,9 +44,7 @@ class HomeAuthModel extends Model
     {
         $builder = $this->db->table('users');
         $result = $builder->where('id', $id)->get()->getResultArray();
-        //($result);
         $validPassword = password_verify($data['old_password'], $result[0]['password']);
-        //return $this->db->table('users')->where('id',$id)->update(array('password'=>$password));
         if ($validPassword) {
             $this->db->table('users')->where('id', $id)->update(array('password'=>$data['password']));
             return true;
