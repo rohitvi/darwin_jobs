@@ -352,49 +352,49 @@
 <script src="<?= base_url(); ?>/public/users/js/noty/noty.js"></script>
 <script>
   $('#login').on('submit',function(){
-        event.preventDefault();
+    event.preventDefault();
     var fields = $('#login').serialize();
     $.ajax({
       url: "<?= base_url('login') ?>",
-            method: "POST",
-            data: fields,
-            success: function(responses){
-              console.log(responses);
-              var response = responses.split('~');
-              if ($.trim(response[0]) == 0) {
-                $('#login').trigger("reset");
-                  new Noty({
-                      type: "error",
-                      layout: "topRight",
-                      text: response[1],
-                      progressBar: true,
-                      timeout: 2500,
-                      animation: {
-                          open: "animated bounceInRight",
-                          close: "animated bounceOutRight"
-                      }
-                  }).show();
+      method: "POST",
+      data: fields,
+      success: function(responses){
+        console.log(responses);
+        var response = responses.split('~');
+        if ($.trim(response[0]) == 0) {
+          $('#login').trigger("reset");
+            new Noty({
+                type: "error",
+                layout: "topRight",
+                text: response[1],
+                progressBar: true,
+                timeout: 2500,
+                animation: {
+                    open: "animated bounceInRight",
+                    close: "animated bounceOutRight"
                 }
-                if ($.trim(responses[0]) == 1) {
-                  $('#login').trigger("reset");
-                  setTimeout(function() {
-                    window.location.href = 'home';
-                  }, 500);
-                  new Noty({
-                      type: "success",
-                      layout: "topRight",
-                      text: response[1],
-                      progressBar: true,
-                      timeout: 2500,
-                      animation: {
-                          open: "animated bounceInRight",
-                          close: "animated bounceOutRight"
-                      }
-                  }).show();
-              }
-            }
+            }).show();
+          }
+          if ($.trim(responses[0]) == 1) {
+            $('#login').trigger("reset");
+            setTimeout(function() {
+              window.location.href = 'home';
+            }, 500);
+            new Noty({
+                type: "success",
+                layout: "topRight",
+                text: response[1],
+                progressBar: true,
+                timeout: 2500,
+                animation: {
+                    open: "animated bounceInRight",
+                    close: "animated bounceOutRight"
+                }
+            }).show();
+          }
+        }
+      });
     });
-  });
 </script>
 </body>
 </html>

@@ -93,7 +93,7 @@ class Employer extends BaseController
                     return redirect()->to(base_url('employer/profile'));
                 }
             }
-            $update_per_info =array(
+            $update_per_info = array(
                 'firstname' => $this->request->getPost('fname'),
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
@@ -180,8 +180,8 @@ class Employer extends BaseController
     public function cmp_info_update()
     {
         if ($this->request->getMethod() == 'put') {
-            
-            if ($_FILES['company_logo']['name'] !='') {
+
+            if ($_FILES['company_logo']['name'] != '') {
                 $rules = [
                     'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
                 ];
@@ -243,7 +243,7 @@ class Employer extends BaseController
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->cmp_info($id);
         // pre($get['data']);exit;
-        return view('employer/auth/company',$get);
+        return view('employer/auth/company', $get);
     }
 
     // Packages Part
@@ -481,7 +481,8 @@ class Employer extends BaseController
                             <p>' . $education[0]["type"] . ',' . $education[0]["degree_title"] . '</p>
                             <p>' . $education[0]["institution"] . '</p>
                             <p>' . $education[0]["completion_year"] . '</p>
-                            <h4>Experience</h4>';}
+                            <h4>Experience</h4>';
+            }
             if ($experience) {
                 $html .= '
                             <hr>
@@ -490,13 +491,15 @@ class Employer extends BaseController
                             <p>' . get_month($experience[0]["starting_month"]) . ' ' . $experience[0]["starting_year"] . ' - ' . $experience[0]["ending_month"] . ' ' . $experience[0]["ending_year"] . ' | ' . get_country_name($experience[0]["country"]) . '</p>
                             <p>' . $experience[0]["job_title"] . '</p>
                             <p>' . $experience[0]["description"] . '</p>
-                            ';}
+                            ';
+            }
             if ($language) {
                 $html .= '
                             <h4>Languages</h4>
                             <hr>
                             <p>' . $language[0]["lang_name"] . '</p>
-                            ';}
+                            ';
+            }
             $html .= '</div>
                     </div>';
             return ($html);
@@ -849,9 +852,11 @@ class Employer extends BaseController
         $mail_data['mail_body'] = $message;
 
         if (sendEmail($mail_data)) {
-            echo 'Email has been sent successfully !';exit;
+            echo 'Email has been sent successfully !';
+            exit;
         } else {
-            echo 'There is a problem while sending email !';exit;
+            echo 'There is a problem while sending email !';
+            exit;
         }
     }
 
