@@ -323,4 +323,3 @@ function get_lang_proficiency_name($id)
         if($id == '3')
             return 'Expert';
 }
-
