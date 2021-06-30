@@ -267,12 +267,8 @@
                   <select class="form-control select" id="country" name="country" required=''>
                     <option value="">Select Country</option>
                     <?php foreach ($countries as $country) : ?>
-                      <?php if ($data[0]['country'] == $country['id']) : ?>
-                        <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
-                      <?php else : ?>
                         <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                    <?php endif;
-                    endforeach; ?>
+                    <?php endforeach; ?>
                   </select>
                 </div>
 
@@ -345,6 +341,98 @@
           </div>
           <!-- /collapse edit-->
 
+           <!-- education start -->
+           <hr>
+          <div class='row'>
+            <div class='col-md-9'>
+              <h3>Education</h3>
+            </div>
+            <div class='col-md-1'>
+              <h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-education"></i></span></h3>
+            </div>
+          </div>
+
+          <div class="row">
+              <?php foreach($education as $edu): ?>
+              <!-- education detail -->
+              <div class="col-md-12 col-sm-12">
+                <div class="employer-job-list">
+                  <h5><?= get_education_level($edu['degree']).', '.$edu['degree_title'] ?></h5>
+                  <p><?= $edu['institution'] ?><br> <?= $edu['completion_year'] ?></p>
+                  <p>
+                  <a href="javascript:void(0)" class="edit-education" data-edu_id="<?= $edu['id'] ?>"><i class="fa fa-pencil"></i> Edit</a>&nbsp;
+                  <a href="<?= base_url('home/delete_education/'.$edu['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i> Delete</a>&nbsp;
+                  </p>
+                </div>
+              </div>
+              <?php endforeach; ?>
+              <!-- education detail -->
+            </div>
+              
+            <!-- add user education collapse -->
+            <div id="user-education" class="collapse">
+                <form action="add_education" method='post'>
+                    <div class="row">
+                        <div class="col-md-6">
+                          <label>Degree Level</label>
+                          <?php 
+                          $educations = get_education_list();
+                          $options = array('' => 'Select Option') + array_column($educations,'type','id');
+                          echo form_dropdown('level',$options,'','class="form-control" required');
+                        ?>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label>Degree Title</label>
+                          <input class="form-control" name="title" type="text" placeholder="e.g., Computer Science" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                          <label>Major Subjects</label>
+                          <input class="form-control" name="majors" type="text" placeholder="please specify your major subjects" required>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label>Institution</label>
+                          <input class="form-control" name="institution" type="text" placeholder="Institution" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                          <label>Country</label>
+                          <select class="form-control select" name="country" required=''>
+                            <option value="">Select Country</option>
+                            <?php foreach ($countries as $country) : ?>
+                                <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                            <?php endforeach; ?>
+                        </select>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label>Completion Year</label>
+                          <?= year_dropdown('year', '1985', ''); ?>
+                        </div>
+                    </div><br>
+
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <div class="submit-field">
+                                <button type="submit" class="btn btn-primary" >Submit</button>
+                                <button type="button" class="btn btn-primary close_all_collapse">Cancel</button>
+                            </div>
+                        </div>
+                        </div>
+                </form>
+            </div>
+            <!-- add user education collapse -->
+
+          <!-- Edit education collapse -->
+           <div id="user-education-edit" class="collapse"></div>
+          <!-- /edit education collapse -->
+
           <!-- Languages start -->
           <hr>
           <div class='row'>
@@ -352,12 +440,64 @@
               <h3>Languages</h3>
             </div>
             <div class='col-md-1'>
-              <h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-experience"></i></span></h3>
+              <h3><span class="pull-left action-circle add-experience"><i class="fa fa-plus" data-toggle="collapse" data-target="#user-language"></i></span></h3>
             </div>
           </div>
 
+                <div class="row">
+                  <?php foreach($languages as $lang): ?>
+                  <!-- education detail -->
+                  <div class="col-md-12 col-sm-12">
+                    <div class="employer-job-list">
+                      <p><?= get_language_name($lang['language']).' ( '.get_lang_proficiency_name($lang['proficiency']).' ) ' ?></p>
+                      <p>
+                      <a href="javascript:void(0)" class="edit-language" data-lang_id="<?= $lang['id'] ?>"><i class="fa fa-pencil"></i> edit</a>&nbsp;
+                      <a href="<?= base_url('home/delete_language/'.$lang['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i>delete</a>&nbsp;
+                      </p>
+                    </div>
+                  </div>
+                  <?php endforeach; ?>
+                  <!-- education detail -->
+                </div>
+
+                <!-- add user languages collapse -->
+                <div id="user-language" class="collapse">
+                <form action="add_language" method='post'>
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <label for="Language">Language</label>
+                            <?php
+                            $educations = get_languages_list();
+                            $options = array('' => 'Select Option') + array_column($educations, 'lang_name', 'lang_id');
+                            echo form_dropdown('language', $options,'', 'class="form-control" required');
+                            ?>
+                        </div>
+
+                        <div class='col-md-6'>
+                            <label for="Language">Proficiency with this language</label>
+                            <?php
+                            $options = get_language_levels();
+                            echo form_dropdown('lang_level', $options, '', 'class="form-control" required');
+                            ?>
+                        </div>
+
+                        <div class='col-md-12'>
+                            <div class="submit-field">
+                                <button type="submit" class="btn btn-primary" >Submit</button>
+                                <button type="button" class="btn btn-primary close_all_collapse">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+              <!-- add user languages collapse -->
+
 
           <!-- Languages end -->
+
+           <!-- Edit collapse -->
+           <div id="user-language-edit" class="collapse"></div>
+          <!-- /edit collapse -->
 
 
 
@@ -506,6 +646,23 @@ $(document).on('click','.edit-language',function(){
   });
 });
 
+// Edit user education
+$(document).on('click','.edit-education',function(){
+  var data = {
+    edu_id : $(this).data('edu_id'),
+  }
+  data[csfr_token_name] = csfr_token_value;
+   $.ajax({
+    type: 'POST',
+    url: "<?=base_url('home/get_education_by_id');?>",
+    data: data,
+    success: function (response) {
+      $('#user-education-edit').html(response);
+      $('#user-education-edit').collapse('show');
+    }
+
+  });
+});
 
 // current working or not
 $(document).on('click','.currently_working_here',function(){
