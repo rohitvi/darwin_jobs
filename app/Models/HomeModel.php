@@ -182,4 +182,29 @@ class HomeModel extends Model
         return $this->db->table('seeker_languages')->where('id',$id)->update($data);
     }
 
+    public function get_user_education($id)
+    {
+        return $this->db->table('seeker_education')->where('user_id',$id)->get()->getResultArray();
+    }
+
+    public function add_education($data)
+    {
+        return $this->db->table('seeker_education')->insert($data);
+    }
+
+    public function delete_education($id)
+    {
+        return $this->db->table('seeker_education')->where('id',$id)->delete();
+    }
+
+    public function get_education_by_id($id)
+    {
+        return $this->db->table('seeker_education')->where('id',$id)->get()->getRowArray();
+    }
+
+    public function update_education($data,$id)
+    {
+        return $this->db->table('seeker_education')->where('id',$id)->update($data);
+    }
+
 }

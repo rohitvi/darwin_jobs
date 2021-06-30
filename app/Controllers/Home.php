@@ -326,6 +326,8 @@ class Home extends BaseController
         $id = session('user_id');
         $get['data'] = $this->HomeModel->perinfo_by_id($id);
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
+        $get['languages'] = $this->HomeModel->get_user_language($id);
+        $get['education'] = $this->HomeModel->get_user_education($id);
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['profile_picture']['name'] != '') {
                 $rules = [
@@ -657,8 +659,8 @@ class Home extends BaseController
             $data = [
                     'user_id' => $user_id,
                     'language' => $this->request->getPost('language'),
-					'proficiency' => $this->request->getPost('lang_level'),
-					'updated_date' => date('Y-m-d'),
+                    'proficiency' => $this->request->getPost('lang_level'),
+                    'updated_date' => date('Y-m-d'),
             ];
             $query = $this->HomeModel->add_user_language($data);
             if ($query == true) {
@@ -667,7 +669,7 @@ class Home extends BaseController
             } else {
                 echo '0~Something went wrong, please try again !';
             }
-        }   
+        }
     }
 
     public function delete_language($id)
@@ -687,7 +689,7 @@ class Home extends BaseController
         if ($this->request->getPost('lang_id')) {
             $lang_id = $this->request->getPost('lang_id');
             $data['userlang'] = $this->HomeModel->get_language_by_id($lang_id);
-            return view('users/auth/user_language_edit',$data);
+            return view('users/auth/user_language_edit', $data);
         }
     }
 
@@ -706,17 +708,112 @@ class Home extends BaseController
             $data = [
                     'user_id' => $user_id,
                     'language' => $this->request->getPost('language'),
-					'proficiency' => $this->request->getPost('lang_level'),
-					'updated_date' => date('Y-m-d'),
+                    'proficiency' => $this->request->getPost('lang_level'),
+                    'updated_date' => date('Y-m-d'),
             ];
             $id= $this->request->getPost('lang_id');
-            $query = $this->HomeModel->update_language($data,$id);
+            $query = $this->HomeModel->update_language($data, $id);
             if ($query == true) {
                 echo '1~ Language Update !';
                 return redirect()->to(base_url('home/profile'));
             } else {
                 echo '0~Something went wrong, please try again !';
             }
-        }   
+        }
+    }
+
+    public function add_education()
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'level' =>  ['label' => 'level', 'rules' => 'required'],
+                'title' => ['label' => 'title', 'rules' => 'required'],
+                'majors' =>  ['label' => 'majors', 'rules' => 'required'],
+                'institution' => ['label' => 'institution', 'rules' => 'required'],
+                'country' =>  ['label' => 'country', 'rules' => 'required'],
+                'year' => ['label' => 'year', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $user_id = session('user_id');
+            $data = [
+                    'user_id' => $user_id,
+                    'degree' => $this->request->getPost('level'),
+                    'degree_title' => $this->request->getPost('title'),
+                    'major_subjects' => $this->request->getPost('majors'),
+                    'institution' => $this->request->getPost('institution'),
+                    'country' => $this->request->getPost('country'),
+                    'completion_year' => $this->request->getPost('year'),
+                    'updated_date' => date('Y-m-d')
+            ];
+            $query = $this->HomeModel->add_education($data);
+            if ($query == true) {
+                echo '1~ Language Update !';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }
+    }
+
+    public function delete_education($id)
+    {
+        $query = $this->HomeModel->delete_education($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Education successfully deleted');
+            return redirect()->to(base_url('home/profile'));
+        } else {
+            $this->session->setFlashdata('error', 'Something went wrong, please try again');
+            return redirect()->to(base_url('home/profile'));
+        }
+    }
+
+    public function get_education_by_id()
+    {
+        if ($this->request->getPost('edu_id')) {
+            $edu_id = $this->request->getPost('edu_id');
+            $data['edu'] = $this->HomeModel->get_education_by_id($edu_id);
+            $data['countries'] = $this->adminModel->get_countries_list();
+            return view('users/auth/user_education_edit', $data);
+        }
+    }
+
+    public function update_education()
+    {
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'level' =>  ['label' => 'level', 'rules' => 'required'],
+                'title' => ['label' => 'title', 'rules' => 'required'],
+                'majors' =>  ['label' => 'majors', 'rules' => 'required'],
+                'institution' => ['label' => 'institution', 'rules' => 'required'],
+                'country' =>  ['label' => 'country', 'rules' => 'required'],
+                'year' => ['label' => 'year', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->listErrors();
+                exit;
+            }
+            $user_id = session('user_id');
+            $data = [
+                    'user_id' => $user_id,
+                    'degree' => $this->request->getPost('level'),
+                    'degree_title' => $this->request->getPost('title'),
+                    'major_subjects' => $this->request->getPost('majors'),
+                    'institution' => $this->request->getPost('institution'),
+                    'country' => $this->request->getPost('country'),
+                    'completion_year' => $this->request->getPost('year'),
+                    'updated_date' => date('Y-m-d')
+            ];
+            $id = $this->request->getPost('edu_id');
+            $query = $this->HomeModel->update_education($data,$id);
+            if ($query == true) {
+                echo '1~ Education Updated !';
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                echo '0~Something went wrong, please try again !';
+            }
+        }
     }
 }
