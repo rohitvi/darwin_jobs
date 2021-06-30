@@ -377,6 +377,7 @@ class Home extends BaseController
             $id = session('user_id');
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
             if ($update_per == 1) {
+                $this->session->set('profile_completed',1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
                 return redirect()->to(base_url('home/profile'));
             } else {
