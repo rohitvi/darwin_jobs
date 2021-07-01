@@ -103,7 +103,7 @@
   <div class="job_container">
     <div class="container">
       <div class="row job_main">
-        <div class="sidebar">
+      <div class="sidebar">
           <ul class="user_navigation">
             <li class="is-active">
               <a>Filter Jobs
@@ -172,12 +172,11 @@
                   </div>
                 </div><br><br>
                 <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
-              </form>
+ 
             </li>
           </ul>
         </div>
         <div class=" job_main_right">
-          <form action="<?= base_url('search') ?>" method="POST">
             <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
               <div class="fild-wrap fw-job-title">
                 <input class="form-control" type="text" name="job_title" placeholder="Job Title" required>
@@ -299,7 +298,7 @@
                   </ul>
                 </div>
                 <div class="fb_action">
-                  <a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
+                  <a title="add to favourite" onclick="save(<?= $job['id'] ?>)"><i id="save" style="cursor:pointer; color:#ff6158;" class="<?= (in_array($job['id'],$saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
                   <a class="btn btn-primary" href="<?= base_url('home/jobdetails/'.$job['id']) ?>">Details</a>
                 </div>
               </div>
@@ -319,3 +318,21 @@
   </div>
 </main>
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
+
+<script>
+  function save(id)
+  {
+    event.preventDefault();
+    var data = {
+      job_id : id
+    };
+    $.ajax({
+      url:'<?= base_url('home/save_job') ?>',
+      method: 'POST',
+      data: data,
+      success: function(response){
+        $("#save").toggleClass("fas far");
+      }
+    });
+  }
+</script>

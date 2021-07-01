@@ -803,12 +803,13 @@ class Employer extends BaseController
             if (!empty($this->request->getPost('experience'))) {
                 $search['experience'] = $this->request->getPost('experience');
             }
+            $jobtitle = $this->request->getPost('job_title');
 
             $get['search_value'] = $search;
             $get['profiles'] = $this->EmployerModel->get_user_profiles($search);
         }
 
-        return view('employer/cv_search/cv_search_page', $get);
+        return view('employer/cv_search/cv_search_page2', $get);
     }
 
     public function make_shortlist($id, $job_id)

@@ -207,4 +207,28 @@ class HomeModel extends Model
         return $this->db->table('seeker_education')->where('id',$id)->update($data);
     }
 
+    public function save_job($data)
+    {
+        if ($this->db->table('saved_jobs')->where(array('seeker_id'=>$data['seeker_id'],'job_id'=>$data['job_id']))->get()->getNumRows() > 0) {
+            $this->db->table('saved_jobs')->where(array('seeker_id'=>$data['seeker_id'],'job_id'=>$data['job_id']))->delete();
+            return 'deleted';
+        } else {
+            $this->db->table('saved_jobs')->insert($data);
+            return 'saved';
+        }
+    }
+
+    public function saved_job_search($user_id)
+    {
+        $data = $this->db->table('saved_jobs')->select('job_id')->where('seeker_id',$user_id)->get()->getResultArray();
+        if ($data){
+            foreach ($data as $key => $value) {
+                $ndata[] = $value['job_id'];
+            }
+            return $ndata;
+        }
+        else
+            return array();
+    }
+
 }

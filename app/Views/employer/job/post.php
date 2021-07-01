@@ -1,5 +1,16 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
+<div class='header_inner '>
+  <div class="header_btm">
+    <h2>Post Job</h2>
+  </div>
+</div>
+</header>
 
+<main>
+  <div class="job_container">
+    <div class="container">
+      <div class="row job_main">
+      <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
 <div class=" job_main_right">
   <div class="row job_section">
     <div class="col-sm-12">

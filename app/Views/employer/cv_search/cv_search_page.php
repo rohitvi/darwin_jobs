@@ -15,8 +15,19 @@ display:block;
 }
 
 </style>
+<div class='header_inner '>
+  <div class="header_btm">
+    <h2>Change Cv Search</h2>
+  </div>
+</div>
+</header>
 
-                <!-- End Left Sidebar -->
+<main>
+  <div class="job_container">
+    <div class="container">
+      <div class="row job_main">
+      <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
+
                 <!-- Begin Content -->
                 <div class="content-inner profile">
                     <div class="container-fluid">
@@ -113,6 +124,9 @@ display:block;
 <br>
 
 
+
+
+
 <div class="row">
 <?php foreach ($profiles as $row): ?>
 <div class="col-xl-4">
@@ -181,10 +195,9 @@ display:block;
 <!-- card end  -->
 
 
-
-                    </div>
-                </div>
-                <script>
+    </div>
+</div>
+<script>
 $(document).ready(function(){
   $("input").focus(function(){
     $(this).css("background-color", "#eae3e3");

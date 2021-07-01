@@ -248,9 +248,9 @@ class Home extends BaseController
             'title' => 'Search Results',
             'meta_description' => 'your meta description here',
             'keywords' => 'meta tags here',
-            'pager' => $Jobs->pager
-        ];
-        // pre($data);exit;
+            'pager' => $Jobs->pager,
+            'saved_job' => $this->HomeModel->saved_job_search(session('user_id'))
+        ];    
         return view('users/job_listing', $data);
     }
 
@@ -394,6 +394,8 @@ class Home extends BaseController
     public function jobdetails($id)
     {
         $get['data'] = $this->HomeModel->jobdetails($id);
+        $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
+        // pre($get);exit;
         return view('users/job_details', $get);
     }
 
@@ -411,6 +413,10 @@ class Home extends BaseController
                 'ending_year'    => ['label' => 'ending_year', 'rules' => 'required'],
                 'description'    => ['label' => 'description', 'rules' => 'required']
             ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
+            }
             $id = session('user_id');
             $data = [
                 'user_id' => $id,
@@ -456,21 +462,21 @@ class Home extends BaseController
                 echo '0~' . $this->validation->getErrors();
                 exit;
             }
-
+            
             $data = [
-                'user_id' => session('user_id'),
-                'emp_id' => $this->request->getPost('emp_id'),
+                'seeker_id' => session('user_id'),
+                'employer_id' => $this->request->getPost('employer_id'),
                 'job_id' => $this->request->getPost('job_id'),
                 'cover_letter' => $this->request->getPost('cover_letter'),
                 'applied_date' => date('Y-m-d : h:m:s')
             ];
             $result = $this->HomeModel->apply_job($data);
             if ($result->resultID == 1) {
-                $emp = get_employer_by_id($data['emp_id']);
+                $emp = get_employer_by_id($data['employer_id']);
                 $job = get_job_detail($data['job_id']);
                 $emp_to = $emp['email'];
 
-                $user_to = get_user_email($data['user_id']);
+                $user_to = get_user_email($data['seeker_id']);
 
                 // Send Email to Employer
                 $mail_data = ['job_title' => $job['title']];
@@ -816,6 +822,25 @@ class Home extends BaseController
             } else {
                 echo '0~Something went wrong, please try again !';
             }
+        }
+    }
+
+    public function save_job()
+    {
+        if ($this->request->isAjax()) {
+            $rules = [
+                'job_id' => ['label'=>'job_id','rules'=>'required'],
+            ];
+            if ($this->validate($rules) == false) {
+                echo '0~' . $this->validation->getErrors();
+                exit;
+            }
+            $data = [
+                'seeker_id' => session('user_id'),
+                'job_id' => $this->request->getPost('job_id')
+            ];
+            $query = $this->HomeModel->save_job($data);
+            return $query;
         }
     }
 }
