@@ -323,3 +323,9 @@ function get_lang_proficiency_name($id)
         if($id == '3')
             return 'Expert';
 }
+function get_job_type_name($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('job_type');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
+}

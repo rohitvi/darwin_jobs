@@ -105,6 +105,7 @@
 	</div>
 </footer>
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
 <script>
 $('.alert').alert()
 $('#subscriber').on('submit',function(){
@@ -159,6 +160,5 @@ $('#subscriber').on('submit',function(){
 <script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/aos.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/custom.js"></script>
-<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
 </body>
 </html>

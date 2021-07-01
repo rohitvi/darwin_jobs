@@ -19,123 +19,80 @@
   <div class="job_container">
     <div class="container">
       <div class="row job_main">
-        <div class="sidebar">
+      <div class="sidebar">
           <ul class="user_navigation">
             <li class="is-active">
-              <a href="browse-jobs.html"><i class="fas fa-search"></i> Browse Jobs </a>
-              <a class="filter_btn" href="#sidebar_filter_option">
+              <a>Filter Jobs
                 <i class="fas fa-filter"></i>
-                <i class="fas fa-times"></i>
               </a>
             </li>
             <li>
-              <form id="#sidebar_filter_option" class="filter_option">
-                <div class="form-group">
-                  <label>Location</label>
-                  <div class="field">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <select class="js-example-basic-single" name="state">
-                      <option value="AL">ALABAMA</option>
-                      <option value="WY">WYOMING</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>Keywords</label>
-                  <div class="field">
-                    <i class="fas fa-briefcase"></i>
-                    <select class="js-example-basic-single" name="state">
-                      <option value="AL">e.g. job title</option>
-                      <option value="WY">Title 1</option>
-                      <option value="WY">Title 2</option>
-                      <option value="WY">Title 3</option>
-                    </select>
-                  </div>
-                </div>
-
+              <form style="padding-left:15px; padding-right:15px;" method="POST">
                 <div class="form-group">
                   <label>Category</label>
                   <div class="field">
                     <i class="fas fa-briefcase"></i>
-                    <select class="js-example-basic-single" name="state">
-                      <option>Admin Support</option>
-                      <option>Customer Service</option>
-                      <option>Data Analytics</option>
-                      <option>Design &amp; Creative</option>
-                      <option>Legal</option>
-                      <option>Software Developing</option>
-                      <option>IT &amp; Networking</option>
-                      <option>Writing</option>
-                      <option>Translation</option>
-                      <option>Sales &amp; Marketing</option>
+                    <select class="js-example-basic-single" name="category">
+                      <option value="">Select Category</option>
+                      <?php foreach ($categories as $key => $cate) : ?>
+                        <option value="<?= $cate['id'] ?>" <?= (isset($_POST['category']) && $_POST['category'] == $cate['id']) ? 'selected' : '' ?>><?= $cate['name'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Experience</label>
+                  <div class="field">
+                    <i class="fas fa-briefcase"></i>
+                    <select class="js-example-basic-single" name="experience">
+                      <option value="">Select Experience</option>
+                      <option value="0-1" <?= (isset($_POST['experience']) && $_POST['experience'] == '0-1') ? 'selected' : '' ?>>0-1 Year</option>
+                      <option value="1-2" <?= (isset($_POST['experience']) && $_POST['experience'] == '1-2') ? 'selected' : '' ?>>1-2 Years</option>
+                      <option value="2-5" <?= (isset($_POST['experience']) && $_POST['experience'] == '2-5') ? 'selected' : '' ?>>2-5 Years</option>
+                      <option value="5-10" <?= (isset($_POST['experience']) && $_POST['experience'] == '5-10') ? 'selected' : '' ?>>5-10 Years</option>
+                      <option value="10-15" <?= (isset($_POST['experience']) && $_POST['experience'] == '10-15') ? 'selected' : '' ?>>10-15 Years</option>
+                      <option value="15+" <?= (isset($_POST['experience']) && $_POST['experience'] == '15+') ? 'selected' : '' ?>>15+ Years</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label>Salary</label>
+                  <label>Job Type</label>
                   <div class="field">
-                    <input type="text" placeholder="e.g. 10k" class="form-control">
+                    <i class="fas fa-briefcase"></i>
+                    <?php
+                    $job_type = (isset($search_value['job_type'])) ? $search_value['job_type'] : '';
+                    $types = get_job_type_list();
+                    ?>
+                    <select class="js-example-basic-single" name="job_type">
+                      <?php foreach ($types as $type) : ?>
+                        <option value="<?= $type['id'] ?>" <?= (isset($_POST['job_type']) && $_POST['job_type'] == $type['id']) ? 'selected' : '' ?>><?= $type['type'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label>Tags</label>
+                  <label>Job Type</label>
                   <div class="field">
-                    <div class="form-group custom_checkboxes">
-                      <label class="custom_checkbox" for="tag-1">
-                        <input type="checkbox" name="usertype" id="tag-1" value="job seeker">
-                        <span><i class="fas fa-check"></i>PHP</span>
-                      </label>
-                      <label class="custom_checkbox" for="tag-2">
-                        <input type="checkbox" name="usertype" id="tag-2" value="employer">
-                        <span><i class="fas fa-check"></i> MySQL</span>
-                      </label>
-                      <label class="custom_checkbox" for="tag-3">
-                        <input type="checkbox" name="usertype" id="tag-3" value="employer">
-                        <span><i class="fas fa-check"></i> API</span>
-                      </label>
-                      <label class="custom_checkbox" for="tag-4">
-                        <input type="checkbox" name="usertype" id="tag-4" value="employer">
-                        <span><i class="fas fa-check"></i> react</span>
-                      </label>
-                      <label class="custom_checkbox" for="tag-5">
-                        <input type="checkbox" name="usertype" id="tag-5" value="employer">
-                        <span><i class="fas fa-check"></i> design</span>
-                      </label>
-                    </div>
+                    <i class="fas fa-briefcase"></i>
+                    <?php
+                    $employment_type = (isset($search_value['employment_type'])) ? $search_value['employment_type'] : '';
+                    $emp_type = get_employment_type_list();
+                    ?>
+                    <select class="js-example-basic-single" name="job_type">
+                      <?php foreach ($emp_type as $type) : ?>
+                        <option value="<?= $type['id'] ?>"><?= $type['type'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
-                </div>
-
-              </form>
-            </li>
-            <li>
-              <a href="job-seeker-dashboard.html">
-                <i class="fas fa-border-all"></i> Job Dashboard
-              </a>
-            </li>
-          </ul>
-          <h5>Organize and Manage</h5>
-          <ul class="user_navigation">
-            <li>
-              <a href="my-stared-jobs.html"><i class="fas fa-star"></i> View My Stared Jobs</a>
-            </li>
-          </ul>
-          <h5>Account</h5>
-          <ul class="user_navigation">
-            <li>
-              <a href="edit-profile.html"><i class="fas fa-user"></i> Update My Profile</a>
-            </li>
-            <li>
-              <a href="edit-password.html"><i class="fas fa-key"></i>Change Password</a>
-            </li>
-            <li>
-              <a href="edit-password.html"><i class="fas fa-power-off"></i> Logout</a>
+                </div><br><br>
+                <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
+ 
             </li>
           </ul>
         </div>
         <div class=" job_main_right">
-          <form action="<?= base_url('search') ?>" method="POST">
             <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
               <div class="fild-wrap fw-job-title">
                 <input class="form-control" type="text" name="job_title" placeholder="Job Title" required>
@@ -189,7 +146,7 @@
                   </ul>
                 </div>
                 <div class="fb_action">
-                  <a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
+                  <a title="add to favourite" onclick="save(<?= $job['id'] ?>)"><i id="save" style="cursor:pointer; color:#ff6158;" class="<?= (in_array($job['id'],$saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
                   <a class="btn btn-primary" href="<?= base_url('home/jobdetails/'.$job['id']) ?>">Details</a>
                 </div>
               </div>
@@ -209,3 +166,21 @@
   </div>
 </main>
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
+
+<script>
+  function save(id)
+  {
+    event.preventDefault();
+    var data = {
+      job_id : id
+    };
+    $.ajax({
+      url:'<?= base_url('home/save_job') ?>',
+      method: 'POST',
+      data: data,
+      success: function(response){
+        $("#save").toggleClass("fas far");
+      }
+    });
+  }
+</script>

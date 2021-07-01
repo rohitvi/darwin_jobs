@@ -219,8 +219,8 @@
 			</ul>		
 		</div>
 		<div class="poster_action">
-			<a class="addtofav" title="add to favourite" href="#"><i class="far fa-heart"></i></a>
-			<a class="btn btn-third" href="#">Apply Now</a>
+			<a class="addtofav" title="add to favourite" onclick="save(<?= $data['id']; ?>)" href="#"><i id="save" style="cursor:pointer" class="<?= (in_array($data['id'],$saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
+			<a class="btn btn-third" onclick="apply(<?= $data['id'] ?>)" href="#">Apply Now</a>
 			
 		</div>
 	</div>
@@ -247,6 +247,10 @@
 		        	<h2>Job Description</h2>
 		        	<p><?= $data['description'] ?></p>
 		        </div>
+            <div class="col-md-12 single_job_main">
+		        	<h2>Cover Letter</h2>
+              <textarea id="cover" class="form-control"></textarea>
+            </div>
 		      </div>
       	</div>
       	<div class="col-md-3 ">
@@ -262,7 +266,7 @@
 	      				<li>
 	      					<i class="fas fa-briefcase"></i>
 	      					<h6>Job Type</h6>
-	      					<p><?= $data['job_type'] ?></p>
+	      					<p><?= get_job_type_name($data['job_type']) ?></p>
 	      				</li>
 	      				<li>
 	      					<i class="fas fa-money-bill-alt"></i>
@@ -278,7 +282,7 @@
 				</div>      			
       		</div>
       		<div class=" sjs_box_action">
-      				<a class="btn btn-primary" href="#">Apply Job</a>
+      				<a class="btn btn-primary" onclick="apply(<?= $data['id'] ?>)">Apply Job</a>
       			</div>
       	</div>
       </div>
@@ -287,3 +291,41 @@
 </main>
 
 <?php include(VIEWPATH.'users/include/footer.php'); ?>
+<script>
+function save(id)
+  {
+    event.preventDefault();
+    var data = {
+      job_id : id
+    };
+    $.ajax({
+      url:'<?= base_url('home/save_job') ?>',
+      method: 'POST',
+      data: data,
+      success: function(response){
+        $("#save").toggleClass("fas far");
+      }
+    });
+  }
+  function apply(id)
+  {
+    event.preventDefault();
+    var data = {
+      'job_id': id,
+      'employer_id': '<?= $data['employer_id'] ?>',
+      'username': '<?= session('username') ?>',
+      'cover_letter': $('#cover').val(),
+      'email': '<?= $data['email'] ?>',
+      'job_title': '<?= $data['title'] ?>',
+      'job_actual_link': '<?= base_url('home/jobdetails/') ?>/'+id,
+    }
+    $.ajax({
+      url:'<?= base_url('home/apply_job') ?>',
+      method:'post',
+      data: data,
+      success: function (response){
+        console.log(response);
+      }
+    })
+  }
+</script>  
