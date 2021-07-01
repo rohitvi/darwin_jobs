@@ -288,6 +288,7 @@ function get_user_email($user_id)
     return $builder->getWhere(array('id' => $user_id))->getRowArray()['email'];
 }
 
+
 // get languages
 function get_languages_list()
 {
@@ -322,4 +323,9 @@ function get_lang_proficiency_name($id)
         if($id == '3')
             return 'Expert';
 }
-
+function get_job_type_name($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('job_type');
+    return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
+}

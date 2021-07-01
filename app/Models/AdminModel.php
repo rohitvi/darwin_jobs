@@ -198,6 +198,12 @@ class AdminModel extends Model
         return $this->db->table('countries')->get()->getResultArray();
     }
 
+	// Get Categories
+    function get_categories_list()
+    {
+       return $this->db->table('categories')->orderBy('name')->get()->getResultArray();
+    }
+
     public function get_states_list($id)
     {
         return $this->db->table('states')->where('country_id', $id)->get()->getResultArray();
