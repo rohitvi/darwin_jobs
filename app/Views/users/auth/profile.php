@@ -1,6 +1,6 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
 
-<div class='header_inner '>
+<div class='header_inner'>
   <div class="header_btm">
     <h2>Update My Profile</h2>
   </div>

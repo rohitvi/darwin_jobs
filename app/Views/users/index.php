@@ -29,7 +29,7 @@
 							<form action="<?= base_url('search') ?>" method="POST">
 								<div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
 									<div class="fild-wrap fw-job-title">
-										<input class="form-control" type="text" name="job_title" placeholder="Job Title" required>
+										<input class="select2-search__field" type="text" name="job_title" placeholder="Job Title" required>
 									</div>
 									<div class="fild-wrap fw-job-location">
 										<i class="fas fa-map-marker-alt"></i>

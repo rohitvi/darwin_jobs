@@ -14,6 +14,8 @@
     display: none;
   }
 </style>
+
+<div class='header_inner '>
 <div class="header_btm">
   <!-- <div class="bg-v" >
 				<div class="bg-v-2 bg-b-r">
@@ -175,76 +177,18 @@
           </ul>
         </div>
         <div class=" job_main_right">
-          <div class="jm_headings">
-            <h5>Browse Jobs in list</h5>
-          </div>
-          <div class="row full_width featured_box_outer">
-            <div class="col-sm-12">
-              <div class="featured_box ">
-                <div class="fb_image">
-                  <img alt="brand logo" src="assets/images/c-logo-02.webp">
-                </div>
-                <div class="fb_content">
-                  <h4>Restaurant General Manager</h4>
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <i class="fas fa-landmark"></i>
-                        Magna Aliqua
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fas fa-map-marker-alt"></i>
-                        New York
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="far fa-clock"></i>
-                        2 days ago
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="fb_action">
-                  <a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
-                  <a class="btn btn-primary" href="#">Apply Now</a>
-                </div>
+          <form action="<?= base_url('search') ?>" method="POST">
+            <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
+              <div class="fild-wrap fw-job-title">
+                <input class="form-control" type="text" name="job_title" placeholder="Job Title" required>
               </div>
-            </div>
-            <div class="col-sm-12">
-              <div class="featured_box ">
-                <div class="fb_image">
-                  <img alt="brand logo" src="assets/images/c-logo-05.webp">
-                </div>
-                <div class="fb_content">
-                  <h4>Restaurant General Manager</h4>
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <i class="fas fa-landmark"></i>
-                        Magna Aliqua
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fas fa-map-marker-alt"></i>
-                        New York
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="far fa-clock"></i>
-                        3 days ago
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="fb_action">
-                  <a title="add to favourite" href="#"><i class="fas fa-heart"></i></a>
-                  <a class="btn btn-primary" href="#">Apply Now</a>
-                </div>
+              <div class="fild-wrap fw-job-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <select class="js-example-basic-single" name="state">
+                <?php foreach ($states as $key=>$state) : ?>
+                  <option value="<?= $state['id'] ?>"><?= $state['name'] ?></option>
+                  <?php endforeach ; ?>
+                </select>
               </div>
             </div>
             <div class="col-sm-12">
@@ -314,42 +258,53 @@
                   <a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
                   <a class="btn btn-primary disabled" href="#">Applied</a>
                 </div>
+              <div class="fild-wrap fw-submit">
+                <button type="submit" class="btn btn-primary" value="">
+                  <i class="material-icons">search</i> SEARCH JOBS
+                </button>
               </div>
             </div>
+          </form>
+          <div class="jm_headings">
+            <h5>Browse Jobs in list</h5>
+          </div>
+          <div class="row full_width featured_box_outer">
+          <?php foreach ($jobs as $job) : ?>
             <div class="col-sm-12">
               <div class="featured_box ">
                 <div class="fb_image">
-                  <img alt="brand logo" src="assets/images/c-logo-03.webp">
+                  <img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-02.webp">
                 </div>
                 <div class="fb_content">
-                  <h4>Restaurant General Manager</h4>
+                  <h4><?= $job['title']; ?></h4>
                   <ul>
                     <li>
                       <a href="#">
                         <i class="fas fa-landmark"></i>
-                        Magna Aliqua
+                        <?= get_company_name($job['company_id']); ?>
                       </a>
                     </li>
                     <li>
                       <a href="#">
                         <i class="fas fa-map-marker-alt"></i>
-                        New York
+                        <?= get_state_name($job['state']) ?>, <?= get_city_name($job['city']) ?>
                       </a>
                     </li>
                     <li>
                       <a href="#">
                         <i class="far fa-clock"></i>
-                        5 days ago
+                        <?= time_ago($job['created_date']) ?>
                       </a>
                     </li>
                   </ul>
                 </div>
                 <div class="fb_action">
                   <a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
-                  <a class="btn btn-primary" href="#">Apply Now</a>
+                  <a class="btn btn-primary" href="<?= base_url('home/jobdetails/'.$job['id']) ?>">Details</a>
                 </div>
               </div>
             </div>
+            <?php endforeach; ?>
           </div>
           <div class="section-divider">
             <?php if ($pager) : ?>

@@ -250,6 +250,7 @@ class Home extends BaseController
             'keywords' => 'meta tags here',
             'pager' => $Jobs->pager
         ];
+        // pre($data);exit;
         return view('users/job_listing', $data);
     }
 
@@ -393,7 +394,7 @@ class Home extends BaseController
     public function jobdetails($id)
     {
         $get['data'] = $this->HomeModel->jobdetails($id);
-        return view('user/job_details', $get);
+        return view('users/job_details', $get);
     }
 
 
