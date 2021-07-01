@@ -193,7 +193,7 @@
     <div class="header_btm header_job_single">
 	<div class="header_job_single_inner container">
 		<div class="poster_company">
-			<img  alt="brand logo" src="<?= base_url(); ?>/public/users/images/demologo.png">
+			<img  alt="brand logo" class="img img-fluid" src="<?= $data['company_logo'] ?>">
 		</div> 
 		<div class="poster_details">
 			<h2><?= $data['title'] ?></h2>
@@ -249,7 +249,9 @@
 		        </div>
             <div class="col-md-12 single_job_main">
 		        	<h2>Cover Letter</h2>
-              <textarea id="cover" class="form-control"></textarea>
+              <div class="form-group">
+                <textarea id="cover" class="form-control"></textarea>
+              </div>
             </div>
 		      </div>
       	</div>
