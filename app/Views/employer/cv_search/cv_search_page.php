@@ -113,6 +113,9 @@ display:block;
 <br>
 
 
+
+
+
 <div class="row">
 <?php foreach ($profiles as $row): ?>
 <div class="col-xl-4">
@@ -181,10 +184,9 @@ display:block;
 <!-- card end  -->
 
 
-
-                    </div>
-                </div>
-                <script>
+    </div>
+</div>
+<script>
 $(document).ready(function(){
   $("input").focus(function(){
     $(this).css("background-color", "#eae3e3");

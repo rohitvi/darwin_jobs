@@ -210,7 +210,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-md-9 ">
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
                   </div>
                 </div>
               </form>

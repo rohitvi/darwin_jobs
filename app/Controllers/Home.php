@@ -416,6 +416,10 @@ class Home extends BaseController
                 'ending_year'    =>['label' => 'ending_year', 'rules' => 'required'],
                 'description'    =>['label' => 'description', 'rules' => 'required']
             ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
+            }
             $id = session('user_id');
             $data = [
                     'user_id' => $id,
