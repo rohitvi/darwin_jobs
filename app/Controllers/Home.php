@@ -249,7 +249,7 @@ class Home extends BaseController
             'keywords' => 'meta tags here',
             'pager' => $Jobs->pager,
             'saved_job' => $this->HomeModel->saved_job_search(session('user_id'))
-        ];    
+        ];
         return view('users/job_listing', $data);
     }
 
