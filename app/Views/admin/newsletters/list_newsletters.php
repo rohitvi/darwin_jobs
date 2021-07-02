@@ -73,7 +73,7 @@
         <!-- <h4 class="modal-title">Compose Email</h4> -->
       </div>
       <div class="modal-body">
-        <?php echo form_open(base_url('admin/newsletter/'));  ?>
+        <form action="newsletter" method="post">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -87,7 +87,7 @@
             <div class="form-group">
               <label for="name" class="control-label">Subject</label>
               <input type="text" name="title" class="form-control" placeholder="Subject">
-              <input type="hidden" name="recipients" class="subscriber-recipients" value="all">
+              <input type="text" name="recipients" class="subscriber-recipients" value="all">
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
             </div>
           </div>
         </div>
-        <?php echo form_close(); ?>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

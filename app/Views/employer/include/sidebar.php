@@ -96,7 +96,10 @@
                 <i class="fas fa-border-all"></i> Job Dashboard </a>
               </li>
               <li class="<?= ($ap === 'search') ? 'is-active' : '' ?>">
-                <a href="<?= base_url('employer/search') ?>"><i class="fas fa-money-bill"></i>Find Candidates</a>
+                <a href="<?= base_url('employer/search') ?>"><i class="fas fa-user"></i>Find Candidates</a>
+              </li>
+              <li class="<?= ($ap === 'shortlisted') ? 'is-active' : '' ?>">
+                <a href="<?= base_url('employer/shortlisted') ?>"><i class="fas fa-user"></i>ShortListed Candidates</a>
               </li>
           </ul>
           <h5>Packages</h5>

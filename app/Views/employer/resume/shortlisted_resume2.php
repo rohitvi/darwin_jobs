@@ -1,64 +1,97 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
 <div class='header_inner '>
   <div class="header_btm">
-    <h2>Change Personal Info</h2>
+    <h2>Shotlisted Resume</h2>
   </div>
 </div>
 </header>
+
 
 <main>
   <div class="job_container">
     <div class="container">
       <div class="row job_main">
-      <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
+            <!-- side bar start -->
+         <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
+        <!-- side bar end -->
 
-<div class="content-inner">
-    <div class="container-fluid">
-        <!-- Begin Page Header-->
-        <div class="row">
-            <div class="page-header">
-                <div class="d-flex align-items-center">
-                    <h2 class="page-header-title">ShortListed Resumes</h2>
-                    <div>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= base_url('employer') ?>"><i class="ti ti-home"></i></a></li><li class="breadcrumb-item active">ShortListed Resumes
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
+        <!-- roght bar start -->
+        <div class=" job_main_right">
+          <div class="row job_section">
+          <div class="col-sm-12">
+                <div class="jm_headings">
+                <h5>Shotlisted Resume</h5>
+              </div>
+              <div class="section-divider">
+              </div>
+               <!-- start -->
+    <div class="section dark-section featured_section">
+		<div class="bg-v">
+			<div class="bg-v-3 bg-t-r">
+			</div>
+			<div class="bg-v-3 bg-b-l">
+			</div>
+		</div>
+		<div class="container">
+			<div class="row two_col featured_box_outer">
+                <?php foreach ($data as $value): ?>
+				<div class="col-sm-6">
+					<div class="featured_box ">
+						<div class="fb_image">
+							<a href="compnay-profile-single.html">
+								<img alt="brand logo" src="<?= base_url('public/employer/assets/img/avatar/user.png')?>">
+							</a>
+						</div>
+						<div class="fb_content">
+							<h4>
+								<a href="#"><?= $value['firstname'].' '.$value['lastname'] ?></a>
+							</h4>
+							<ul>
+								<li>
+									<a href="#">
+										<i class="fas fa-landmark"></i>
+										Magna Aliqua
+									</a>
+								</li>
+								<li>
+									<a href="#"><i class="fas fa-map-marker-alt"></i>   <?= get_state_name($value['state']).', '.get_country_name($value['country']) ?></a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fas fa-money-bill"></i>
+										Current Salary : INR <?= $value['current_salary'] ?>
+									</a>
+								</li>
+                                <li>
+									<a href="#">
+										<i class="fas fa-list"></i>
+										Category : <?= $value['job_title'] ?>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="fb_action text-center">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn-sm btn-primary" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large" data-message="<?= $value['email'] ?>">User Profile</button>&nbsp;&nbsp;
+                            <button class="btn-sm btn-primary" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>">Interview</button>&nbsp;&nbsp;
+                            <a  href="<?= base_url($value['resume']) ?>" ><button class="btn-sm btn-primary">Download CV</button></a>
+						</div>
+					</div>
+				</div>
+                <?php endforeach ?>
+				<div class="col-md-12 text-right"> 
+					<a data-aos="fade-down" data-aos-delay="400" class="btn btn-primary aos-init" href="<?= base_url('employer/search') ?>">Find Candidates <i class="fas fa-long-arrow-alt-right"></i></a>
+				</div>
+			</div>
+		</div>
+	</div><!-- end -->
+          </div>
+          </div>  
         </div>
-        <!-- End Page Header -->
-        <!-- Begin Row -->
-        <div class="row flex-row">
-            <?php foreach ($data as $value): ?>
-            <div class="col-xl-3 col-md-6 col-sm-6">
-                <!-- Begin Widget 01 -->
-                <div class="widget widget-01 has-shadow">
-                    <div class="widget-body no-padding text-center">
-                        <h3><?= $value['firstname'].' '.$value['lastname'] ?></h3>
-                        <h5 class="m0p14"><?= $value['job_title'] ?></h5>
-                        <h5 class="m0p14">Location : <?= get_state_name($value['state']).', '.get_country_name($value['country']) ?></h5>
-                        <h5 class="m0p14">Current Salary : INR <?= $value['current_salary'] ?></h5>
-                        <h5 class="m0p14"><a href="<?= base_url($value['resume']) ?>"><i class="la la-download animated swing"></i> Download CV</a></h5>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6">
-                                <button class="btn btn-sm btn-light mb-2" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large"><i class="la la-user animated swing"></i>User Profile</button>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn btn-sm btn-light mb-2" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>"><i class="la la-wechat animated swing"></i>Interview</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Widget 01 -->
-            </div>
-            <?php endforeach ?>
-        </div>
-        <!-- End Row -->
-    </div>
-<!-- End Container -->
+         <!-- right bar start -->
+
+
 <!-- Begin User Modal -->
 <div id="modal-large" class="modal fade">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -80,6 +113,8 @@
     </div>
 </div>
 <!-- End User Modal -->
+
+
 
 <!-- Begin Interview Modal -->
 <div id="modal-centered" class="modal fade">
@@ -113,6 +148,11 @@
     </div>
 </div>
 <!-- End Interview Modal -->
+
+      </div>
+    </div>
+  </div>
+</main>
 
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 

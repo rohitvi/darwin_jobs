@@ -392,7 +392,7 @@ class Employer extends BaseController
     {
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
-        return view('employer/resume/shortlisted_resume', $get);
+        return view('employer/resume/shortlisted_resume2', $get);
     }
 
     public function userdetails($id)
@@ -774,7 +774,7 @@ class Employer extends BaseController
         $search = array();
         $get['profiles'] = array();
         $get['categories'] = $this->adminModel->get_all_categories();
-        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['states'] = $this->EmployerModel->get_states_list();
         $get['education'] = get_education_list();
 
         if ($this->request->getMethod() == 'post') {
@@ -788,8 +788,8 @@ class Employer extends BaseController
                 $search['category'] = $this->request->getPost('category');
             }
 
-            if (!empty($this->request->getPost('country'))) {
-                $search['country'] = $this->request->getPost('country');
+            if (!empty($this->request->getPost('state'))) {
+                $search['state'] = $this->request->getPost('state');
             }
 
             if (!empty($this->request->getPost('expected_salary'))) {
@@ -803,13 +803,12 @@ class Employer extends BaseController
             if (!empty($this->request->getPost('experience'))) {
                 $search['experience'] = $this->request->getPost('experience');
             }
-            $jobtitle = $this->request->getPost('job_title');
 
             $get['search_value'] = $search;
             $get['profiles'] = $this->EmployerModel->get_user_profiles($search);
         }
 
-        return view('employer/cv_search/cv_search_page2', $get);
+        return view('employer/cv_search/cv_search_page', $get);
     }
 
     public function make_shortlist($id, $job_id)
