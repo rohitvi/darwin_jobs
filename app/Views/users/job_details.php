@@ -20,6 +20,7 @@
 <link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
 </head>
 <body>
 
@@ -31,7 +32,7 @@
       <div class="container">
         <div class="header_top">
           <div class="logo">
-            <a href="index.html">
+            <a href="<?= base_url('home') ?>">
               <img  alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
             </a>
           </div>
@@ -304,8 +305,15 @@ function save(id)
       url:'<?= base_url('home/save_job') ?>',
       method: 'POST',
       data: data,
-      success: function(response){
+      success: function(responses){
         $("#save").toggleClass("fas far");
+        var response = responses.split('~');
+        if ($.trim(response[0]) == 0) {
+          toastr.error(response[1]);
+          }
+        if ($.trim(response[0]) == 1) {
+        toastr.success(response[1]);
+          }
       }
     });
   }
@@ -320,13 +328,19 @@ function save(id)
       'email': '<?= $data['email'] ?>',
       'job_title': '<?= $data['title'] ?>',
       'job_actual_link': '<?= base_url('home/jobdetails/') ?>/'+id,
-    }
+    };
     $.ajax({
       url:'<?= base_url('home/apply_job') ?>',
       method:'post',
       data: data,
-      success: function (response){
-        console.log(response);
+      success: function (responses){
+        var response = responses.split('~');
+        if ($.trim(response[0]) == 0) {
+          toastr.error(response[1]);
+          }
+        if ($.trim(response[0]) == 1) {
+            toastr.success(response[1]);
+          }
       }
     })
   }

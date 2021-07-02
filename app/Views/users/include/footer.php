@@ -83,14 +83,12 @@
 					</div>
 					
           <div class="footer_widget_box">
-		  				<form action="" id="subscriber" method="post" class='newsletter'>
+		  				<form id="subscriber" method="post" class='newsletter'>
 			                  <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
 			                  <div data-aos="fade-in" data-aos-delay="200" class="d-flex">
-							  	<form action="" id="subscriber" method="post">
 			                    <input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
-			                    <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+			                    <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
 			                  </div>
-		                   
 		                </form>
 		            </div> 
 				</div>
@@ -112,7 +110,6 @@
     <?= (session()->getFlashdata('denied')) ? "toastr.warning('" . session()->getFlashdata('denied') . "')" : '' ?>
 </script>
 <script>
-$('.alert').alert();
 $('#subscriber').on('submit',function(){
     event.preventDefault();
     var fields = $('#subscriber').serialize();
@@ -121,39 +118,21 @@ $('#subscriber').on('submit',function(){
         method: "POST",
         data: fields,
          success:function(responses){
+			console.log(responses);
             var response = responses.split('~');
             $('#subscriber').trigger("reset");
               if ($.trim(response[0]) == 0) {
-                new Noty({
-                    type: "error",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
+                toastr.error(response[1]);
               }
               if ($.trim(response[0]) == 1) {
-                new Noty({
-                    type: "success",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
+				toastr.success(response[1]);
               }
          }
     });
 
 });
-</script>
+$('.alert').alert();
+</script>	
 <!-- End Footer Container
 ================================================== -->
 <!-- Scripts

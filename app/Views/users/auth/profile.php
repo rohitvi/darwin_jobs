@@ -251,19 +251,19 @@
               <div class="row">
                 <div class="col-md-6">
                   <label>Job Title</label>
-                  <input class="form-control valid" name="job_title" type="text" required>
+                  <input class="form-control valid" name="job_title" type="text">
                 </div>
 
                 <div class="col-md-6">
                   <label>Company</label>
-                  <input class="form-control valid" name="company" type="text" required>
+                  <input class="form-control valid" name="company" type="text">
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6">
                   <label>Country</label>
-                  <select class="form-control select" id="country" name="country" required=''>
+                  <select class="form-control select" id="country" name="country">
                     <option value="">Select Country</option>
                     <?php foreach ($countries as $country) : ?>
                         <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
@@ -275,14 +275,14 @@
                   <label>Start Month</label>
                   <?php
                   $options = get_months_list();
-                  echo form_dropdown('starting_month', $options, '', 'class="form-control" required');
+                  echo form_dropdown('starting_month', $options, '', 'class="form-control"');
                   ?>
                 </div>
                 <div class="col-md-3">
                   <label>Start Year</label>
                   <?php
                   $options = get_years_list();
-                  echo form_dropdown('starting_year', $options, '', 'class="form-control" required');
+                  echo form_dropdown('starting_year', $options, '', 'class="form-control"');
                   ?>
                 </div>
               </div>
@@ -293,7 +293,7 @@
                     <label>End Month</label>
                     <?php
                     $options = get_months_list();
-                    echo form_dropdown('ending_month', $options, '', 'class="form-control " required');
+                    echo form_dropdown('ending_month', $options, '', 'class="form-control "');
                     ?>
                   </div>
                 </div>
@@ -302,7 +302,7 @@
                     <label>End Year</label>
                     <?php
                     $options = get_years_list();
-                    echo form_dropdown('ending_year', $options, '', 'class="form-control " required');
+                    echo form_dropdown('ending_year', $options, '', 'class="form-control "');
                     ?>
                   </div>
                 </div>
@@ -321,7 +321,6 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="submit-field">
-                    <!-- <input type="submit" class="genric-btn danger circle"value="Submit"> -->
                     <button class='genric-btn danger circle'>Submit</button>
                     <button type="button" class="genric-btn danger circle close_all_collapse">Cancel</button>
                   </div>
@@ -578,37 +577,18 @@
             $('#experience').trigger("reset");
             $('#user-experience').collapse('hide');
               if ($.trim(response[0]) == 0) {
-                new Noty({
-                    type: "error",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
+                toastr.error(response[1]);
               }
               if ($.trim(response[0]) == 1) {
-                new Noty({
-                    type: "success",
-                    layout: "topRight",
-                    text: response[1],
-                    progressBar: true,
-                    timeout: 2500,
-                    animation: {
-                        open: "animated bounceInRight",
-                        close: "animated bounceOutRight"
-                    }
-                }).show();
+                toastr.success(response[1]);
               }
          }
     });
   });
 
 
-  $(document).on('click', '.edit-experience', function() {
+  $('.edit-experience').on('click', function() {
+    event.preventDefault();
     var data = {
       exp_id: $(this).data('exp_id'),
     }
@@ -618,7 +598,7 @@
       url: "<?= base_url('home/get_experience_by_id'); ?>",
       data: data,
       success: function(response) {
-        console.log(response);
+        // console.log(response);
         $('#user-experience-edit').html(response);
         $('#user-experience-edit').collapse('show');
       }

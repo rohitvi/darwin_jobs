@@ -73,7 +73,7 @@
           $('#login').trigger("reset");
           toastr.error(response[1]);
           }
-        if ($.trim(responses[0]) == 1) {
+        if ($.trim(response[0]) == 1) {
             $('#login').trigger("reset");
             toastr.success(response[1]);
             setTimeout(function() {
