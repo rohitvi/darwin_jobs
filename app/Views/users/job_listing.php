@@ -106,7 +106,7 @@
                 </select>
               </div>
               <div class="fild-wrap fw-submit">
-                <button type="submit" class="btn btn-primary" value="">
+                <button type="submit" class="btn btn-primary">
                   <i class="material-icons">search</i> SEARCH JOBS
                 </button>
               </div>
@@ -146,7 +146,7 @@
                   </ul>
                 </div>
                 <div class="fb_action">
-                  <a title="add to favourite" onclick="save(<?= $job['id'] ?>)"><i id="save" style="cursor:pointer; color:#ff6158;" class="<?= (in_array($job['id'],$saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
+                  <a title="add to favourite" onclick="save(<?= $job['id'] ?>)"><i id="save" style="cursor:pointer; color:#ff6158;" class="<?= (in_array($job['id'], $saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
                   <a class="btn btn-primary" href="<?= base_url('home/jobdetails/'.$job['id']) ?>">Details</a>
                 </div>
               </div>
@@ -154,6 +154,21 @@
             <?php endforeach; ?>
           </div>
           <div class="section-divider">
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
             <?php if ($pager) : ?>
               <?php $pagi_path = 'search' ?>
               <?php $pager->setPath($pagi_path); ?>
@@ -168,8 +183,7 @@
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
 
 <script>
-  function save(id)
-  {
+  function save(id){
     event.preventDefault();
     var data = {
       job_id : id

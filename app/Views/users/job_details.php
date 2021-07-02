@@ -284,7 +284,7 @@
 				</div>      			
       		</div>
       		<div class=" sjs_box_action">
-      				<a class="btn btn-primary" onclick="apply(<?= $data['id'] ?>)">Apply Job</a>
+      				<a class="btn btn-third text-white" onclick="apply(<?= $data['id'] ?>)">Apply Job</a>
       			</div>
       	</div>
       </div>

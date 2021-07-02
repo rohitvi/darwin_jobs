@@ -19,7 +19,6 @@
             <div class="col-sm-12">
               <div class="jm_headings">
                 <h5>Update My Profile</h5>
-                <a class="btn btn-primary mypbtn" href="compnay-profile-single.html">Company profile</a>
               </div>
               <div class="section-divider">
               </div>
