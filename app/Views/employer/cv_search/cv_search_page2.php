@@ -138,7 +138,7 @@
               <?php if(isset($_POST['search']) && empty($profiles)): ?>
             <p class="alert alert-danger" >Sorry, we could not find any profile for the keywords that you entered</p>
             <?php endif; ?>
-              <form id='search' method='post'>
+              <form action='search' method='post'>
                 <div class="big_form_group">
                   <div class="row">
 
@@ -146,7 +146,7 @@
                             <div class="form-group">
                                 <div class="field">
                                 <i class="fa fa-search"></i>
-                                <input type="text" name='job_title' class="form-control" placeholder='what are you looking for?'>
+                                <input type="text" name='job_title' class="form-control" value="<?= set_value('job_title');?>" placeholder='what are you looking for?'>
                                 </div>
                             </div>
                     </div>
@@ -169,10 +169,10 @@
                             <div class="form-group">
                                 <div class="field">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <select name="country" class="form-control">
+                                <select name="state" class="form-control">
                                     <option value="">Select Location</option>
-                                    <?php foreach($countries as $country):?>
-                                    <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                                    <?php foreach($states as $state):?>
+                                    <option value="<?= $state['id']; ?>"> <?= $state['name']; ?> </option>
                                     <?php endforeach; ?>
                                 </select>
                                 </div>
@@ -228,13 +228,25 @@
                     </div>
 
                     <div class="col-md-4">
-                    <input type="submit" name="search" class="btn btn-primary btn-block mb-2" value='Search'>
+                    <!-- <input type="submit" name="search" class="btn btn-primary btn-block mb-2" value='Search'> -->
+                    <button type="submit" class="btn btn-primary" value="">
+													 <i class="material-icons">search</i> SEARCH CV
+												</button>
                     </div>
                     <div class="col-md-4">
                     </div>
                   </div>
                 </div>
               </form>   
+
+
+        
+
+
+
+
+
+
           </div>
           </div>             
 
@@ -256,7 +268,7 @@
                     </tr>
                     <tr>
                     <td><b>Current Salary :</b>&nbsp;&nbsp;&nbsp;INR  <?= $row['current_salary']; ?></td>
-                    <td><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;<?= get_city_name($row['city']).','. get_country_name($row['country']); ?></td>
+                    <td><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;<?= get_state_name($row['state']).','. get_country_name($row['country']); ?></td>
                     </tr>
                     <tr>
                     <td><b>Expected Salary :</b>&nbsp;&nbsp;&nbsp;INR  <?= $row['current_salary']; ?></td>
@@ -287,16 +299,3 @@
 
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 
-<script>
-$('#search').on('submit',function(){
-  event.preventDefault();
-  var fields = $('#search').serialize();
-  $.ajax({
-    url: "<?=base_url('home/insert_user_experience');?>",
-    method: "POST",
-    data: fields,
-    
-
-  });
-});
-</script>

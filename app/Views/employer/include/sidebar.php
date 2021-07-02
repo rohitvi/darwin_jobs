@@ -94,7 +94,10 @@
                 <i class="fas fa-border-all"></i> Job Dashboard </a>
               </li>
               <li >
-                <a href="<?= base_url('employer/search') ?>"><i class="fas fa-money-bill"></i>Find Candidates</a>
+                <a href="<?= base_url('employer/search') ?>"><i class="fas fa-user"></i>Find Candidates</a>
+              </li>
+              <li >
+                <a href="<?= base_url('employer/shortlisted') ?>"><i class="fas fa-user"></i>ShortListed Candidates</a>
               </li>
           </ul>
           <h5>Packages</h5>

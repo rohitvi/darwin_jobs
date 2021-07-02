@@ -267,8 +267,8 @@ class EmployerModel extends Model
     {
         $builder = $this->db->table('users');
         // search URI parameters
-        if (!empty($search['country'])) {
-            $builder->where('country', $search['country']);
+        if (!empty($search['state'])) {
+            $builder->where('state', $search['state']);
         }
 
         if (!empty($search['category'])) {
@@ -314,6 +314,11 @@ class EmployerModel extends Model
             $data = ['employer_id' => $emp_id,'user_id'  => $user_id,];
             return $this->db->table('cv_shortlisted')->insert($data);
         }
+    }
+
+    public function get_states_list()
+    {
+        return $this->db->table('states')->get()->getResultArray();
     }
 
 }
