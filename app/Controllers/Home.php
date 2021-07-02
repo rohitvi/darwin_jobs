@@ -324,6 +324,7 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
+            $skills=$this->request->getPost('skills');
             $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
@@ -334,7 +335,7 @@ class Home extends BaseController
                 'category' => $this->request->getPost('category'),
                 'job_title' => $this->request->getPost('job_title'),
                 'experience' => $this->request->getPost('experience'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => explode(",",$skills),
                 'current_salary' => $this->request->getPost('current_salary'),
                 'expected_salary' => $this->request->getPost('expected_salary'),
                 'country' => $this->request->getPost('country'),
@@ -347,7 +348,9 @@ class Home extends BaseController
                 $update_user_info['profile_picture'] = $url;
             }
             $id = session('user_id');
+            pre($update_user_info );
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
+          
             if ($update_per == 1) {
                 $this->session->set('profile_completed', 1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');

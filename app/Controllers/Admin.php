@@ -1532,12 +1532,11 @@ class Admin extends BaseController
                     $subscribers = $this->adminModel->get_subscribers($this->request->getPost('recipients'));
                     $body = $this->request->getPost('content');
                     $subject = $this->request->getPost('title');
-
-                    foreach ($subscribers as $subscriber){
-                        $this->mailer->send_newsletter($subscriber,$subject,$body);
-                    }
-                    $this->session->setFlashdata('success', 'Newsletter sent successfully');
-                    return redirect()->to(base_url('admin/newsletters/list_newsletters'),'refresh');
+                    if($this->mailer->send_newsletter($subscribers,$subject,$body))
+                        $this->session->setFlashdata('success', 'Newsletter sent successfully');
+                    else
+                        $this->session->setFlashdata('error', 'Failed to Send Mail');
+                    return redirect()->to(base_url('admin/list_newsletters'));
                 }
         }
 
