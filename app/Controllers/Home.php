@@ -81,29 +81,6 @@ class Home extends BaseController
         return view('users/auth/login');
     }
 
-    public function updateProfileImage()
-    {
-        if ($this->request->isAJAX()) {
-            if ($_FILES['profile_picture']['name'] == '') {
-                echo '0~Select Profile Picture';
-                exit;
-            }
-            $result = UploadFile($_FILES['profile_picture']);
-            if ($result['status'] == true) {
-                $url = $result['result']['file_url'];
-                $builder = $this->db->table('users');
-                $builder->where('id', session('user_id'));
-                if ($builder->update(array('profile_picture' => $url))) {
-                    echo '1~' . $url;
-                    exit;
-                }
-            } else {
-                echo '0~' . $result['message'];
-                exit;
-            }
-        }
-    }
-
     //Get States
     public function get_country_states()
     {
@@ -261,7 +238,7 @@ class Home extends BaseController
                 'subscriber_email' => ['label' => 'subscriber_email', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->getErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $data = [
@@ -297,9 +274,9 @@ class Home extends BaseController
                 'new_password' => ['label' => 'new_password', 'rules' => 'required'],
                 'confirm_password' => ['label' => 'confirm_password', 'rules' => 'required|matches[new_password]']
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/change_password'));
             }
             $id = session('user_id');
             $data = array(
@@ -314,7 +291,7 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/change_password'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                exit;
+                return redirect()->to(base_url('home/change_password'));
             }
         }
         return view('users/auth/change_password');
@@ -395,7 +372,6 @@ class Home extends BaseController
     {
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
-        // pre($get);exit;
         return view('users/job_details', $get);
     }
 
@@ -404,18 +380,18 @@ class Home extends BaseController
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'job_title'     => ['label' => 'job_title', 'rules' => 'required'],
-                'company'       => ['label' => 'company', 'rules' => 'required'],
-                'country'       => ['label' => 'country', 'rules' => 'required'],
-                'starting_month' => ['label' => 'starting_month', 'rules' => 'required'],
-                'starting_year' => ['label' => 'starting_year', 'rules' => 'required'],
-                'ending_month' => ['label' => 'ending_month', 'rules' => 'required'],
-                'ending_year'    => ['label' => 'ending_year', 'rules' => 'required'],
-                'description'    => ['label' => 'description', 'rules' => 'required']
+                'job_title'     => ['label' => 'Job Title', 'rules' => 'required'],
+                'company'       => ['label' => 'Company', 'rules' => 'required'],
+                'country'       => ['label' => 'Country', 'rules' => 'required'],
+                'starting_month' => ['label' => 'Starting Month', 'rules' => 'required'],
+                'starting_year' => ['label' => 'Starting Year', 'rules' => 'required'],
+                'ending_month' => ['label' => 'Ending Month', 'rules' => 'required'],
+                'ending_year'    => ['label' => 'Ending Year', 'rules' => 'required'],
+                'description'    => ['label' => 'Description', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
-                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                return redirect()->to(base_url('home/profile'));
+                echo '0~' . arrayToList($this->validation->getErrors());
+                exit;
             }
             $id = session('user_id');
             $data = [
@@ -459,10 +435,9 @@ class Home extends BaseController
                 'job_actual_link' => ['label' => 'job_actual_link', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->getErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
-            
             $data = [
                 'seeker_id' => session('user_id'),
                 'employer_id' => $this->request->getPost('employer_id'),
@@ -513,10 +488,7 @@ class Home extends BaseController
             $exp_id = $this->request->getPost('exp_id');
             $data['expedit'] = $this->HomeModel->get_experience_by_id($exp_id);
             $data['countries'] = $this->adminModel->get_countries_list();
-            //pre($data);
             return view('users/auth/user_experience_edit', $data);
-            //return json_encode($data);
-            //return $data;
         }
     }
 
@@ -568,6 +540,10 @@ class Home extends BaseController
                 'ending_year'    => ['label' => 'ending_year', 'rules' => 'required'],
                 'description'    => ['label' => 'description', 'rules' => 'required']
             ];
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/profile'));
+            }
             $user_id = session('user_id');
             $data = [
                 'user_id' => $user_id,
@@ -584,11 +560,11 @@ class Home extends BaseController
             $id = $this->request->getPost('exp_id');
             $query = $this->HomeModel->update_user_experience($data, $id);
             if ($query == 1) {
-                echo '1~ Experience Updated';
+                $this->session->setFlashdata('success', 'Experience Updated');
                 return redirect()->to(base_url('home/profile'));
             } else {
-                echo '0~ Something Went Wrong, Please Try Again !';
-                exit;
+                $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again !');
+                return redirect()->to(base_url('home/profile'));
             }
         }
     }
@@ -646,8 +622,10 @@ class Home extends BaseController
             $query = $this->HomeAuthModel->update_reset_password($password, $id);
             if ($query) {
                 echo '1~Password changed successfully !';
+                exit;
             } else {
                 echo '0~Something went wrong, please try again !';
+                exit;
             }
         }
     }
@@ -659,9 +637,9 @@ class Home extends BaseController
                 'language' =>  ['label' => 'language', 'rules' => 'required'],
                 'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
             }
             $user_id = session('user_id');
             $data = [
@@ -671,11 +649,12 @@ class Home extends BaseController
                     'updated_date' => date('Y-m-d'),
             ];
             $query = $this->HomeModel->add_user_language($data);
-            if ($query == true) {
-                echo '1~ Language Update !';
+            if ($query) {
+                $this->session->setFlashdata('success', 'Language Added Successfully!');
                 return redirect()->to(base_url('home/profile'));
             } else {
-                echo '0~Something went wrong, please try again !';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('home/profile'));
             }
         }
     }
@@ -708,9 +687,9 @@ class Home extends BaseController
                 'language' =>  ['label' => 'language', 'rules' => 'required'],
                 'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
             }
             $user_id = session('user_id');
             $data = [
@@ -722,10 +701,11 @@ class Home extends BaseController
             $id= $this->request->getPost('lang_id');
             $query = $this->HomeModel->update_language($data, $id);
             if ($query == true) {
-                echo '1~ Language Update !';
+                $this->session->setFlashdata('success', 'Language Updated !');
                 return redirect()->to(base_url('home/profile'));
             } else {
-                echo '0~Something went wrong, please try again !';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again !');
+                return redirect()->to(base_url('home/profile'));
             }
         }
     }
@@ -741,9 +721,9 @@ class Home extends BaseController
                 'country' =>  ['label' => 'country', 'rules' => 'required'],
                 'year' => ['label' => 'year', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
             }
             $user_id = session('user_id');
             $data = [
@@ -757,11 +737,12 @@ class Home extends BaseController
                     'updated_date' => date('Y-m-d')
             ];
             $query = $this->HomeModel->add_education($data);
-            if ($query == true) {
-                echo '1~ Language Update !';
+            if ($query) {
+                $this->session->setFlashdata('success', 'Education Added Successfully');
                 return redirect()->to(base_url('home/profile'));
             } else {
-                echo '0~Something went wrong, please try again !';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again !');
+                return redirect()->to(base_url('home/profile'));
             }
         }
     }
@@ -769,7 +750,7 @@ class Home extends BaseController
     public function delete_education($id)
     {
         $query = $this->HomeModel->delete_education($id);
-        if ($query == true) {
+        if ($query) {
             $this->session->setFlashdata('success', 'Education successfully deleted');
             return redirect()->to(base_url('home/profile'));
         } else {
@@ -799,9 +780,9 @@ class Home extends BaseController
                 'country' =>  ['label' => 'country', 'rules' => 'required'],
                 'year' => ['label' => 'year', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
             }
             $user_id = session('user_id');
             $data = [
@@ -816,11 +797,12 @@ class Home extends BaseController
             ];
             $id = $this->request->getPost('edu_id');
             $query = $this->HomeModel->update_education($data,$id);
-            if ($query == true) {
-                echo '1~ Education Updated !';
+            if ($query) {
+                $this->session->setFlashdata('success', 'Education Updated !');
                 return redirect()->to(base_url('home/profile'));
             } else {
-                echo '0~Something went wrong, please try again !';
+                $this->session->setFlashdata('error', 'Something went wrong, please try again!');
+                return redirect()->to(base_url('home/profile'));
             }
         }
     }
@@ -832,7 +814,7 @@ class Home extends BaseController
                 'job_id' => ['label'=>'job_id','rules'=>'required'],
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->getErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $data = [

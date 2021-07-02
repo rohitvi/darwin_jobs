@@ -278,8 +278,8 @@ class Employer extends BaseController
                     'emp_id' => ['label' => 'emp_id', 'rules' => 'required'],
                 ];
                 if ($this->validate($rules) == false) {
-                    $this->session->setFlashdata('error', $this->validation->listErrors());
-                    return redirect()->to(base_url('employer/packages'));
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('employer/package_confirmation'));
                 }
                 $data = [
                     'payment_method' => 'credit card',
@@ -574,8 +574,8 @@ class Employer extends BaseController
                 "location" => ["label" => "location", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/post'));
             }
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
@@ -712,8 +712,8 @@ class Employer extends BaseController
                 "location" => ["label" => "location", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
-                exit;
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/list_jobs'));
             }
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
@@ -948,7 +948,6 @@ class Employer extends BaseController
         $emp_id = session('employer_id');
         $result = $this->EmployerModel->candidates_shortlisted($emp_id, $user_id);
         if ($result) {
-            //return redirect()->to('employer/shortlisted');
             return redirect()->to(base_url('employer/shortlisted'));
         }
     }
