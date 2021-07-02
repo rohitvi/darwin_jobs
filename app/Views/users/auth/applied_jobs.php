@@ -18,7 +18,8 @@
           </div>
           <div class="row full_width featured_box_outer">
             <!-- single-job-content -->
-            <?php foreach ($data as $key => $value) : ?>
+            <?php if(!empty($data)) : 
+            foreach ($data as $key => $value) : ?>
               <div class="col-sm-12">
                 <div class="featured_box ">
                   <div class="fb_image">
@@ -40,7 +41,12 @@
                   </div>
                 </div>
               </div>
-            <?php endforeach; ?>
+            <?php endforeach; 
+            else : ?>
+            <div class="col-sm-12 text-center">
+              <p>No Applied Jobs.</p>
+            </div>
+            <?php endif ; ?>
             <!-- single-job-content -->
 
           </div>

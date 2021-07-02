@@ -808,7 +808,7 @@ class Employer extends BaseController
             $get['profiles'] = $this->EmployerModel->get_user_profiles($search);
         }
 
-        return view('employer/cv_search/cv_search_page2', $get);
+        return view('employer/cv_search/cv_search_page', $get);
     }
 
     public function make_shortlist($id, $job_id)

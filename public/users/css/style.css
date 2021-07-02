@@ -328,12 +328,13 @@ form {
     padding: 0 20px 0 44px;
     font-size: 14px;
     border: 1px solid #ced4da;
+	height: 58px;
 }
 .select2-container .select2-selection--single {
-    height: 40px;
+    height: 58px;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 40px;
+    height: 58px;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
