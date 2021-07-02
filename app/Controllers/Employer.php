@@ -780,12 +780,7 @@ class Employer extends BaseController
         if ($this->request->getMethod() == 'post') {
 
             $rules = [
-                "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
-                "category" => ["label" => "Category", "rules" => "trim|required"],
-                "state" => ["label" => "State", "rules" => "trim|required"],
-                "expected_salary" => ["label" => "Expected Salary", "rules" => "trim|required"],
-                "education_level" => ["label" => "Education Level", "rules" => "trim|required"],
-                "experience" => ["label" => "Experience", "rules" => "trim|required"],
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required"]
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -819,7 +814,10 @@ class Employer extends BaseController
             }
 
             $get['search_value'] = $search;
-            $get['profiles'] = $this->EmployerModel->get_user_profiles($search);
+            $Users = new EmployerModel();
+            $Users->setTable('users');
+            $get['profiles'] = $Users->get_user_profiles($search);
+            $get['pager'] = $Users->pager;
         }
 
         return view('employer/cv_search/cv_search_page', $get);

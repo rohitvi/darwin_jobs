@@ -27,8 +27,6 @@
               <div class="jm_headings">
                 <h5>Search Candidates</h5>
               </div>
-              <div class="section-divider">
-              </div>
               <?php if (isset($_POST['search']) && empty($profiles)) : ?>
                 <p class="alert alert-danger">Sorry, we could not find any profile for the keywords that you entered</p>
               <?php endif; ?>
@@ -133,48 +131,48 @@
               </form>
             </div>
           </div>
-
-          <?php foreach ($profiles as $row) : ?>
-            <div id='big_form_group' class='big_form_group'>
-              <div class="row">
-                <table>
-                  <tr>
-                    <td>
-                      <h5><?= $row['firstname'] . ' ' . $row['lastname']; ?></h5>
-                    </td>
-
-                    <td> <img src="<?= base_url('public/employer/assets/img/avatar/user.png') ?>" height=60 alt=""></td>
-                  </tr>
-                  <tr>
-                    <td><b>Job Title :&nbsp;&nbsp;&nbsp;</b><?= $row['job_title']; ?></td>
-                  </tr>
-                  <tr>
-                    <td><b>Category :&nbsp;&nbsp;&nbsp;</b><?= get_category_name($row['category']); ?></td>
-                    <td><i class="fas fa-briefcase"></i>&nbsp;&nbsp;&nbsp;<?= $row['experience']; ?> Years</td>
-                  </tr>
-                  <tr>
-                    <td><b>Current Salary :</b>&nbsp;&nbsp;&nbsp;INR <?= $row['current_salary']; ?></td>
-                    <td><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;<?= get_state_name($row['state']) . ',' . get_country_name($row['country']); ?></td>
-                  </tr>
-                  <tr>
-                    <td><b>Expected Salary :</b>&nbsp;&nbsp;&nbsp;INR <?= $row['current_salary']; ?></td>
-                    <td><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;<b>Nationality :&nbsp;&nbsp;&nbsp;</b><?= get_country_name($row['nationality']); ?></td>
-                  </tr>
-                  <tr>
-                    <td><b>Skills :</b>&nbsp;&nbsp;&nbsp;<?php $skills = explode(",", $row['skills']); ?> <?php foreach ($skills as $skill) : ?><span class='tags'><a href="#"><?= $skill; ?></a></span><?php endforeach; ?></td>
-                    <td><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;&nbsp;<?= get_education_level($row['education_level']); ?></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><a href="<?= base_url('employer/candidates_shortlisted/' . $row['id']) ?>"><input type="submit" name="search" class="btn btn-primary btn-rounded" value="Shortlist"></a></td>
-                    <td><input type="submit" name="search" class="btn btn-primary btn-rounded" value="Download CV"></td>
-                  </tr>
-                </table>
+          <div class="row findstaf_section ">
+            <?php foreach ($profiles as $row) : ?>
+              <div class="col-sm-6">
+                <div class="staffBox">
+                  <div class="staff_img">
+                    <img alt="Photo" src="<?= $row['profile_picture']; ?>">
+                  </div>
+                  <div class="staff_detail">
+                    <h3><?= $row['firstname'] . ' ' . $row['lastname']; ?></h3>
+                    <p><?= $row['job_title']; ?></p>
+                    <ul>
+                      <li>
+                        <h6><?= $row['job_title']; ?></h6>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><?= get_city_name($row['city']); ?></span>
+                      </li>
+                      <li>
+                        <h6>Experience</h6>
+                        <i class="fas fa-calendar-check"></i>
+                        <span><?= $row['experience']; ?></span>
+                      </li>
+                      <li>
+                        <h6>Age</h6>
+                        <i class="fas fa-user"></i>
+                        <span><?= $row['age']; ?></span>
+                      </li>
+                    </ul>
+                    <div class="staffBox_action">
+                      <a href="<?= base_url('employer/candidates_shortlisted/' . $row['id']) ?>" class="btn btn-third">Shortlist</a>
+                      <a class="btn btn-third" href="">View profile</a>
+                      <a class="btn btn-third" href="<?= $row['resume'] ?>">Download CV</a>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
+          </div>
+          <?php if ($pager) : ?>
+            <?php $pagi_path = 'employer/search' ?>
+            <?php $pager->setPath($pagi_path); ?>
+            <?= $pager->links() ?>
+          <?php endif ?>
         </div>
       </div>
     </div>
@@ -183,5 +181,5 @@
 
 <?php include(VIEWPATH . 'employer/include/footer.php'); ?>
 <script>
-		$('.js-example-basic-single').select2();  
+  $('.js-example-basic-single').select2();
 </script>
