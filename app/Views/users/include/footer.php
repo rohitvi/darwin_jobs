@@ -83,15 +83,13 @@
 					</div>
 					
           <div class="footer_widget_box">
-		  				<form action="" id="subscriber" method="post" class='newsletter'>
+		  				<form id="subscriber" method="post" class='newsletter'>
 			                  <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
 			                  <div data-aos="fade-in" data-aos-delay="200" class="d-flex">
-							  	<form action="" id="subscriber" method="post">
 			                    <input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
 			                    <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
 			                  </div>
-		                   
-		                </form>
+						</form>
 		            </div> 
 				</div>
 				<div class="col-md-12">
@@ -105,6 +103,7 @@
 	</div>
 </footer>
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/tagin.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/toastr/toastr.min.js"></script>
 <script>
 	<?= (session()->getFlashdata('success')) ? "toastr.success('" . session()->getFlashdata('success') . "')" : '' ?>

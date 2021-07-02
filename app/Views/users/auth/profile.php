@@ -1,5 +1,4 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
-
 <div class='header_inner'>
   <div class="header_btm">
     <h2>Update My Profile</h2>
@@ -96,7 +95,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group ">
-                        <label>Your Title</label>
+                        <label>Job Title</label>
                         <input type="text" name="job_title" value="<?= $data[0]['job_title']; ?>" class="form-control">
                       </div>
                     </div>
@@ -129,7 +128,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Skills</label>
-                        <input type="text" name="skills" value="<?= $data[0]['skills']; ?>" class="form-control">
+                        <input type="text" name="skills" value="<?= $data[0]['skills']; ?>" class="form-control tagin">
                       </div>
                     </div>
 
@@ -670,4 +669,8 @@ $(document).on('click','.currently_working_here',function(){
   else
     $('.exp-end-field').show();
 });
+
+for (const el of document.querySelectorAll('.tagin')) {
+      tagin(el)
+    }
 </script>
