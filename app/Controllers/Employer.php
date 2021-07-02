@@ -50,7 +50,7 @@ class Employer extends BaseController
             ];
 
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $email = $this->request->getPost('email');
@@ -347,14 +347,14 @@ class Employer extends BaseController
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'company_name' => ['label' => 'company_name', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+                'firstname' => ['label' => 'First Name', 'rules' => 'required'],
+                'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->listErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $user_details = [

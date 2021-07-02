@@ -38,26 +38,6 @@
                   </div>
                 </div>    
                </div>
-               <div class="section-divider">
-              </div>
-
-              <h4> Your Profile Views</h4>
-              <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
-              <div class="section-divider">
-              </div>
-              <div class="col-md-12">
-                  <div class=" job_seekernotifi ondahsboard">
-                      <h4>Inbox</h4>
-                      <ul>
-                        <li><img alt=""  src="assets/images/profile-1.png"><a href="#"> John Stone applying this job  contact  </a> </li>
-                        <li><img alt=""  src="assets/images/profile-2.png"><a href="#">Nguta Ithya  applying this job  contact  </a> </li>
-                        <li><img alt=""  src="assets/images/profile-4.png"><a href="#">Salome Simoes applying this job</a> </li>
-                      </ul>
-                  </div>
-                </div>
-               
-               
-              </div>
           </div>    
            
                     

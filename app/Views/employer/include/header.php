@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
 <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/datatables/datatables.min.css">
+<link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
 </head>
 <body>
 

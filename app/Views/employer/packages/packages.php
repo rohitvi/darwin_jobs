@@ -33,7 +33,7 @@
                             <li><i class="fas fa-check"></i>Fraud protection</li>
                             <li><i class="fas fa-check"></i>Featured Listing</li>
                         </ul>
-                        <a class="btn btn-third" href="<?= base_url('employer/package_confirmation/'.$value['id']) ?>">Buy Now</a>
+                        <a class="btn btn-third" type="button" href="<?= base_url('employer/package_confirmation/'.$value['id']) ?>" <?= ($value['price'] == 0) ? 'disabled' : '' ?>>Buy Now</a>
                     </div>
                 </div>
                 <?php endforeach; ?>
