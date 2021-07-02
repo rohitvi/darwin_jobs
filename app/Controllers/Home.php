@@ -56,7 +56,7 @@ class Home extends BaseController
                 'password' => ['label' => 'password', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->getErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $email = $this->request->getPost('email');
@@ -74,7 +74,7 @@ class Home extends BaseController
                     'is_verify' => $logindata['is_verify']
                 ];
                 $this->session->set($employerdata);
-                echo '1~ You Have Successfully Logged in';
+                echo '1~You Have Successfully Logged in';
                 exit;
             }
         }
@@ -146,12 +146,12 @@ class Home extends BaseController
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
                 'lastname' => ['label' => 'lastname', 'rules' => 'required'],
                 'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'Password', 'rules' => 'required|matches[password]'],
                 'termsncondition' => ['label' => 'termsncondition', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
-                echo '0~' . $this->validation->getErrors();
+                echo '0~' . arrayToList($this->validation->getErrors());
                 exit;
             }
             $data = [
@@ -330,15 +330,15 @@ class Home extends BaseController
         $get['languages'] = $this->HomeModel->get_user_language($id);
         $get['education'] = $this->HomeModel->get_user_education($id);
         if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'firstname'     => ['label' => 'First Name', 'rules' => 'required'],
+                'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
+            ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/profile'));
+            }
             if ($_FILES['profile_picture']['name'] != '') {
-                $rules = [
-                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
-                ];
-
-                if ($this->validate($rules) == false) {
-                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                    return redirect()->to(base_url('home/profile'));
-                }
                 $result = UploadFile($_FILES['profile_picture']);
                 if ($result['status'] == true) {
                     $url = $result['result']['file_url'];
@@ -380,7 +380,6 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/profile'));
             }
         }
-
         return view('users/auth/profile', $get);
     }
 

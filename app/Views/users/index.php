@@ -20,7 +20,7 @@
 					<div class="col-lg-4" data-aos="fade-down" data-aos-delay="200">
 						<h2>Find the most exciting<br> starup jobs</h2>
 						<p>Most complete 2020 template for Job board sites.</p>
-						<a class="btn btn-primary" href="browse-jobs.html">Know more
+						<a class="btn btn-primary" id="tos">Know more
 							<i class="material-icons">arrow_right_alt</i>
 						</a>
 					</div>

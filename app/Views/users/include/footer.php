@@ -105,9 +105,14 @@
 	</div>
 </footer>
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
-<script src="<?= base_url(); ?>/public/users/js/noty/noty.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/toastr/toastr.min.js"></script>
 <script>
-$('.alert').alert()
+	<?= (session()->getFlashdata('success')) ? "toastr.success('" . session()->getFlashdata('success') . "')" : '' ?>
+    <?= (session()->getFlashdata('error')) ? "toastr.error('" . session()->getFlashdata('error') . "')" : '' ?>
+    <?= (session()->getFlashdata('denied')) ? "toastr.warning('" . session()->getFlashdata('denied') . "')" : '' ?>
+</script>
+<script>
+$('.alert').alert();
 $('#subscriber').on('submit',function(){
     event.preventDefault();
     var fields = $('#subscriber').serialize();
@@ -151,7 +156,6 @@ $('#subscriber').on('submit',function(){
 </script>
 <!-- End Footer Container
 ================================================== -->
-
 <!-- Scripts
 ================================================== -->
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
