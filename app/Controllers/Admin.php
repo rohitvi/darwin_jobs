@@ -1514,4 +1514,32 @@ class Admin extends BaseController
             echo 'There is a problem while sending email !';
         }
     }
+
+
+    public function newsletter()
+    {
+        if ($this->request->getPost('submit')) 
+        {
+            $rules = [
+                'title' => ['label' => 'title', 'rules' =>'required'],
+                'content' => ['label' => 'content', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/newsletters/list_newsletters'));
+            }
+            else{
+                    $subscribers = $this->adminModel->get_subscribers($this->request->getPost('recipients'));
+                    $body = $this->request->getPost('content');
+                    $subject = $this->request->getPost('title');
+
+                    foreach ($subscribers as $subscriber){
+                        $this->mailer->send_newsletter($subscriber,$subject,$body);
+                    }
+                    $this->session->setFlashdata('success', 'Newsletter sent successfully');
+                    return redirect()->to(base_url('admin/newsletters/list_newsletters'),'refresh');
+                }
+        }
+
+    }
 }
