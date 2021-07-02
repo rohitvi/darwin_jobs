@@ -43,7 +43,7 @@
                   <?php foreach ($newsletters as $row) : ?>
 
                     <tr>
-                      <td><input type="checkbox" class="subscriber-checkbox" value="'.$row['id'].'"></td>
+                      <td><input type="checkbox" class="subscriber-checkbox" value="<?= $row['id']; ?>"></td>
                       <td><?= $row['email']; ?></td>
                       <td><?= $row['created_at']; ?></td>
                       <td><a class="btn btn-danger btn-xs" onclick="return confirm('Are you Sure to Delete ?')" href="<?= base_url('admin/del_newsletters/' . $row['id']); ?>"><i class="fa fa-trash"></i> Delete</a></td>
@@ -102,9 +102,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <input type="button" value="Preview" class="btn btn-warning pull-right" id="btn_preview_email">
+              <!-- <input type="button" value="Preview" class="btn btn-warning pull-right" id="btn_preview_email"> -->
               &nbsp;&nbsp;
-              <input type="submit" name="submit" value="Send Email" class="btn btn-primary pull-right ml-5">
+              <input type="submit" name="submit" value="Send Email" class="btn btn-primary">
             </div>
           </div>
         </div>

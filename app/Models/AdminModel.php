@@ -606,4 +606,15 @@ class AdminModel extends Model
         $builder->where('seeker_applied_job.id', $id);
         return $builder->get()->getRowArray()['email'];
     }
+
+    public function get_subscribers($ids)
+    {
+        $builder = $this->db->table('subscribers');
+        if ($ids != 'all' ) {
+            $builder->whereIn('id',explode(',',$ids));
+        }
+
+        $result = $builder->get()->getResultArray();
+        return array_column($result, 'email');
+    }
 }

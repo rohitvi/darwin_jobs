@@ -21,6 +21,7 @@
   <link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
+  <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
 </head>
 
 <body>

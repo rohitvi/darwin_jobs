@@ -108,6 +108,7 @@
 <!-- Scripts
 ================================================== -->
 <script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/toastr/toastr.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/popper.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/bootstrap.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/owl.carousel.min.js"></script>
@@ -117,6 +118,11 @@
 <script src="<?= base_url(); ?>/public/users/js/datatables/datatables.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/js/select2.min.js"></script>
 
+<script>
+    <?= (session()->getFlashdata('success')) ? "toastr.success('" . session()->getFlashdata('success') . "')" : '' ?>
+    <?= (session()->getFlashdata('error')) ? "toastr.error('" . session()->getFlashdata('error') . "')" : '' ?>
+    <?= (session()->getFlashdata('denied')) ? "toastr.warning('" . session()->getFlashdata('denied') . "')" : '' ?>
+</script>
 </body>
 
 </html>
