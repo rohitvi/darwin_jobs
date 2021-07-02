@@ -779,6 +779,20 @@ class Employer extends BaseController
 
         if ($this->request->getMethod() == 'post') {
 
+            $rules = [
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
+                "category" => ["label" => "Category", "rules" => "trim|required"],
+                "state" => ["label" => "State", "rules" => "trim|required"],
+                "expected_salary" => ["label" => "Expected Salary", "rules" => "trim|required"],
+                "education_level" => ["label" => "Education Level", "rules" => "trim|required"],
+                "experience" => ["label" => "Experience", "rules" => "trim|required"],
+            ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/search'));
+                exit;
+            }
+
             // search job title, keyword
             if (!empty($this->request->getPost('job_title'))) {
                 $search['job_title'] = $this->request->getPost('job_title');
