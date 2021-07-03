@@ -321,4 +321,17 @@ class EmployerModel extends Model
         return $this->db->table('states')->get()->getResultArray();
     }
 
+    public function total_posted_job($id)
+    {
+        $builder = $this->db->table('job_post');
+        return $builder->where('employer_id',$id)->countAllResults();
+
+    }
+
+    public function job_seekers_applied($id)
+    {
+        $builder = $this->db->table('seeker_applied_job');
+        return $builder->where('employer_id',$id)->countAllResults();
+    }
+
 }

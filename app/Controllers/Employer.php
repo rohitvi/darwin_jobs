@@ -34,7 +34,13 @@ class Employer extends BaseController
 
     public function dashboard()
     {
-        return view('employer/dashboard');
+        $id = session('employer_id');
+        $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
+        $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
+        $data['current_package'] = $this->EmployerModel->get_active_package();
+        $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'],1, $data['current_package']['payment_id']);
+       // pre($data);
+        return view('employer/dashboard',$data);
     }
 
     public function login()

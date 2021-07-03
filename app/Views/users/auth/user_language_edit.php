@@ -7,7 +7,7 @@
                 <?php
                 $educations = get_languages_list();
                 $options = array('' => 'Select Option') + array_column($educations, 'lang_name', 'lang_id');
-                echo form_dropdown('language', $options, $userlang['language'], 'class="form-control" required');
+                echo form_dropdown('language', $options, $userlang['language'], 'class="form-control" ');
                 ?>
             </div>
 
@@ -15,14 +15,14 @@
                 <label for="Language">Proficiency with this language</label>
                 <?php
                 $options = get_language_levels();
-                echo form_dropdown('lang_level', $options, $userlang['proficiency'], 'class="form-control" required');
+                echo form_dropdown('lang_level', $options, $userlang['proficiency'], 'class="form-control" ');
                 ?>
             </div>
 
             <div class='col-md-12'>
                 <div class="submit-field">
-                    <button type="submit" class="btn btn-primary" >Submit</button>
-                    <button type="button" class="btn btn-primary close_all_collapse">Cancel</button>
+                    <button type="submit" class="btn-sm btn-primary" >Submit</button>
+                    <button type="button" class="btn-sm btn-primary close_all_collapse">Cancel</button>
                 </div>
             </div>
         </div>
