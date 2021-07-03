@@ -213,8 +213,14 @@ class Home extends BaseController
             if (!empty($this->request->getPost('employment_type'))) {
                 $search['employment_type'] = $this->request->getPost('employment_type');
             }
+            // $query = assoc_to_uri($search);
+            $city_query = http_build_query($search);
+            return redirect()->to(base_url('search?'.$city_query));
         }
-
+        // $uri = new \CodeIgniter\HTTP\URI(current_url(true));
+        $query_str = parse_url(current_url(true), PHP_URL_QUERY);
+        parse_str($query_str, $search);
+        // pre($search);
         $Jobs = new HomeModel();
         $Jobs->setTable('job_post');
         $data = [
@@ -228,6 +234,7 @@ class Home extends BaseController
             'pager' => $Jobs->pager,
             'saved_job' => $this->HomeModel->saved_job_search(session('user_id'))
         ];
+        // pre($data['jobs']);
         return view('users/job_listing', $data);
     }
 
