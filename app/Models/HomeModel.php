@@ -60,8 +60,17 @@ class HomeModel extends Model
 
         $builder->select('id, title, company_id, job_slug, job_type, description, state, city, expiry_date, created_date, industry');
 
-        // search URI parameters
-        unset($search['p']); //unset pagination parameter form search
+        if (!empty($search['title'])) {
+            $search_text = explode('-', $search['title']);
+            // pre($search_text);
+            foreach ($search_text as $search) {
+                $builder->groupStart();
+                $builder->orLike('title', $search);
+                $builder->orLike('skills', $search);
+                $builder->orLike('job_slug', $search);
+                $builder->groupEnd();
+            }
+        }
 
         if (!empty($search['state']))
             $builder->where('state', $search['state']);
@@ -81,24 +90,12 @@ class HomeModel extends Model
         if (!empty($search['employment_type']))
             $builder->where('employment_type', $search['employment_type']);
 
-        if (!empty($search['title'])) {
-            $search_text = explode('-', $search['title']);
-            // pre($search_text);
-            foreach ($search_text as $search) {
-                $builder->groupStart();
-                $builder->orLike('title', $search);
-                $builder->orLike('skills', $search);
-                $builder->orLike('job_slug', $search);
-                $builder->groupEnd();
-            }
-        }
-
         $builder->where('is_status', 'active');
         $builder->where('curdate() <  expiry_date');
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('id');
         $result = $builder->paginate(1);
-        // pre($this->db->getLastQuery());
+        // pre($builder->getLastQuery());
         return $result;
     }
 
