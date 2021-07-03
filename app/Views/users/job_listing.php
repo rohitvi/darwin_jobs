@@ -35,7 +35,7 @@
                     <select class="js-example-basic-single" name="category">
                       <option value="">Select Category</option>
                       <?php foreach ($categories as $key => $cate) : ?>
-                        <option value="<?= $cate['id'] ?>" <?= (isset($_POST['category']) && $_POST['category'] == $cate['id']) ? 'selected' : '' ?>><?= $cate['name'] ?></option>
+                        <option value="<?= $cate['id'] ?>" <?= (isset($_GET['category']) && $_GET['category'] == $cate['id']) ? 'selected' : '' ?>><?= $cate['name'] ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -45,13 +45,13 @@
                   <div class="field">
                     <i class="fas fa-briefcase"></i>
                     <select class="js-example-basic-single" name="experience">
-                      <option value="">Select Experience</option>
-                      <option value="0-1" <?= (isset($_POST['experience']) && $_POST['experience'] == '0-1') ? 'selected' : '' ?>>0-1 Year</option>
-                      <option value="1-2" <?= (isset($_POST['experience']) && $_POST['experience'] == '1-2') ? 'selected' : '' ?>>1-2 Years</option>
-                      <option value="2-5" <?= (isset($_POST['experience']) && $_POST['experience'] == '2-5') ? 'selected' : '' ?>>2-5 Years</option>
-                      <option value="5-10" <?= (isset($_POST['experience']) && $_POST['experience'] == '5-10') ? 'selected' : '' ?>>5-10 Years</option>
-                      <option value="10-15" <?= (isset($_POST['experience']) && $_POST['experience'] == '10-15') ? 'selected' : '' ?>>10-15 Years</option>
-                      <option value="15+" <?= (isset($_POST['experience']) && $_POST['experience'] == '15+') ? 'selected' : '' ?>>15+ Years</option>
+                      <option value="">Select Experience</option>s
+                      <option value="0-1" <?= (isset($_GET['experience']) && $_GET['experience'] == '0-1') ? 'selected' : '' ?>>0-1 Year</option>
+                      <option value="1-2" <?= (isset($_GET['experience']) && $_GET['experience'] == '1-2') ? 'selected' : '' ?>>1-2 Years</option>
+                      <option value="2-5" <?= (isset($_GET['experience']) && $_GET['experience'] == '2-5') ? 'selected' : '' ?>>2-5 Years</option>
+                      <option value="5-10" <?= (isset($_GET['experience']) && $_GET['experience'] == '5-10') ? 'selected' : '' ?>>5-10 Years</option>
+                      <option value="10-15" <?= (isset($_GET['experience']) && $_GET['experience'] == '10-15') ? 'selected' : '' ?>>10-15 Years</option>
+                      <option value="15+" <?= (isset($_GET['experience']) && $_GET['experience'] == '15+') ? 'selected' : '' ?>>15+ Years</option>
                     </select>
                   </div>
                 </div>
@@ -66,7 +66,7 @@
                     ?>
                     <select class="js-example-basic-single" name="job_type">
                       <?php foreach ($types as $type) : ?>
-                        <option value="<?= $type['id'] ?>" <?= (isset($_POST['job_type']) && $_POST['job_type'] == $type['id']) ? 'selected' : '' ?>><?= $type['type'] ?></option>
+                        <option value="<?= $type['id'] ?>" <?= (isset($_GET['job_type']) && $_GET['job_type'] == $type['id']) ? 'selected' : '' ?>><?= $type['type'] ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -95,13 +95,13 @@
         <div class=" job_main_right">
           <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
             <div class="fild-wrap fw-job-title">
-              <input class="form-control" value="<?= isset($_POST['job_title']) ? $_POST['job_title'] : '' ?>" type="text" name="job_title" placeholder="Job Title" required>
+              <input class="form-control" value="<?= isset($_GET['job_title']) ? $_GET['job_title'] : '' ?>" type="text" name="job_title" placeholder="Job Title" required>
             </div>
             <div class="fild-wrap fw-job-location">
               <i class="fas fa-map-marker-alt"></i>
               <select class="js-example-basic-single" name="state">
                 <?php foreach ($states as $key => $state) : ?>
-                  <option value="<?= $state['id'] ?>" <?= (isset($_POST['state']) && $_POST['state'] == $state['id']) ? 'selected' : '' ?>><?= $state['name'] ?></option>
+                  <option value="<?= $state['id'] ?>" <?= (isset($_GET['state']) && $_GET['state'] == $state['id']) ? 'selected' : '' ?>><?= $state['name'] ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
