@@ -215,7 +215,7 @@ function sendEmail($mail_data)
 
 function add_30_days($days)
 {
-    return date('Y-m-d', strtotime(' + '.$days.' days'));
+    return date('Y-m-d', strtotime(' + ' . $days . ' days'));
 }
 // get_user_skills
 function get_user_skills($user_id)
@@ -240,8 +240,8 @@ function get_company_logo($company_id)
 }
 
 function get_months_list()
-    {
-        return array(
+{
+    return array(
         '' => 'Month',
         '1' => 'Jan',
         '2' => 'Feb',
@@ -255,24 +255,24 @@ function get_months_list()
         '10' => 'Oct',
         '11' => 'Nov',
         '12' => 'Dec',
-      );
-    }
+    );
+}
 
-    function get_years_list()
-    {
-        $years = [];
-        $years[''] = 'Year';
-        for ($i=0; $i < 50; $i++) { 
-            $year = date('Y',strtotime('- '.$i.' years'));
-            $years[$year] = $year;
-        }
-        return $years;
+function get_years_list()
+{
+    $years = [];
+    $years[''] = 'Year';
+    for ($i = 0; $i < 50; $i++) {
+        $year = date('Y', strtotime('- ' . $i . ' years'));
+        $years[$year] = $year;
     }
+    return $years;
+}
 
-    function get_nth_month($nth)
-    {
-        return date('M',strtotime($nth.' month'));
-    }
+function get_nth_month($nth)
+{
+    return date('M', strtotime($nth . ' month'));
+}
 // Get Employer By ID
 function get_employer_by_id($employer_id)
 {
@@ -299,33 +299,50 @@ function get_languages_list()
 
 function get_language_levels()
 {
-        return array(
+    return array(
         '' => 'Select Option',
         '1' => 'Beginner',
         '2' => 'Intermediate',
         '3' => 'Expert',
-      );
+    );
 }
 
 function get_language_name($id)
 {
-        $db = \Config\Database::connect();
-        $builder = $db->table('languages');
-        return $builder->getWhere(array('lang_id' => $id))->getRowArray()['lang_name'];
+    $db = \Config\Database::connect();
+    $builder = $db->table('languages');
+    return $builder->getWhere(array('lang_id' => $id))->getRowArray()['lang_name'];
 }
 
 function get_lang_proficiency_name($id)
 {
-        if($id == '1')
-            return 'Beginner';
-        if($id == '2')
-            return 'Intermediate';
-        if($id == '3')
-            return 'Expert';
+    if ($id == '1')
+        return 'Beginner';
+    if ($id == '2')
+        return 'Intermediate';
+    if ($id == '3')
+        return 'Expert';
 }
 function get_job_type_name($id)
 {
     $db = \Config\Database::connect();
     $builder = $db->table('job_type');
     return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
+}
+
+// get user profile by ID
+function get_user_profile($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('users');
+    return $builder->select('profile_picture')->getWhere(array('id' => $id))->getRowArray()['profile_picture'];
+}
+
+// -----------------------------------------------------------------------------
+// get user profile by ID
+function get_employer_profile($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('employers');
+    return $builder->select('profile_picture')->getWhere(array('id' => $id))->getRowArray()['profile_picture'];
 }

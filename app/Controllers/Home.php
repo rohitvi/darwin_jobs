@@ -261,8 +261,8 @@ class Home extends BaseController
                 $search['employment_type'] = $this->request->getPost('employment_type');
             }
             // $query = assoc_to_uri($search);
-            $city_query = http_build_query($search);
-            return redirect()->to(base_url('search?'.$city_query));
+            $query = http_build_query($search);
+            return redirect()->to(base_url('search?'.$query));
         }
         // $uri = new \CodeIgniter\HTTP\URI(current_url(true));
         $query_str = parse_url(current_url(true), PHP_URL_QUERY);

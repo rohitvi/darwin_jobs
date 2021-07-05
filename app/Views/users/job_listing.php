@@ -88,7 +88,6 @@
                   </div>
                 </div><br><br>
                 <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
-
             </li>
           </ul>
         </div>

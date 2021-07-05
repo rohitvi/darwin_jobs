@@ -38,7 +38,7 @@
                       <div class="form-group">
                         <div class="field">
                           <i class="fa fa-search"></i>
-                          <input type="text" name='job_title' class="form-control" value="<?= set_value('job_title'); ?>" placeholder='What are you looking for?'>
+                          <input type="text" name='job_title' class="form-control" value="<?= $_GET['job_title']; ?>" placeholder='What are you looking for?'>
                         </div>
                       </div>
                     </div>
@@ -50,7 +50,7 @@
                           <select name="category" class="form-control js-example-basic-single">
                             <option value="">Select Category</option>
                             <?php foreach ($categories as $category) : ?>
-                              <option value="<?= $category['id']; ?>"> <?= $category['name']; ?> </option>
+                              <option value="<?= $category['id']; ?>" <?= (isset($_GET['category']) && $_GET['category'] == $category['id']) ? 'selected' : '' ?>> <?= $category['name']; ?> </option>
                             <?php endforeach; ?>
                           </select>
                         </div>
@@ -64,7 +64,7 @@
                           <select name="state" class="form-control js-example-basic-single">
                             <option value="">Select Location</option>
                             <?php foreach ($states as $state) : ?>
-                              <option value="<?= $state['id']; ?>"> <?= $state['name']; ?> </option>
+                              <option value="<?= $state['id']; ?>" <?= (isset($_GET['state']) && $_GET['state'] == $state['id']) ? 'selected' : '' ?>> <?= $state['name']; ?> </option>
                             <?php endforeach; ?>
                           </select>
                         </div>
@@ -78,7 +78,7 @@
                           <select name="expected_salary" class="form-control js-example-basic-single">
                             <option value="">Expected Salary</option>
                             <?php for ($i = 500; $i < 10000; $i = $i + 500) { ?>
-                              <option value="<?= $i; ?>"> <?= $i; ?> </option>
+                              <option value="<?= $i; ?>" <?= (isset($_GET['expected_salary']) && $_GET['expected_salary'] == $i) ? 'selected' : '' ?>> <?= $i; ?> </option>
                             <?php } ?>
                           </select>
                         </div>
@@ -92,7 +92,7 @@
                           <select name="education_level" class="form-control js-example-basic-single">
                             <option value="">Select Education</option>
                             <?php foreach ($education as $education) : ?>
-                              <option value="<?= $education['id']; ?>"> <?= $education['type']; ?> </option>
+                              <option value="<?= $education['id']; ?>" <?= (isset($_GET['education_level']) && $_GET['education_level'] == $education['id']) ? 'selected' : '' ?>> <?= $education['type']; ?> </option>
                             <?php endforeach; ?>
                           </select>
                         </div>
@@ -105,12 +105,12 @@
                           <i class="fas fa-briefcase"></i>
                           <select name="experience" class="form-control js-example-basic-single">
                             <option value="">Select Experience</option>
-                            <option value="0-1">0-1 years</option>
-                            <option value="1-2">1-2 years</option>
-                            <option value="2-5">2-5 years</option>
-                            <option value="5-10">5-10 years</option>
-                            <option value="10-15">10-15 years</option>
-                            <option value="15+">15+ years</option>
+                            <option value="0-1" <?= (isset($_GET['experience']) && $_GET['experience'] == '0-1') ? 'selected' : '' ?>>0-1 Year</option>
+                            <option value="1-2" <?= (isset($_GET['experience']) && $_GET['experience'] == '1-2') ? 'selected' : '' ?>>1-2 Years</option>
+                            <option value="2-5" <?= (isset($_GET['experience']) && $_GET['experience'] == '2-5') ? 'selected' : '' ?>>2-5 Years</option>
+                            <option value="5-10" <?= (isset($_GET['experience']) && $_GET['experience'] == '5-10') ? 'selected' : '' ?>>5-10 Years</option>
+                            <option value="10-15" <?= (isset($_GET['experience']) && $_GET['experience'] == '10-15') ? 'selected' : '' ?>>10-15 Years</option>
+                            <option value="15+" <?= (isset($_GET['experience']) && $_GET['experience'] == '15+') ? 'selected' : '' ?>>15+ Years</option>
                           </select>
                         </div>
                       </div>
@@ -121,10 +121,8 @@
 
                     <div class="col-md-4">
                       <input type="submit" name="search" class="btn btn-primary btn-block mb-2" value='Search'>
-
                     </div>
                     <div class="col-md-4">
-
                     </div>
                   </div>
                 </div>

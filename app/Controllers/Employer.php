@@ -38,9 +38,9 @@ class Employer extends BaseController
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
         $data['current_package'] = $this->EmployerModel->get_active_package();
-        $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'],1, $data['current_package']['payment_id']);
-       // pre($data);
-        return view('employer/dashboard',$data);
+        $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
+        // pre($data);
+        return view('employer/dashboard', $data);
     }
 
     public function login()
@@ -819,12 +819,17 @@ class Employer extends BaseController
                 $search['experience'] = $this->request->getPost('experience');
             }
 
-            $get['search_value'] = $search;
-            $Users = new EmployerModel();
-            $Users->setTable('users');
-            $get['profiles'] = $Users->get_user_profiles($search);
-            $get['pager'] = $Users->pager;
+            $query = http_build_query($search);
+            return redirect()->to(base_url('employer/search?' . $query));
         }
+        $query_str = parse_url(current_url(true), PHP_URL_QUERY);
+        parse_str($query_str, $search);
+
+        $get['search_value'] = $search;
+        $Users = new EmployerModel();
+        $Users->setTable('users');
+        $get['profiles'] = $Users->get_user_profiles($search);
+        $get['pager'] = $Users->pager;
 
         return view('employer/cv_search/cv_search_page', $get);
     }

@@ -47,138 +47,40 @@
                   </div>
                 </div>
                 <ul>
-                  <li class="has-sub-menu current_page">
-                    <a href="index.html">Home</a>
-                    <ul class="sub-menu">
-                      <li class="current_page">
-                        <a href="index.html">Homepage 1</a>
-                      </li>
-                      <li>
-                        <a href="home-page-2.html">Homepage 2</a>
-                      </li>
-                      <li>
-                        <a href="home-page-3.html">Homepage 3</a>
-                      </li>
-                      <li>
-                        <a href="home-page-4.html">Homepage 4</a>
-                      </li>
-                    </ul>
+                  <li class="current_page">
+                    <a href="<?= base_url() ?>">Home</a>
                   </li>
                   <li class="has-sub-menu">
-                    <a href="index.html">Job Seekers</a>
+                    <a href="#">Jobs</a>
                     <ul class="sub-menu">
-                      <li>
-                        <a href="job-seeker-dashboard.html">Job dashboard</a>
-                      </li>
-                      <li>
-                        <a href="browse-jobs.html">Browse jobs</a>
-                      </li>
-
-                      <li>
-                        <a href="job-single.html">Job single</a>
-                      </li>
-
-                      <li>
-                        <a href="my-stared-jobs.html">My stared jobs</a>
-                      </li>
-                      <li>
-                        <a href="staff-profile-single.html">Job seeker profile</a>
-                      </li>
-                      <li>
-                        <a href="edit-profile.html">Update my profile</a>
-                      </li>
-
-                      <li>
-                        <a href="<?= base_url('home/changepassword'); ?>">Change password</a>
-                      </li>
-                      <li>
-                        <a href="registration.html">Registration</a>
-                      </li>
-                      <li>
-                        <a href="browse-companies.html">Browse companies</a>
-                      </li>
+                      <li><a href="<?= base_url() ?>">Search Job</a></li>
+                      <li><a href="<?= base_url() ?>">Job By Category</a></li>
+                      <li><a href="<?= base_url() ?>">Job By Industry</a></li>
+                      <li><a href="<?= base_url() ?>">Job By Location</a></li>
+                      <li><a href="<?= base_url() ?>">Browse All Jobs</a></li>
                     </ul>
                   </li>
-
-
-                  <li class="has-sub-menu">
-                    <a href="#">For employers</a>
-                    <ul class="sub-menu">
-                      <li>
-                        <a href="job-dashboard.html">Job dashboard</a>
-                      </li>
-                      <li>
-                        <a href="post-a-job.html">Post a job</a>
-                      </li>
-                      <li>
-                        <a href="my-job-listing.html">My Jobs listing</a>
-                      </li>
-                      <li>
-                        <a href="find-staff.html">Find staff</a>
-                      </li>
-                      <li>
-                        <a href="compnay-profile-single.html">Company profile</a>
-                      </li>
-
-                      <li>
-                        <a href="emp-edit-profile.html">Update profile</a>
-                      </li>
-                      <li>
-                        <a href="emp-edit-password.html">Change password</a>
-                      </li>
-                      <li>
-                        <a href="emp-registration.html">Employer registration</a>
-                      </li>
-                    </ul>
-                  </li>
-
-                  <li class="has-sub-menu">
-                    <a href="#">Pages</a>
-                    <ul class="sub-menu">
-
-                      <li>
-                        <a href="blog.html">blog</a>
-                      </li>
-                      <li>
-                        <a href="blog-single.html">Blog single</a>
-                      </li>
-                      <li>
-                        <a href="contact-us.html">Contact us</a>
-                      </li>
-                      <li>
-                        <a href="plan-page.html">Membership Plans</a>
-                      </li>
-                      <li>
-                        <a href="login.html">Login</a>
-                      </li>
-                      <li>
-                        <a href="lost-password.html">Lost password</a>
-                      </li>
-                      <li>
-                        <a href="user-interface-elements.html">User interface elements</a>
-                      </li>
-                      <li>
-                        <a href="404.html">404</a>
-                      </li>
-                    </ul>
-                  </li>
+                  <li class=""><a href="<?= base_url('company'); ?>"><?= 'Companies' ?></a></li>
+                  <?php if (session('user_logged_in')) : ?>
+                    <li class="has-sub-menu">
+                      <a href="#"><?= session('username'); ?></a>
+                      <ul class="sub-menu">
+                        <li><a href="<?= base_url('home/profile'); ?>">My Profile</a></li>
+                        <li><a href="<?= base_url('home/applied_jobs'); ?>">My Applications</a></li>
+                        <li><a href="<?= base_url('home/matching_jobs'); ?>">Matching Jobs</a></li>
+                        <li><a href="<?= base_url('home/saved_jobs'); ?>">Saved Jobs</a></li>
+                        <li><a href="<?= base_url('home/change_password'); ?>">Change Password</a></li>
+                        <li><a href="<?= base_url('home/logout') ?>">Logout</a></li>
+                      </ul>
+                    </li>
+                  <?php endif; ?>
                 </ul>
               </nav>
               <div class="ac_nav">
                 <!--Not logedin-->
                 <?php if (session('user_logged_in')) : ?>
-                  <div class="login_pop">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome <?= session('username') ?></button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="<?= base_url('home/profile') ?>"><i class="fas fa-user" aria-hidden="true"></i> &nbsp;&nbsp;My Profile</a>
-                        <a class="dropdown-item" href="<?= base_url('home/applied_jobs') ?>"><i class="fas fa-briefcase" aria-hidden="true"></i> &nbsp;&nbsp;My Applications</a>
-                        <a class="dropdown-item" href="<?= base_url('home/matching_jobs') ?>"><i class="fas fa-briefcase" aria-hidden="true"></i> &nbsp;&nbsp;Matching Jobs</a>
-                        <a class="dropdown-item" href="<?= base_url('home/saved_jobs') ?>"><i class="fas fa-briefcase" aria-hidden="true"></i> &nbsp;&nbsp;Saved Jobs</a>
-                        <a class="dropdown-item" href="<?= base_url('home/change_password') ?>"><i class="fas fa-key" aria-hidden="true"></i> &nbsp;&nbsp;Change Password</a>
-                        <a class="dropdown-item" href="<?= base_url('home/logout') ?>"><i class="fas fa-power-off"></i> &nbsp;&nbsp;Logout</a>
-                      </div>
-                    </div>
+                  <div class="">
+                    <a class="btn btn-primary" href="<?= base_url('employer/login'); ?>">Employer Login</a>
                   </div>
                 <?php else : ?>
                   <div class="dropdown login_pop">
