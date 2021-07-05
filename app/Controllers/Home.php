@@ -116,8 +116,7 @@ class Home extends BaseController
                     'user_logged_in' => true,
                     'profile_pic'=> $logindata['profile_picture'],
                     'username'=>$logindata['firstname'].' '.$logindata['lastname'],
-                    'profile_completed' => $logindata['profile_completed'],
-                    'is_verify' => $logindata['is_verify']
+                    'profile_completed' => $logindata['profile_completed']
                 ];
                 session()->set($employerdata);
             }
