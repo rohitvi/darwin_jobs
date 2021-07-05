@@ -10,11 +10,11 @@ use App\Libraries\Mailer;
 
 class Home extends BaseController
 {
-    private $facebook=NULL;
-    private $fb_helper=NULL;
+    private $facebook = NULL;
+    private $fb_helper = NULL;
     public function __construct()
     {
-        require_once APPPATH. 'Libraries/vendor/autoload.php';
+        require_once APPPATH . 'Libraries/vendor/autoload.php';
         $this->facebook = new \Facebook\Facebook([
             'app_id' => '2995803240742072',
             'app_secret' => '2cee320baf4567f0ccf4f4eca6f4a5be',
@@ -61,7 +61,7 @@ class Home extends BaseController
     public function login()
     {
         $fb_permission = ['email'];
-        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?',$fb_permission);
+        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?', $fb_permission);
         if ($this->request->isAJAX()) {
             $rules = [
                 'email' => ['label' => 'email', 'rules' => 'required'],
@@ -90,41 +90,41 @@ class Home extends BaseController
                 exit;
             }
         }
-        return view('users/auth/login',$data);
+        return view('users/auth/login', $data);
     }
 
     public function authWithFb()
     {
-        if($this->request->getVar('state')) {
-            $this->fb_helper->getPersistentDataHandler()->set('state',$this->request->getVar('state'));
+        if ($this->request->getVar('state')) {
+            $this->fb_helper->getPersistentDataHandler()->set('state', $this->request->getVar('state'));
         }
         if ($this->request->getVar('code')) {
             if (session()->get('access_token')) {
                 $access_token = session()->get('access_token');
-            } else{
+            } else {
                 $access_token = $this->fb_helper->getAccessToken();
-                session()->set('access_token',$access_token);
+                session()->set('access_token', $access_token);
                 $this->facebook->setDefaultAccessToken(session()->get('access_token'));
             }
-            $graph_response = $this->facebook->get('/me?fields=name,email,picture.width(800).height(800)',$access_token);
+            $graph_response = $this->facebook->get('/me?fields=name,email,picture.width(800).height(800)', $access_token);
             $fb_user_info = $graph_response->getGraphUser();
-            $profilep='http://graph.facebook.com/'.$fb_user_info['id'].'/picture';
-            if(!empty($fb_user_info['id'])){
-                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'],$fb_user_info['name'],$fb_user_info['email'],$profilep);
-                $employerdata=[
-                    'user_id' =>$logindata['id'],
+            $profilep = 'http://graph.facebook.com/' . $fb_user_info['id'] . '/picture';
+            if (!empty($fb_user_info['id'])) {
+                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep);
+                $employerdata = [
+                    'user_id' => $logindata['id'],
                     'user_logged_in' => true,
-                    'profile_pic'=> $logindata['profile_picture'],
-                    'username'=>$logindata['firstname'].' '.$logindata['lastname'],
+                    'profile_pic' => $logindata['profile_picture'],
+                    'username' => $logindata['firstname'] . ' ' . $logindata['lastname'],
                     'profile_completed' => $logindata['profile_completed']
                 ];
                 session()->set($employerdata);
             }
-        }else{
-            session()->setFlashData('error','Something went wrong, Please try again!');
+        } else {
+            session()->setFlashData('error', 'Something went wrong, Please try again!');
             return redirect()->to(base_url('login'));
         }
-        session()->setFlashData('success','Login Success!');
+        session()->setFlashData('success', 'Login Success!');
         return redirect()->to(base_url('home/profile'));
     }
 
@@ -241,9 +241,19 @@ class Home extends BaseController
                 $search['state'] = $this->request->getPost('state');
             }
 
+            // search job city
+            if (!empty($this->request->getPost('city'))) {
+                $search['city'] = $this->request->getPost('city');
+            }
+
             // search catagory
             if (!empty($this->request->getPost('category'))) {
                 $search['category'] = $this->request->getPost('category');
+            }
+
+            // search industry
+            if (!empty($this->request->getPost('industry'))) {
+                $search['industry'] = $this->request->getPost('industry');
             }
 
             // search experience
@@ -262,7 +272,7 @@ class Home extends BaseController
             }
             // $query = assoc_to_uri($search);
             $query = http_build_query($search);
-            return redirect()->to(base_url('search?'.$query));
+            return redirect()->to(base_url('search?' . $query));
         }
         // $uri = new \CodeIgniter\HTTP\URI(current_url(true));
         $query_str = parse_url(current_url(true), PHP_URL_QUERY);
@@ -419,7 +429,7 @@ class Home extends BaseController
             $id = session('user_id');
             // pre($update_user_info );
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
-          
+
             if ($update_per == 1) {
                 $this->session->set('profile_completed', 1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
@@ -867,7 +877,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d')
             ];
             $id = $this->request->getPost('edu_id');
-            $query = $this->HomeModel->update_education($data,$id);
+            $query = $this->HomeModel->update_education($data, $id);
             if ($query) {
                 $this->session->setFlashdata('success', 'Education Updated !');
                 return redirect()->to(base_url('home/profile'));
@@ -882,7 +892,7 @@ class Home extends BaseController
     {
         if ($this->request->isAjax()) {
             $rules = [
-                'job_id' => ['label'=>'job_id','rules'=>'required'],
+                'job_id' => ['label' => 'job_id', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -896,4 +906,66 @@ class Home extends BaseController
             return $query;
         }
     }
+
+    // Jobs by category
+    public function jobs_by_category()
+    {
+        $data['categories'] = $this->HomeModel->get_categories_with_jobs();
+        $data['title'] = 'label_jobs_by_cat';
+        $data['meta_description'] = 'your meta description here';
+        $data['keywords'] = 'meta tags here';
+        // pre($data);
+        return view('users/jobs_category_page', $data);
+    }
+
+    // Jobs by Industry
+    public function jobs_by_industry()
+    {
+        $data['industries'] = $this->HomeModel->get_industries_with_jobs();
+
+        $data['title'] = 'label_jobs_by_industry';
+        $data['meta_description'] = 'your meta description here';
+        $data['keywords'] = 'meta tags here';
+
+        return view('users/jobs_industry_page', $data);
+    }
+
+    // Jobs by loccation
+    public function jobs_by_location()
+    {
+        $data['cities'] = $this->HomeModel->get_cities_with_jobs();
+
+        $data['title'] = 'label_jobs_by_loc';
+        $data['meta_description'] = 'your meta description here';
+        $data['keywords'] = 'meta tags here';
+
+        return view('users/jobs_location_page', $data);
+    }
+
+    // Jobs by loccation
+    public function companies()
+    {
+        $data['companies'] = $this->HomeModel->get_companies();
+
+        $data['title'] = 'top_companies';
+        $data['meta_description'] = 'your meta description here';
+        $data['keywords'] = 'meta tags here';
+        // pre($data);
+        return view('users/companies', $data);
+    }
+
+	// Company Detail
+	public function company_detail($id)
+	{
+		// $data['company_info'] = $this->company_model->get_company_detail($company_id);
+
+		// $data['jobs'] = $this->company_model->get_jobs_by_companies($company_id); // Get company jobs
+
+		// $data['title'] = trans('company_details');
+		// $data['meta_description'] = 'your meta description here';
+		// $data['keywords'] = 'meta tags here';
+		
+        // return view('users/company-details', $data);
+	}
+
 }

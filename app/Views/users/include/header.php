@@ -53,14 +53,14 @@
                   <li class="has-sub-menu">
                     <a href="#">Jobs</a>
                     <ul class="sub-menu">
-                      <li><a href="<?= base_url() ?>">Search Job</a></li>
-                      <li><a href="<?= base_url() ?>">Job By Category</a></li>
-                      <li><a href="<?= base_url() ?>">Job By Industry</a></li>
-                      <li><a href="<?= base_url() ?>">Job By Location</a></li>
-                      <li><a href="<?= base_url() ?>">Browse All Jobs</a></li>
+                      <li><a href="<?= base_url('home/search') ?>">Search Job</a></li>
+                      <li><a href="<?= base_url('home/jobs_by_category') ?>">Job By Category</a></li>
+                      <li><a href="<?= base_url('home/jobs_by_industry') ?>">Job By Industry</a></li>
+                      <li><a href="<?= base_url('home/jobs_by_location') ?>">Job By Location</a></li>
+                      <li><a href="<?= base_url('home/search') ?>">Browse All Jobs</a></li>
                     </ul>
                   </li>
-                  <li class=""><a href="<?= base_url('company'); ?>"><?= 'Companies' ?></a></li>
+                  <li class=""><a href="<?= base_url('home/companies'); ?>"><?= 'Companies' ?></a></li>
                   <?php if (session('user_logged_in')) : ?>
                     <li class="has-sub-menu">
                       <a href="#"><?= session('username'); ?></a>

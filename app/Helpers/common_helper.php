@@ -346,3 +346,11 @@ function get_employer_profile($id)
     $builder = $db->table('employers');
     return $builder->select('profile_picture')->getWhere(array('id' => $id))->getRowArray()['profile_picture'];
 }
+
+// Get category by ID
+function get_category_slug($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('categories');
+    return $builder->select('slug')->getWhere(array('id' => $id))->getRowArray()['slug'];
+}

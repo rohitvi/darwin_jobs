@@ -22,7 +22,7 @@ class HomeModel extends Model
     public function matching_jobs($skills)
     {
         $builder =  $this->db->table('job_post')->select('job_post.id, job_post.title, job_post.company_id, job_post.job_slug, job_post.job_type, job_post.description, job_post.country, job_post.city,job_post.expiry_date, job_post.created_date, job_post.industry,job_post.min_salary,job_post.max_salary,companies.company_name,companies.company_logo')->join('companies', 'companies.id = job_post.company_id');
-        
+
         if (!empty($skills)) {
             $skills = explode(',', trim($skills));
             foreach ($skills as $skill) {
@@ -81,6 +81,9 @@ class HomeModel extends Model
         if (!empty($search['category']))
             $builder->where('category', $search['category']);
 
+        if (!empty($search['industry']))
+            $builder->where('industry', $search['industry']);
+
         if (!empty($search['experience']))
             $builder->where('experience', $search['experience']);
 
@@ -101,26 +104,24 @@ class HomeModel extends Model
 
     public function get_user_experience($id)
     {
-        return $this->db->table('seeker_experience')->where('user_id',$id)->get()->getResultArray();
+        return $this->db->table('seeker_experience')->where('user_id', $id)->get()->getResultArray();
     }
 
-    public function insert_user_experience($data,$id)
+    public function insert_user_experience($data, $id)
     {
         $builder = $this->db->table('seeker_experience');
-        $builder->where('id',$id);
+        $builder->where('id', $id);
         if ($builder->countAllResults() > 0) {
             return $this->db->table('seeker_experience')->where('id', $id)->update($data);
-        }
-        else
-        {
+        } else {
             $this->db->table('seeker_experience')->insert($data);
         }
         return true;
     }
-    
+
     public function applied_jobs($user_id)
     {
-        return $this->db->table('seeker_applied_job')->select('seeker_applied_job.seeker_id,seeker_applied_job.employer_id,job_post.title,job_post.*')->join('job_post','job_post.id = seeker_applied_job.job_id')->where('seeker_applied_job.id',$user_id)->get()->getResultArray();
+        return $this->db->table('seeker_applied_job')->select('seeker_applied_job.seeker_id,seeker_applied_job.employer_id,job_post.title,job_post.*')->join('job_post', 'job_post.id = seeker_applied_job.job_id')->where('seeker_applied_job.id', $user_id)->get()->getResultArray();
     }
 
     public function apply_job($data)
@@ -130,17 +131,17 @@ class HomeModel extends Model
 
     public function delete_experience($id)
     {
-        $this->db->table('seeker_experience')->where('id',$id)->delete();
+        $this->db->table('seeker_experience')->where('id', $id)->delete();
     }
 
-    public function user_info_update($update_user_info,$id)
+    public function user_info_update($update_user_info, $id)
     {
         return $this->db->table('users')->where('id', $id)->update($update_user_info);
     }
 
     public function get_experience_by_id($id)
     {
-        return $this->db->table('seeker_experience')->where('id',$id)->get()->getRowArray();
+        return $this->db->table('seeker_experience')->where('id', $id)->get()->getRowArray();
     }
 
     public function update_user_resume($update_resume, $id)
@@ -148,15 +149,15 @@ class HomeModel extends Model
         return $this->db->table('users')->where('id', $id)->update(array('resume' => $update_resume));
     }
 
-    public function update_user_experience($data,$id)
+    public function update_user_experience($data, $id)
     {
         //return $this->db->table('users')->where('id', $id)->update($update_user_info);
-        return $this->db->table('seeker_experience')->where('id',$id)->update($data);
+        return $this->db->table('seeker_experience')->where('id', $id)->update($data);
     }
 
     public function get_user_language($id)
     {
-        return $this->db->table('seeker_languages')->where('user_id',$id)->get()->getResultArray();
+        return $this->db->table('seeker_languages')->where('user_id', $id)->get()->getResultArray();
     }
 
     public function add_user_language($data)
@@ -166,22 +167,22 @@ class HomeModel extends Model
 
     public function delete_language($id)
     {
-        return $this->db->table('seeker_languages')->where('id',$id)->delete();
+        return $this->db->table('seeker_languages')->where('id', $id)->delete();
     }
 
     public function get_language_by_id($id)
     {
-        return $this->db->table('seeker_languages')->where('id',$id)->get()->getRowArray();
+        return $this->db->table('seeker_languages')->where('id', $id)->get()->getRowArray();
     }
 
-    public function update_language($data,$id)
+    public function update_language($data, $id)
     {
-        return $this->db->table('seeker_languages')->where('id',$id)->update($data);
+        return $this->db->table('seeker_languages')->where('id', $id)->update($data);
     }
 
     public function get_user_education($id)
     {
-        return $this->db->table('seeker_education')->where('user_id',$id)->get()->getResultArray();
+        return $this->db->table('seeker_education')->where('user_id', $id)->get()->getResultArray();
     }
 
     public function add_education($data)
@@ -191,23 +192,23 @@ class HomeModel extends Model
 
     public function delete_education($id)
     {
-        return $this->db->table('seeker_education')->where('id',$id)->delete();
+        return $this->db->table('seeker_education')->where('id', $id)->delete();
     }
 
     public function get_education_by_id($id)
     {
-        return $this->db->table('seeker_education')->where('id',$id)->get()->getRowArray();
+        return $this->db->table('seeker_education')->where('id', $id)->get()->getRowArray();
     }
 
-    public function update_education($data,$id)
+    public function update_education($data, $id)
     {
-        return $this->db->table('seeker_education')->where('id',$id)->update($data);
+        return $this->db->table('seeker_education')->where('id', $id)->update($data);
     }
 
     public function save_job($data)
     {
-        if ($this->db->table('saved_jobs')->where(array('seeker_id'=>$data['seeker_id'],'job_id'=>$data['job_id']))->get()->getNumRows() > 0) {
-            $this->db->table('saved_jobs')->where(array('seeker_id'=>$data['seeker_id'],'job_id'=>$data['job_id']))->delete();
+        if ($this->db->table('saved_jobs')->where(array('seeker_id' => $data['seeker_id'], 'job_id' => $data['job_id']))->get()->getNumRows() > 0) {
+            $this->db->table('saved_jobs')->where(array('seeker_id' => $data['seeker_id'], 'job_id' => $data['job_id']))->delete();
             return '0~UnSaved';
         } else {
             $this->db->table('saved_jobs')->insert($data);
@@ -217,15 +218,53 @@ class HomeModel extends Model
 
     public function saved_job_search($user_id)
     {
-        $data = $this->db->table('saved_jobs')->select('job_id')->where('seeker_id',$user_id)->get()->getResultArray();
-        if ($data){
+        $data = $this->db->table('saved_jobs')->select('job_id')->where('seeker_id', $user_id)->get()->getResultArray();
+        if ($data) {
             foreach ($data as $key => $value) {
                 $ndata[] = $value['job_id'];
             }
             return $ndata;
-        }
-        else
+        } else
             return array();
     }
 
+    //----------------------------------------------------
+    // Get those citites who have jobs
+    public function get_cities_with_jobs()
+    {
+        $builder = $this->db->table('job_post');
+        $builder->select('city as city_id, COUNT(city) as total_jobs');
+        $builder->where(array('curdate() <' => 'expiry_date'));
+        $builder->groupBy('city');
+        return $builder->get()->getResultArray();
+    }
+
+    // Get those industries who have jobs
+    public function get_industries_with_jobs()
+    {
+        $builder = $this->db->table('job_post');
+        $builder->select('industry as industry_id, COUNT(industry) as total_jobs');
+        $builder->where(array('is_status' => 'active', 'curdate() <' => 'expiry_date'));
+        $builder->groupBy('industry');
+        return $builder->get()->getResultArray();
+    }
+
+    // Get those categories who have jobs
+    public function get_categories_with_jobs()
+    {
+        $builder = $this->db->table('job_post');
+        $builder->select('category as category_id, COUNT(category) as total_jobs');
+        $builder->where(array('is_status' => 'active', 'curdate() <' => 'expiry_date'));
+        $builder->groupBy('category');
+        return $builder->get()->getResultArray();
+    }
+
+    // Get all companies
+    public function get_companies()
+    {
+        $builder = $this->db->table('companies');
+        $builder->select('id, company_name, company_slug, company_logo');
+        $builder->groupBy('companies.company_slug');
+        return $builder->get()->getResultArray();
+    }
 }
