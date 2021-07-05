@@ -47,7 +47,12 @@
             </form>
             <div class="social_login">
               <p class="or_span"><span>or</span></p>
-              <button class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Log In via Facebook</button>
+              <?php
+                if($fb_btn) {
+                  echo "<a href='".$fb_btn."' class='btn btn-facebook'><i class='fab fa-facebook-f'></i> Log In via Facebook</a>";
+                } 
+              ?>
+              
               <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button>
             </div>
            </div>

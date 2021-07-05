@@ -23,6 +23,26 @@ class HomeAuthModel extends Model
         }
     }
 
+    public function facebook_validate($id,$name,$email,$profile_picture)
+    {
+        $builder = $this->db->table('users');
+        $get_id = $builder->where('fb_id',$id)->get()->getResultArray();
+        $result = $builder->where('email',$email)->get()->getResultArray();
+        if(count($result) == 1){
+            return $result[0];
+        }else{
+            if(count($get_id) == 1){
+                return $get_id[0];
+            }else{
+                $names = explode(' ',$name);
+                $this->db->table('users')->insert(array('fb_id'=> $id,'firstname'=>$names[0],'lastname'=>$names[1],'email'=> $email,'profile_picture'=>$profile_picture));
+                $lastid = $this->db->insertID();
+                $reg = $builder->where('id',$lastid)->get()->getResultArray();
+                return $reg[0];
+            }
+        }
+    }
+
     public function register($data)
     {
         $this->db->table('users')->insert($data);

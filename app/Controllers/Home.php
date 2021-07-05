@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Controller;
 use App\Models\HomeModel;
 use App\Models\auth\HomeAuthModel;
 use App\Models\AdminModel;
@@ -9,8 +10,17 @@ use App\Libraries\Mailer;
 
 class Home extends BaseController
 {
+    private $facebook=NULL;
+    private $fb_helper=NULL;
     public function __construct()
     {
+        require_once APPPATH. 'Libraries/vendor/autoload.php';
+        $this->facebook = new \Facebook\Facebook([
+            'app_id' => '2995803240742072',
+            'app_secret' => '2cee320baf4567f0ccf4f4eca6f4a5be',
+            'default_graph_version' => 'v2.3'
+        ]);
+        $this->fb_helper = $this->facebook->getRedirectLoginHelper();
         $this->HomeModel = new HomeModel();
         $this->HomeAuthModel = new HomeAuthModel();
         $this->adminModel = new AdminModel();
@@ -50,6 +60,8 @@ class Home extends BaseController
 
     public function login()
     {
+        $fb_permission = ['email'];
+        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?',$fb_permission);
         if ($this->request->isAJAX()) {
             $rules = [
                 'email' => ['label' => 'email', 'rules' => 'required'],
@@ -78,7 +90,43 @@ class Home extends BaseController
                 exit;
             }
         }
-        return view('users/auth/login');
+        return view('users/auth/login',$data);
+    }
+
+    public function authWithFb()
+    {
+        if($this->request->getVar('state')) {
+            $this->fb_helper->getPersistentDataHandler()->set('state',$this->request->getVar('state'));
+        }
+        if ($this->request->getVar('code')) {
+            if (session()->get('access_token')) {
+                $access_token = session()->get('access_token');
+            } else{
+                $access_token = $this->fb_helper->getAccessToken();
+                session()->set('access_token',$access_token);
+                $this->facebook->setDefaultAccessToken(session()->get('access_token'));
+            }
+            $graph_response = $this->facebook->get('/me?fields=name,email,picture.width(800).height(800)',$access_token);
+            $fb_user_info = $graph_response->getGraphUser();
+            $profilep='http://graph.facebook.com/'.$fb_user_info['id'].'/picture';
+            if(!empty($fb_user_info['id'])){
+                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'],$fb_user_info['name'],$fb_user_info['email'],$profilep);
+                $employerdata=[
+                    'user_id' =>$logindata['id'],
+                    'user_logged_in' => true,
+                    'profile_pic'=> $logindata['profile_picture'],
+                    'username'=>$logindata['firstname'].' '.$logindata['lastname'],
+                    'profile_completed' => $logindata['profile_completed'],
+                    'is_verify' => $logindata['is_verify']
+                ];
+                session()->set($employerdata);
+            }
+        }else{
+            session()->setFlashData('error','Something went wrong, Please try again!');
+            return redirect()->to(base_url('login'));
+        }
+        session()->setFlashData('success','Login Success!');
+        return redirect()->to(base_url('home/profile'));
     }
 
     //Get States
