@@ -1,5 +1,4 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
-
 <div class='header_inner'>
   <div class="header_btm">
     <h2>Update My Profile</h2>
@@ -61,7 +60,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Date of Birth:</label>
-                        <input type="date" name="dob" value="<?= $data[0]['dob']; ?>" class="form-control">
+                        <input type="date" name="dob" onchange="mydob()" id="dob" value="<?= $data[0]['dob']; ?>" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -96,7 +95,7 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group ">
-                        <label>Your Title</label>
+                        <label>Job Title</label>
                         <input type="text" name="job_title" value="<?= $data[0]['job_title']; ?>" class="form-control">
                       </div>
                     </div>
@@ -129,7 +128,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Skills</label>
-                        <input type="text" name="skills" value="<?= $data[0]['skills']; ?>" class="form-control">
+                        <input type="text" name="skills" value="<?= $data[0]['skills']; ?>" class="form-control tagin">
                       </div>
                     </div>
 
@@ -183,7 +182,7 @@
                         <?php
                         $states = get_country_states($data[0]['country']);
                         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                        echo form_dropdown('state', $options, $data[0]['state'], 'class="state form-control" required');
+                        echo form_dropdown('state', $options, $data[0]['state'], 'class="state form-control"');
                         ?>
                       </div>
                     </div>
@@ -195,7 +194,7 @@
                         <?php
                         $cities = get_state_cities($data[0]['state']);
                         $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                        echo form_dropdown('city', $options, $data[0]['city'], 'class="city form-control" required');
+                        echo form_dropdown('city', $options, $data[0]['city'], 'class="city form-control"');
                         ?>
                       </div>
                     </div>
@@ -289,7 +288,7 @@
 
               <div class="row">
                 <div class="col-md-3">
-                  <div class=exp-end-field">
+                  <div class="exp-end-field">
                     <label>End Month</label>
                     <?php
                     $options = get_months_list();
@@ -315,14 +314,14 @@
               <div class="row">
                 <div class="col-md-12">
                   <h5>Description</h5>
-                  <textarea name="description" class="form-control" rows="5"></textarea>
+                  <textarea name="description" class="form-control" rows="2"></textarea>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="submit-field">
-                    <button class='genric-btn danger circle'>Submit</button>
-                    <button type="button" class="genric-btn danger circle close_all_collapse">Cancel</button>
+                  <div class="submit-field"><br>
+                    <button class='btn-sm btn-primary'>Submit</button>
+                    <button type="button" class="btn-sm btn-primary close_all_collapse">Cancel</button>
                   </div>
                 </div>
               </div>
@@ -376,32 +375,32 @@
                           <?php 
                           $educations = get_education_list();
                           $options = array('' => 'Select Option') + array_column($educations,'type','id');
-                          echo form_dropdown('level',$options,'','class="form-control" required');
+                          echo form_dropdown('level',$options,'','class="form-control"');
                         ?>
                         </div>
 
                         <div class="col-md-6">
                           <label>Degree Title</label>
-                          <input class="form-control" name="title" type="text" placeholder="e.g., Computer Science" required>
+                          <input class="form-control" name="title" type="text" placeholder="e.g., Computer Science">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                           <label>Major Subjects</label>
-                          <input class="form-control" name="majors" type="text" placeholder="please specify your major subjects" required>
+                          <input class="form-control" name="majors" type="text" placeholder="please specify your major subjects">
                         </div>
 
                         <div class="col-md-6">
                           <label>Institution</label>
-                          <input class="form-control" name="institution" type="text" placeholder="Institution" required>
+                          <input class="form-control" name="institution" type="text" placeholder="Institution">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                           <label>Country</label>
-                          <select class="form-control select" name="country" required=''>
+                          <select class="form-control select" name="country">
                             <option value="">Select Country</option>
                             <?php foreach ($countries as $country) : ?>
                                 <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
@@ -418,8 +417,8 @@
                     <div class="row">
                         <div class='col-md-12'>
                             <div class="submit-field">
-                                <button type="submit" class="btn btn-primary" >Submit</button>
-                                <button type="button" class="btn btn-primary close_all_collapse">Cancel</button>
+                                <button type="submit" class="btn-sm btn-primary" >Submit</button>
+                                <button type="button" class="btn-sm btn-primary close_all_collapse">Cancel</button>
                             </div>
                         </div>
                         </div>
@@ -449,8 +448,8 @@
                     <div class="employer-job-list">
                       <p><?= get_language_name($lang['language']).' ( '.get_lang_proficiency_name($lang['proficiency']).' ) ' ?></p>
                       <p>
-                      <a href="javascript:void(0)" class="edit-language" data-lang_id="<?= $lang['id'] ?>"><i class="fa fa-pencil"></i> edit</a>&nbsp;
-                      <a href="<?= base_url('home/delete_language/'.$lang['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i>delete</a>&nbsp;
+                      <a href="javascript:void(0)" class="edit-language" data-lang_id="<?= $lang['id'] ?>"><i class="fa fa-pencil"></i> Edit</a>&nbsp;
+                      <a href="<?= base_url('home/delete_language/'.$lang['id']) ?>" class="btn-delete"><i class="fa fa-trash"></i>Delete</a>&nbsp;
                       </p>
                     </div>
                   </div>
@@ -467,7 +466,7 @@
                             <?php
                             $educations = get_languages_list();
                             $options = array('' => 'Select Option') + array_column($educations, 'lang_name', 'lang_id');
-                            echo form_dropdown('language', $options,'', 'class="form-control" required');
+                            echo form_dropdown('language', $options,'', 'class="form-control" ');
                             ?>
                         </div>
 
@@ -475,14 +474,14 @@
                             <label for="Language">Proficiency with this language</label>
                             <?php
                             $options = get_language_levels();
-                            echo form_dropdown('lang_level', $options, '', 'class="form-control" required');
+                            echo form_dropdown('lang_level', $options, '', 'class="form-control" ');
                             ?>
                         </div>
 
                         <div class='col-md-12'>
-                            <div class="submit-field">
-                                <button type="submit" class="btn btn-primary" >Submit</button>
-                                <button type="button" class="btn btn-primary close_all_collapse">Cancel</button>
+                            <div class="submit-field"><br>
+                                <button type="submit" class="btn-sm btn-primary" >Submit</button>
+                                <button type="button" class="btn-sm btn-primary close_all_collapse">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -510,7 +509,8 @@
                 <input type="file" name="user_resume">
               </div>
               <div class='col-md-6'>
-                <button type="submit" class="btn btn-primary" name='update_resume'>Update</button>
+                <button type="submit" class="btn-sm btn-primary" name='update_resume'>Update</button>
+                <!-- <button type="submit" class="btn-sm btn-primary" name='update_resume'>Download CV</button> -->
               </div>
             </div>
           </form>
@@ -650,4 +650,16 @@ $(document).on('click','.currently_working_here',function(){
   else
     $('.exp-end-field').show();
 });
+
+for (const el of document.querySelectorAll('.tagin')) {
+      tagin(el)
+}
+
+// function mydob(){
+//   var dob = $('#dob').val();
+//   var month_diff = Date.now() - dob.getTime();
+
+//   alert(month_diff);
+// }
+
 </script>

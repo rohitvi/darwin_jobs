@@ -3578,6 +3578,9 @@ form.newsletter .btn {
 .dashboard_boxes > div:nth-child(3) .dashboard_box{
 	background: #ead6fd
 }
+.dashboard_boxes > div:nth-child(4) .dashboard_box{
+	background: #fdf1db
+}
 .dashboard_boxes > div:nth-child(1) i{
  	color: #77e596;
 }
@@ -3586,6 +3589,9 @@ form.newsletter .btn {
 }
 .dashboard_boxes > div:nth-child(3) i{
  	color: #ab58ff;
+}
+.dashboard_boxes > div:nth-child(4) i{
+	color: #ab58ff;
 }
 .dashboard_box h2 {
 	font-size: 18px;

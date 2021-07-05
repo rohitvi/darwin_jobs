@@ -37,7 +37,7 @@ class Home extends BaseController
             return redirect()->to('home/login');
         }
     }
-    
+
     public function checkProfileCompleted()
     {
         if (session('profile_completed') == 0) {
@@ -53,7 +53,7 @@ class Home extends BaseController
     public function dashboard()
     {
         $data['states'] = $this->adminModel->get_states_list(101);
-        return view('users/index',$data);
+        return view('users/index', $data);
         $this->checkProfileCompleted();
         return view('users/index');
     }
@@ -229,6 +229,7 @@ class Home extends BaseController
     // Advance Search functionality
     public function search()
     {
+        // pre($_POST);
         $search = array();
         if ($this->request->getMethod() == 'post') {
             // search job title
@@ -260,8 +261,14 @@ class Home extends BaseController
             if (!empty($this->request->getPost('employment_type'))) {
                 $search['employment_type'] = $this->request->getPost('employment_type');
             }
+            // $query = assoc_to_uri($search);
+            $city_query = http_build_query($search);
+            return redirect()->to(base_url('search?'.$city_query));
         }
-
+        // $uri = new \CodeIgniter\HTTP\URI(current_url(true));
+        $query_str = parse_url(current_url(true), PHP_URL_QUERY);
+        parse_str($query_str, $search);
+        // pre($search);
         $Jobs = new HomeModel();
         $Jobs->setTable('job_post');
         $data = [
@@ -275,6 +282,7 @@ class Home extends BaseController
             'pager' => $Jobs->pager,
             'saved_job' => $this->HomeModel->saved_job_search(session('user_id'))
         ];
+        // pre($data['jobs']);
         return view('users/job_listing', $data);
     }
 
@@ -357,7 +365,22 @@ class Home extends BaseController
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'firstname'     => ['label' => 'First Name', 'rules' => 'required'],
-                'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
+                'lastname'     => ['label' => 'Last Name', 'rules' => 'required'],
+                'email'         => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'mobile_no'     => ['label' => 'Phone Number', 'rules' => 'required|min_length[10]'],
+                'dob'           => ['label' => 'Date of Birth', 'rules' => 'required'],
+                'age'           => ['label' => 'Age', 'rules' => 'required'],
+                'category'      => ['label' => 'Category', 'rules' => 'required'],
+                'job_title'      => ['label' => 'Job Title', 'rules' => 'required'],
+                'experience'      => ['label' => 'Experience', 'rules' => 'required'],
+                'skills'          => ['label' => 'Skills', 'rules' => 'required'],
+                'current_salary'  => ['label' => 'Current Salary', 'rules' => 'required'],
+                'expected_salary' => ['label' => 'Expected Salary', 'rules' => 'required'],
+                'country'          => ['label' => 'Country', 'rules' => 'required'],
+                'state'            => ['label' => 'State', 'rules' => 'required'],
+                'city'             => ['label' => 'City', 'rules' => 'required'],
+                'address'          => ['label' => 'Address', 'rules' => 'required'],
+                // 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -372,7 +395,6 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
-            $skills=$this->request->getPost('skills');
             $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
@@ -383,7 +405,7 @@ class Home extends BaseController
                 'category' => $this->request->getPost('category'),
                 'job_title' => $this->request->getPost('job_title'),
                 'experience' => $this->request->getPost('experience'),
-                'skills' => explode(",",$skills),
+                'skills' => $this->request->getPost('skills'),
                 'current_salary' => $this->request->getPost('current_salary'),
                 'expected_salary' => $this->request->getPost('expected_salary'),
                 'country' => $this->request->getPost('country'),
@@ -396,7 +418,7 @@ class Home extends BaseController
                 $update_user_info['profile_picture'] = $url;
             }
             $id = session('user_id');
-            pre($update_user_info );
+            // pre($update_user_info );
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
           
             if ($update_per == 1) {
@@ -434,8 +456,9 @@ class Home extends BaseController
                 'country'       => ['label' => 'Country', 'rules' => 'required'],
                 'starting_month' => ['label' => 'Starting Month', 'rules' => 'required'],
                 'starting_year' => ['label' => 'Starting Year', 'rules' => 'required'],
-                'ending_month' => ['label' => 'Ending Month', 'rules' => 'required'],
-                'ending_year'    => ['label' => 'Ending Year', 'rules' => 'required'],
+                'ending_month' => ['label' => 'Ending Month', 'rules' => 'trim'],
+                'ending_year'    => ['label' => 'Ending Year', 'rules' => 'trim'],
+                'currently_working_here'    => ['label' => 'Currently Working Here', 'rules' => 'trim'],
                 'description'    => ['label' => 'Description', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
@@ -452,6 +475,7 @@ class Home extends BaseController
                 'starting_year' => $this->request->getPost('starting_year'),
                 'ending_month' => $this->request->getPost('ending_month'),
                 'ending_year' => $this->request->getPost('ending_year'),
+                'currently_working_here' => $this->request->getPost('currently_working_here'),
                 'description' => $this->request->getPost('description'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
@@ -585,13 +609,12 @@ class Home extends BaseController
                 'country'       => ['label' => 'country', 'rules' => 'required'],
                 'starting_month' => ['label' => 'starting_month', 'rules' => 'required'],
                 'starting_year' => ['label' => 'starting_year', 'rules' => 'required'],
-                'ending_month' => ['label' => 'ending_month', 'rules' => 'required'],
-                'ending_year'    => ['label' => 'ending_year', 'rules' => 'required'],
-                'description'    => ['label' => 'description', 'rules' => 'required']
+                'ending_month' => ['label' => 'ending_month', 'rules' => 'trim'],
+                'ending_year'    => ['label' => 'ending_year', 'rules' => 'trim']
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                return redirect()->to(base_url('employer/profile'));
+                return redirect()->to(base_url('home/profile'));
             }
             $user_id = session('user_id');
             $data = [
@@ -683,8 +706,8 @@ class Home extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'language' =>  ['label' => 'language', 'rules' => 'required'],
-                'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
+                'language' =>  ['label' => 'Language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'Proficiency with this language', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -692,10 +715,10 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'language' => $this->request->getPost('language'),
-                    'proficiency' => $this->request->getPost('lang_level'),
-                    'updated_date' => date('Y-m-d'),
+                'user_id' => $user_id,
+                'language' => $this->request->getPost('language'),
+                'proficiency' => $this->request->getPost('lang_level'),
+                'updated_date' => date('Y-m-d'),
             ];
             $query = $this->HomeModel->add_user_language($data);
             if ($query) {
@@ -733,8 +756,8 @@ class Home extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'language' =>  ['label' => 'language', 'rules' => 'required'],
-                'lang_level' => ['label' => 'lang_level', 'rules' => 'required']
+                'language' =>  ['label' => 'Language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'Proficiency with this language', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -742,12 +765,12 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'language' => $this->request->getPost('language'),
-                    'proficiency' => $this->request->getPost('lang_level'),
-                    'updated_date' => date('Y-m-d'),
+                'user_id' => $user_id,
+                'language' => $this->request->getPost('language'),
+                'proficiency' => $this->request->getPost('lang_level'),
+                'updated_date' => date('Y-m-d'),
             ];
-            $id= $this->request->getPost('lang_id');
+            $id = $this->request->getPost('lang_id');
             $query = $this->HomeModel->update_language($data, $id);
             if ($query == true) {
                 $this->session->setFlashdata('success', 'Language Updated !');
@@ -763,12 +786,12 @@ class Home extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'level' =>  ['label' => 'level', 'rules' => 'required'],
-                'title' => ['label' => 'title', 'rules' => 'required'],
-                'majors' =>  ['label' => 'majors', 'rules' => 'required'],
-                'institution' => ['label' => 'institution', 'rules' => 'required'],
-                'country' =>  ['label' => 'country', 'rules' => 'required'],
-                'year' => ['label' => 'year', 'rules' => 'required']
+                'level' =>  ['label' => 'Degree Level', 'rules' => 'required'],
+                'title' => ['label' => 'Degree Title', 'rules' => 'required'],
+                'majors' =>  ['label' => 'Major Subjects', 'rules' => 'required'],
+                'institution' => ['label' => 'Institution', 'rules' => 'required'],
+                'country' =>  ['label' => 'Country', 'rules' => 'required'],
+                'year' => ['label' => 'Completion Year', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -776,14 +799,14 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'degree' => $this->request->getPost('level'),
-                    'degree_title' => $this->request->getPost('title'),
-                    'major_subjects' => $this->request->getPost('majors'),
-                    'institution' => $this->request->getPost('institution'),
-                    'country' => $this->request->getPost('country'),
-                    'completion_year' => $this->request->getPost('year'),
-                    'updated_date' => date('Y-m-d')
+                'user_id' => $user_id,
+                'degree' => $this->request->getPost('level'),
+                'degree_title' => $this->request->getPost('title'),
+                'major_subjects' => $this->request->getPost('majors'),
+                'institution' => $this->request->getPost('institution'),
+                'country' => $this->request->getPost('country'),
+                'completion_year' => $this->request->getPost('year'),
+                'updated_date' => date('Y-m-d')
             ];
             $query = $this->HomeModel->add_education($data);
             if ($query) {
@@ -822,12 +845,12 @@ class Home extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'level' =>  ['label' => 'level', 'rules' => 'required'],
-                'title' => ['label' => 'title', 'rules' => 'required'],
-                'majors' =>  ['label' => 'majors', 'rules' => 'required'],
-                'institution' => ['label' => 'institution', 'rules' => 'required'],
-                'country' =>  ['label' => 'country', 'rules' => 'required'],
-                'year' => ['label' => 'year', 'rules' => 'required']
+                'level' =>  ['label' => 'Degree Level', 'rules' => 'required'],
+                'title' => ['label' => 'Degree Title', 'rules' => 'required'],
+                'majors' =>  ['label' => 'Major Subjects', 'rules' => 'required'],
+                'institution' => ['label' => 'Institution', 'rules' => 'required'],
+                'country' =>  ['label' => 'Country', 'rules' => 'required'],
+                'year' => ['label' => 'Completion Year', 'rules' => 'required']
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -835,14 +858,14 @@ class Home extends BaseController
             }
             $user_id = session('user_id');
             $data = [
-                    'user_id' => $user_id,
-                    'degree' => $this->request->getPost('level'),
-                    'degree_title' => $this->request->getPost('title'),
-                    'major_subjects' => $this->request->getPost('majors'),
-                    'institution' => $this->request->getPost('institution'),
-                    'country' => $this->request->getPost('country'),
-                    'completion_year' => $this->request->getPost('year'),
-                    'updated_date' => date('Y-m-d')
+                'user_id' => $user_id,
+                'degree' => $this->request->getPost('level'),
+                'degree_title' => $this->request->getPost('title'),
+                'major_subjects' => $this->request->getPost('majors'),
+                'institution' => $this->request->getPost('institution'),
+                'country' => $this->request->getPost('country'),
+                'completion_year' => $this->request->getPost('year'),
+                'updated_date' => date('Y-m-d')
             ];
             $id = $this->request->getPost('edu_id');
             $query = $this->HomeModel->update_education($data,$id);

@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
+  <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
 </head>
 
 <body>

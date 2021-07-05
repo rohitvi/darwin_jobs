@@ -265,8 +265,7 @@ class EmployerModel extends Model
     // All CV Search Result
     public function get_user_profiles($search)
     {
-        $builder = $this->db->table('users');
-        // search URI parameters
+        $builder = $this->table('users');
         if (!empty($search['state'])) {
             $builder->where('state', $search['state']);
         }
@@ -300,7 +299,7 @@ class EmployerModel extends Model
         $builder->where('profile_completed', '1');
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('job_title');
-        return $builder->get()->getResultArray();
+        return $builder->paginate(1);
     }
 
     public function candidates_shortlisted($emp_id,$user_id){
@@ -319,6 +318,19 @@ class EmployerModel extends Model
     public function get_states_list()
     {
         return $this->db->table('states')->get()->getResultArray();
+    }
+
+    public function total_posted_job($id)
+    {
+        $builder = $this->db->table('job_post');
+        return $builder->where('employer_id',$id)->countAllResults();
+
+    }
+
+    public function job_seekers_applied($id)
+    {
+        $builder = $this->db->table('seeker_applied_job');
+        return $builder->where('employer_id',$id)->countAllResults();
     }
 
 }
