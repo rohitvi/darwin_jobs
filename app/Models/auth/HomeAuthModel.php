@@ -93,4 +93,25 @@ class HomeAuthModel extends Model
     {
         return $this->db->table('users')->where('id', $id)->update(array('password'=>$password,'password_reset_code'=>''));
     }
+
+    public function google_validate($id,$given_name,$family_name,$email,$picture)
+    {
+        $builder = $this->db->table('users');
+        $get_id = $builder->where('google_id',$id)->get()->getResultArray();
+        $result = $builder->where('email',$email)->get()->getResultArray();
+        if(count($result) == 1){
+            return $result[0];
+        }else{
+                if (count($get_id) == 1) {
+                    return $get_id[0];
+                }else{
+                $this->db->table('users')->insert(array('google_id'=> $id,'firstname'=>$given_name,'lastname'=>$family_name,'email'=> $email,'profile_picture'=>$picture));
+                $lastid = $this->db->insertID();
+                $reg = $builder->where('id',$lastid)->get()->getResultArray();
+                return $reg[0];
+                    }
+            
+            }
+
+    }
 }
