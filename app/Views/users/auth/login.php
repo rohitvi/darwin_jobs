@@ -53,7 +53,10 @@
                 } 
               ?>
               
-              <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button>
+              <?php if(isset($loginButton)):?>
+              <a href="<?=$loginButton; ?>" class="btn btn-primary"><i class="fab fa-google-plus-g"></i>Register via Google+</a>
+              <!-- <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button> -->
+              <?php endif; ?>
             </div>
            </div>
         </div>
