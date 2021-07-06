@@ -41,5 +41,4 @@
         </div>
     </div>
 </main>
-
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
