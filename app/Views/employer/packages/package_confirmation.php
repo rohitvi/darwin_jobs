@@ -34,7 +34,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
-                                    <button type="button" class="btn btn-third btn-block">BUY NOW</button>
+                                    <button type="button" class="btn btn-third btn-block" id="paynow">BUY NOW</button>
                                 </div>
                             </div>
                         </div>
@@ -46,3 +46,21 @@
 </main>
 
 <?php include(VIEWPATH . 'employer/include/footer.php'); ?>
+<?php $orderID = "OD" . strtoupper(uniqid()); ?>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    $('#paynow').click(function() {
+        $.ajax({
+            url: '<?= base_url('employer/getPackageInfo') ?>',
+            type: 'post',
+            data: {
+                package_id: '<?= $id ?>',
+            },
+            success: function(data) {
+                const data = $.parseJSON(data);
+                console.log(data);
+                
+            }
+        });
+    });
+</script>

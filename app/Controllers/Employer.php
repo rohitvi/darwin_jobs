@@ -273,6 +273,7 @@ class Employer extends BaseController
             $this->session->setFlashdata('success', 'Package Already Purchased');
             return redirect()->to(base_url('employer/mypackages'));
         }
+        $get['id'] = $id;
         $get['title'] = 'Package Confirmation';
         return view('employer/packages/package_confirmation', $get);
     }
@@ -980,5 +981,94 @@ class Employer extends BaseController
         if ($result) {
             return redirect()->to(base_url('employer/shortlisted'));
         }
+    }
+
+    public function getPackageInfo()
+    {
+        if ($this->request->isAJAX()) {
+            $emp_id = session('employer_id');
+            $package_id = $this->request->getPost('package_id');
+            $result = $this->EmployerModel->getPackageInfo($package_id);
+            echo json_encode($result);
+            exit;
+        }
+    }
+
+    public function process_payment()
+    {
+        $emp_id = session('employer_id');
+        (!$emp_id) ? redirect(base_url('employer/packages')) : "";
+        if ($this->input->post('payment_type') == 'razorpay') {
+            $capture_amount = $this->input->post('totalAmount'); //% by 100
+            $data['user_id']              = $this->session->userdata('user_id');
+            $data['payment_id']       = $this->input->post("razorpay_payment_id");
+            $data['tax_rate']       = $this->input->post("taxRate");
+            $data['shipping_chrgs']       = $this->input->post("shippingChrgs");
+            $data['payment_type']       = 'Razorpay';
+            $data['payment_status']     = 'due';
+            $data['payment_details']    = 'none';
+            $data['amount']             = $capture_amount / 100;
+            $data['payment_timestamp']  = date('Y-m-d H:i:s');
+            $this->db->insert('payments', $data);
+            $insert_id = $this->db->insert_id();
+            $this->session->set_userdata('payment_id', $insert_id);
+            $razorpay_key = get_DirectValue('general_setting', 'value', 'name', 'razorpay_public_key');
+            $razorpay_secret = get_DirectValue('general_setting', 'value', 'name', 'razorpay_secret_key');
+
+            $api = new Api($razorpay_key, $razorpay_secret);
+            if (isset($_POST['razorpay_payment_id']) === false) {
+                die("Payment Failed. Please Retry!");
+            }
+            $id = $this->input->post('razorpay_payment_id');
+            $payment  = $api->payment->fetch($id);
+
+            if ($payment['status'] == 'authorized' || $payment['status'] == 'captured' || $payment['status'] == 'created') {
+                $payment  =  $api->payment->fetch($id)->capture(array('amount' => $capture_amount));
+                $this->razorpay_success();
+            } else {
+                $this->razorpay_cancel();
+            }
+        }
+
+        // check other payments type here
+
+    }
+
+    /* FUNCTION: Verify razorpay payment*/
+    public function razorpay_success()
+    {
+        $payment_id                = $this->session->userdata('payment_id');
+        $data['payment_details']   = json_encode($_POST);
+        $data['payment_timestamp'] = date('Y-m-d H:i:s');
+        $data['payment_type']      = 'Razorpay';
+        $data['payment_status']    = 'paid';
+        $this->db->where('id', $payment_id)->update('payments', $data);
+        $user_id = $this->session->userdata("user_id");
+        $orderID = $this->input->post("orderId");
+        $phone = $this->input->post("phone");
+        $email = $this->input->post("email");
+        $data = [
+            'payment_id' => $this->input->post("razorpay_payment_id"),
+            'payment_method' => 'Online',
+            'order_status' => '1',
+            'mobile' => $phone,
+            'email' => $email,
+            'final_price' => $this->input->post('totalAmount') / 100 //% by 100
+        ];
+        if ($this->db->where("order_number", $orderID)->where("user_id", $user_id)->update("orders", $data) && $this->db->where("user_id", $user_id)->delete("user_cart")) {
+            $this->api_return(["status" => 200]);
+        } else {
+            var_dump($this->db->error());
+            $this->api_return(["status" => 500]);
+        }
+        return 1;
+    }
+
+    public function razorpay_cancel()
+    {
+        $payment_id = $this->session->userdata('payment_id');
+        $this->db->where('id', $payment_id);
+        $this->db->delete('payments');
+        return 0; //msg here 
     }
 }
