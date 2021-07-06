@@ -40,6 +40,7 @@ class Employer extends BaseController
         $data['current_package'] = $this->EmployerModel->get_active_package();
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
         // pre($data);
+        $data['title'] = 'Employer Dashboard';
         return view('employer/dashboard', $data);
     }
 
@@ -77,7 +78,8 @@ class Employer extends BaseController
                 exit;
             }
         }
-        return view('employer/auth/login');
+        $data['title'] = 'Employer Login';
+        return view('employer/auth/login',$data);
     }
 
     public function personal_info_update()
@@ -160,7 +162,8 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/changepassword'));
             }
         }
-        return view('employer/auth/changepassword');
+        $data['title'] = 'Change Password';
+        return view('employer/auth/changepassword',$data);
     }
 
     public function profile()
@@ -175,6 +178,7 @@ class Employer extends BaseController
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->personal_info($id);
+        $get['title'] = 'Personal Info';
         // pre( $get['data'] );
         return view('employer/auth/profile', $get);
     }
@@ -254,6 +258,7 @@ class Employer extends BaseController
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->cmp_info($id);
+        $get['title'] = 'Company Information';
         // pre($get['data']);exit;
         return view('employer/auth/company', $get);
     }
@@ -263,6 +268,7 @@ class Employer extends BaseController
     public function packages()
     {
         $get['data'] = $this->EmployerModel->getpackages();
+        $get['title'] = 'Membership Plans';
         return view('employer/packages/packages', $get);
     }
 
@@ -348,6 +354,7 @@ class Employer extends BaseController
     {
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
+        $get['title'] = 'My Packages';
         return view('employer/packages/my_packages', $get);
     }
 
@@ -406,6 +413,7 @@ class Employer extends BaseController
     {
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
+        $get['title'] = 'Shortlisted Candidates';
         return view('employer/resume/shortlisted_resume2', $get);
     }
 
@@ -643,12 +651,14 @@ class Employer extends BaseController
         $get['employment'] = get_employment_type_list();
         $get['educations'] = $this->EmployerModel->get_education();
         $get['countries'] = $this->EmployerModel->get_countries_list();
+        $get['title'] = 'Post Job';
         return view('employer/job/post', $get);
     }
 
     public function list_jobs()
     {
-        return view('employer/job/job_list');
+        $data['title'] = 'Job List';
+        return view('employer/job/job_list',$data);
     }
 
     public function datatable_json()
@@ -697,6 +707,7 @@ class Employer extends BaseController
         $get['educations'] = $this->EmployerModel->get_education();
         $get['countries'] = $this->EmployerModel->get_countries_list();
         $get['data'] = $this->EmployerModel->edit_job($id);
+        $get['title'] = 'Edit Job';
         return view('employer/job/edit_job', $get);
     }
 
@@ -839,6 +850,7 @@ class Employer extends BaseController
         $get['profiles'] = $Users->get_user_profiles($search);
         $get['pager'] = $Users->pager;
 
+         $get['title'] = 'Find Candidates';
         return view('employer/cv_search/cv_search_page', $get);
     }
 
