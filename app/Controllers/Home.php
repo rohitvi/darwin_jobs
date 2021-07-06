@@ -62,12 +62,12 @@ class Home extends BaseController
     public function login()
     {
         $fb_permission = ['email'];
-        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?',$fb_permission);
+        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?', $fb_permission);
 
         $google_client = new \Google_Client();
         $google_client->setClientId('192651661990-ivaf8o78h2caano4r29uktnl1l9oapc8.apps.googleusercontent.com');
         $google_client->setClientSecret('-3ouIrk2EgJ6x9y2aZ4YQBmz');
-        $google_client->setRedirectUri(base_url().'/login');
+        $google_client->setRedirectUri(base_url() . '/login');
         $google_client->addScope('email');
         $google_client->addScope('profile');
 
@@ -75,25 +75,24 @@ class Home extends BaseController
             $token = $google_client->fetchAccessTokenWithAuthCode($this->request->getVar('code'));
             if (!isset($token['error'])) {
                 $google_client->setAccessToken($token['access_token']);
-                $this->session->set('access_token',$token['access_token']);
+                $this->session->set('access_token', $token['access_token']);
                 //to get profile data
                 $google_service = new \Google_Service_Oauth2($google_client);
                 $g_data = $google_service->userinfo->get();
-                if(!empty($g_data['id'])){
-                    $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
+                if (!empty($g_data['id'])) {
+                    $logindata = $this->HomeAuthModel->google_validate($g_data['id'], $g_data['given_name'], $g_data['family_name'], $g_data['email'], $g_data['picture']);
                     //pre($logindata);
-                    $employerdata=[
-                        'user_id' =>$logindata['id'],
+                    $employerdata = [
+                        'user_id' => $logindata['id'],
                         'user_logged_in' => true,
-                        'profile_pic'=> $logindata['profile_picture'],
-                        'username'=>$logindata['firstname'].' '.$logindata['lastname'],
+                        'profile_pic' => $logindata['profile_picture'],
+                        'username' => $logindata['firstname'] . ' ' . $logindata['lastname'],
                         'profile_completed' => $logindata['profile_completed']
                     ];
                     session()->set($employerdata);
-                    session()->setFlashData('success','Login Success!');
+                    session()->setFlashData('success', 'Login Success!');
                     return redirect()->to(base_url('home/profile'));
                 }
-
             }
         }
 
@@ -129,7 +128,7 @@ class Home extends BaseController
             $data['loginButton'] = $google_client->createAuthUrl();
         }
 
-        return view('users/auth/login',$data);
+        return view('users/auth/login', $data);
     }
 
     public function authWithFb()
@@ -982,7 +981,7 @@ class Home extends BaseController
     }
 
     // Jobs by loccation
-    public function companies($letter='A')
+    public function companies($letter = 'A')
     {
         $data['companies'] = $this->HomeModel->get_companies($letter);
 
@@ -993,19 +992,18 @@ class Home extends BaseController
         return view('users/companies', $data);
     }
 
-	// Company Detail
-	public function company_detail($company_id)
-	{
-		$data['company_info'] = $this->HomeModel->get_company_detail($company_id);
+    // Company Detail
+    public function company_detail($company_id)
+    {
+        $data['company_info'] = $this->HomeModel->get_company_detail($company_id);
 
-		$data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
-		$data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
+        $data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
+        $data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
 
-		$data['title'] = 'company_details';
-		$data['meta_description'] = 'your meta description here';
-		$data['keywords'] = 'meta tags here';
-		// pre($data['company_info']);
+        $data['title'] = 'company_details';
+        $data['meta_description'] = 'your meta description here';
+        $data['keywords'] = 'meta tags here';
+        // pre($data['company_info']);
         return view('users/company-details', $data);
-	}
-
+    }
 }
