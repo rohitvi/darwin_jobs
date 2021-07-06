@@ -34,15 +34,15 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
-                    <input type="text" name="category" class="form-control <?php echo (isset($validation) && $validation->hasError('category')) ? 'is-invalid' : '';?>" id="category" placeholder="Category Name">
-                    <?php
-                   // print_r($validation);
-                      if(isset($validation) && $validation->hasError('category')){
-                        echo '<p class="invalid-feedback">'.$validation->getError('category').'</p>';
-                      }
-                    ?>
+                    <input type="text" name="category" class="form-control" placeholder="Category Name">
+                  </div>
+
+                  <div class='form-group'>
+                      <label for="iconfield">Add Icon Field</label>
+                      <input type="text" name="iconfield" class="form-control" placeholder="Add Icon Field">
                   </div>
                 </div>
+
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <input type="submit" name="submit" value="Add Category" class="btn btn-info">
