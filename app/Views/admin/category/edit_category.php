@@ -31,18 +31,29 @@
               
               <!-- /.card-header -->
               <!-- form start-->
-              <form action="<?php echo base_url('admin/edit_category/'.$category_row[0]['id'])?>"  name="editcategory" id="editcategory" method="post">
+              <form action="<?= base_url('admin/edit_category/'.$category_row[0]['id'])?>" method="post">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
-                    <input type="text" name="category" class="form-control" id="category" value="<?php echo  $category_row[0]['name'];?>" placeholder="category Name">
-                    <?php
-                   // print_r($validation);
-                      if(isset($validation) && $validation->hasError('category')){
-                        echo '<p class="invalid-feedback">'.$validation->getError('category').'</p>';
-                      }
-                    ?>
+                    <input type="text" name="category" class="form-control" value="<?php echo  $category_row[0]['name'];?>" placeholder="category Name">
+                   
                   </div>
+
+                  <div class='form-group'>
+                      <label for="iconfield">Add Icon Field</label>
+                      <input type="text" name="iconfield" class="form-control" value="<?php echo  $category_row[0]['iconfield'];?>" placeholder="Add Icon Field">
+          
+                  </div>
+
+                  <div class='form-group'>
+                      <label for="">Status</label>
+                      <select name="status" class="form-control">
+                      <option value="">Please Select</option>
+                      <option value="0" <?= ($category_row[0]['status'] == 0)?'selected' :'' ?>>Inactive</option>
+                      <option value="1" <?= ($category_row[0]['status'] == 1)?'selected' :'' ?>>Active</option>
+                      </select> 
+                  </div>
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

@@ -335,30 +335,63 @@ class Admin extends BaseController
         return view('admin/category/list_category', $data);
     }
 
+    // public function add_category()
+    // {
+    //     $data = [];
+    //     if ($this->request->getMethod() == 'post') {
+    //         $input = $this->validate([
+    //             'category' => 'required|min_length[5]',
+    //         ]);
+
+    //         if ($input == true) {
+    //             $addcategorydata = [
+    //                 'name' => $this->request->getPost('category'),
+    //                 'slug' => $this->request->getPost('category'),
+    //             ];
+    //             $addcategory = $this->adminModel->add_category($addcategorydata);
+    //             $this->session->setFlashdata('status', 'Category Added successfully');
+    //             return redirect()->to('/admin/list_category')->with('status_icon', 'success');
+    //         } else {
+    //             //form not validated successfully
+    //             $data['validation'] = $this->validator;
+    //         }
+    //     }
+    //     $data['title'] = 'Add Category';
+    //     return view('admin/category/add_category', $data);
+    // }
+
     public function add_category()
     {
         $data = [];
         if ($this->request->getMethod() == 'post') {
-            $input = $this->validate([
-                'category' => 'required|min_length[5]',
-            ]);
+            $rules = [
+                'category' => ['label' =>'Category Name', 'rules' => 'required'],
+                'iconfield' => ['label' =>'Add Icon', 'rules' => 'required']
+                    ];
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/add_category'));
+            }
 
-            if ($input == true) {
                 $addcategorydata = [
                     'name' => $this->request->getPost('category'),
                     'slug' => $this->request->getPost('category'),
+                    'iconfield' => $this->request->getPost('iconfield'),
                 ];
                 $addcategory = $this->adminModel->add_category($addcategorydata);
-                $this->session->setFlashdata('status', 'Category Added successfully');
-                return redirect()->to('/admin/list_category')->with('status_icon', 'success');
-            } else {
-                //form not validated successfully
-                $data['validation'] = $this->validator;
-            }
+                if ($addcategory == true) {
+                    $this->session->setFlashdata('success', 'Category Added successfully');
+                    return redirect()->to(base_url('/admin/list_category'));
+                    } else {
+                    $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again !');
+                    return redirect()->to(base_url('/admin/add_category'));
+                    }
+                
         }
         $data['title'] = 'Add Category';
         return view('admin/category/add_category', $data);
     }
+
 
     public function edit_category($id)
     {
@@ -366,21 +399,30 @@ class Admin extends BaseController
         $data['category_row'] = $category_row;
 
         if ($this->request->getMethod() == 'post') {
-            $input = $this->validate([
-                'category' => 'required|min_length[5]',
-            ]);
-            if ($input == true) {
+            $rules = [
+            'category' => ['label' =>'Category Name', 'rules' => 'required'],
+            'iconfield' => ['label' =>'Add Icon', 'rules' => 'required'],
+            'status' => ['label' =>'Status', 'rules' => 'required']
+                ];
+
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/edit_category/'.$id));
+            }
                 $editcategory = [
                     'name' => $this->request->getPost('category'),
                     'slug' => $this->request->getPost('category'),
+                    'iconfield' => $this->request->getPost('iconfield'),
+                    'status' => $this->request->getPost('status'),
                 ];
                 $editcategorydata = $this->adminModel->edit_category($editcategory, $id);
-                $this->session->setFlashdata('status', 'Category Updated Successfully');
-                return redirect()->to('/admin/list_category')->with('status_icon', 'success');
-            } else {
-                //form not validated successfully
-                $data['validation'] = $this->validator;
-            }
+                if ($editcategorydata == 1) {
+                $this->session->setFlashdata('success', 'Category Updated Successfully');
+                return redirect()->to(base_url('/admin/list_category'));
+                } else {
+                    $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again !');
+                        return redirect()->to(base_url('/admin/edit_category'));
+                }
         }
         $data['title'] = 'Edit Category';
         return view('admin/category/edit_category', $data);
