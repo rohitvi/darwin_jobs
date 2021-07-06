@@ -1,17 +1,13 @@
-<?php include(VIEWPATH . 'users/include/header.php'); ?>
+<<?php include(VIEWPATH . 'users/include/header.php'); ?>
+<div class='header_inner'>
+  <div class="header_btm">
+    <h2>Jobs by Location</h2>
+  </div>
 </div>
 </header>
 <main>
     <div class="section status_section">
-        <div class="bg-v">
-            <div class="bg-v-1 bg-t-r">
-            </div>
-            <div class="bg-v-2 bg-b-l">
-            </div>
-        </div>
         <div class="container">
-            <h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Jobs by Location</h2>
-
             <div class="row justify-content-center">
                 <?php foreach ($cities as $city) : ?>
                     <div class="col-auto">

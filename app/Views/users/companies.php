@@ -1,29 +1,45 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
+<div class='header_inner'>
+    <div class="header_btm">
+        <h2>Browse Companies</h2>
+    </div>
 </div>
 </header>
 <main>
-    <div class="section status_section">
-        <div class="bg-v">
-            <div class="bg-v-1 bg-t-r">
-            </div>
-            <div class="bg-v-2 bg-b-l">
-            </div>
-        </div>
+    <div class="job_container">
         <div class="container">
-            <h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Top Companies</h2>
-            <div class="row justify-content-center">
-                <?php foreach ($companies as $company) : ?>
-                    <div class="col-auto">
-                        <div class="status_box" data-aos="fade-in" data-aos-delay="1000">
-                            <a href="<?= base_url('home/company_detail=' . $company['id']); ?>">
-                                <img alt="" data-aos="fade-up" data-aos-delay="1400" src="<?= base_url(); ?>/public/users/images/i-company.png">
-                                <p><?= $company['company_name']; ?></p>
-                            </a>
-                        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="letters-list">
+                        <?php
+                        $uri = new \CodeIgniter\HTTP\URI(current_url());
+                        foreach (range('A', 'Z') as $char) { ?>
+                            <a href="<?= base_url('home/companies/' . $char) ?>" class="<?= $uri->getSegment(4) == $char ? 'current' : '' ?>"><?= $char ?></a>
+                        <?php } ?>
                     </div>
-                <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="row company_names">
+                <?php
+                if (count($companies) > 0) :
+                    foreach ($companies as $company) : ?>
+                        <div class="col-md-3">
+                            <div class="company_name_box">
+                                <a href="<?= base_url('home/company_detail/' . $company['id']); ?>">
+                                    <img alt="" src="<?= $company['company_logo']; ?>">
+                                    <h3><?= $company['company_name']; ?></h3>
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach;
+                else : ?>
+                    <div class="col-md-12 text-center">
+                        <h3>No Company Found</h3>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </main>
+
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>

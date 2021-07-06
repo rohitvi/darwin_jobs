@@ -982,9 +982,9 @@ class Home extends BaseController
     }
 
     // Jobs by loccation
-    public function companies()
+    public function companies($letter='A')
     {
-        $data['companies'] = $this->HomeModel->get_companies();
+        $data['companies'] = $this->HomeModel->get_companies($letter);
 
         $data['title'] = 'top_companies';
         $data['meta_description'] = 'your meta description here';
@@ -994,17 +994,18 @@ class Home extends BaseController
     }
 
 	// Company Detail
-	public function company_detail($id)
+	public function company_detail($company_id)
 	{
-		// $data['company_info'] = $this->company_model->get_company_detail($company_id);
+		$data['company_info'] = $this->HomeModel->get_company_detail($company_id);
 
-		// $data['jobs'] = $this->company_model->get_jobs_by_companies($company_id); // Get company jobs
+		$data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
+		$data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
 
-		// $data['title'] = trans('company_details');
-		// $data['meta_description'] = 'your meta description here';
-		// $data['keywords'] = 'meta tags here';
-		
-        // return view('users/company-details', $data);
+		$data['title'] = 'company_details';
+		$data['meta_description'] = 'your meta description here';
+		$data['keywords'] = 'meta tags here';
+		// pre($data['company_info']);
+        return view('users/company-details', $data);
 	}
 
 }

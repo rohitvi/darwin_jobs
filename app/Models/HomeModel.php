@@ -260,11 +260,34 @@ class HomeModel extends Model
     }
 
     // Get all companies
-    public function get_companies()
+    public function get_companies($letter)
     {
         $builder = $this->db->table('companies');
         $builder->select('id, company_name, company_slug, company_logo');
+        $builder->like('company_name', $letter, 'after');
         $builder->groupBy('companies.company_slug');
+        return $builder->get()->getResultArray();
+    }
+
+    // Get company detail
+    public function get_company_detail($id)
+    {
+        $builder = $this->db->table('companies');
+        $builder->Where(array('id' => $id));
+        $data = $builder->get()->getResultArray();
+        return $data[0];
+    }
+
+    //----------------------------------------------------
+    // Get all companies
+    public function get_jobs_by_companies($company_id)
+    {
+        $builder = $this->db->table('job_post');
+        $builder->select('id, min_salary,max_salary,title, company_id, job_slug, job_type, description, country, city, created_date, industry');
+        $builder->Where('company_id', $company_id);
+        $builder->Where('is_status', 'active');
+        $builder->Where('curdate() <  expiry_date');
+        $builder->orderBy('created_date', 'desc');
         return $builder->get()->getResultArray();
     }
 }
