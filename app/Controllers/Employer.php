@@ -273,6 +273,7 @@ class Employer extends BaseController
             $this->session->setFlashdata('success', 'Package Already Purchased');
             return redirect()->to(base_url('employer/mypackages'));
         }
+        $get['title'] = 'Package Confirmation';
         return view('employer/packages/package_confirmation', $get);
     }
 
