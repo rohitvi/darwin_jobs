@@ -105,7 +105,7 @@ class HomeAuthModel extends Model
                 if (count($get_id) == 1) {
                     return $get_id[0];
                 }else{
-                $this->db->table('users')->insert(array('google_id'=> $id,'firstname'=>$given_name,'lastname'=>$family_name,'email'=> $email,'profile_picture'=>$picture));
+                $this->db->table('users')->insert(array('google_id'=> $id,'firstname'=>$given_name,'lastname'=>$family_name,'email'=> $email,'profile_picture'=>$picture,'is_verify'=>1));
                 $lastid = $this->db->insertID();
                 $reg = $builder->where('id',$lastid)->get()->getResultArray();
                 return $reg[0];

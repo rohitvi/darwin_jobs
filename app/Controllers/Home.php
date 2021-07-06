@@ -79,6 +79,7 @@ class Home extends BaseController
                 //to get profile data
                 $google_service = new \Google_Service_Oauth2($google_client);
                 $g_data = $google_service->userinfo->get();
+                // pre($g_data);
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
                     //pre($logindata);
@@ -87,7 +88,8 @@ class Home extends BaseController
                         'user_logged_in' => true,
                         'profile_pic'=> $logindata['profile_picture'],
                         'username'=>$logindata['firstname'].' '.$logindata['lastname'],
-                        'profile_completed' => $logindata['profile_completed']
+                        'profile_completed' => $logindata['profile_completed'],
+                        'is_verify' =>  $logindata['is_verify']
                     ];
                     session()->set($employerdata);
                     session()->setFlashData('success','Login Success!');
@@ -364,7 +366,7 @@ class Home extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'old_password' => ['label' => 'old_password', 'rules' => 'required'],
+                'old_password' => ['label' => 'Current password', 'rules' => 'required'],
                 'new_password' => ['label' => 'new_password', 'rules' => 'required'],
                 'confirm_password' => ['label' => 'confirm_password', 'rules' => 'required|matches[new_password]']
             ];

@@ -20,9 +20,17 @@ class EmployerAuthModel extends Model
         }
     }
 
-    public function changepassword($id,$password)
+    public function changepassword($id,$data)
     {
-    	return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password));
+        $builder = $this->db->table('employers');
+        $result = $builder->where('id',$id)->get()->getResultArray();
+        $validPassword = password_verify($data['old_password'], $result[0]['password']);   
+        if ($validPassword) {
+            $this->db->table('employers')->where('id', $id)->update(array('password'=>$data['new_password']));
+            return true;
+        } else {
+            return false;
+        }     
     }
 
     public function personal_info($id)
