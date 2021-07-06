@@ -136,16 +136,22 @@ class Employer extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
+                'currentpassword' => ['label' => 'Current password', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'matches[password]']
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
                 exit;
             }
             $id = session('employer_id');
-            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-            $query = $this->EmployerAuthModel->changepassword($id, $password);
+            $data = array(
+                'id' => $id,
+                'old_password' => $this->request->getPost('currentpassword'),
+                'new_password' =>  password_hash($this->request->getPost('cpassword'), PASSWORD_DEFAULT)
+            );
+
+            $query = $this->EmployerAuthModel->changepassword($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
                 return redirect()->to(base_url('employer/profile'));

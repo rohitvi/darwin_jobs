@@ -510,7 +510,9 @@
               </div>
               <div class='col-md-6'>
                 <button type="submit" class="btn-sm btn-primary" name='update_resume'>Update</button>
-                <!-- <button type="submit" class="btn-sm btn-primary" name='update_resume'>Download CV</button> -->
+                    <?php if ($data[0]['resume'] != '') { ?>
+                <a href="<?= $data[0]['resume']; ?>"><button type="button" class="btn-sm btn-primary" name='update_resume'><i class="fa fa-download"></i> Download CV</button></a>
+                <?php }?>
               </div>
             </div>
           </form>

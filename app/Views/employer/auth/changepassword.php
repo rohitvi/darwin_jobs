@@ -33,13 +33,19 @@
                 <input type="hidden" name="_method" value="PUT" />
                 <div class="big_form_group">
                   <div class="row">
-                    <div class="col-md-6">
+                  <div class="col-md-4">
                       <div class="form-group ">
-                        <label>Password</label>
-                        <input name="password" type="password" class="form-control" placeholder="Enter Password" required>
+                        <label>Current Password</label>
+                        <input name="currentpassword" type="password" class="form-control" placeholder="Current Password" required>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                      <div class="form-group ">
+                        <label>New Password</label>
+                        <input name="password" type="password" class="form-control" placeholder="New Password" required>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
                       <div class="form-group ">
                         <label>Confirm Password</label>
                         <input name="cpassword" type="password" class="form-control" placeholder="Confirm Password" required>
