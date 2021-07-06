@@ -54,6 +54,7 @@ class Home extends BaseController
     public function dashboard()
     {
         $data['states'] = $this->adminModel->get_states_list(101);
+        $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
         $this->checkProfileCompleted();
         return view('users/index');
@@ -130,6 +131,7 @@ class Home extends BaseController
             $data['loginButton'] = $google_client->createAuthUrl();
         }
 
+        $data['title'] = 'Job Seeker Login';
         return view('users/auth/login', $data);
     }
 
@@ -238,7 +240,8 @@ class Home extends BaseController
                 exit;
             }
         }
-        return view('users/auth/registration');
+        $data['title'] = 'Job Seeker Register';
+        return view('users/auth/registration',$data);
     }
 
     public function logout()
@@ -368,6 +371,7 @@ class Home extends BaseController
         $skills = get_user_skills($user_id); // helper function
 
         $data['jobs'] = $this->HomeModel->matching_jobs($skills);
+        $data['title'] = 'Matching Jobs';
         return view('users/auth/matching_jobs', $data);
     }
 
@@ -399,7 +403,8 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/change_password'));
             }
         }
-        return view('users/auth/change_password');
+        $data['title'] = 'Change Password';
+        return view('users/auth/change_password',$data);
     }
 
     public function profile()
@@ -411,6 +416,7 @@ class Home extends BaseController
         $get['experiences'] = $this->HomeModel->get_user_experience($id);
         $get['languages'] = $this->HomeModel->get_user_language($id);
         $get['education'] = $this->HomeModel->get_user_education($id);
+        $get['title'] = 'Seeker Profile';
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'firstname'     => ['label' => 'First Name', 'rules' => 'required'],
@@ -485,6 +491,7 @@ class Home extends BaseController
     public function saved_jobs()
     {
         $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
+        $get['title'] = 'Saved Jobs';
         return view('users/auth/saved_jobs', $get);
     }
 
@@ -542,6 +549,7 @@ class Home extends BaseController
     {
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
+        $get['title'] = 'Applied Jobs';
         return view('users/auth/applied_jobs', $get);
     }
 
@@ -717,7 +725,8 @@ class Home extends BaseController
                 exit;
             }
         }
-        return view('users/auth/password_reset');
+        $data['title'] = 'Password Recovery';
+        return view('users/auth/password_reset',$data);
     }
 
     public function reset_password($reset_code)
@@ -951,7 +960,7 @@ class Home extends BaseController
     public function jobs_by_category()
     {
         $data['categories'] = $this->HomeModel->get_categories_with_jobs();
-        $data['title'] = 'label_jobs_by_cat';
+        $data['title'] = 'Jobs by Category';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
         // pre($data);
@@ -963,7 +972,7 @@ class Home extends BaseController
     {
         $data['industries'] = $this->HomeModel->get_industries_with_jobs();
 
-        $data['title'] = 'label_jobs_by_industry';
+        $data['title'] = 'Jobs by Industry';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
 
@@ -975,7 +984,7 @@ class Home extends BaseController
     {
         $data['cities'] = $this->HomeModel->get_cities_with_jobs();
 
-        $data['title'] = 'label_jobs_by_loc';
+        $data['title'] = 'Jobs by Location';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
 
@@ -987,7 +996,7 @@ class Home extends BaseController
     {
         $data['companies'] = $this->HomeModel->get_companies($letter);
 
-        $data['title'] = 'top_companies';
+        $data['title'] = 'Top Companies';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
         // pre($data);
