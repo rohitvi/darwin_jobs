@@ -44,7 +44,8 @@ class Home extends BaseController
 
     public function dashboard()
     {
-        $data['states'] = $this->adminModel->get_states_list(101);
+        $data['categories'] = $this->HomeModel->getTopCategory();
+        $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
     }
@@ -315,7 +316,7 @@ class Home extends BaseController
         $data = [
             'search_value' => $search,
             'jobs' => $Jobs->get_all_jobs($search),
-            'states' => $this->adminModel->get_states_list(101),
+            'cities' => get_country_cities(101),
             'categories' => $this->adminModel->get_categories_list(),
             'title' => 'Search Results',
             'meta_description' => 'your meta description here',

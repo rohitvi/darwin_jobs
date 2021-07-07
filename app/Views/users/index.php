@@ -33,9 +33,9 @@
 									</div>
 									<div class="fild-wrap fw-job-location">
 										<i class="fas fa-map-marker-alt"></i>
-										<select class="js-example-basic-single" name="state">
-											<?php foreach ($states as $key => $state) : ?>
-												<option value="<?= $state['id'] ?>" <?=  (isset($_POST['state']) && $_POST['state'] == $state['id'] ) ? 'selected' : '' ?>><?= $state['name'] ?></option>
+										<select class="js-example-basic-single" name="city">
+											<?php foreach ($cities as $key => $city) : ?>
+												<option value="<?= $city['id'] ?>" <?=  (isset($_POST['city']) && $_POST['city'] == $city['id'] ) ? 'selected' : '' ?>><?= $city['name'] ?></option>
 											<?php endforeach; ?>
 										</select>
 									</div>
