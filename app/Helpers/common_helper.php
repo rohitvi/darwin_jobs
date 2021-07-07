@@ -89,7 +89,12 @@ function get_category_name($id)
 {
     $db      = \Config\Database::connect();
     $builder = $db->table('categories');
-    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
+    $data = $builder->getWhere(array('id' => $id))->getRowArray();
+    if($data)
+        return $data['name'];
+    else
+        return 0;
+        
 }
 
 // Get country's states
@@ -98,6 +103,17 @@ function get_country_states($country_id)
     $db      = \Config\Database::connect();
     $builder = $db->table('states');
     return $builder->select('*')->where('country_id', $country_id)->get()->getResultArray();
+}
+
+// Get country's states
+function get_country_cities($country_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('cities');
+    $builder->select('cities.id,cities.name');
+    $builder->join('states', 'states.id = cities.state_id');
+    $builder->where('states.country_id',$country_id);
+    return $builder->get()->getResultArray();
 }
 
 function arrayToList(array $array): string
@@ -363,4 +379,58 @@ function get_category_slug($id)
     $db = \Config\Database::connect();
     $builder = $db->table('categories');
     return $builder->select('slug')->getWhere(array('id' => $id))->getRowArray()['slug'];
+}
+
+function user_vaidate($para='user_logged_in')
+{
+    if($para == 'user_logged_in')
+    {
+        if(empty(session('user_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'user_id')
+    {
+        if(empty(session('user_logged_in')))
+            return FALSE;
+        else
+            return session('user_id');
+    }
+}
+
+function employer_vaidate($para='employer_logged_in')
+{
+    if($para == 'employer_logged_in')
+    {
+        if(empty(session('employer_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'employer_id')
+    {
+        if(empty(session('employer_logged_in')))
+            return FALSE;
+        else
+            return session('employer_id');
+    }
+}
+
+function admin_vaidate($para='admin_logged_in')
+{
+    if($para == 'admin_logged_in')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'admin_logged_in')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return session('admin_logged_in');
+    }
 }

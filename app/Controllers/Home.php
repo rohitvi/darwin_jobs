@@ -30,15 +30,6 @@ class Home extends BaseController
         $this->uri = service('uri');
     }
 
-    public function checklogin()
-    {
-        if (session('user_logged_in')) {
-            return redirect()->to('home/dashboard');
-        } else {
-            return redirect()->to('home/login');
-        }
-    }
-
     public function checkProfileCompleted()
     {
         if (session('profile_completed') == 0) {
@@ -56,6 +47,8 @@ class Home extends BaseController
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
         $data['posts'] = $this->HomeModel->getLastPost();
+        $data['categories'] = $this->HomeModel->getTopCategory();
+        $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
     }
@@ -326,7 +319,7 @@ class Home extends BaseController
         $data = [
             'search_value' => $search,
             'jobs' => $Jobs->get_all_jobs($search),
-            'states' => $this->adminModel->get_states_list(101),
+            'cities' => get_country_cities(101),
             'categories' => $this->adminModel->get_categories_list(),
             'title' => 'Search Results',
             'meta_description' => 'your meta description here',
@@ -366,7 +359,6 @@ class Home extends BaseController
 
     public function matching_jobs()
     {
-        $this->checklogin();
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
 
@@ -419,22 +411,22 @@ class Home extends BaseController
         $get['title'] = 'Seeker Profile';
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'firstname'     => ['label' => 'First Name', 'rules' => 'required'],
-                'lastname'     => ['label' => 'Last Name', 'rules' => 'required'],
-                'email'         => ['label' => 'Email', 'rules' => 'required|valid_email'],
-                'mobile_no'     => ['label' => 'Phone Number', 'rules' => 'required|min_length[10]'],
-                'dob'           => ['label' => 'Date of Birth', 'rules' => 'required'],
-                'age'           => ['label' => 'Age', 'rules' => 'required'],
-                'category'      => ['label' => 'Category', 'rules' => 'required'],
-                'job_title'      => ['label' => 'Job Title', 'rules' => 'required'],
-                'experience'      => ['label' => 'Experience', 'rules' => 'required'],
-                'skills'          => ['label' => 'Skills', 'rules' => 'required'],
-                'current_salary'  => ['label' => 'Current Salary', 'rules' => 'required'],
-                'expected_salary' => ['label' => 'Expected Salary', 'rules' => 'required'],
-                'country'          => ['label' => 'Country', 'rules' => 'required'],
-                'state'            => ['label' => 'State', 'rules' => 'required'],
-                'city'             => ['label' => 'City', 'rules' => 'required'],
-                'address'          => ['label' => 'Address', 'rules' => 'required'],
+                'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
+                'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
+                'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'mobile_no'         => ['label' => 'Phone Number', 'rules' => 'required|min_length[10]'],
+                'dob'               => ['label' => 'Date of Birth', 'rules' => 'required'],
+                'age'               => ['label' => 'Age', 'rules' => 'required'],
+                'category'          => ['label' => 'Category', 'rules' => 'required'],
+                'job_title'         => ['label' => 'Job Title', 'rules' => 'required'],
+                'experience'        => ['label' => 'Experience', 'rules' => 'required'],
+                'skills'            => ['label' => 'Skills', 'rules' => 'required'],
+                'current_salary'    => ['label' => 'Current Salary', 'rules' => 'required'],
+                'expected_salary'   => ['label' => 'Expected Salary', 'rules' => 'required'],
+                'country'           => ['label' => 'Country', 'rules' => 'required'],
+                'state'             => ['label' => 'State', 'rules' => 'required'],
+                'city'              => ['label' => 'City', 'rules' => 'required'],
+                'address'           => ['label' => 'Address', 'rules' => 'required'],
                 // 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
             ];
             if ($this->validate($rules) == false) {
