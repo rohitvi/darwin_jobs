@@ -46,6 +46,8 @@
 </main>
 
 <?php include(VIEWPATH . 'employer/include/footer.php'); ?>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <?php $orderID = "OD" . strtoupper(uniqid()); ?>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
@@ -73,7 +75,7 @@
                                 type: 'POST',
                                 data: {
                                     package_id: '<?= $id ?>',
-                                    payid: payid
+                                    razorpay_payment_id: payid
                                 },
                                 beforeSend: function() {
                                     swal({
@@ -84,7 +86,6 @@
                                     });
                                     $('#paynow').text('Please Wait..');
 
-                                    document.getElementById("shares").readOnly = true;
                                     document.getElementById("paynow").disabled = true;
                                 },
                                 success: function(data) {
@@ -92,10 +93,9 @@
                                         swal.close();
                                         swal({
                                             title: "Purchased Successfully",
-                                            text: "Payment has been received, Product(s) will be allocated to you within 2 business days.",
                                             type: "success",
                                         }).then(function() {
-                                            location.reload();
+                                            windows.location.href ('<?= base_url('employer/packages') ?>');
                                         });
                                     } else if (daat == 2) {
                                         alert("Sorry! something went wrong");
