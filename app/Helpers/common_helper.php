@@ -329,6 +329,13 @@ function get_job_type_name($id)
     $builder = $db->table('job_type');
     return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
 }
+function getNumsJobThruCategory($cate_id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('job_type');
+    $builder->selectSum('category');
+    return $builder->where(array('category' => $cate_id))->get()->getResultArray();
+}
 
 // get user profile by ID
 function get_user_profile($id)

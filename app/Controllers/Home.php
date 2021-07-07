@@ -47,8 +47,6 @@ class Home extends BaseController
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
-        $this->checkProfileCompleted();
-        return view('users/index');
     }
 
     public function login()
@@ -254,7 +252,7 @@ class Home extends BaseController
             $this->session->setFlashdata('success', 'Email Successfully Verified!');
             return redirect()->to(base_url('login'));
         } else {
-            $this->session->setFlashdata('error', 'Somethiung Went Wrong Try Again!');
+            $this->session->setFlashdata('error', 'Something Went Wrong Try Again!');
             return redirect()->to(base_url('home'));
         }
     }
