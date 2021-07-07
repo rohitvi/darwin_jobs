@@ -22,7 +22,7 @@
       <div class="section-divider">
       </div>
       <form action="<?= base_url('employer/personal_info_update') ?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="_method" value="PUT" />
+        <!-- <input type="hidden" name="_method" value="PUT" /> -->
         <div class="big_form_group">
           <div class="row">
             <div class="col-md-12">
@@ -52,7 +52,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Designation</label>
-                <input name="designation" type="text" class="form-control" placeholder="Enter Designation" value="<?= $data[0]['designation'] ?>">
+                <input name="designation" type="text" class="form-control" placeholder="Enter Designation" value="<?= $data[0]['designation'] ?>" >
               </div>
             </div>
             <div class="col-md-6">

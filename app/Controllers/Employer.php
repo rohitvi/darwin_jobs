@@ -34,6 +34,7 @@ class Employer extends BaseController
 
     public function dashboard()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
@@ -84,15 +85,9 @@ class Employer extends BaseController
 
     public function personal_info_update()
     {
-        if ($this->request->getMethod() == 'put') {
+        if ($this->request->getMethod() == 'post') {
             if ($_FILES['profile_picture']['name'] != '') {
-                $rules = [
-                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]']
-                ];
-                if ($this->validate($rules) == false) {
-                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                    return redirect()->to(base_url('employer/profile'));
-                }
+                
                 $result = UploadFile($_FILES['profile_picture']);
                 if ($result['status'] == true) {
                     $url = $result['result']['file_url'];
@@ -100,18 +95,35 @@ class Employer extends BaseController
                     $this->session->setFlashdata('error', $result['message']);
                     return redirect()->to(base_url('employer/profile'));
                 }
+                $rules = [ 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'] ];
             }
-            $update_per_info = array(
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
-                'email' => $this->request->getPost('email'),
-                'designation' => $this->request->getPost('designation'),
-                'mobile_no' => $this->request->getPost('phoneno'),
-                'country' => $this->request->getPost('country'),
-                'state' => $this->request->getPost('state'),
-                'city' => $this->request->getPost('city'),
-                'address' => $this->request->getPost('address'),
-            );
+                $rules = [
+                    'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
+                    'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
+                    'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                    'designation'        => ['label' => 'Designation', 'rules' => 'required'],
+                    'mobile_no'          => ['label' => 'Mobile No.', 'rules' => 'required'],
+                    'country'          => ['label' => 'Country', 'rules' => 'required'],
+                    'state'             => ['label' => 'State', 'rules' => 'required'],
+                    'city'              => ['label' => 'City', 'rules' => 'required'],
+                    'address'           => ['label' => 'Address', 'rules' => 'required']
+                ];
+            
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('employer/profile'));
+                }
+                $update_per_info = array(
+                    'firstname' => $this->request->getPost('firstname'),
+                    'lastname' => $this->request->getPost('lastname'),
+                    'email' => $this->request->getPost('email'),
+                    'designation' => $this->request->getPost('designation'),
+                    'mobile_no' => $this->request->getPost('mobile_no'),
+                    'country' => $this->request->getPost('country'),
+                    'state' => $this->request->getPost('state'),
+                    'city' => $this->request->getPost('city'),
+                    'address' => $this->request->getPost('address'),
+                );
 
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_per_info['profile_picture'] = $url;
@@ -136,6 +148,7 @@ class Employer extends BaseController
 
     public function changepassword()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'currentpassword' => ['label' => 'Current password', 'rules' => 'required'],
@@ -168,6 +181,7 @@ class Employer extends BaseController
 
     public function profile()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         if ($this->request->isAJAX()) {
             $country_id = $this->request->getPost('country_id');
             $states = $this->adminModel->get_states_list($country_id);
@@ -195,6 +209,7 @@ class Employer extends BaseController
 
     public function cmp_info_update()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         if ($this->request->getMethod() == 'put') {
 
             if ($_FILES['company_logo']['name'] != '') {
@@ -267,6 +282,7 @@ class Employer extends BaseController
 
     public function packages()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         $get['data'] = $this->EmployerModel->getpackages();
         $get['title'] = 'Membership Plans';
         return view('employer/packages/packages', $get);
@@ -352,6 +368,7 @@ class Employer extends BaseController
 
     public function mypackages()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
         $get['title'] = 'My Packages';
@@ -411,6 +428,7 @@ class Employer extends BaseController
 
     public function shortlisted()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
         $get['title'] = 'Shortlisted Candidates';
@@ -657,6 +675,7 @@ class Employer extends BaseController
 
     public function list_jobs()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         $data['title'] = 'Job List';
         return view('employer/job/job_list', $data);
     }
@@ -796,6 +815,7 @@ class Employer extends BaseController
 
     public function search()
     {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
         $search = array();
         $get['profiles'] = array();
         $get['categories'] = $this->adminModel->get_all_categories();

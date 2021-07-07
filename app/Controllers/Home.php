@@ -45,6 +45,7 @@ class Home extends BaseController
     public function dashboard()
     {
         $data['states'] = $this->adminModel->get_states_list(101);
+        $data['categories'] = $this->HomeModel->getTopCategory();
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
     }
@@ -355,6 +356,7 @@ class Home extends BaseController
 
     public function matching_jobs()
     {
+        if(!user_vaidate())  return redirect()->to('/admin/login');
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
 
@@ -365,6 +367,7 @@ class Home extends BaseController
 
     public function change_password()
     {
+        if(!user_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'old_password' => ['label' => 'Current password', 'rules' => 'required'],
@@ -397,6 +400,7 @@ class Home extends BaseController
 
     public function profile()
     {
+        if(!user_vaidate())  return redirect()->to('login');
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $id = session('user_id');
@@ -485,6 +489,9 @@ class Home extends BaseController
 
     public function jobdetails($id)
     {
+        if(!user_vaidate())  return redirect()->to('/admin/login');
+        if(!user_vaidate())  return redirect()->to('login');
+        $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
         return view('users/job_details', $get);
@@ -535,6 +542,7 @@ class Home extends BaseController
     }
     public function applied_jobs()
     {
+        if(!user_vaidate())  return redirect()->to('/admin/login');
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
         $get['title'] = 'Applied Jobs';

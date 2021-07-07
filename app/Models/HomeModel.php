@@ -230,7 +230,7 @@ class HomeModel extends Model
 
     public function getTopCategory()
     {
-        return $this->db->table('categories')->where('top_category', 1)->get(8)->getResultArray();
+        return $this->db->table('categories')->where('featured', 1)->get(8)->getResultArray();
     }
     //----------------------------------------------------
     // Get those citites who have jobs
