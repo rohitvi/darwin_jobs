@@ -354,3 +354,57 @@ function get_category_slug($id)
     $builder = $db->table('categories');
     return $builder->select('slug')->getWhere(array('id' => $id))->getRowArray()['slug'];
 }
+
+function user_vaidate($para='user_logged_in')
+{
+    if($para == 'user_logged_in')
+    {
+        if(empty(session('user_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'user_id')
+    {
+        if(empty(session('user_logged_in')))
+            return FALSE;
+        else
+            return session('user_id');
+    }
+}
+
+function employer_vaidate($para='employer_logged_in')
+{
+    if($para == 'employer_logged_in')
+    {
+        if(empty(session('employer_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'employer_id')
+    {
+        if(empty(session('employer_logged_in')))
+            return FALSE;
+        else
+            return session('employer_id');
+    }
+}
+
+function admin_vaidate($para='admin_logged_in')
+{
+    if($para == 'admin_logged_in')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'admin_logged_in')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return session('admin_logged_in');
+    }
+}

@@ -30,15 +30,6 @@ class Home extends BaseController
         $this->uri = service('uri');
     }
 
-    public function checklogin()
-    {
-        if (session('user_logged_in')) {
-            return redirect()->to('home/dashboard');
-        } else {
-            return redirect()->to('home/login');
-        }
-    }
-
     public function checkProfileCompleted()
     {
         if (session('profile_completed') == 0) {
@@ -366,7 +357,6 @@ class Home extends BaseController
 
     public function matching_jobs()
     {
-        $this->checklogin();
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
 
