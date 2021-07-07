@@ -294,4 +294,9 @@ class HomeModel extends Model
         $builder->orderBy('created_date', 'desc');
         return $builder->get()->getResultArray();
     }
+
+    public function getLastPost()
+    {
+        return $this->db->table('job_post')->where('is_featured', 'yes')->get(8)->getResultArray();
+    }
 }

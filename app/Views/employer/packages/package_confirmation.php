@@ -60,11 +60,11 @@
                 const NewPackage = $.parseJSON(package);
                 console.log(NewPackage);
                 var options = {
-                    "key": "<?= get_g_setting_val('razorpay_key'); ?>",
-                    "amount": data.price * 100,
-                    "name": <?= get_g_setting_val('application_name'); ?>,
-                    "description": data.title,
-                    "image": <?= get_g_setting_val('logo'); ?>,
+                    "key": '<?= get_g_setting_val('razorpay_key'); ?>',
+                    "amount": NewPackage.price * 100,
+                    "name": '<?= get_g_setting_val('application_name'); ?>',
+                    "description": NewPackage.title,
+                    "image": '<?= get_g_setting_val('logo'); ?>',
                     "handler": function(response) {
                         if (response != '') {
                             var payid = response.razorpay_payment_id;

@@ -46,6 +46,8 @@ class Home extends BaseController
     {
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
+        $data['posts'] = $this->HomeModel->getLastPost();
+        $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
     }
@@ -316,7 +318,7 @@ class Home extends BaseController
         $data = [
             'search_value' => $search,
             'jobs' => $Jobs->get_all_jobs($search),
-            'states' => $this->adminModel->get_states_list(101),
+            'cities' => get_country_cities(101),
             'categories' => $this->adminModel->get_categories_list(),
             'title' => 'Search Results',
             'meta_description' => 'your meta description here',
@@ -494,6 +496,7 @@ class Home extends BaseController
         $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
+        $get['title'] = 'Job Details';
         return view('users/job_details', $get);
     }
 

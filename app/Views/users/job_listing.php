@@ -94,13 +94,13 @@
         <div class=" job_main_right">
           <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
             <div class="fild-wrap fw-job-title">
-              <input class="form-control" value="<?= isset($_GET['job_title']) ? $_GET['job_title'] : '' ?>" type="text" name="job_title" placeholder="Job Title" required>
+              <input class="form-control" value="<?= isset($_GET['title']) ? $_GET['title'] : '' ?>" type="text" name="job_title" placeholder="Job Title" required>
             </div>
             <div class="fild-wrap fw-job-location">
               <i class="fas fa-map-marker-alt"></i>
-              <select class="js-example-basic-single" name="state">
-                <?php foreach ($states as $key => $state) : ?>
-                  <option value="<?= $state['id'] ?>" <?= (isset($_GET['state']) && $_GET['state'] == $state['id']) ? 'selected' : '' ?>><?= $state['name'] ?></option>
+              <select class="js-example-basic-single" name="city">
+                <?php foreach ($cities as $key => $city) : ?>
+                  <option value="<?= $city['id'] ?>" <?= (isset($_GET['city']) && $_GET['city'] == $city['id']) ? 'selected' : '' ?>><?= $city['name'] ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -177,7 +177,7 @@
       method: 'POST',
       data: data,
       success: function(response) {
-        $("#save"+id).toggleClass("fas far");
+        $("#save" + id).toggleClass("fas far");
       }
     });
   }
