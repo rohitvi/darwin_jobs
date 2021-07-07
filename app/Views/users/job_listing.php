@@ -88,7 +88,6 @@
                   </div>
                 </div><br><br>
                 <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
-
             </li>
           </ul>
         </div>
@@ -146,7 +145,7 @@
                     </ul>
                   </div>
                   <div class="fb_action">
-                    <a title="add to favourite" onclick="save(<?= $job['id'] ?>)"><i id="save" style="cursor:pointer; color:#ff6158;" class="<?= (in_array($job['id'], $saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
+                    <a title="add to favourite" onclick="save(<?= $job['id'] ?>)"><i id="save<?= $job['id'] ?>" style="cursor:pointer; color:#ff6158;" class="<?= (in_array($job['id'], $saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
                     <a class="btn btn-primary" href="<?= base_url('home/jobdetails/' . $job['id']) ?>">Details</a>
                   </div>
                 </div>
@@ -178,7 +177,7 @@
       method: 'POST',
       data: data,
       success: function(response) {
-        $("#save").toggleClass("fas far");
+        $("#save"+id).toggleClass("fas far");
       }
     });
   }

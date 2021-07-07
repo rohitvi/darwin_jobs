@@ -1,7 +1,7 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
 <div class='header_inner'>
     <div class="header_btm">
-      <h2>Job Seeker Login</h2>
+      <h2>Employer Login</h2>
     </div>
   </div> 
 </header>

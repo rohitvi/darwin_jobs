@@ -80,15 +80,9 @@ class AdminModel extends Model
         return $builder->where('id', $id)->get()->getResultArray();
     }
 
-    public function edit_category($editrow, $id)
+    public function edit_category($data, $id)
     {
-        $builder = $this->db->table('categories');
-        $update_row = [
-            'name' => $editrow['name'],
-            'slug' => $editrow['slug']
-        ];
-        $builder->where('id', $id);
-        return $query = $builder->update($update_row);
+        return $this->db->table('categories')->where('id', $id)->update($data);
     }
 
     public function del_category($id)

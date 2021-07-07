@@ -38,9 +38,10 @@ class Employer extends BaseController
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
         $data['current_package'] = $this->EmployerModel->get_active_package();
-        $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'],1, $data['current_package']['payment_id']);
-       // pre($data);
-        return view('employer/dashboard',$data);
+        $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
+        // pre($data);
+        $data['title'] = 'Employer Dashboard';
+        return view('employer/dashboard', $data);
     }
 
     public function login()
@@ -77,7 +78,8 @@ class Employer extends BaseController
                 exit;
             }
         }
-        return view('employer/auth/login');
+        $data['title'] = 'Employer Login';
+        return view('employer/auth/login', $data);
     }
 
     public function personal_info_update()
@@ -136,16 +138,22 @@ class Employer extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
+                'currentpassword' => ['label' => 'Current password', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'matches[password]']
+                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
                 exit;
             }
             $id = session('employer_id');
-            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-            $query = $this->EmployerAuthModel->changepassword($id, $password);
+            $data = array(
+                'id' => $id,
+                'old_password' => $this->request->getPost('currentpassword'),
+                'new_password' =>  password_hash($this->request->getPost('cpassword'), PASSWORD_DEFAULT)
+            );
+
+            $query = $this->EmployerAuthModel->changepassword($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Password successfully Updated');
                 return redirect()->to(base_url('employer/profile'));
@@ -154,7 +162,8 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/changepassword'));
             }
         }
-        return view('employer/auth/changepassword');
+        $data['title'] = 'Change Password';
+        return view('employer/auth/changepassword', $data);
     }
 
     public function profile()
@@ -169,6 +178,7 @@ class Employer extends BaseController
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->personal_info($id);
+        $get['title'] = 'Personal Info';
         // pre( $get['data'] );
         return view('employer/auth/profile', $get);
     }
@@ -248,6 +258,7 @@ class Employer extends BaseController
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->cmp_info($id);
+        $get['title'] = 'Company Information';
         // pre($get['data']);exit;
         return view('employer/auth/company', $get);
     }
@@ -257,6 +268,7 @@ class Employer extends BaseController
     public function packages()
     {
         $get['data'] = $this->EmployerModel->getpackages();
+        $get['title'] = 'Membership Plans';
         return view('employer/packages/packages', $get);
     }
 
@@ -267,6 +279,8 @@ class Employer extends BaseController
             $this->session->setFlashdata('success', 'Package Already Purchased');
             return redirect()->to(base_url('employer/mypackages'));
         }
+        $get['id'] = $id;
+        $get['title'] = 'Package Confirmation';
         return view('employer/packages/package_confirmation', $get);
     }
 
@@ -340,6 +354,7 @@ class Employer extends BaseController
     {
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
+        $get['title'] = 'My Packages';
         return view('employer/packages/my_packages', $get);
     }
 
@@ -398,6 +413,7 @@ class Employer extends BaseController
     {
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
+        $get['title'] = 'Shortlisted Candidates';
         return view('employer/resume/shortlisted_resume2', $get);
     }
 
@@ -635,12 +651,14 @@ class Employer extends BaseController
         $get['employment'] = get_employment_type_list();
         $get['educations'] = $this->EmployerModel->get_education();
         $get['countries'] = $this->EmployerModel->get_countries_list();
+        $get['title'] = 'Post Job';
         return view('employer/job/post', $get);
     }
 
     public function list_jobs()
     {
-        return view('employer/job/job_list');
+        $data['title'] = 'Job List';
+        return view('employer/job/job_list', $data);
     }
 
     public function datatable_json()
@@ -689,6 +707,7 @@ class Employer extends BaseController
         $get['educations'] = $this->EmployerModel->get_education();
         $get['countries'] = $this->EmployerModel->get_countries_list();
         $get['data'] = $this->EmployerModel->edit_job($id);
+        $get['title'] = 'Edit Job';
         return view('employer/job/edit_job', $get);
     }
 
@@ -819,13 +838,19 @@ class Employer extends BaseController
                 $search['experience'] = $this->request->getPost('experience');
             }
 
-            $get['search_value'] = $search;
-            $Users = new EmployerModel();
-            $Users->setTable('users');
-            $get['profiles'] = $Users->get_user_profiles($search);
-            $get['pager'] = $Users->pager;
+            $query = http_build_query($search);
+            return redirect()->to(base_url('employer/search?' . $query));
         }
+        $query_str = parse_url(current_url(true), PHP_URL_QUERY);
+        parse_str($query_str, $search);
 
+        $get['search_value'] = $search;
+        $Users = new EmployerModel();
+        $Users->setTable('users');
+        $get['profiles'] = $Users->get_user_profiles($search);
+        $get['pager'] = $Users->pager;
+
+        $get['title'] = 'Find Candidates';
         return view('employer/cv_search/cv_search_page', $get);
     }
 
@@ -968,5 +993,94 @@ class Employer extends BaseController
         if ($result) {
             return redirect()->to(base_url('employer/shortlisted'));
         }
+    }
+
+    public function getPackageInfo()
+    {
+        if ($this->request->isAJAX()) {
+            $emp_id = session('employer_id');
+            $package_id = $this->request->getPost('package_id');
+            $result = $this->EmployerModel->getPackageInfo($package_id);
+            echo json_encode($result);
+            exit;
+        }
+    }
+
+    public function process_payment()
+    {
+        $emp_id = session('employer_id');
+        (!$emp_id) ? redirect(base_url('employer/packages')) : "";
+        if ($this->input->post('payment_type') == 'razorpay') {
+            $capture_amount = $this->input->post('totalAmount'); //% by 100
+            $data['user_id']              = $this->session->userdata('user_id');
+            $data['payment_id']       = $this->input->post("razorpay_payment_id");
+            $data['tax_rate']       = $this->input->post("taxRate");
+            $data['shipping_chrgs']       = $this->input->post("shippingChrgs");
+            $data['payment_type']       = 'Razorpay';
+            $data['payment_status']     = 'due';
+            $data['payment_details']    = 'none';
+            $data['amount']             = $capture_amount / 100;
+            $data['payment_timestamp']  = date('Y-m-d H:i:s');
+            $this->db->insert('payments', $data);
+            $insert_id = $this->db->insert_id();
+            $this->session->set_userdata('payment_id', $insert_id);
+            $razorpay_key = get_DirectValue('general_setting', 'value', 'name', 'razorpay_public_key');
+            $razorpay_secret = get_DirectValue('general_setting', 'value', 'name', 'razorpay_secret_key');
+
+            $api = new Api($razorpay_key, $razorpay_secret);
+            if (isset($_POST['razorpay_payment_id']) === false) {
+                die("Payment Failed. Please Retry!");
+            }
+            $id = $this->input->post('razorpay_payment_id');
+            $payment  = $api->payment->fetch($id);
+
+            if ($payment['status'] == 'authorized' || $payment['status'] == 'captured' || $payment['status'] == 'created') {
+                $payment  =  $api->payment->fetch($id)->capture(array('amount' => $capture_amount));
+                $this->razorpay_success();
+            } else {
+                $this->razorpay_cancel();
+            }
+        }
+
+        // check other payments type here
+
+    }
+
+    /* FUNCTION: Verify razorpay payment*/
+    public function razorpay_success()
+    {
+        $payment_id                = $this->session->userdata('payment_id');
+        $data['payment_details']   = json_encode($_POST);
+        $data['payment_timestamp'] = date('Y-m-d H:i:s');
+        $data['payment_type']      = 'Razorpay';
+        $data['payment_status']    = 'paid';
+        $this->db->where('id', $payment_id)->update('payments', $data);
+        $user_id = $this->session->userdata("user_id");
+        $orderID = $this->input->post("orderId");
+        $phone = $this->input->post("phone");
+        $email = $this->input->post("email");
+        $data = [
+            'payment_id' => $this->input->post("razorpay_payment_id"),
+            'payment_method' => 'Online',
+            'order_status' => '1',
+            'mobile' => $phone,
+            'email' => $email,
+            'final_price' => $this->input->post('totalAmount') / 100 //% by 100
+        ];
+        if ($this->db->where("order_number", $orderID)->where("user_id", $user_id)->update("orders", $data) && $this->db->where("user_id", $user_id)->delete("user_cart")) {
+            $this->api_return(["status" => 200]);
+        } else {
+            var_dump($this->db->error());
+            $this->api_return(["status" => 500]);
+        }
+        return 1;
+    }
+
+    public function razorpay_cancel()
+    {
+        $payment_id = $this->session->userdata('payment_id');
+        $this->db->where('id', $payment_id);
+        $this->db->delete('payments');
+        return 0; //msg here 
     }
 }
