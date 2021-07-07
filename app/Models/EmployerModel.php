@@ -33,11 +33,9 @@ class EmployerModel extends Model
 
     public function payment($data)
     {
-        $builder = $this->db->table('payments')->insert($data);
-        $result['pay_data'] = $this->last_payment_details();
-        if (count($result) == 1) {
-            $array = array('status' => 1, 'payment_id' => $result['pay_data']['id'], 'employer_id' => $result['pay_data']['employer_id']);
-            return $array;
+        if ($this->db->table('payments')->insert($data)) {
+            $id = $this->db->insertID();
+            return array('status' => 1, 'InsertID' => $id);
         } else {
             return 0;
         }
