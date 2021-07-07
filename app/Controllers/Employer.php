@@ -87,7 +87,7 @@ class Employer extends BaseController
         if ($this->request->getMethod() == 'put') {
             if ($_FILES['profile_picture']['name'] != '') {
                 $rules = [
-                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
+                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]']
                 ];
                 if ($this->validate($rules) == false) {
                     $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -102,7 +102,7 @@ class Employer extends BaseController
                 }
             }
             $update_per_info = array(
-                'firstname' => $this->request->getPost('fname'),
+                'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
                 'email' => $this->request->getPost('email'),
                 'designation' => $this->request->getPost('designation'),
