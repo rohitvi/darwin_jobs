@@ -329,6 +329,13 @@ function get_job_type_name($id)
     $builder = $db->table('job_type');
     return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
 }
+function getNumsJobThruCategory($cate_id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('job_type');
+    $builder->selectSum('category');
+    return $builder->where(array('category' => $cate_id))->get()->getResultArray();
+}
 
 // get user profile by ID
 function get_user_profile($id)
@@ -353,4 +360,58 @@ function get_category_slug($id)
     $db = \Config\Database::connect();
     $builder = $db->table('categories');
     return $builder->select('slug')->getWhere(array('id' => $id))->getRowArray()['slug'];
+}
+
+function user_vaidate($para='user_logged_in')
+{
+    if($para == 'user_logged_in')
+    {
+        if(empty(session('user_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'user_id')
+    {
+        if(empty(session('user_logged_in')))
+            return FALSE;
+        else
+            return session('user_id');
+    }
+}
+
+function employer_vaidate($para='employer_logged_in')
+{
+    if($para == 'employer_logged_in')
+    {
+        if(empty(session('employer_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'employer_id')
+    {
+        if(empty(session('employer_logged_in')))
+            return FALSE;
+        else
+            return session('employer_id');
+    }
+}
+
+function admin_vaidate($para='admin_logged_in')
+{
+    if($para == 'admin_logged_in')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return TRUE;
+    }
+    if($para == 'admin_logged_in')
+    {
+        if(empty(session('admin_logged_in')))
+            return FALSE;
+        else
+            return session('admin_logged_in');
+    }
 }

@@ -30,15 +30,6 @@ class Home extends BaseController
         $this->uri = service('uri');
     }
 
-    public function checklogin()
-    {
-        if (session('user_logged_in')) {
-            return redirect()->to('home/dashboard');
-        } else {
-            return redirect()->to('home/login');
-        }
-    }
-
     public function checkProfileCompleted()
     {
         if (session('profile_completed') == 0) {
@@ -56,8 +47,6 @@ class Home extends BaseController
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
-        $this->checkProfileCompleted();
-        return view('users/index');
     }
 
     public function login()
@@ -263,7 +252,7 @@ class Home extends BaseController
             $this->session->setFlashdata('success', 'Email Successfully Verified!');
             return redirect()->to(base_url('login'));
         } else {
-            $this->session->setFlashdata('error', 'Somethiung Went Wrong Try Again!');
+            $this->session->setFlashdata('error', 'Something Went Wrong Try Again!');
             return redirect()->to(base_url('home'));
         }
     }
@@ -366,7 +355,6 @@ class Home extends BaseController
 
     public function matching_jobs()
     {
-        $this->checklogin();
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
 

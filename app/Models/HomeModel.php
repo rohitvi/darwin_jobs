@@ -228,6 +228,10 @@ class HomeModel extends Model
             return array();
     }
 
+    public function getTopCategory()
+    {
+        return $this->db->table('categories')->where('top_category', 1)->get(8)->getResultArray();
+    }
     //----------------------------------------------------
     // Get those citites who have jobs
     public function get_cities_with_jobs()

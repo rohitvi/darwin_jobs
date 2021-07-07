@@ -79,7 +79,7 @@ class Employer extends BaseController
             }
         }
         $data['title'] = 'Employer Login';
-        return view('employer/auth/login',$data);
+        return view('employer/auth/login', $data);
     }
 
     public function personal_info_update()
@@ -163,7 +163,7 @@ class Employer extends BaseController
             }
         }
         $data['title'] = 'Change Password';
-        return view('employer/auth/changepassword',$data);
+        return view('employer/auth/changepassword', $data);
     }
 
     public function profile()
@@ -658,7 +658,7 @@ class Employer extends BaseController
     public function list_jobs()
     {
         $data['title'] = 'Job List';
-        return view('employer/job/job_list',$data);
+        return view('employer/job/job_list', $data);
     }
 
     public function datatable_json()
@@ -850,7 +850,7 @@ class Employer extends BaseController
         $get['profiles'] = $Users->get_user_profiles($search);
         $get['pager'] = $Users->pager;
 
-         $get['title'] = 'Find Candidates';
+        $get['title'] = 'Find Candidates';
         return view('employer/cv_search/cv_search_page', $get);
     }
 

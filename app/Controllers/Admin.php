@@ -18,7 +18,6 @@ class Admin extends BaseController
 
     public function index()
     {
-        // return view('admin/dashboard');
         if (session('admin_logged_in')) {
             return redirect()->to('admin/dashboard');
         } else {
@@ -28,6 +27,7 @@ class Admin extends BaseController
 
     public function dashboard()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['all_users'] = $this->adminModel->get_all_users();
         $data['active_users'] = $this->adminModel->get_active_users();
         $data['deactive_users'] = $this->adminModel->get_deactive_users();
@@ -62,7 +62,7 @@ class Admin extends BaseController
                 exit;
             } elseif ($logindata['status'] == 1) {
                 $admindata = [
-                    'admin_id' => $logindata['id'],
+                    'admin_logged_in' => $logindata['id'],
                     'admin_logged_in' => true,
                     'admin_username' => $username,
                 ];
