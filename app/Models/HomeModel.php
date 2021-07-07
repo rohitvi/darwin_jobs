@@ -230,7 +230,7 @@ class HomeModel extends Model
 
     public function getTopCategory()
     {
-        return $this->db->table('categories')->where('top_category', 1)->get(8)->getResultArray();
+        return $this->db->table('categories')->where('featured', 1)->get(8)->getResultArray();
     }
     //----------------------------------------------------
     // Get those citites who have jobs
@@ -293,5 +293,10 @@ class HomeModel extends Model
         $builder->Where('curdate() <  expiry_date');
         $builder->orderBy('created_date', 'desc');
         return $builder->get()->getResultArray();
+    }
+
+    public function getLastPost()
+    {
+        return $this->db->table('job_post')->where('is_featured', 'yes')->get(8)->getResultArray();
     }
 }

@@ -332,9 +332,12 @@ function get_job_type_name($id)
 function getNumsJobThruCategory($cate_id)
 {
     $db = \Config\Database::connect();
-    $builder = $db->table('job_type');
-    $builder->selectSum('category');
-    return $builder->where(array('category' => $cate_id))->get()->getResultArray();
+    $sql = 'SELECT COUNT(*) as cateTotal FROM job_post WHERE category = ? GROUP BY category';
+    if(isset($db->query($sql,$cate_id)->getRowArray()['cateTotal'])){
+        return $db->query($sql,$cate_id)->getRowArray()['cateTotal'];
+    }else{
+        return 0;
+    }
 }
 
 // get user profile by ID

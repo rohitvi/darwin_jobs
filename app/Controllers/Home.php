@@ -54,6 +54,8 @@ class Home extends BaseController
     public function dashboard()
     {
         $data['states'] = $this->adminModel->get_states_list(101);
+        $data['categories'] = $this->HomeModel->getTopCategory();
+        $data['posts'] = $this->HomeModel->getLastPost();
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
     }
@@ -497,6 +499,7 @@ class Home extends BaseController
     {
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
+        $get['title'] = 'Job Details';
         return view('users/job_details', $get);
     }
 
