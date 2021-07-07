@@ -638,7 +638,6 @@ $(document).on('click','.edit-education',function(){
       $('#user-education-edit').html(response);
       $('#user-education-edit').collapse('show');
     }
-
   });
 });
 

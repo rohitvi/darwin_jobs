@@ -20,7 +20,7 @@
 					<div class="col-lg-4" data-aos="fade-down" data-aos-delay="200">
 						<h2>Find the most exciting<br> starup jobs</h2>
 						<p>Most complete 2020 template for Job board sites.</p>
-						<a class="btn btn-primary" id="tos">Know more
+						<a class="btn btn-primary text-white" href="<?= base_url('search') ?>" id="tos">All Jobs
 							<i class="material-icons">arrow_right_alt</i>
 						</a>
 					</div>
@@ -108,122 +108,23 @@
 			</div>
 			<div class="bg-v-2 bg-b-r" data-aos="zoom-in">
 			</div>
-			<!-- <div class="bg-v-4">
-			</div>
-			<div class="bg-v-5">
-			</div>
-			<div class="bg-v-6">
-			</div>
-			<div class="bg-v-7">
-			</div>
-			<div class="bg-v-8">
-			</div>
-			<div class="bg-v-9">
-			</div>
-			<div class="bg-v-10">
-			</div>
-			<div class="bg-v-11">
-			</div> -->
 		</div>
 		<div class="container">
 			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h">Popular Job Categories</h2>
 			<div class="row">
+			<?php foreach($categories as $category) : ?>
 				<div class="col-lg-3 col-md-6">
 					<div class="category_box">
 						<div class="cb_header">
 							<img alt="" src="<?= base_url(); ?>/public/users/images/i-code.png">
-							<span class="job_count">363</span>
+							<span class="job_count"><?= $category['id'] ?></span>
 						</div>
 						<div class="cb_bottom">
-							<h3>Web & Software Dev</h3>
-							<p>Software Engineer, Web / Mobile Developer &amp; More</p>
+							<h3><?= $category['name'] ?></h3>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-server.png">
-							<span class="job_count">572</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Data Science & Analitycs</h3>
-							<p>Data Specialist / Scientist, Data Analyst & More</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-calculator.png">
-							<span class="job_count">252</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Accounting & Consulting</h3>
-							<p>Auditor, Accountant, Fnancial Analyst & More</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-pan.png">
-							<span class="job_count">523</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Writing & Translations</h3>
-							<p>Copywriter, Creative Writer, Translator & More</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-chart.png">
-							<span class="job_count">98</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Sales & Marketing</h3>
-							<p>Brand Manager, Marketing Coordinator & More</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-graphic.png">
-							<span class="job_count">53</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Graphics & Design</h3>
-							<p>Creative Director, Web Designer & More</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-digital.png">
-							<span class="job_count">75</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Digital Marketing</h3>
-							<p>Darketing Analyst, Social Profile Admin & More</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="category_box">
-						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-education.png">
-							<span class="job_count">366</span>
-						</div>
-						<div class="cb_bottom">
-							<h3>Education & Training</h3>
-							<p>Advisor, Coach, Education Coordinator & More</p>
-						</div>
-					</div>
-				</div>
+			<?php endforeach; ?>
 			</div>
 		</div>
 	</div>

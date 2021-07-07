@@ -12,6 +12,8 @@ class Home extends BaseController
 {
     private $facebook=NULL;
     private $fb_helper=NULL;
+    private $fb_app_id='2995803240742072';
+    private $fb_app_secret='2cee320baf4567f0ccf4f4eca6f4a5be';
     public function __construct()
     {
         require_once APPPATH. 'Libraries/vendor/autoload.php';
@@ -53,9 +55,10 @@ class Home extends BaseController
     public function dashboard()
     {
         $data['states'] = $this->adminModel->get_states_list(101);
+        $data['categories'] = $this->HomeModel->getTopCategory();
+        pre(getNumsJobThruCategory($data['categories'][0]['id']));
+        // echo $data['categories'];exit;
         return view('users/index', $data);
-        $this->checkProfileCompleted();
-        return view('users/index');
     }
 
     public function login()
@@ -220,7 +223,7 @@ class Home extends BaseController
             $this->session->setFlashdata('success', 'Email Successfully Verified!');
             return redirect()->to(base_url('login'));
         } else {
-            $this->session->setFlashdata('error', 'Somethiung Went Wrong Try Again!');
+            $this->session->setFlashdata('error', 'Something Went Wrong Try Again!');
             return redirect()->to(base_url('home'));
         }
     }
