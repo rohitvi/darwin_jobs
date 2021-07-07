@@ -144,12 +144,12 @@
 					<div class="featured_box ">
 						<div class="fb_image">
 							<a href="compnay-profile-single.html">
-								<img alt="brand logo" src="<?= base_url(); ?>/public/users/images/c-logo-01.webp">
+								<img alt="brand logo" src="<?= get_company_logo($post['company_id']) ?>">
 							</a>
 						</div>
 						<div class='fb_content'>
 							<h4>
-								<a href="job-single.html"><?= $post['title'] ?></a>
+								<a href="<?= base_url('home/jobdetails/' . $post['id']) ?>"><?= $post['title'] ?></a>
 							</h4>
 							<ul>
 								<li>
@@ -173,13 +173,7 @@
 							</ul>
 						</div>
 						<div class="fb_action">
-							<a title="add to favourite" href="#"><i class="far fa-heart"></i></a>
 							<a class="btn btn-third" type="button" href="<?= session('user_logged_in') ? base_url('home/jobdetails/' . $post['id']) : base_url('login') ?>">Details</a>
-							<ul class="tags">
-								<li>copywriting</li>
-								<li>translating</li>
-								<li>editing</li>
-							</ul>
 						</div>
 					</div>
 				</div>
