@@ -107,7 +107,7 @@ class Mailer
         $token = $user['token'];
 
         if ($type == 'employer')
-            $varification_link = base_url('employer/auth/verify/' . $token);
+            $varification_link = base_url('employer/verify/' . $token);
 
         if ($type == 'user' || $type == '')
             $varification_link = base_url('home/verify/' . $token);

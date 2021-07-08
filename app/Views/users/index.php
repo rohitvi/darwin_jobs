@@ -145,7 +145,7 @@
 				<div class="col-sm-6">
 					<div class="featured_box ">
 						<div class="fb_image">
-							<a href="compnay-profile-single.html">
+							<a href="<?= base_url('home/jobdetails/' . $post['id']) ?>">
 								<img alt="brand logo" src="<?= get_company_logo($post['company_id']) ?>">
 							</a>
 						</div>

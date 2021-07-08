@@ -76,7 +76,7 @@ class Home extends BaseController
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
                     //pre($logindata);
-                    $employerdata = [
+                    $userdata = [
                         'user_id' => $logindata['id'],
                         'user_logged_in' => true,
                         'profile_pic'=> $logindata['profile_picture'],
@@ -107,7 +107,7 @@ class Home extends BaseController
                 echo '0~Invalid email or password';
                 exit;
             } else {
-                $employerdata = [
+                $userdata = [
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'username' => $logindata['username'],
