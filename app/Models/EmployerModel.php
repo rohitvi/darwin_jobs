@@ -64,6 +64,7 @@ class EmployerModel extends Model
     {
         return $this->db->table('countries')->get()->getResultArray();
     }
+
     public function userdetails($id)
     {
         return $this->db->table('users')->where('id', $id)->get()->getResultArray();
@@ -302,7 +303,7 @@ class EmployerModel extends Model
         $builder->where('profile_completed', '1');
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('job_title');
-        return $builder->paginate(1);
+        return $builder->paginate(6);
     }
 
     public function candidates_shortlisted($emp_id, $user_id)

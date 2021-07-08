@@ -9,54 +9,52 @@
 <main>
   <div class="job_container">
     <div class="container">
+    <?php include(VIEWPATH . 'employer/include/profile_info.php'); ?>
       <div class="row job_main">
       <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
-
-<div class=" job_main_right">
-  <div class="row job_section">
-    <div class="col-sm-12">
-      <div class="jm_headings">
-        <h5>Applicant List</h5>
+      <div class=" job_main_right">
+        <div class="row job_section">
+          <div class="col-sm-12">
+            <div class="jm_headings">
+              <h5>Applicant List</h5>
+            </div>
+            <div class="section-divider">
+            </div>
+            <table id="sorting-table" class="table mb-0 mv_datatable">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Industry</th>
+                      <th>Location</th>
+                      <th>Email</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+            <?php $count = 0;
+                  foreach ($applicants as $applicant) : ?>
+              <tr>
+                <td><img src="<?= $applicant['profile_picture'] ?>" alt="" height="50"></td>
+                <td><?= $applicant['firstname'] . ' ' . $applicant['lastname']; ?><small> (<?= $applicant['job_title']; ?>)</small></td>
+                <td><?= get_category_name($applicant['category']); ?></td>
+                <td><?= get_city_name($applicant['city']); ?>, <?= get_country_name($applicant['country']); ?></td>
+                <td><?= $applicant['email'] ?></td>
+                <?php $resume = ($applicant['resume'] != '') ? base_url($applicant['resume']) : '#'  ?>
+                <td>
+                  <a title="resume" class="btn btn-sm btn-info pull-right mb-3" href="<?= $resume; ?>"> Preview CV</a>
+                  <a title="email" class="btn btn-sm btn-primary pull-right  mb-3" href="#" data-toggle="modal" data-target="#emailModal" data-whatever="<?= $applicant['email']; ?>"> Email Candidate</a>
+                  <a title="Shortlist" onclick="interview(<?= $applicant['id'] ?>)" id="inter<?= $applicant['id'] ?>" class="btn btn-sm btn-success pull-right" href="#" data-toggle="modal" data-target="#myModal" data-message="<?= $applicant['email'] ?>">Interview Message</a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+          </table>
+          </div>
+        </div>
       </div>
-      <div class="section-divider">
-      </div>
-      <table id="sorting-table" class="table mb-0 mv_datatable">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Industry</th>
-                <th>Location</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-    	<?php $count = 0;
-			foreach ($applicants as $applicant) : ?>
-				<tr>
-					<td><img src="<?= $applicant['profile_picture'] ?>" alt="" height="50"></td>
-					<td><?= $applicant['firstname'] . ' ' . $applicant['lastname']; ?><small> (<?= $applicant['job_title']; ?>)</small></td>
-					<td><?= get_category_name($applicant['category']); ?></td>
-					<td><?= get_city_name($applicant['city']); ?>, <?= get_country_name($applicant['country']); ?></td>
-					<td><?= $applicant['email'] ?></td>
-					<?php $resume = ($applicant['resume'] != '') ? base_url($applicant['resume']) : '#'  ?>
-					<td>
-						<a title="resume" class="btn btn-sm btn-info pull-right mb-3" href="<?= $resume; ?>"> Preview CV</a>
-						<a title="email" class="btn btn-sm btn-primary pull-right  mb-3" href="#" data-toggle="modal" data-target="#emailModal" data-whatever="<?= $applicant['email']; ?>"> Email Candidate</a>
-						<a title="Shortlist" onclick="interview(<?= $applicant['id'] ?>)" id="inter<?= $applicant['id'] ?>" class="btn btn-sm btn-success pull-right" href="#" data-toggle="modal" data-target="#myModal" data-message="<?= $applicant['email'] ?>">Interview Message</a>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-    </tbody>
-    </table>
     </div>
   </div>
-
-
-</div>
-</div>
-</div>
 </div>
 </main>
 
@@ -144,7 +142,6 @@
                             }
                         }).show();
                     }
-
                     $('.close').trigger('click');
                 }
             });

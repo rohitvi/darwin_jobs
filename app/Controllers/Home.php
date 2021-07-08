@@ -76,7 +76,7 @@ class Home extends BaseController
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
                     //pre($logindata);
-                    $employerdata = [
+                    $userdata = [
                         'user_id' => $logindata['id'],
                         'user_logged_in' => true,
                         'profile_pic'=> $logindata['profile_picture'],
@@ -103,11 +103,12 @@ class Home extends BaseController
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $logindata = $this->HomeAuthModel->login_validate($email, $password);
+            print_r($logindata);exit;
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
             } else {
-                $employerdata = [
+                $userdata = [
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'username' => $logindata['username'],
@@ -358,7 +359,7 @@ class Home extends BaseController
 
     public function matching_jobs()
     {
-        if(!user_vaidate())  return redirect()->to('/admin/login');
+        if(!user_vaidate())  return redirect()->to(base_url('login'));
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
 
@@ -369,7 +370,7 @@ class Home extends BaseController
 
     public function change_password()
     {
-        if(!user_vaidate())  return redirect()->to('/admin/login');
+        if(!user_vaidate())  return redirect()->to(base_url('login'));
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'old_password' => ['label' => 'Current password', 'rules' => 'required'],
@@ -402,7 +403,7 @@ class Home extends BaseController
 
     public function profile()
     {
-        if(!user_vaidate())  return redirect()->to('login');
+        if(!user_vaidate())  return redirect()->to(base_url('login'));
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $id = session('user_id');
@@ -491,8 +492,7 @@ class Home extends BaseController
 
     public function jobdetails($id)
     {
-        if(!user_vaidate())  return redirect()->to('/admin/login');
-        if(!user_vaidate())  return redirect()->to('login');
+        if(!user_vaidate())  return redirect()->to(base_url('login'));
         $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
@@ -545,7 +545,7 @@ class Home extends BaseController
     }
     public function applied_jobs()
     {
-        if(!user_vaidate())  return redirect()->to('/admin/login');
+        if(!user_vaidate())  return redirect()->to(base_url('login'));
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
         $get['title'] = 'Applied Jobs';

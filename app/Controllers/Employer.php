@@ -78,6 +78,9 @@ class Employer extends BaseController
                     'employer_id' => $logindata['id'],
                     'employer_logged_in' => true,
                     'employer_username' => $logindata['username'],
+                    'profile_completed' => $logindata['profile_completed'],
+                    'company_completed' => $logindata['company_completed'],
+                    'is_verify' =>  $logindata['is_verify']
                 ];
                 $this->session->set($employerdata);
                 echo '1~ You Have Successfully Logged in';
@@ -127,6 +130,7 @@ class Employer extends BaseController
                     'state' => $this->request->getPost('state'),
                     'city' => $this->request->getPost('city'),
                     'address' => $this->request->getPost('address'),
+                    'profile_completed' => 1,
                 );
 
             if ($_FILES['profile_picture']['name'] != '') {
@@ -135,6 +139,7 @@ class Employer extends BaseController
             $id = session('employer_id');
             $update_per = $this->EmployerAuthModel->personal_info_update($update_per_info, $id);
             if ($update_per == 1) {
+                $this->session->set('profile_completed', 1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
                 return redirect()->to(base_url('employer/profile'));
             } else {
@@ -286,6 +291,8 @@ class Employer extends BaseController
             $id = session('employer_id');
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
             if ($update_per == 1) {
+                $this->EmployerAuthModel->cmpy_cmpld($id);
+                $this->session->set('company_completed', 1);
                 $this->session->setFlashdata('success', 'Company Information Successfully Updated');
                 return redirect()->to(base_url('employer/cmp_info_update'));
             } else {
@@ -304,7 +311,6 @@ class Employer extends BaseController
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->cmp_info($id);
         $get['title'] = 'Company Information';
-        // pre($get['data']);exit;
         return view('employer/auth/company', $get);
     }
 
@@ -366,7 +372,11 @@ class Employer extends BaseController
             $user_details = [
                 'firstname' => $this->request->getPost('firstname'),
                 'email' => $this->request->getPost('email'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),'is_verify' => 0,
+                'is_verify' => 0,
+                'token' => md5(rand(0, 1000)),
+                'created_date' => date('Y-m-d : h:m:s'),
+                'updated_date' => date('Y-m-d : h:m:s')
             ];
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name'),
@@ -384,6 +394,7 @@ class Employer extends BaseController
             ];
             $package_bought = $this->EmployerModel->packages_bought($buyer_array);
             if ($result->resultID == 1) {
+                $this->mailer->send_verification_email($cmpny['employer_id'], 'employer');
                 echo '1~Employer Successfully Registered !';
                 exit;
             } else {
@@ -403,6 +414,7 @@ class Employer extends BaseController
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
         $get['title'] = 'Shortlisted Candidates';
+        // pre($get);
         return view('employer/resume/shortlisted_resume2', $get);
     }
 
@@ -661,13 +673,13 @@ class Employer extends BaseController
         $i = 1;
         foreach ($records['data'] as $row) {
             $buttoncontroll = '<a class="btn btn-sm btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
-                 <i class="la la-eye"></i></a>&nbsp
+                 <i class="fas fa-eye"></i></a>&nbsp
 
                   <a class="edit btn btn-sm btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
-                 <i class="la la-edit"></i></a>&nbsp;
+                 <i class="fas fa-edit"></i></a>&nbsp;
 
                  <a class="btn-delete btn btn-sm btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
-                 <i class="la-trash"></i></a>';
+                 <i class="fas fa-trash"></i></a>';
 
             $data[] = array(
                 $i++,
@@ -753,6 +765,7 @@ class Employer extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'location' => $this->request->getPost('location'),
+                'is_featured' => $this->request->getPost('is_featured'),
                 'created_date' => date('Y-m-d : H:i:s'),
                 'updated_date' => date('Y-m-d : H:i:s'),
             );
@@ -1080,5 +1093,23 @@ class Employer extends BaseController
         $builder->delete();
         $this->session->setFlashdata('error', 'Something went wrong, please try again');
         echo "0";exit;
+    }
+
+    public function verify($token)
+    {
+        $result = $this->EmployerAuthModel->email_verification($token);
+        if (count($result) > 0) {
+            // Send Mail Data
+            $mail_data = array(
+                'fullname' => $result['firstname'] . ' ' . $result['lastname'],
+            );
+            $this->session->set('is_verify', 1);
+            $this->mailer->mail_template($result['email'], 'welcome', $mail_data);
+            $this->session->setFlashdata('success', 'Email Successfully Verified!');
+            return redirect()->to(base_url('login'));
+        } else {
+            $this->session->setFlashdata('error', 'Something Went Wrong Try Again!');
+            return redirect()->to(base_url('home'));
+        }
     }
 }

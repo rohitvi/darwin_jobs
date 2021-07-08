@@ -8,6 +8,9 @@
     box-shadow: 2px 14px 14px 12px rgb(14 13 13 / 11%);
     padding-left: 20px;
   }
+  nav{
+    margin-top: 50px;
+  }
 </style>
 <div class='header_inner '>
   <div class="header_btm">
@@ -19,6 +22,7 @@
 <main>
   <div class="job_container">
     <div class="container">
+    <?php include(VIEWPATH . 'employer/include/profile_info.php'); ?>
       <div class="row job_main">
         <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
         <div class=" job_main_right">
@@ -158,7 +162,7 @@
                     </ul>
                     <div class="staffBox_action">
                       <a href="<?= base_url('employer/candidates_shortlisted/' . $row['id']) ?>" class="btn btn-third">Shortlist</a>
-                      <a class="btn btn-third" href="">View profile</a>
+                      <a class="btn btn-third" href="<?= base_url('employer/candidates_shortlisted/' . $row['id']) ?>" onclick="userdetails(<?= $row['id'] ?>)" data-toggle="modal" data-target="#modal-large" data-message="<?= $row['email'] ?>">User Profile</a>
                       <a class="btn btn-third" href="<?= $row['resume'] ?>">Download CV</a>
                     </div>
                   </div>
@@ -177,7 +181,43 @@
   </div>
 </main>
 
+<!-- Begin User Modal -->
+<div id="modal-large" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Details</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End User Modal -->
+
 <?php include(VIEWPATH . 'employer/include/footer.php'); ?>
 <script>
   $('.js-example-basic-single').select2();
+</script>
+<script>
+    function userdetails(id){
+        event.preventDefault();
+        $('#modal-body').html('');
+        var id = id;
+        $.ajax({
+            type: "GET",
+            url: '<?= base_url();?>/employer/userdetails/'+id,
+            cached: false,
+            success: function(data) {
+                $('#modal-body').html(data);
+            }
+        });
+    }
 </script>
