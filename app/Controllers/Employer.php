@@ -382,6 +382,7 @@ class Employer extends BaseController
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
         $get['title'] = 'Shortlisted Candidates';
+        // pre($get);
         return view('employer/resume/shortlisted_resume2', $get);
     }
 
@@ -639,14 +640,13 @@ class Employer extends BaseController
 
         $i = 1;
         foreach ($records['data'] as $row) {
-            $buttoncontroll = '<a class="btn btn-sm btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
-                 <i class="la la-eye"></i></a>&nbsp
+            $buttoncontroll = '<a class="" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
+                 <i class="fas fa-eye"></i></a>&nbsp
+                  <a class="edit" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
+                 <i class="fas fa-edit"></i></a>&nbsp;
 
-                  <a class="edit btn btn-sm btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
-                 <i class="la la-edit"></i></a>&nbsp;
-
-                 <a class="btn-delete btn btn-sm btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
-                 <i class="la-trash"></i></a>';
+                 <a class="btn-delete" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
+                 <i class="fas fa-trash"></i></a>';
 
             $data[] = array(
                 $i++,

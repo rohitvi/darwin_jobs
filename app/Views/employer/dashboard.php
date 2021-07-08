@@ -33,14 +33,13 @@
                           <h2>Job Seekers Applied <span><?= $job_seekers_applied ?></span></h2>
                         </div>
                       </div>
-                      <?php  if(!empty($current_package)): ?>
+                      <?php  if (!empty($current_package)): ?>
                       <div class="col-md-4">
                         <div class="dashboard_box ">
                           <i class="fas fa-list"></i>
                           <h2>Featured Jobs Credits<span><?= ($current_package['price'] != 0)? $total_featured_jobs.'/'. $current_package['no_of_posts']: 0 ?></span> </h2>
                         </div>
-                      </div> 
-
+                      </div>
                       <div class="col-md-4">
                         <div class="dashboard_box ">
                           <i class="fas fa-list"></i>

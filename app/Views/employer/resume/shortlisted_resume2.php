@@ -1,7 +1,7 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
 <div class='header_inner '>
   <div class="header_btm">
-    <h2>Shotlisted Resume</h2>
+    <h2>Shortlisted Resume</h2>
   </div>
 </div>
 </header>
@@ -15,25 +15,61 @@
          <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
         <!-- side bar end -->
 
+        <div class=" job_main_right">
+            <div class="jm_headings">
+                <h5>Shortlisted Resume</h5>
+            </div>
+          <div class="row findstaf_section ">
+          <?php foreach ($data as $value): ?>
+            <div class="col-sm-6">
+              <div class="staffBox">
+                <div class="staff_img">
+                  <img alt="" src="assets/images/profile-4.png">
+                </div>
+                <div class="staff_detail">
+                  <h3><?= $value['firstname'].' '.$value['lastname'] ?> <img alt="" src="<?= $value['profile_picture'] ?>"></h3>
+                  <p><?= $value['job_title'] ?></p>
+                  <ul>
+                    <li>
+                      <h6>Location</h6>
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span><?= get_city_name($value['city']) ?></span>
+                    </li>
+                    <li>
+                      <h6>Experience</h6>
+                      <i class="fas fa-calendar-check"></i>
+                      <span><?= $row['experience']; ?></span>
+                    </li>
+                    <li>
+                      <h6>Age</h6>
+                      <i class="fas fa-user"></i>
+                      <span>26</span>
+                    </li>
+                  </ul>
+                  <div class="staffBox_action">
+                    <a  class="btn btn-third" href="staff-profile-single.html">View profile</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <?php endforeach ?>
+          </div>      
+        </div>
+
+
 
         <!-- roght bar start -->
         <div class=" job_main_right">
-          <div class="row job_section">
+          <div class="row findstaf_section">
           <div class="col-sm-12">
                 <div class="jm_headings">
-                <h5>Shotlisted Resume</h5>
+                <h5>Shortlisted Resume</h5>
               </div>
               <div class="section-divider">
               </div>
                <!-- start -->
             <?php if ($data !== null) : ?>
-            <div class="section dark-section featured_section">
-                <div class="bg-v">
-                    <div class="bg-v-3 bg-t-r">
-                    </div>
-                    <div class="bg-v-3 bg-b-l">
-                    </div>
-                </div>
+            <div class="job_container ">
                 <div class="container">
                     <div class="row two_col featured_box_outer">
                         <?php foreach ($data as $value): ?>
@@ -52,7 +88,7 @@
                                         <li>
                                             <a href="#">
                                                 <i class="fas fa-landmark"></i>
-                                                Magna Aliqua
+                                                <?= get_city_name($value['city']) ?>
                                             </a>
                                         </li>
                                         <li>
@@ -116,7 +152,6 @@
                 </button>
             </div>
             <div class="modal-body" id="modal-body">
-                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-shadow" data-dismiss="modal">Close</button>
