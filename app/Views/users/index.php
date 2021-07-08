@@ -50,7 +50,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="user_type_inner  user_type_seeker">
-											<a href="browse-jobs.html">
+											<a href="<?= base_url('home/search') ?>">
 												<div class="usertype_img">
 													<img alt="" src="<?= base_url(); ?>/public/users/images/usertype-2.png">
 													<img alt="" class="usertype-addon" src="<?= base_url(); ?>/public/users/images/usertype-2-addon.png">
@@ -65,7 +65,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="user_type_inner user_type_post">
-											<a href="post-a-job.html">
+											<a href="<?= base_url('employer') ?>">
 												<div class="usertype_img">
 													<img alt="" src="<?= base_url(); ?>/public/users/images/usertype-1.png">
 													<img alt="" class="usertype-addon" src="<?= base_url(); ?>/public/users/images/usertype-1-addon.png">
@@ -114,15 +114,17 @@
 			<div class="row">
 			<?php foreach($categories as $category) : ?>
 				<div class="col-lg-3 col-md-6">
+				<a href="<?= base_url('home/search?category='.$category['id']) ?>">
 					<div class="category_box">
 						<div class="cb_header">
-							<img alt="" src="<?= base_url(); ?>/public/users/images/i-code.png">
+							<img alt="img" src="<?= base_url(); ?>/public/users/images/i-code.png">
 							<span class="job_count"><?= getNumsJobThruCategory($category['id']) ?></span>
 						</div>
 						<div class="cb_bottom">
 							<h3><?= $category['name'] ?></h3>
 						</div>
 					</div>
+				</a>
 				</div>
 			<?php endforeach; ?>
 			</div>
@@ -173,7 +175,7 @@
 							</ul>
 						</div>
 						<div class="fb_action">
-							<a class="btn btn-third" type="button" href="<?= session('user_logged_in') ? base_url('home/jobdetails/' . $post['id']) : base_url('login') ?>">Details</a>
+							<a class="btn btn-third" type="button" href="<?= base_url('home/jobdetails/' . $post['id']) ?>">Details</a>
 						</div>
 					</div>
 				</div>

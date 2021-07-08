@@ -1013,7 +1013,6 @@ class Home extends BaseController
         $data['title'] = 'company_details';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
-        // pre($data['company_info']);
         return view('users/company-details', $data);
     }
 }

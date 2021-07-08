@@ -60,7 +60,6 @@
             },
             success: function(package) {
                 const NewPackage = $.parseJSON(package);
-                console.log(NewPackage);
                 var options = {
                     "key": '<?= get_g_setting_val('razorpay_key'); ?>',
                     "amount": NewPackage.price * 100,
@@ -88,17 +87,19 @@
 
                                     document.getElementById("paynow").disabled = true;
                                 },
-                                success: function(data) {
-                                    if (data == 1) {
+                                success: function(res) {
+                                    // console.log(res);return false;
+                                    if (res == '1') {
                                         swal.close();
                                         swal({
                                             title: "Purchased Successfully",
                                             type: "success",
                                         }).then(function() {
-                                            windows.location.href ('<?= base_url('employer/packages') ?>');
+                                            window.location.href = '<?= base_url('employer/mypackages') ?>';
                                         });
-                                    } else if (daat == 2) {
-                                        alert("Sorry! something went wrong");
+                                    } else {
+                                        swal.close();
+                                        window.location.href ='<?= base_url('employer/packages') ?>';
                                     }
                                 }
                             });
@@ -113,7 +114,6 @@
                         "color": "#15b8f3" // screen color
                     }
                 };
-                console.log(options);
                 var propay = new Razorpay(options);
                 propay.open();
             }

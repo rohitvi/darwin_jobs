@@ -325,7 +325,7 @@ form {
 
 
 .select2-container .select2-selection--single .select2-selection__rendered {
-    padding: 0 20px 0 44px;
+    padding: 0 44px;
     font-size: 14px;
     border: 1px solid #ced4da;
 	height: 58px;

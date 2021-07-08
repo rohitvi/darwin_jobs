@@ -49,38 +49,5 @@ class BaseController extends Controller
         $this->db 		= \Config\Database::connect();
 		$this->validation =  \Config\Services::validation();
 		$this->uri = service('uri');
-		// **Test Eaxmpe**
-		// $this->session->set('item', 'value');
-		// $this->session->remove('item');
-		// echo $this->session->get('item');
-
-		// $this->session->setFlashdata('item', 'value');
-		// echo $this->session->getFlashdata('item');
-    	// $this->session->destroy();
-
-
-	        // $rules = [
-	        //     "email" => [
-	        //         "label" => "Email", 
-	        //         "rules" => "required"
-	        //     ],
-	        //     "lastname" => [
-	        //         "label" => "Last Name", 
-	        //         "rules" => "required|min_length[3]|max_length[20]"
-	        //     ],
-	        //     "email" => [
-	        //         "label" => "Email", 
-	        //         "rules" => "required|min_length[3]|max_length[20]|valid_email|is_unique[users.email]"
-	        //     ],
-	        //     "password" => [
-	        //         "label" => "Password", 
-	        //         "rules" => "required|min_length[8]|max_length[20]"
-	        //     ],
-	        //     "password_confirm" => [
-	        //         "label" => "Confirm Password", 
-	        //         "rules" => "matches[password]"
-	        //     ]
-	        // ];
-
 	}
 }

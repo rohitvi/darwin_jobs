@@ -36,7 +36,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" value="<?= set_value('username', $data[0]['username']); ?>" class="form-control">
+                        <input type="text" name="username" value="<?= $data[0]['username'] ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>First Name</label>
