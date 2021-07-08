@@ -5,6 +5,17 @@
   </div>
 </div>
 </header>
+<style>
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding: 0 10px;
+    font-size: 18px;
+    border: 1px solid #ced4da;
+    height: 43px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: black;
+}
+</style>
 <!-- Main
 ================================================== -->
 <main>
@@ -25,7 +36,15 @@
                 <div class="big_form_group">
                   <div class="row">
 
-                    <div class="col-md-12">
+                  <div class="col-md-6">
+                      <div class="form-group text-center">
+
+                        <img src="<?= $data[0]['profile_picture']; ?>" alt="company logo" width='80px'>
+                        <!-- <label  >Profile Picture</label>
+                        <input type="file" name="profile_picture" class="form-control"> -->
+                      </div>
+                    </div>
+                    <div class="col-md-6">
                       <div class="form-group ">
                         <label  >Profile Picture</label>
                         <input type="file" name="profile_picture" class="form-control">
@@ -66,7 +85,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Age * </label>
-                        <select name="age" class="form-control">
+                        <select name="age" class="form-control js-example-basic-single">
                           <?php for ($i = 11; $i < 80; $i++) : ?>
                             <?php if ($data[0]['age'] == $i) : ?>
                               <option selected><?= $i; ?></option>
@@ -81,7 +100,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Category</label>
-                        <select class="form-control" name="category">
+                        <select class="form-control js-example-basic-single" name="category">
                           <option value="">Select Category</option>
                           <?php foreach ($categories as $category) : ?>
                             <?php if ($data[0]['category'] == $category['id']) : ?>
@@ -103,7 +122,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Experience</label>
-                        <select name="experience" class="form-control">
+                        <select name="experience" class="form-control js-example-basic-single">
                           <option value="0-1" <?php if ($data[0]['experience'] == '0-1') {
                               echo "selected";
                           } ?>>0-1 Years</option>
@@ -135,7 +154,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Current Salary(INR)</label>
-                        <select name="current_salary" class="form-control">
+                        <select name="current_salary" class="form-control js-example-basic-single">
                           <?php for ($i = 500; $i < 10000; $i = $i + 500) : ?>
                             <?php if ($data[0]['current_salary'] == $i) : ?>
                               <option value="<?= $i; ?>" selected> <?= $i; ?> </option>
@@ -149,7 +168,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Expected Salary(INR)</label>
-                        <select name="expected_salary" class="form-control">
+                        <select name="expected_salary" class="form-control js-example-basic-single">
                           <?php for ($i = 500; $i < 10000; $i = $i + 500) : ?>
                             <?php if ($data[0]['expected_salary'] == $i) : ?>
                               <option value="<?= $i; ?>" selected> <?= $i; ?> </option>
@@ -164,7 +183,7 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Country</label>
-                        <select class="form-control" id="country" name="country">
+                        <select class="form-control js-example-basic-single" id="country" name="country">
                           <option value="">Select Country</option>
                           <?php foreach ($countries as $country) : ?>
                             <?php if ($data[0]['country'] == $country['id']) : ?>
@@ -182,7 +201,7 @@
                         <?php
                         $states = get_country_states($data[0]['country']);
                         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                        echo form_dropdown('state', $options, $data[0]['state'], 'class="state form-control"');
+                        echo form_dropdown('state', $options, $data[0]['state'], 'class="state form-control js-example-basic-single"');
                         ?>
                       </div>
                     </div>
@@ -194,7 +213,7 @@
                         <?php
                         $cities = get_state_cities($data[0]['state']);
                         $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                        echo form_dropdown('city', $options, $data[0]['city'], 'class="city form-control"');
+                        echo form_dropdown('city', $options, $data[0]['city'], 'class="city form-control js-example-basic-single"');
                         ?>
                       </div>
                     </div>
@@ -656,11 +675,6 @@ for (const el of document.querySelectorAll('.tagin')) {
       tagin(el)
 }
 
-// function mydob(){
-//   var dob = $('#dob').val();
-//   var month_diff = Date.now() - dob.getTime();
-
-//   alert(month_diff);
-// }
+$('.js-example-basic-single').select2();
 
 </script>

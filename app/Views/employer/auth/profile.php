@@ -27,7 +27,7 @@
           <div class="row">
           <div class="col-md-6">
               <div class="form-group text-center">
-              <img src="<?= $data[0]['profile_picture'] ?>" alt="Profile Photo" width="70px">
+             <img src="<?= $data[0]['profile_picture'] ?>" alt="Company Logo" width="80px">
               </div>
             </div>
             <div class="col-md-6">
@@ -69,7 +69,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Country</label>
-                <select name="country" class="form-control">
+                <select  id="country" name="country" class="form-control">
                   <?php foreach($countries as $value) : 
                     if ($value['id'] == $data[0]['country']) : ?>
                     <option value="<?= $value['id'] ?>" selected><?= $value['name'] ?></option>
@@ -86,7 +86,7 @@
                 <?php
                   $states = get_country_states($data[0]['country']);
                   $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state" required');
+                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state"');
                 ?>
               </div>
             </div>
@@ -96,7 +96,7 @@
                 <?php
                   $cities = get_state_cities($data[0]['state']);
                   $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" required');
+                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city"');
                 ?>
               </div>
             </div>
@@ -133,33 +133,35 @@
     var csfr_token_name = '<?= csrf_token() ?>';
     var csfr_token_value = '<?= csrf_hash() ?>';
     $(document).ready(function(){
-      $('#country').on('change',function(){
-        var data = {country: this.value,}
-        data[csfr_token_name] = csfr_token_value;
-        $.ajax({
-          url: '<?= base_url('home/get_country_states'); ?>',
-          type: 'POST',
-          data: data,
-          dataType: 'json',
-          cached: false,
-          success: function(obj){
-            $('.state').html(obj.msg);
-          }
-        });
+      $('#country').on('change', function() {
+      var data = {country: this.value,}
+      data[csfr_token_name] = csfr_token_value;
+      $.ajax({
+        url: '<?= base_url('home/get_country_states'); ?>',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        cached: false,
+        success: function(obj) {
+          $('.state').html(obj.msg);
+        }
       });
-      $('.state').on('change',function(){
-        var data = {state: this.value,}
-        data[csfr_token_name] = csfr_token_value;
-        $.ajax({
-          url: '<?= base_url('home/get_state_cities'); ?>',
-          type: 'POST',
-          data: data,
-          dataType: 'json',
-          cached: false,
-          success: function(obj){
-            $('.city').html(obj.msg);
-          }
-        });
+    });
+    $('.state').on('change', function() {
+      var data = {
+        state: this.value,
+      }
+      data[csfr_token_name] = csfr_token_value;
+      $.ajax({
+        url: '<?= base_url('home/get_state_cities'); ?>',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        cached: false,
+        success: function(obj) {
+          $('.city').html(obj.msg);
+        }
       });
+    });
     });
   </script>
