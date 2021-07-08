@@ -46,6 +46,8 @@
 </main>
 
 <?php include(VIEWPATH . 'employer/include/footer.php'); ?>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <?php $orderID = "OD" . strtoupper(uniqid()); ?>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
@@ -58,7 +60,6 @@
             },
             success: function(package) {
                 const NewPackage = $.parseJSON(package);
-                console.log(NewPackage);
                 var options = {
                     "key": '<?= get_g_setting_val('razorpay_key'); ?>',
                     "amount": NewPackage.price * 100,
@@ -73,7 +74,7 @@
                                 type: 'POST',
                                 data: {
                                     package_id: '<?= $id ?>',
-                                    payid: payid
+                                    razorpay_payment_id: payid
                                 },
                                 beforeSend: function() {
                                     swal({
@@ -84,21 +85,21 @@
                                     });
                                     $('#paynow').text('Please Wait..');
 
-                                    document.getElementById("shares").readOnly = true;
                                     document.getElementById("paynow").disabled = true;
                                 },
-                                success: function(data) {
-                                    if (data == 1) {
+                                success: function(res) {
+                                    // console.log(res);return false;
+                                    if (res == '1') {
                                         swal.close();
                                         swal({
                                             title: "Purchased Successfully",
-                                            text: "Payment has been received, Product(s) will be allocated to you within 2 business days.",
                                             type: "success",
                                         }).then(function() {
-                                            location.reload();
+                                            window.location.href = '<?= base_url('employer/mypackages') ?>';
                                         });
-                                    } else if (daat == 2) {
-                                        alert("Sorry! something went wrong");
+                                    } else {
+                                        swal.close();
+                                        window.location.href ='<?= base_url('employer/packages') ?>';
                                     }
                                 }
                             });
@@ -113,7 +114,6 @@
                         "color": "#15b8f3" // screen color
                     }
                 };
-                console.log(options);
                 var propay = new Razorpay(options);
                 propay.open();
             }

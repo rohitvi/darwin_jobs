@@ -78,7 +78,7 @@ class Admin extends BaseController
     }
 
     public function forgot_password()
-    {
+    {   
         if (session('admin_logged_in')) {
             return redirect()->to('admin/dashboard');
         }
@@ -160,6 +160,7 @@ class Admin extends BaseController
 
     public function account()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $data = [
                 'firstname' => $this->request->getPost('firstname'),
@@ -222,6 +223,7 @@ class Admin extends BaseController
 
     public function deleteadmin($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $query = $this->adminAuthModel->deleteadmin($id);
         if ($query->resultID == 1) {
             return redirect()->to(base_url('admin/showadmin'));
@@ -232,7 +234,8 @@ class Admin extends BaseController
     }
 
     public function deleteemployer($id)
-    {
+    {   
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $query = $this->adminModel->deleteemployer($id);
         if ($query->resultID == 1) {
             return redirect()->to(base_url('admin/employer'));
@@ -251,6 +254,7 @@ class Admin extends BaseController
 
     public function changepassword()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'password' => ['label' => 'password', 'rules' => 'required'],
@@ -277,6 +281,7 @@ class Admin extends BaseController
 
     public function showadmin()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $result['admin'] = $this->adminAuthModel->showadmin();
         $result['title'] = 'Admin List';
         return view('admin/showadmin.php', $result);
@@ -284,6 +289,7 @@ class Admin extends BaseController
 
     public function editadmin($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['data'] = $this->adminAuthModel->getaccount($id);
         $get['title'] = 'Edit Admin';
         return view('admin/auth/editadmin', $get);
@@ -291,6 +297,7 @@ class Admin extends BaseController
 
     public function updateadmin($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'username' => ['label' => 'username', 'rules' => 'required'],
@@ -328,40 +335,16 @@ class Admin extends BaseController
     }
 
     public function list_category()
-    {
+    {   
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['categories'] = $this->adminModel->get_all_categories();
-        //$data['categories'] = $model->get_all_categories();
         $data['title'] = 'List Category';
         return view('admin/category/list_category', $data);
     }
 
-    // public function add_category()
-    // {
-    //     $data = [];
-    //     if ($this->request->getMethod() == 'post') {
-    //         $input = $this->validate([
-    //             'category' => 'required|min_length[5]',
-    //         ]);
-
-    //         if ($input == true) {
-    //             $addcategorydata = [
-    //                 'name' => $this->request->getPost('category'),
-    //                 'slug' => $this->request->getPost('category'),
-    //             ];
-    //             $addcategory = $this->adminModel->add_category($addcategorydata);
-    //             $this->session->setFlashdata('status', 'Category Added successfully');
-    //             return redirect()->to('/admin/list_category')->with('status_icon', 'success');
-    //         } else {
-    //             //form not validated successfully
-    //             $data['validation'] = $this->validator;
-    //         }
-    //     }
-    //     $data['title'] = 'Add Category';
-    //     return view('admin/category/add_category', $data);
-    // }
-
     public function add_category()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data = [];
         if ($this->request->getMethod() == 'post') {
             $rules = [
@@ -395,6 +378,7 @@ class Admin extends BaseController
 
     public function edit_category($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $category_row = $this->adminModel->get_category_by_id($id);
         $data['category_row'] = $category_row;
 
@@ -436,6 +420,7 @@ class Admin extends BaseController
 
     public function list_industry()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['industry'] = $this->adminModel->get_all_industry();
         $data['title'] = 'List Industry';
         return view('admin/industry/list_industry', $data);
@@ -443,6 +428,7 @@ class Admin extends BaseController
 
     public function add_industry()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data = [];
         if ($this->request->getMethod() == 'post') {
             $input = $this->validate([
@@ -466,6 +452,7 @@ class Admin extends BaseController
 
     public function edit_industry($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $industry_row = $this->adminModel->get_industry_by_id($id);
         $data['industry_row'] = $industry_row;
         // pre( $data );
@@ -499,6 +486,7 @@ class Admin extends BaseController
 
     public function list_packages()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['packages'] = $this->adminModel->get_all_packages();
         $data['title'] = 'List Packages';
         return view('admin/packages/list_packages', $data);
@@ -506,6 +494,7 @@ class Admin extends BaseController
 
     public function add_packages()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data = [];
         $data['title'] = 'Add Packages';
         if ($this->request->getMethod() == 'post') {
@@ -534,38 +523,11 @@ class Admin extends BaseController
             }
         }
         return view('admin/packages/add_packages', $data);
-        $data = [];
-        if ($this->request->getMethod() == 'post') {
-            $input = $this->validate([
-                'title' => 'required',
-                'price' => 'required',
-                'detail' => 'required',
-                'no_of_days' => 'required',
-                'no_of_posts' => 'required',
-                'sort_order' => 'required',
-            ]);
-            if ($input == true) {
-                $addpackage = [
-                    'title' => $this->request->getPost('title'),
-                    'slug' => $this->request->getPost('title'),
-                    'price' => $this->request->getPost('price'),
-                    'detail' => $this->request->getPost('detail'),
-                    'no_of_days' => $this->request->getPost('no_of_days'),
-                    'no_of_posts' => $this->request->getPost('no_of_posts'),
-                    'sort_order' => $this->request->getPost('sort_order'),
-                ];
-                $addpack = $this->adminModel->add_packages($addpackage);
-                $this->session->setFlashdata('status', 'Packages Added Successfully');
-                return redirect()->to('/admin/list_packages')->with('status_icon', 'success');
-            } else {
-                $data['validation'] = $this->validator;
-            }
-        }
-        return view('admin/packages/add_packages', $data);
     }
 
     public function edit_packages($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['title'] = 'Edit Packages';
         $packages_row = $this->adminModel->get_packages_by_id($id);
         $data['packages_row'] = $packages_row;
@@ -598,42 +560,11 @@ class Admin extends BaseController
             }
         }
         return view('admin/packages/edit_packages', $data);
-        $packages_row = $this->adminModel->get_packages_by_id($id);
-        $data['packages_row'] = $packages_row;
-
-        if ($this->request->getMethod() == 'post') {
-            $input = $this->validate([
-                'title' => 'required',
-                'price' => 'required',
-                'detail' => 'required',
-                'no_of_days' => 'required',
-                'no_of_posts' => 'required',
-                'sort_order' => 'required',
-                'status' => 'required',
-            ]);
-            if ($input == true) {
-                $editpackage = [
-                    'title' => $this->request->getPost('title'),
-                    'slug' => $this->request->getPost('title'),
-                    'price' => $this->request->getPost('price'),
-                    'detail' => $this->request->getPost('detail'),
-                    'no_of_days' => $this->request->getPost('no_of_days'),
-                    'no_of_posts' => $this->request->getPost('no_of_posts'),
-                    'sort_order' => $this->request->getPost('sort_order'),
-                    'is_active' => $this->request->getPost('status'),
-                ];
-                $editpack = $this->adminModel->edit_packages($editpackage, $id);
-                $this->session->setFlashdata('status', 'Packages Updated Successfully');
-                return redirect()->to('/admin/list_packages')->with('status_icon', 'success');
-            } else {
-                $data['validation'] = $this->validator;
-            }
-        }
-        return view('admin/packages/edit_packages', $data);
     }
 
     public function list_newsletters()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['newsletters'] = $this->adminModel->get_all_newsletters();
         $data['title'] = 'Newsletters';
         return view('admin/newsletters/list_newsletters', $data);
@@ -647,6 +578,7 @@ class Admin extends BaseController
 
     public function list_contact()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['contact'] = $this->adminModel->get_all_contactus();
         $data['title'] = 'List Contacts';
         return view('admin/contact/list_contact', $data);
@@ -662,6 +594,7 @@ class Admin extends BaseController
 
     public function job_type()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['types'] = $this->adminModel->get_job_type();
         $data['title'] = 'Job Types';
         return view('admin/job_attributes/job_type', $data);
@@ -669,6 +602,7 @@ class Admin extends BaseController
 
     public function addjob()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
             if ($this->validate($rules) == FALSE) {
@@ -691,6 +625,7 @@ class Admin extends BaseController
 
     public function editjob($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['data'] = $this->adminModel->editjob($id);
         $data['title'] = 'Edit Job Type';
         return view('admin/job_attributes/edit_job_type', $get);
@@ -698,6 +633,7 @@ class Admin extends BaseController
 
     public function updatejob($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'type' => ['label' => 'type', 'rules' => 'required'],
@@ -734,6 +670,7 @@ class Admin extends BaseController
 
     public function education()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['data'] = $this->adminModel->education();
         $get['title'] = 'Education';
         return view('admin/education/education', $get);
@@ -741,6 +678,7 @@ class Admin extends BaseController
 
     public function addeducation()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
             if ($this->validate($rules) == FALSE) {
@@ -763,6 +701,7 @@ class Admin extends BaseController
 
     public function editeducation($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['data'] = $this->adminModel->editeducation($id);
         $get['title'] = 'Edit Education';
         return view('admin/education/edit_education', $get);
@@ -770,6 +709,7 @@ class Admin extends BaseController
 
     public function updateeducation($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'type' => ['label' => 'type', 'rules' => 'required'],
@@ -806,6 +746,7 @@ class Admin extends BaseController
 
     public function employment()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['data'] = $this->adminModel->employment();
         $get['title'] = 'Employment';
         return view('admin/employment/employment', $get);
@@ -813,6 +754,7 @@ class Admin extends BaseController
 
     public function addemployment()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
             if ($this->validate($rules) == false) {
@@ -835,6 +777,7 @@ class Admin extends BaseController
 
     public function editemployment($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['data'] = $this->adminModel->editemployment($id);
         $get['title'] = 'Edit Employment';
         return view('admin/employment/edit_employment', $get);
@@ -842,6 +785,7 @@ class Admin extends BaseController
 
     public function updateemployment($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'type' => ['label' => 'type', 'rules' => 'required'],
@@ -878,6 +822,7 @@ class Admin extends BaseController
 
     public function employer()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $employer['data'] = $this->adminModel->getemployer();
         $employer['title'] = 'Employer';
         return view('admin/employer/showemployers', $employer);
@@ -885,6 +830,7 @@ class Admin extends BaseController
 
     public function addemployer()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->isAJAX()) {
             $country_id = $this->request->getPost('country_id');
             // return json_encode($this->adminModel->get_states_list($country_id));
@@ -953,6 +899,7 @@ class Admin extends BaseController
 
     public function editemployer($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $query['data'] = $this->adminModel->editemployer($id);
         $query['categories'] = $this->adminModel->get_all_categories();
         $query['countries'] = $this->adminModel->get_countries_list();
@@ -971,6 +918,7 @@ class Admin extends BaseController
     }
     public function updateemployer($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
@@ -1011,6 +959,7 @@ class Admin extends BaseController
 
     public function updatecompany($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->isAJAX()) {
             $rules = [
                 'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
@@ -1076,6 +1025,7 @@ class Admin extends BaseController
 
     public function adduser()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
@@ -1119,6 +1069,7 @@ class Admin extends BaseController
 
     public function updateuser($id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
@@ -1173,6 +1124,7 @@ class Admin extends BaseController
 
     public function list_job()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $this->session->remove('job_search_type');
         $this->session->remove('job_search_from');
         $this->session->remove('job_search_to');
@@ -1251,6 +1203,7 @@ class Admin extends BaseController
 
     public function post()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $admin_id = session('admin_id');
         $data['categories'] = $this->adminModel->get_all_categories();
         $data['industries'] = $this->adminModel->get_all_industry();
@@ -1329,6 +1282,7 @@ class Admin extends BaseController
 
     public function edit_post($job_id = 0)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $admin_id = session('admin_id');
         $data['categories'] = $this->adminModel->get_all_categories();
         $data['industries'] = $this->adminModel->get_all_industry();
@@ -1412,6 +1366,7 @@ class Admin extends BaseController
     // Applicants who have applied for the job
     public function view_job_applicants($job_id)
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data['applicants'] = $this->adminModel->get_applicants($job_id);
         $data['title'] = 'Job Applicants';
         // pre($data);
@@ -1443,6 +1398,7 @@ class Admin extends BaseController
 
     public function add_general_settings()
     {
+        if(!admin_vaidate())  return redirect()->to('/admin/login');
         $get['gsetting'] = $this->adminModel->fetch_general_setting();
         $get['footer_settings'] = $this->adminModel->get_footer_settings();
         $get['title'] = 'General Setting';

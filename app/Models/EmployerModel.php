@@ -33,11 +33,8 @@ class EmployerModel extends Model
 
     public function payment($data)
     {
-        $builder = $this->db->table('payments')->insert($data);
-        $result['pay_data'] = $this->last_payment_details();
-        if (count($result) == 1) {
-            $array = array('status' => 1, 'payment_id' => $result['pay_data']['id'], 'employer_id' => $result['pay_data']['employer_id']);
-            return $array;
+        if ($this->db->table('payments')->insert($data)) {
+            return $this->db->insertID();
         } else {
             return 0;
         }
@@ -239,10 +236,11 @@ class EmployerModel extends Model
     public function check_if_bought($emp_id, $pkg_id)
     {
         $builder = $this->db->table('packages_bought')->getWhere(array('employer_id' => $emp_id, 'package_id' => $pkg_id, 'is_active' => 1))->getResultArray();
-        if ($builder)
+        if ($builder) {
             return 1;
-        else
+        } else {
             return 0;
+        }
     }
 
     public function get_active_package()
@@ -252,7 +250,7 @@ class EmployerModel extends Model
 
     public function getPackageInfo($package_id)
     {
-        return $this->db->table('packages')->select('price,title')->where('id', $package_id)->get()->getRowArray();
+        return $this->db->table('packages')->where('id', $package_id)->get()->getRowArray();
     }
 
     public function count_posted_jobs($pkg_id, $is_featured, $payment_id)

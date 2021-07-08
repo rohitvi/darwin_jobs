@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Controllers;
+require_once APPPATH . 'Libraries/razorpay-php/Razorpay.php';
 
 use App\Libraries\Mailer;
 use App\Models\AdminModel;
 use App\Models\auth\EmployerAuthModel;
 use App\Models\EmployerModel;
+use Razorpay\Api\Api;
 
 class Employer extends BaseController
 {
@@ -14,6 +16,7 @@ class Employer extends BaseController
         $this->EmployerModel = new EmployerModel();
         $this->EmployerAuthModel = new EmployerAuthModel();
         $this->adminModel = new AdminModel();
+        $this->mailer = new Mailer();
         $this->mailer = new Mailer();
     }
 
@@ -34,6 +37,9 @@ class Employer extends BaseController
 
     public function dashboard()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
@@ -84,15 +90,8 @@ class Employer extends BaseController
 
     public function personal_info_update()
     {
-        if ($this->request->getMethod() == 'put') {
+        if ($this->request->getMethod() == 'post') {
             if ($_FILES['profile_picture']['name'] != '') {
-                $rules = [
-                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]']
-                ];
-                if ($this->validate($rules) == false) {
-                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                    return redirect()->to(base_url('employer/profile'));
-                }
                 $result = UploadFile($_FILES['profile_picture']);
                 if ($result['status'] == true) {
                     $url = $result['result']['file_url'];
@@ -100,18 +99,35 @@ class Employer extends BaseController
                     $this->session->setFlashdata('error', $result['message']);
                     return redirect()->to(base_url('employer/profile'));
                 }
+                $rules = [ 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'] ];
+            }
+            $rules = [
+                    'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
+                    'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
+                    'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                    'designation'        => ['label' => 'Designation', 'rules' => 'required'],
+                    'mobile_no'          => ['label' => 'Mobile No.', 'rules' => 'required'],
+                    'country'          => ['label' => 'Country', 'rules' => 'required'],
+                    'state'             => ['label' => 'State', 'rules' => 'required'],
+                    'city'              => ['label' => 'City', 'rules' => 'required'],
+                    'address'           => ['label' => 'Address', 'rules' => 'required']
+                ];
+            
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/profile'));
             }
             $update_per_info = array(
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
-                'email' => $this->request->getPost('email'),
-                'designation' => $this->request->getPost('designation'),
-                'mobile_no' => $this->request->getPost('phoneno'),
-                'country' => $this->request->getPost('country'),
-                'state' => $this->request->getPost('state'),
-                'city' => $this->request->getPost('city'),
-                'address' => $this->request->getPost('address'),
-            );
+                    'firstname' => $this->request->getPost('firstname'),
+                    'lastname' => $this->request->getPost('lastname'),
+                    'email' => $this->request->getPost('email'),
+                    'designation' => $this->request->getPost('designation'),
+                    'mobile_no' => $this->request->getPost('mobile_no'),
+                    'country' => $this->request->getPost('country'),
+                    'state' => $this->request->getPost('state'),
+                    'city' => $this->request->getPost('city'),
+                    'address' => $this->request->getPost('address'),
+                );
 
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_per_info['profile_picture'] = $url;
@@ -136,6 +152,9 @@ class Employer extends BaseController
 
     public function changepassword()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'currentpassword' => ['label' => 'Current password', 'rules' => 'required'],
@@ -168,6 +187,9 @@ class Employer extends BaseController
 
     public function profile()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         if ($this->request->isAJAX()) {
             $country_id = $this->request->getPost('country_id');
             $states = $this->adminModel->get_states_list($country_id);
@@ -195,8 +217,10 @@ class Employer extends BaseController
 
     public function cmp_info_update()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         if ($this->request->getMethod() == 'put') {
-
             if ($_FILES['company_logo']['name'] != '') {
                 $rules = [
                     'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
@@ -267,6 +291,9 @@ class Employer extends BaseController
 
     public function packages()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         $get['data'] = $this->EmployerModel->getpackages();
         $get['title'] = 'Membership Plans';
         return view('employer/packages/packages', $get);
@@ -284,74 +311,11 @@ class Employer extends BaseController
         return view('employer/packages/package_confirmation', $get);
     }
 
-    public function payment()
-    {
-        if ($this->request->getMethod() == 'post') {
-            if (session('employer_logged_in')) {
-                $rules = [
-                    'fullname' => ['label' => 'fullname', 'rules' => 'required'],
-                    'payer_email' => ['label' => 'payer_email', 'rules' => 'required'],
-                    'card_no' => ['label' => 'card_no', 'rules' => 'required'],
-                    'mm' => ['label' => 'mm', 'rules' => 'required'],
-                    'yy' => ['label' => 'yy', 'rules' => 'required'],
-                    'cvv' => ['label' => 'cvv', 'rules' => 'required'],
-                    'emp_id' => ['label' => 'emp_id', 'rules' => 'required'],
-                ];
-                if ($this->validate($rules) == false) {
-                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                    return redirect()->to(base_url('employer/package_confirmation'));
-                }
-                $data = [
-                    'payment_method' => 'credit card',
-                    'txn_id' => 'txn_1FXkFpHDx7jzBoS98m5C2Jpl',
-                    'user_id' => '0',
-                    'employer_id' => session('employer_id'),
-                    'payment_amount' => $this->request->getPost('payment_amount'),
-                    'payer_email' => $this->request->getPost('payer_email'),
-                    'payment_status' => 'succeeded',
-                    'purchased_plan' => $this->request->getPost('purchased_plan'),
-                ];
-                $query = $this->EmployerModel->payment($data);
-                if ($query == 0) {
-                    $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                    return redirect()->to(base_url('employer/packages'));
-                } elseif ($query['status'] == 1) {
-                    $date = date("y-m-d G.i:s");
-                    if ($this->request->getPost('package_days') == 45) {
-                        $exp_date = date('y-m-d G.i:s', strtotime(' + 45 days'));
-                    } elseif ($this->request->getPost('package_days') == 30) {
-                        $exp_date = date('y-m-d G.i:s', strtotime(' + 30 days'));
-                    } elseif ($this->request->getPost('package_days') == 90) {
-                        $exp_date = date('y-m-d G.i:s', strtotime(' + 90 days'));
-                    }
-                    $package_info = [
-                        'payment_id' => $query['payment_id'],
-                        'employer_id' => $query['employer_id'],
-                        'user_id' => 0,
-                        'package_id' => $this->request->getPost('package_id'),
-                        'is_renewal' => 0,
-                        'is_upgrade' => 0,
-                        'buy_date' => $date,
-                        'expire_date' => $exp_date,
-                        'is_active' => 1,
-                    ];
-                    $pay_query = $this->EmployerModel->packages_bought($package_info);
-                    if ($pay_query->resultID == 1) {
-                        $this->session->setFlashdata('success', 'Package Successfully Purchased');
-                        return redirect()->to(base_url('employer/mypackages'));
-                    } else {
-                        $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                        return redirect()->to(base_url('employer/packages'));
-                    }
-                }
-            } else {
-                return redirect()->to(base_url('employer/login'));
-            }
-        }
-    }
-
     public function mypackages()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
         $get['title'] = 'My Packages';
@@ -412,6 +376,9 @@ class Employer extends BaseController
 
     public function shortlisted()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
         $get['title'] = 'Shortlisted Candidates';
@@ -658,6 +625,9 @@ class Employer extends BaseController
 
     public function list_jobs()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         $data['title'] = 'Job List';
         return view('employer/job/job_list', $data);
     }
@@ -797,6 +767,9 @@ class Employer extends BaseController
 
     public function search()
     {
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         $search = array();
         $get['profiles'] = array();
         $get['categories'] = $this->adminModel->get_all_categories();
@@ -804,7 +777,6 @@ class Employer extends BaseController
         $get['education'] = get_education_list();
 
         if ($this->request->getMethod() == 'post') {
-
             $rules = [
                 "job_title" => ["label" => "Job Title", "rules" => "trim|required"]
             ];
@@ -1010,78 +982,82 @@ class Employer extends BaseController
     public function process_payment()
     {
         $emp_id = session('employer_id');
-        (!$emp_id) ? redirect(base_url('employer/packages')) : "";
-        if ($this->input->post('payment_type') == 'razorpay') {
-            $capture_amount = $this->input->post('totalAmount'); //% by 100
-            $data['user_id']              = $this->session->userdata('user_id');
-            $data['payment_id']       = $this->input->post("razorpay_payment_id");
-            $data['tax_rate']       = $this->input->post("taxRate");
-            $data['shipping_chrgs']       = $this->input->post("shippingChrgs");
-            $data['payment_type']       = 'Razorpay';
-            $data['payment_status']     = 'due';
-            $data['payment_details']    = 'none';
-            $data['amount']             = $capture_amount / 100;
-            $data['payment_timestamp']  = date('Y-m-d H:i:s');
-            $this->db->insert('payments', $data);
-            $insert_id = $this->db->insert_id();
-            $this->session->set_userdata('payment_id', $insert_id);
-            $razorpay_key = get_DirectValue('general_setting', 'value', 'name', 'razorpay_public_key');
-            $razorpay_secret = get_DirectValue('general_setting', 'value', 'name', 'razorpay_secret_key');
-
-            $api = new Api($razorpay_key, $razorpay_secret);
+        if (!employer_vaidate()) {
+            exit;
+        }
+        if ($this->request->isAJAX()) {
             if (isset($_POST['razorpay_payment_id']) === false) {
-                die("Payment Failed. Please Retry!");
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                echo "0";exit;
             }
-            $id = $this->input->post('razorpay_payment_id');
-            $payment  = $api->payment->fetch($id);
-
+            $payment_amount = $this->EmployerModel->getPackageInfo($this->request->getPost("package_id"));
+            $razorpay_key = get_g_setting_val('razorpay_key');
+            $razorpay_secret = get_g_setting_val('razorpay_secret');
+            $api = new Api($razorpay_key, $razorpay_secret);
+            $razorpay_payment_id = $this->request->getPost("razorpay_payment_id");
+            $payment  = $api->payment->fetch($razorpay_payment_id);
+            $capture_amount = $payment_amount['price']*100;
             if ($payment['status'] == 'authorized' || $payment['status'] == 'captured' || $payment['status'] == 'created') {
-                $payment  =  $api->payment->fetch($id)->capture(array('amount' => $capture_amount));
+                $payment  =  $api->payment->fetch($razorpay_payment_id)->capture(array('amount' => $capture_amount));
+                $data = [
+                    'payment_method' => 'Razorpay',
+                    'txn_id' => $razorpay_payment_id,
+                    'user_id' => '0',
+                    'employer_id' => session('employer_id'),
+                    'payment_amount' => $payment_amount['price'],
+                    'payer_email' => $this->request->getPost('payer_email'),
+                    'payment_status' => 'succeeded',
+                    'purchased_plan' => $this->request->getPost("package_id"),
+                    'payment_date' => date('Y-m-d H:i:s')
+                ];
+                $insert_id = $this->EmployerModel->payment($data);
+                $this->session->set('payment_id', $insert_id);
                 $this->razorpay_success();
             } else {
                 $this->razorpay_cancel();
             }
         }
-
-        // check other payments type here
-
     }
 
-    /* FUNCTION: Verify razorpay payment*/
+
     public function razorpay_success()
     {
-        $payment_id                = $this->session->userdata('payment_id');
-        $data['payment_details']   = json_encode($_POST);
-        $data['payment_timestamp'] = date('Y-m-d H:i:s');
-        $data['payment_type']      = 'Razorpay';
-        $data['payment_status']    = 'paid';
-        $this->db->where('id', $payment_id)->update('payments', $data);
-        $user_id = $this->session->userdata("user_id");
-        $orderID = $this->input->post("orderId");
-        $phone = $this->input->post("phone");
-        $email = $this->input->post("email");
-        $data = [
-            'payment_id' => $this->input->post("razorpay_payment_id"),
-            'payment_method' => 'Online',
-            'order_status' => '1',
-            'mobile' => $phone,
-            'email' => $email,
-            'final_price' => $this->input->post('totalAmount') / 100 //% by 100
-        ];
-        if ($this->db->where("order_number", $orderID)->where("user_id", $user_id)->update("orders", $data) && $this->db->where("user_id", $user_id)->delete("user_cart")) {
-            $this->api_return(["status" => 200]);
-        } else {
-            var_dump($this->db->error());
-            $this->api_return(["status" => 500]);
+        if (session('payment_id')) {
+            $date = date("y-m-d G.i:s");
+            $package_info = $this->EmployerModel->getPackageInfo($this->request->getPost("package_id"));
+            $package_days = $package_info['no_of_days'];
+            $exp_date = date('y-m-d G.i:s', strtotime(' + '.$package_days.' days'));
+            $package_info = [
+                        'payment_id' => session('payment_id'),
+                        'employer_id' => session('employer_id'),
+                        'user_id' => 0,
+                        'package_id' => $this->request->getPost('package_id'),
+                        'is_renewal' => 0,
+                        'is_upgrade' => 0,
+                        'buy_date' => $date,
+                        'expire_date' => $exp_date,
+                        'is_active' => 1,
+                    ];
+            $pay_query = $this->EmployerModel->packages_bought($package_info);
+            session()->remove('payment_id');
+            if ($pay_query->resultID == 1) {
+                $this->session->setFlashdata('success', 'Package Successfully Purchased');
+                echo "1";exit;
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                echo "0";exit;
+            }
         }
-        return 1;
     }
 
     public function razorpay_cancel()
     {
-        $payment_id = $this->session->userdata('payment_id');
-        $this->db->where('id', $payment_id);
-        $this->db->delete('payments');
-        return 0; //msg here 
+        $payment_id = session('payment_id');
+        session()->remove('payment_id');
+        $builder = $this->db->table('payments');
+        $builder->where('id', $payment_id);
+        $builder->delete();
+        $this->session->setFlashdata('error', 'Something went wrong, please try again');
+        echo "0";exit;
     }
 }
