@@ -26,70 +26,82 @@
               <div class="section-divider">
               </div>
                <!-- start -->
-    <div class="section dark-section featured_section">
-		<div class="bg-v">
-			<div class="bg-v-3 bg-t-r">
-			</div>
-			<div class="bg-v-3 bg-b-l">
-			</div>
-		</div>
-		<div class="container">
-			<div class="row two_col featured_box_outer">
-                <?php foreach ($data as $value): ?>
-				<div class="col-sm-6">
-					<div class="featured_box ">
-						<div class="fb_image">
-							<a href="compnay-profile-single.html">
-								<img alt="brand logo" src="<?= base_url('public/employer/assets/img/avatar/user.png')?>">
-							</a>
-						</div>
-						<div class="fb_content">
-							<h4>
-								<a href="#"><?= $value['firstname'].' '.$value['lastname'] ?></a>
-							</h4>
-							<ul>
-								<li>
-									<a href="#">
-										<i class="fas fa-landmark"></i>
-										Magna Aliqua
-									</a>
-								</li>
-								<li>
-									<a href="#"><i class="fas fa-map-marker-alt"></i>   <?= get_state_name($value['state']).', '.get_country_name($value['country']) ?></a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fas fa-money-bill"></i>
-										Current Salary : INR <?= $value['current_salary'] ?>
-									</a>
-								</li>
-                                <li>
-									<a href="#">
-										<i class="fas fa-list"></i>
-										Category : <?= $value['job_title'] ?>
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="fb_action text-center">
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <button class="btn-sm btn-primary" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large" data-message="<?= $value['email'] ?>">User Profile</button>&nbsp;&nbsp;
-                            <button class="btn-sm btn-primary" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>">Interview</button>&nbsp;&nbsp;
-                            <a  href="<?= base_url($value['resume']) ?>" ><button class="btn-sm btn-primary">Download CV</button></a>
-						</div>
-					</div>
-				</div>
-                <?php endforeach ?>
-				<div class="col-md-12 text-right"> 
-					<a data-aos="fade-down" data-aos-delay="400" class="btn btn-primary aos-init" href="<?= base_url('employer/search') ?>">Find Candidates <i class="fas fa-long-arrow-alt-right"></i></a>
-				</div>
-			</div>
-		</div>
-	</div><!-- end -->
+            <?php if ($data !== null) : ?>
+            <div class="section dark-section featured_section">
+                <div class="bg-v">
+                    <div class="bg-v-3 bg-t-r">
+                    </div>
+                    <div class="bg-v-3 bg-b-l">
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row two_col featured_box_outer">
+                        <?php foreach ($data as $value): ?>
+                        <div class="col-sm-6">
+                            <div class="featured_box ">
+                                <div class="fb_image">
+                                    <a href="compnay-profile-single.html">
+                                        <img alt="brand logo" src="<?= base_url('public/employer/assets/img/avatar/user.png')?>">
+                                    </a>
+                                </div>
+                                <div class="fb_content">
+                                    <h4>
+                                        <a href="#"><?= $value['firstname'].' '.$value['lastname'] ?></a>
+                                    </h4>
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-landmark"></i>
+                                                Magna Aliqua
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fas fa-map-marker-alt"></i>   <?= get_state_name($value['state']).', '.get_country_name($value['country']) ?></a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-money-bill"></i>
+                                                Current Salary : INR <?= $value['current_salary'] ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fas fa-list"></i>
+                                                Category : <?= $value['job_title'] ?>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="fb_action text-center">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="btn-sm btn-primary" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large" data-message="<?= $value['email'] ?>">User Profile</button>&nbsp;&nbsp;
+                                    <button class="btn-sm btn-primary" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>">Interview</button>&nbsp;&nbsp;
+                                    <a  href="<?= base_url($value['resume']) ?>" ><button class="btn-sm btn-primary">Download CV</button></a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach ?>
+                        <div class="col-md-12 text-right"> 
+                            <a data-aos="fade-down" data-aos-delay="400" class="btn btn-primary aos-init" href="<?= base_url('employer/search') ?>">Find Candidates <i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end -->
+            <?php else: ?>
+            <div class="section dark-section featured_section">
+                <p>No ShortListed Candidates</p>
+            </div>
+            <?php endif; ?>
           </div>
           </div>  
         </div>
          <!-- right bar start -->
+         
+      </div>
+    </div>
+  </div>
+</main>
 
 
 <!-- Begin User Modal -->
@@ -129,7 +141,7 @@
             </div>
             <div class="modal-body" id="interview-modal">
                 <?php echo form_open('/', 'class="email-form"') ?>
-                <input type="hidden" name="email" class="form-control" value="<?= $value['email'] ?>" id="email">
+                <input type="hidden" name="email" class="form-control" value="<?= (isset($value['email'])) ? $value['email'] : '' ?>" id="email">
                 <div class="form-group">
                     <label class="form-control-label">Subject:</label>
                     <input class="form-control" type="text" name="subject" id="subject">
@@ -149,10 +161,6 @@
 </div>
 <!-- End Interview Modal -->
 
-      </div>
-    </div>
-  </div>
-</main>
 
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 

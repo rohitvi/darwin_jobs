@@ -26,37 +26,37 @@
         <div class="big_form_group">
           <div class="row">
             <div class="col-md-12">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Comapany Logo *</label>
                 <input name="company_logo" type="file" class="form-control">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Company Name</label>
-                <input name="company_name" type="text" class="form-control" placeholder="Enter Company Name" value="<?= $data[0]['company_name'] ?>">
+                <input name="company_name" type="text" class="form-control" placeholder="Enter Company Name" value="<?= (isset($data[0]['company_name'])) ? $data[0]['company_name'] : '' ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Company Email</label>
                 <input name="email" type="email" class="form-control" placeholder="Enter Company Email" value="<?= $data[0]['email'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Phone No</label>
                 <input name="phone_no" type="number" class="form-control" placeholder="Enter Phone Number" value="<?= $data[0]['phone_no'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Company Website</label>
                 <input name="website" type="text" class="form-control" placeholder="Enter Company Website" value="<?= $data[0]['website'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label  >Category</label>
                 <select name="category" class="form-control">
                   <option>Select Category</option>
@@ -77,7 +77,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Organization Type</label>
                 <select name="org_type" class="form-control">
                   <option <?= ($data[0]['org_type'] == 'Public') ? 'selected' : '' ?>>Public</option>
@@ -88,7 +88,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>No. of Employers</label>
                 <select name="no_of_employers" class="form-control select">
                   <option value="1-10" <?= ($data[0]['no_of_employers'] == '1-10') ? "selected" : " " ?>>1-10</option>
@@ -101,13 +101,13 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Comapany Description</label>
                 <input name="description" type="text" class="form-control" placeholder="Enter Company Description" value="<?= $data[0]['description'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Country</label>
                 <select name="country" class="form-control">
                   <?php foreach($countries as $value) : 
@@ -121,7 +121,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>State</label>
                 <?php
                   $states = get_country_states($data[0]['country']);
@@ -131,7 +131,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>City</label>
                 <?php
                   $cities = get_state_cities($data[0]['state']);
@@ -141,13 +141,13 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Pin Code</label>
                 <input name="postcode" type="number" class="form-control" placeholder="Enter Pincode" value="<?= $data[0]['postcode'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Full Address</label>
                 <input name="address" type="text" class="form-control" placeholder="Enter Adress" value="<?= $data[0]['address'] ?>">
               </div>
@@ -159,19 +159,19 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Twitter</label>
                 <input name="twitter_link" type="text" class="form-control" placeholder="Enter Twitter Url" value="<?= $data[0]['twitter_link'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Youtube</label>
                 <input name="youtube_link" type="text" class="form-control" placeholder="Enter Youtube Url" value="<?= $data[0]['youtube_link'] ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>LinkedIn</label>
                 <input name="linkedin_link" type="text" class="form-control" placeholder="Enter LinkedIn" value="<?= $data[0]['linkedin_link'] ?>">
               </div>

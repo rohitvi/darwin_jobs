@@ -78,7 +78,7 @@
               </ul>
             </div>
           </div>
-          <div class=" sjs_box_action">
+          <div class="sjs_box_action">
             <a class="btn btn-third text-white" onclick="apply(<?= $data['id'] ?>)">Apply Job</a>
           </div>
         </div>

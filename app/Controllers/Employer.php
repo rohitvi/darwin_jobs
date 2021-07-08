@@ -406,7 +406,8 @@ class Employer extends BaseController
                 exit;
             }
         }
-        return view('employer/auth/register');
+        $get['title'] = 'Employer Registration';
+        return view('employer/auth/register',$get);
     }
 
     public function shortlisted()

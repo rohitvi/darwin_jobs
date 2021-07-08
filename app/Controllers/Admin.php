@@ -62,7 +62,7 @@ class Admin extends BaseController
                 exit;
             } elseif ($logindata['status'] == 1) {
                 $admindata = [
-                    'admin_logged_in' => $logindata['id'],
+                    'admin_id' => $logindata['id'],
                     'admin_logged_in' => true,
                     'admin_username' => $username,
                 ];
