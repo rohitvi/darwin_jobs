@@ -10,6 +10,7 @@
 <main>
   <div class="job_container">
     <div class="container">
+    <?php include(VIEWPATH . 'employer/include/profile_info.php'); ?>
       <div class="row job_main">
       <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
 <div class=" job_main_right">
@@ -64,7 +65,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Country</label>
-                <select name="country" class="form-control">
+                <select id="country" name="country" class="form-control">
                   <?php foreach($countries as $value) : 
                     if ($value['id'] == $data[0]['country']) : ?>
                     <option value="<?= $value['id'] ?>" selected><?= $value['name'] ?></option>

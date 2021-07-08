@@ -11,7 +11,7 @@ class EmployerAuthModel extends Model
         $result = $builder->where(array('email' => $email))->get()->getResultArray();
         if (count($result) == 1) {
             if (password_verify($password, $result[0]['password'])) {
-               $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname']);
+               $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname'], 'profile_completed' => $result[0]['profile_completed'], 'company_completed' => $result[0]['company_completed'], 'is_verify' => $result[0]['is_verify']);
                return $array; 
             } else 
                 return 0;
@@ -89,5 +89,21 @@ class EmployerAuthModel extends Model
     public function update_reset_password($password,$id)
     {
         return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password,'password_reset_code'=>''));
+    }
+
+    public function email_verification($token)
+    {
+        $builder = $this->db->table('employers')->where('token', $token)->get()->getRowArray();
+        if (count($builder) > 0) {
+            $this->db->table('employers')->where('token', $token)->update(array('is_verify'=>1,'token'=>''));
+            return $builder;
+        } else {
+            return false;
+        }
+    }
+
+    public function cmpy_cmpld($user_id)
+    {
+        return $this->db->table('employers')->where('id',$user_id)->update(array('company_completed' => 1));
     }
 }

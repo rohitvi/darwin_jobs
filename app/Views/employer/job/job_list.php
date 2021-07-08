@@ -17,6 +17,7 @@
 <main>
   <div class="job_container">
     <div class="container">
+    <?php include(VIEWPATH . 'employer/include/profile_info.php'); ?>
       <div class="row job_main">
       <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
         <div class=" job_main_right">
