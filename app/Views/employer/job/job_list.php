@@ -1,5 +1,12 @@
 <?php include(VIEWPATH . 'employer/include/header.php'); ?>
-
+<style>
+.btn, button {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0px 1px;
+}
+</style>
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Job List</h2>
@@ -12,38 +19,36 @@
     <div class="container">
       <div class="row job_main">
       <?php include(VIEWPATH . 'employer/include/sidebar.php'); ?>
-<div class=" job_main_right">
-  <div class="row job_section">
-    <div class="col-sm-12">
-      <div class="jm_headings">
-        <h5>My Job List</h5>
-        <a class="btn btn-primary mypbtn" href="<?= base_url('employer/cmp_info_update') ?>">Company profile</a>
-      </div>
-      <div class="section-divider">
-      </div>
-      <table id="sorting-table" class="table mb-0 mv_datatable">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Applicants</th>
-                <th>Industry</th>
-                <th>Location</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th><span style="width:100px;">Actions</span></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+        <div class=" job_main_right">
+        <div class="row job_section">
+            <div class="col-sm-12">
+            <div class="jm_headings">
+                <h5>My Job List</h5>
+                <a class="btn btn-primary mypbtn" href="<?= base_url('employer/cmp_info_update') ?>">Company profile</a>
+            </div>
+            <div class="section-divider">
+            </div>
+            <table id="sorting-table" class="table mb-0 mv_datatable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Applicants</th>
+                        <th>Industry</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th><span style="width:100px;">Actions</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
     </div>
-  </div>
-
-
-</div>
-</div>
-</div>
+    </div>
 </div>
 </main>
 
@@ -54,7 +59,7 @@
       $('.mv_datatable').DataTable({
       "processing": true,
       "serverSide": true,
-      "pageLength": 25,
+      "pageLength": 5,
       "bDestroy": true,
       "ajax": "<?= base_url('employer/datatable_json') ?>",
       "order": [
@@ -77,7 +82,7 @@
           "targets": 2,
           "name": "Applicants",
           'searchable': false,
-          'orderable': true
+          'orderable': false
         },
         {
           "targets": 3,
@@ -87,8 +92,8 @@
         },
         {
           "targets": 4,
-          "name": "country",
-          'searchable': false,
+          "name": "city",
+          'searchable': true,
           'orderable': false
         },
         {

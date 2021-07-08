@@ -1,12 +1,12 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
+<style>
+</style>
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Shortlisted Resume</h2>
   </div>
 </div>
 </header>
-
-
 <main>
   <div class="job_container">
     <div class="container">
@@ -38,102 +38,25 @@
                     <li>
                       <h6>Experience</h6>
                       <i class="fas fa-calendar-check"></i>
-                      <span><?= $row['experience']; ?></span>
+                      <span><?= $value['experience']; ?></span>
                     </li>
                     <li>
                       <h6>Age</h6>
                       <i class="fas fa-user"></i>
-                      <span>26</span>
+                      <span><?= $value['age']; ?></span>
                     </li>
                   </ul>
                   <div class="staffBox_action">
-                    <a  class="btn btn-third" href="staff-profile-single.html">View profile</a>
+                      <a class="btn btn-third" href="<?= base_url('employer/candidates_shortlisted/' . $value['id']) ?>" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large" data-message="<?= $value['email'] ?>">User Profile</a>
+                      <a class="btn btn-third" href="" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>">Interview</a>
+                      <a class="btn btn-third" href="<?= $value['resume'] ?>">Download CV</a>
                   </div>
                 </div>
               </div>
             </div>
             <?php endforeach ?>
           </div>      
-        </div>
-
-
-
-        <!-- roght bar start -->
-        <div class=" job_main_right">
-          <div class="row findstaf_section">
-          <div class="col-sm-12">
-                <div class="jm_headings">
-                <h5>Shortlisted Resume</h5>
-              </div>
-              <div class="section-divider">
-              </div>
-               <!-- start -->
-            <?php if ($data !== null) : ?>
-            <div class="job_container ">
-                <div class="container">
-                    <div class="row two_col featured_box_outer">
-                        <?php foreach ($data as $value): ?>
-                        <div class="col-sm-6">
-                            <div class="featured_box ">
-                                <div class="fb_image">
-                                    <a href="compnay-profile-single.html">
-                                        <img alt="brand logo" src="<?= base_url('public/employer/assets/img/avatar/user.png')?>">
-                                    </a>
-                                </div>
-                                <div class="fb_content">
-                                    <h4>
-                                        <a href="#"><?= $value['firstname'].' '.$value['lastname'] ?></a>
-                                    </h4>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fas fa-landmark"></i>
-                                                <?= get_city_name($value['city']) ?>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="fas fa-map-marker-alt"></i>   <?= get_state_name($value['state']).', '.get_country_name($value['country']) ?></a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fas fa-money-bill"></i>
-                                                Current Salary : INR <?= $value['current_salary'] ?>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fas fa-list"></i>
-                                                Category : <?= $value['job_title'] ?>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="fb_action text-center">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <button class="btn-sm btn-primary" onclick="userdetails(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-large" data-message="<?= $value['email'] ?>">User Profile</button>&nbsp;&nbsp;
-                                    <button class="btn-sm btn-primary" id="inter<?= $value['user_id'] ?>" onclick="interview(<?= $value['user_id'] ?>)" data-toggle="modal" data-target="#modal-centered" data-message="<?= $value['email'] ?>">Interview</button>&nbsp;&nbsp;
-                                    <a  href="<?= base_url($value['resume']) ?>" ><button class="btn-sm btn-primary">Download CV</button></a>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach ?>
-                        <div class="col-md-12 text-right"> 
-                            <a data-aos="fade-down" data-aos-delay="400" class="btn btn-primary aos-init" href="<?= base_url('employer/search') ?>">Find Candidates <i class="fas fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end -->
-            <?php else: ?>
-            <div class="section dark-section featured_section">
-                <p>No ShortListed Candidates</p>
-            </div>
-            <?php endif; ?>
-          </div>
-          </div>  
-        </div>
-         <!-- right bar start -->
-         
+        </div>         
       </div>
     </div>
   </div>
@@ -202,6 +125,7 @@
 <script>
     function userdetails(id){
         event.preventDefault();
+        $('#modal-body').html('');
         var id = id;
         $.ajax({
             type: "GET",

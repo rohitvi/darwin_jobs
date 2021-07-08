@@ -52,8 +52,8 @@
                                     <?php endif; ?>
                                     <?php if (session('employer_logged_in')) : ?>
                                     <li><a href="<?= base_url('employer/dashboard') ?>"> Dashboard </a></li>
-                                    <li><a href="<?= base_url('employer/job/listing') ?>"> Manage Jobs</a></li>
-                                    <li><a href="<?= base_url('employer/cv/search') ?>"> Find Candidate</a></li>
+                                    <li><a href="<?= base_url('employer/list_jobs') ?>"> Manage Jobs</a></li>
+                                    <li><a href="<?= base_url('employer/search') ?>"> Find Candidate</a></li>
                                     <li class="has-sub-menu">
                                         <a href="#"><?= session('employer_username'); ?></a>
                                         <ul class="sub-menu">
