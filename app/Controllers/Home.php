@@ -72,7 +72,7 @@ class Home extends BaseController
                 //to get profile data
                 $google_service = new \Google_Service_Oauth2($google_client);
                 $g_data = $google_service->userinfo->get();
-                // pre($g_data);
+                 //pre($g_data);
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
                     //pre($logindata);

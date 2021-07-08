@@ -25,7 +25,12 @@
         <!-- <input type="hidden" name="_method" value="PUT" /> -->
         <div class="big_form_group">
           <div class="row">
-            <div class="col-md-12">
+          <div class="col-md-6">
+              <div class="form-group text-center">
+              <img src="<?= $data[0]['profile_picture'] ?>" alt="Profile Photo" width="70px">
+              </div>
+            </div>
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Profile Picture</label>
                 <input name="profile_picture" type="file" class="form-control">

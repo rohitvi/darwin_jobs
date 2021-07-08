@@ -22,10 +22,15 @@
       <div class="section-divider">
       </div>
       <form action="<?= base_url('employer/cmp_info_update') ?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="_method" value="PUT" />
+        <!-- <input type="hidden" name="_method" value="PUT" /> -->
         <div class="big_form_group">
           <div class="row">
-            <div class="col-md-12">
+          <div class="col-md-6">
+              <div class="form-group text-center">
+              <img src="<?= $data[0]['company_logo'] ?>" alt="Profile Photo" width="100px">
+              </div>
+            </div>
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Comapany Logo *</label>
                 <input name="company_logo" type="file" class="form-control">
@@ -126,7 +131,7 @@
                 <?php
                   $states = get_country_states($data[0]['country']);
                   $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state" required');
+                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state"');
                 ?>
               </div>
             </div>
@@ -136,7 +141,7 @@
                 <?php
                   $cities = get_state_cities($data[0]['state']);
                   $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" required');
+                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" ');
                 ?>
               </div>
             </div>
