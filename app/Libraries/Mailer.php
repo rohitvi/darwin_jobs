@@ -130,7 +130,7 @@ class Mailer
 
         sendEmail($Mail);
 
-        return $Mail;
+        return 1;
     }
 
     //=============================================================

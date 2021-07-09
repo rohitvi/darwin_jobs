@@ -299,4 +299,9 @@ class HomeModel extends Model
     {
         return $this->db->table('job_post')->where('is_featured', 'yes')->orderBy('id', 'DESC')->get(8)->getResultArray();
     }
+
+    public function contactus($data)
+    {
+        return $builder = $this->db->table('contact_us')->insert($data);
+    }
 }

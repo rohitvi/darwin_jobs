@@ -223,7 +223,6 @@ function sendEmail($mail_data)
     if ($email->send()) {
         return 1;
     } else {
-        // return 0;
         return 0;
         // pre($email->printDebugger(['headers']));
     }
@@ -433,4 +432,11 @@ function admin_vaidate($para='admin_logged_in')
         else
             return session('admin_logged_in');
     }
+}
+
+function get_footer_settings()
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('footer_settings');
+    return $builder->get()->getResultArray();
 }
