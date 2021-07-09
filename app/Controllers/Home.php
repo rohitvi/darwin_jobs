@@ -10,8 +10,8 @@ use App\Libraries\Mailer;
 
 class Home extends BaseController
 {
-    private $facebook = NULL;
-    private $fb_helper = NULL;
+    private $facebook = null;
+    private $fb_helper = null;
     public function __construct()
     {
         require_once APPPATH . 'Libraries/vendor/autoload.php';
@@ -69,7 +69,7 @@ class Home extends BaseController
         parse_str($query_str, $search);
 
         if (count($search) > 0 && $search['code'] != '') {
-        // if ($this->request->getVar('code')) {
+            // if ($this->request->getVar('code')) {
             $token = $google_client->fetchAccessTokenWithAuthCode($search['code']);
             if (!isset($token['error'])) {
                 $google_client->setAccessToken($token['access_token']);
@@ -77,8 +77,8 @@ class Home extends BaseController
                 //to get profile data
                 $google_service = new \Google_Service_Oauth2($google_client);
                 $g_data = $google_service->userinfo->get();
-                if(!empty($g_data['id'])){
-                    $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
+                if (!empty($g_data['id'])) {
+                    $logindata = $this->HomeAuthModel->google_validate($g_data['id'], $g_data['given_name'], $g_data['family_name'], $g_data['email'], $g_data['picture']);
                     //pre($logindata);
                     $userdata = [
                         'user_id' => $logindata['id'],
@@ -107,7 +107,8 @@ class Home extends BaseController
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $logindata = $this->HomeAuthModel->login_validate($email, $password);
-            print_r($logindata);exit;
+            print_r($logindata);
+            exit;
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
@@ -238,7 +239,7 @@ class Home extends BaseController
             }
         }
         $data['title'] = 'Job Seeker Register';
-        return view('users/auth/registration',$data);
+        return view('users/auth/registration', $data);
     }
 
     public function logout()
@@ -363,7 +364,9 @@ class Home extends BaseController
 
     public function matching_jobs()
     {
-        if(!user_vaidate())  return redirect()->to(base_url('login'));
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
 
@@ -374,14 +377,16 @@ class Home extends BaseController
 
     public function change_password()
     {
-        if(!user_vaidate())  return redirect()->to(base_url('login'));
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
         if ($this->request->getMethod() == 'post') {
             $rules = [
                 'old_password' => ['label' => 'Current password', 'rules' => 'required'],
                 'new_password' => ['label' => 'new_password', 'rules' => 'required'],
                 'confirm_password' => ['label' => 'confirm_password', 'rules' => 'required|matches[new_password]']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/change_password'));
             }
@@ -402,12 +407,14 @@ class Home extends BaseController
             }
         }
         $data['title'] = 'Change Password';
-        return view('users/auth/change_password',$data);
+        return view('users/auth/change_password', $data);
     }
 
     public function profile()
     {
-        if(!user_vaidate())  return redirect()->to(base_url('login'));
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $id = session('user_id');
@@ -496,7 +503,9 @@ class Home extends BaseController
 
     public function jobdetails($id)
     {
-        if(!user_vaidate())  return redirect()->to(base_url('login'));
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
         $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
@@ -549,7 +558,9 @@ class Home extends BaseController
     }
     public function applied_jobs()
     {
-        if(!user_vaidate())  return redirect()->to(base_url('login'));
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
         $get['title'] = 'Applied Jobs';
@@ -672,7 +683,7 @@ class Home extends BaseController
                 'ending_month' => ['label' => 'ending_month', 'rules' => 'trim'],
                 'ending_year'    => ['label' => 'ending_year', 'rules' => 'trim']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('home/profile'));
             }
@@ -729,7 +740,7 @@ class Home extends BaseController
             }
         }
         $data['title'] = 'Password Recovery';
-        return view('users/auth/password_reset',$data);
+        return view('users/auth/password_reset', $data);
     }
 
     public function reset_password($reset_code)
@@ -770,7 +781,7 @@ class Home extends BaseController
                 'language' =>  ['label' => 'Language', 'rules' => 'required'],
                 'lang_level' => ['label' => 'Proficiency with this language', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('home/profile'));
             }
@@ -820,7 +831,7 @@ class Home extends BaseController
                 'language' =>  ['label' => 'Language', 'rules' => 'required'],
                 'lang_level' => ['label' => 'Proficiency with this language', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('home/profile'));
             }
@@ -854,7 +865,7 @@ class Home extends BaseController
                 'country' =>  ['label' => 'Country', 'rules' => 'required'],
                 'year' => ['label' => 'Completion Year', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('home/profile'));
             }
@@ -913,7 +924,7 @@ class Home extends BaseController
                 'country' =>  ['label' => 'Country', 'rules' => 'required'],
                 'year' => ['label' => 'Completion Year', 'rules' => 'required']
             ];
-            if ($this->validate($rules) == FALSE) {
+            if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('home/profile'));
             }
@@ -1018,5 +1029,12 @@ class Home extends BaseController
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
         return view('users/company-details', $data);
+    }
+
+    // Company Detail
+    public function Page404()
+    {
+        $data['title'] = 'Page Not Found | 404';
+        echo view('users/404', $data);
     }
 }
