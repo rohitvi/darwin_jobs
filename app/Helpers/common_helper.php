@@ -433,3 +433,10 @@ function admin_vaidate($para='admin_logged_in')
             return session('admin_logged_in');
     }
 }
+
+function get_footer_settings()
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('footer_settings');
+    return $builder->get()->getResultArray();
+}
