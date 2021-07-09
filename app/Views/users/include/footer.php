@@ -54,7 +54,7 @@
 					<div class="footer_widget_box">
 						<h2 data-aos="fade-up" data-aos-delay="400">Community</h2>
 						<ul data-aos="fade-in" data-aos-delay="200">
-							<li> <a href="contact-us.html">Help / Contact Us</a> 
+							<li> <a href="<?= base_url('home/contactus'); ?>">Help / Contact Us</a> 
 				            </li>
 				            <li> <a href="content-page.html">Guidelines</a> 
 				            </li>

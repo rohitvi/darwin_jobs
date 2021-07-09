@@ -35,6 +35,7 @@
                     <th>No</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>User Type</th>
                     <th>Subject</th>
                     <th>Message</th>
                     <th style="width: 150px;">Action</th>
@@ -46,6 +47,7 @@
                     <td><?= ++$count; ?></td>
                     <td><?= $row['username']; ?></td>
                     <td><?= $row['email']; ?></td>
+                    <td><?= ($row['user_type']  == 'JobSeeker') ? '<span class="btn btn-primary btn-xs">JobSeeker</span>' : '<span class="btn btn-success  btn-xs">Employer</span>' ?></td>
                     <td><?= $row['subject']; ?></td>
                     <td><?= $row['message']; ?></td>
                         <td><a title="Delete" class="btn-delete btn btn-sm btn-danger" onclick="return confirm('Are you Sure to Delete ?')" href="<?= base_url('admin/del_contactus/'.$row['id']); ?>"> <i class="fa fa-trash"></i>    Delete</a></td>

@@ -1031,10 +1031,48 @@ class Home extends BaseController
         return view('users/company-details', $data);
     }
 
-    // Company Detail
-    public function Page404()
+    public function contactus()
     {
-        $data['title'] = 'Page Not Found | 404';
-        echo view('users/404', $data);
+        $data['title'] = 'Contact Us';
+        if ($this->request->getMethod() == 'post' ) {
+            $rules = [
+                'name'      => ['label' => 'Name', 'rules' => 'required|min_length[3]'],
+                'email'     => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'user_type' => ['label' =>  'Type', 'rules' =>  'required'],
+                'subject'   => ['label' => 'Subject', 'rules' => 'required|min_length[3]'],
+                'message'   => ['label' => 'Message', 'rules' => 'required|min_length[3]']
+            ];
+
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/contactus'));
+            }
+            else{
+                    $data =[
+                        'username'      => $this->request->getPost('name'),
+                        'email'         => $this->request->getPost('email'),
+                        'user_type'     => $this->request->getPost('user_type'),
+                        'subject'       => $this->request->getPost('subject'),
+                        'message'       => $this->request->getPost('message'),
+                        'created_date'  => date('Y-m-d : h:m:s'),
+                        'updated_date'  => date('Y-m-d : h:m:s')
+                        ];
+                    $result = $this->HomeModel->contactus($data);
+                    if ($result) {
+
+                            // email code
+                        // $to = $this->general_settings['admin_email'];
+                        // $subject = 'Contact Us | '.$this->general_settings['application_name'];
+                        // $message =  '<p>Username: '.$data['username'].'</p> 
+                        // <p>Email: '.$data['email'].'</p>
+                        // <p>Message: '.$data['message'].'</p>' ;
+					    // sendEmail($to, $subject, $message, $file = '' , $cc = '');
+
+                        $this->session->setFlashdata('success', 'Your Message Has Been Sent Successfully !');
+                        return redirect()->to(base_url('home/contactus'));
+                    }
+                }
+        }
+        return view('users/contactus',$data);
     }
 }
