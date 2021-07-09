@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '798cc3c181bf27d896852578c02a980c94f81ed2',
+        'reference' => '08c6f77c4ed7b7a9eabc2f5f0fb52de01d806ae0',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '798cc3c181bf27d896852578c02a980c94f81ed2',
+            'reference' => '08c6f77c4ed7b7a9eabc2f5f0fb52de01d806ae0',
             'dev_requirement' => false,
         ),
         'facebook/graph-sdk' => array(
@@ -92,12 +92,12 @@
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(
-            'pretty_version' => '2.2.0',
-            'version' => '2.2.0.0',
+            'pretty_version' => '2.3.0',
+            'version' => '2.3.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
-            'reference' => '1cb1cde8e8dd0f70cc0fe51354a59acad9302084',
+            'reference' => 'df991fd88693ab703aa403413d83e15f688dae33',
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(

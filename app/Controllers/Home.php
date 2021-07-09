@@ -63,16 +63,20 @@ class Home extends BaseController
         $google_client->setRedirectUri(base_url() . '/login');
         $google_client->addScope('email');
         $google_client->addScope('profile');
+        
+        // Get URL DATA
+        $query_str = parse_url(current_url(true), PHP_URL_QUERY);
+        parse_str($query_str, $search);
 
-        if ($this->request->getVar('code')) {
-            $token = $google_client->fetchAccessTokenWithAuthCode($this->request->getVar('code'));
+        if (count($search) > 0 && $search['code'] != '') {
+        // if ($this->request->getVar('code')) {
+            $token = $google_client->fetchAccessTokenWithAuthCode($search['code']);
             if (!isset($token['error'])) {
                 $google_client->setAccessToken($token['access_token']);
                 $this->session->set('access_token', $token['access_token']);
                 //to get profile data
                 $google_service = new \Google_Service_Oauth2($google_client);
                 $g_data = $google_service->userinfo->get();
-                 //pre($g_data);
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
                     //pre($logindata);
@@ -84,7 +88,7 @@ class Home extends BaseController
                         'profile_completed' => $logindata['profile_completed'],
                         'is_verify' =>  $logindata['is_verify']
                     ];
-                    session()->set($employerdata);
+                    session()->set($userdata);
                     session()->setFlashData('success', 'Login Success!');
                     return redirect()->to(base_url('home/profile'));
                 }
@@ -115,7 +119,7 @@ class Home extends BaseController
                     'profile_completed' => $logindata['profile_completed'],
                     'is_verify' => $logindata['is_verify']
                 ];
-                $this->session->set($employerdata);
+                $this->session->set($userdata);
                 echo '1~You Have Successfully Logged in';
                 exit;
             }
@@ -414,7 +418,7 @@ class Home extends BaseController
         $get['title'] = 'Seeker Profile';
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'firstname'         => ['label' => 'First Name',    'rules' => 'required'],
+                'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
                 'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
                 'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
                 'mobile_no'         => ['label' => 'Phone Number', 'rules' => 'required|min_length[10]'],
@@ -682,7 +686,6 @@ class Home extends BaseController
                 'starting_year' => $this->request->getPost('starting_year'),
                 'ending_month' => $this->request->getPost('ending_month'),
                 'ending_year' => $this->request->getPost('ending_year'),
-                'currently_working_here' => $this->request->getPost('currently_working_here'),
                 'description' => $this->request->getPost('description'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
