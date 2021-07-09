@@ -414,8 +414,11 @@ class Admin extends BaseController
 
     public function del_category($id)
     {
-        $this->adminModel->del_category($id);
-        return redirect()->to(base_url('admin/list_category'));
+        $query = $this->adminModel->del_category($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Category Deleted Successfully');
+            return redirect()->to(base_url('/admin/list_category'));
+            }
     }
 
     public function list_industry()
@@ -431,20 +434,25 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data = [];
         if ($this->request->getMethod() == 'post') {
-            $input = $this->validate([
-                'industry' => 'required|min_length[5]',
-            ]);
-            if ($input == true) {
+            $rules = [
+                'industry' => ['label' =>'Industry Name', 'rules' => 'required']
+                    ];
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/add_industry'));
+            }
                 $addindustrydata = [
                     'name' => $this->request->getPost('industry'),
-                    'slug' => $this->request->getPost('industry'),
+                    'slug' => $this->request->getPost('industry')
                 ];
                 $addindustry = $this->adminModel->add_industry($addindustrydata);
-                $this->session->setFlashdata('status', 'Industry Added Successfully');
-                return redirect()->to('/admin/list_industry')->with('status_icon', 'success');
-            } else {
-                $data['validation'] = $this->validator;
-            }
+                if ($addindustry == true) {
+                    $this->session->setFlashdata('success', 'Industry Added successfully');
+                    return redirect()->to(base_url('/admin/list_industry'));
+                    } else {
+                    $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again !');
+                    return redirect()->to(base_url('/admin/add_industry'));
+                    }
         }
         $data['title'] = 'Add Industry';
         return view('admin/industry/add_industry', $data);
@@ -457,21 +465,25 @@ class Admin extends BaseController
         $data['industry_row'] = $industry_row;
         // pre( $data );
         if ($this->request->getMethod() == 'post') {
-            $input = $this->validate([
-                'industry' => 'required|min_length[5]',
-            ]);
-
-            if ($input == true) {
+            $rules = [
+                'industry' => ['label' =>'Industry Name', 'rules' => 'required']
+                    ];
+            if ($this->validate($rules) == FALSE) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/add_industry'));
+            }
                 $editindustry = [
                     'name' => $this->request->getPost('industry'),
-                    'slug' => $this->request->getPost('industry'),
+                    'slug' => $this->request->getPost('industry')
                 ];
                 $editindustrydata = $this->adminModel->edit_industry($editindustry, $id);
-                $this->session->setFlashdata('status', 'Industry Updated Successfully');
-                return redirect()->to('/admin/list_industry')->with('status_icon', 'success');
-            } else {
-                $data['validation'] = $this->validator;
-            }
+                if ($editindustrydata == true) {
+                    $this->session->setFlashdata('success', 'Industry Updated Successfully');
+                    return redirect()->to(base_url('/admin/list_industry'));
+                    } else {
+                    $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again !');
+                    return redirect()->to(base_url('/admin/edit_industry'));
+                    }
         }
         $data['title'] = 'Edit Industry';
         return view('admin/industry/edit_industry', $data);
@@ -479,9 +491,11 @@ class Admin extends BaseController
 
     public function del_industry($id)
     {
-        $this->adminModel->del_industry($id);
-        $this->session->setFlashdata('status', 'Industry Deleted Successfully');
-        return redirect()->to('/admin/list_industry')->with('status_icon', 'success');
+        $query = $this->adminModel->del_industry($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Industry Deleted Successfully');
+            return redirect()->to(base_url('/admin/list_industry'));
+            }
     }
 
     public function list_packages()
@@ -496,15 +510,14 @@ class Admin extends BaseController
     {
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         $data = [];
-        $data['title'] = 'Add Packages';
         if ($this->request->getMethod() == 'post') {
             $input = $this->validate([
-                'title' => 'required',
-                'price' => 'required',
-                'detail' => 'required',
-                'no_of_days' => 'required',
-                'no_of_posts' => 'required',
-                'sort_order' => 'required',
+                'title'         => ['label' =>'Title', 'rules' => 'required'],
+                'price'         => ['label' =>'Price', 'rules' => 'required'],
+                'detail'        => ['label' =>'Package Detail', 'rules' => 'required'],
+                'no_of_days'    => ['label' =>'No of Days', 'rules' => 'required'],
+                'no_of_posts'   => ['label' =>'No of Posts', 'rules' => 'required'],
+                'sort_order'    => ['label' =>'Sort Order', 'rules' => 'required'],
             ]);
             if ($input == true) {
                 $addpackage = [
@@ -522,6 +535,7 @@ class Admin extends BaseController
                 $data['validation'] = $this->validator;
             }
         }
+        $data['title'] = 'Add Packages';
         return view('admin/packages/add_packages', $data);
     }
 
@@ -534,13 +548,12 @@ class Admin extends BaseController
 
         if ($this->request->getMethod() == 'post') {
             $input = $this->validate([
-                'title' => 'required',
-                'price' => 'required',
-                'detail' => 'required',
-                'no_of_days' => 'required',
-                'no_of_posts' => 'required',
-                'sort_order' => 'required',
-                'status' => 'required',
+                'title'         => ['label' =>'Title', 'rules' => 'required'],
+                'price'         => ['label' =>'Price', 'rules' => 'required'],
+                'detail'        => ['label' =>'Package Detail', 'rules' => 'required'],
+                'no_of_days'    => ['label' =>'No of Days', 'rules' => 'required'],
+                'no_of_posts'   => ['label' =>'No of Posts', 'rules' => 'required'],
+                'sort_order'    => ['label' =>'Sort Order', 'rules' => 'required'],
             ]);
             if ($input == true) {
                 $editpackage = [
@@ -572,8 +585,11 @@ class Admin extends BaseController
 
     public function del_newsletters($id)
     {
-        $this->adminModel->del_newsletters($id);
-        return redirect()->to('/admin/list_newsletters');
+        $query = $this->adminModel->del_newsletters($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Subscribers Mail ID Deleted Successfully');
+            return redirect()->to(base_url('/admin/list_newsletters'));
+            }
     }
 
     public function list_contact()
@@ -586,8 +602,11 @@ class Admin extends BaseController
 
     public function del_contactus($id)
     {
-        $this->adminModel->del_contactus($id);
-        return redirect()->to('/admin/list_contact');
+        $query = $this->adminModel->del_contactus($id);
+        if ($query == true) {
+            $this->session->setFlashdata('success', 'Contact Us Deleted Successfully');
+            return redirect()->to(base_url('/admin/list_contact'));
+            }
     }
 
     // Job type
@@ -1403,10 +1422,7 @@ class Admin extends BaseController
         $get['footer_settings'] = $this->adminModel->get_footer_settings();
         $get['title'] = 'General Setting';
 
-        //echo '<pre>';
-        //print_r( $get);
         if ($this->request->getMethod() == 'post') {
-
             // $rules=[
             //     'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
             //     'logo' =>['uploaded[logo]','max_size[logo,1024]']
@@ -1458,8 +1474,8 @@ class Admin extends BaseController
                 // Footer Settings
                 $footer_result = $this->add_footer_widget();
             }
-            $this->session->setFlashdata('status', 'Setting has been changed Successfully!');
-            return redirect()->to('/admin/add_general_settings')->with('status_icon', 'success');
+            $this->session->setFlashdata('success', 'Setting has been changed Successfully!');
+            return redirect()->to(base_url('/admin/add_general_settings'));
         }
         return view('admin/settings/general_settings', $get);
     }

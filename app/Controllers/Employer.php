@@ -108,9 +108,9 @@ class Employer extends BaseController
                     'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
                     'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
                     'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
-                    'designation'        => ['label' => 'Designation', 'rules' => 'required'],
-                    'mobile_no'          => ['label' => 'Mobile No.', 'rules' => 'required'],
-                    'country'          => ['label' => 'Country', 'rules' => 'required'],
+                    'designation'       => ['label' => 'Designation', 'rules' => 'required'],
+                    'mobile_no'         => ['label' => 'Mobile No.', 'rules' => 'required'],
+                    'country'           => ['label' => 'Country', 'rules' => 'required'],
                     'state'             => ['label' => 'State', 'rules' => 'required'],
                     'city'              => ['label' => 'City', 'rules' => 'required'],
                     'address'           => ['label' => 'Address', 'rules' => 'required']
@@ -222,14 +222,10 @@ class Employer extends BaseController
 
     public function cmp_info_update()
     {
-        if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
-        }
-        if ($this->request->getMethod() == 'put') {
+        if(!employer_vaidate())  return redirect()->to('/employer/login');
+        if ($this->request->getMethod() == 'post') {
             if ($_FILES['company_logo']['name'] != '') {
-                $rules = [
-                    'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
-                ];
+                $rules = ['company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'] ];
                 if ($this->validate($rules) == false) {
                     $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                     return redirect()->to(base_url('employer/profile'));
@@ -241,6 +237,31 @@ class Employer extends BaseController
                     $this->session->setFlashdata('error', $result['message']);
                     return redirect()->to(base_url('employer/profile'));
                 }
+            }
+            $rules = [
+                'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
+                'email'             => ['label' => 'Company Email', 'rules' => 'required'],
+                'phone_no'          => ['label' => 'Phone No', 'rules' => 'required'],
+                'website'           => ['label' => 'Company Website', 'rules' => 'required'],
+                'category'          => ['label' => 'Category', 'rules' => 'required'],
+                'founded_date'      => ['label' => 'Founded Date', 'rules' => 'required'],
+                'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
+                'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
+                'description'       => ['label' => 'Comapany Description', 'rules' => 'required'],
+                'country'           => ['label' => 'Country', 'rules' => 'required'],
+                'state'             => ['label' => 'State', 'rules' => 'required'],
+                'city'              => ['label' => 'City', 'rules' => 'required'],
+                'postcode'          => ['label' => 'Pin Code', 'rules' => 'required'],
+                'address'           => ['label' => 'Address', 'rules' => 'required'],
+                'facebook_link'     => ['label' => 'Facebook', 'rules' => 'trim'],
+                'twitter_link'      => ['label' => 'Twitter', 'rules' => 'trim'],
+                'youtube_link'      => ['label' => 'Youtube', 'rules' => 'trim'],
+                'linkedin_link'     => ['label' => 'LinkedIn', 'rules' => 'trim']
+
+            ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/cmp_info_update'));
             }
 
             $cmp_info_update = array(

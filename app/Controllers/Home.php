@@ -72,7 +72,7 @@ class Home extends BaseController
                 //to get profile data
                 $google_service = new \Google_Service_Oauth2($google_client);
                 $g_data = $google_service->userinfo->get();
-                // pre($g_data);
+                 //pre($g_data);
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
                     //pre($logindata);
@@ -414,7 +414,7 @@ class Home extends BaseController
         $get['title'] = 'Seeker Profile';
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
+                'firstname'         => ['label' => 'First Name',    'rules' => 'required'],
                 'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
                 'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
                 'mobile_no'         => ['label' => 'Phone Number', 'rules' => 'required|min_length[10]'],
@@ -682,6 +682,7 @@ class Home extends BaseController
                 'starting_year' => $this->request->getPost('starting_year'),
                 'ending_month' => $this->request->getPost('ending_month'),
                 'ending_year' => $this->request->getPost('ending_year'),
+                'currently_working_here' => $this->request->getPost('currently_working_here'),
                 'description' => $this->request->getPost('description'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
