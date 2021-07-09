@@ -5,14 +5,5 @@
     "require": {
         "facebook/graph-sdk": "^5.1",
         "google/apiclient": "^2.10"
-    },
-    "scripts": {
-        "post-update-cmd": "Google\\Task\\Composer::cleanup"
-    },
-    "extra": {
-        "google/apiclient-services": [
-            "Drive",
-            "YouTube"
-        ]
     }
 }
