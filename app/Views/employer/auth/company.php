@@ -6,7 +6,17 @@
   </div>
 </div>
 </header>
-
+<style>
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding: 0 10px;
+    font-size: 18px;
+    border: 1px solid #ced4da;
+    height: 43px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: black;
+}
+</style>
 <main>
   <div class="job_container">
     <div class="container">
@@ -64,7 +74,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label  >Category</label>
-                <select name="category" class="form-control">
+                <select name="category" class="form-control js-example-basic-single">
                   <option>Select Category</option>
                   <?php foreach($categories as $value) : 
                     if ($data[0]['category'] == $value['id']) : ?>
@@ -85,7 +95,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Organization Type</label>
-                <select name="org_type" class="form-control">
+                <select name="org_type" class="form-control js-example-basic-single">
                   <option <?= ($data[0]['org_type'] == 'Public') ? 'selected' : '' ?>>Public</option>
                   <option <?= ($data[0]['org_type'] == 'Private') ? 'selected' : '' ?>>Private</option>
                   <option <?= ($data[0]['org_type'] == 'Government') ? 'selected' : '' ?>>Government</option>
@@ -96,7 +106,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>No. of Employers</label>
-                <select name="no_of_employers" class="form-control select">
+                <select name="no_of_employers" class="form-control select js-example-basic-single">
                   <option value="1-10" <?= ($data[0]['no_of_employers'] == '1-10') ? "selected" : " " ?>>1-10</option>
                   <option value="10-20" <?= ($data[0]['no_of_employers'] == '10-20') ? "selected" : " " ?>>10-20</option>
                   <option value="20-30" <?= ($data[0]['no_of_employers'] == '20-30') ? "selected" : " " ?>>20-30</option>
@@ -115,7 +125,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Country</label>
-                <select id="country" name="country" class="form-control">
+                <select id="country" name="country" class="form-control js-example-basic-single">
                   <?php foreach($countries as $value) : 
                     if ($value['id'] == $data[0]['country']) : ?>
                     <option value="<?= $value['id'] ?>" selected><?= $value['name'] ?></option>
@@ -132,7 +142,7 @@
                 <?php
                   $states = get_country_states($data[0]['country']);
                   $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state"');
+                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state js-example-basic-single"');
                 ?>
               </div>
             </div>
@@ -142,7 +152,7 @@
                 <?php
                   $cities = get_state_cities($data[0]['state']);
                   $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" ');
+                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city js-example-basic-single" ');
                 ?>
               </div>
             </div>
@@ -238,4 +248,6 @@
         });
       });
     });
+
+    $('.js-example-basic-single').select2();
   </script>

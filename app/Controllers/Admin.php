@@ -1423,30 +1423,45 @@ class Admin extends BaseController
         $get['title'] = 'General Setting';
 
         if ($this->request->getMethod() == 'post') {
-            // $rules=[
-            //     'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'],
-            //     'logo' =>['uploaded[logo]','max_size[logo,1024]']
-            // ];
+            
+            if ($_FILES['favicon']['name'] != "") {
+                $rules=[ 'favicon' =>['uploaded[favicon]','max_size[favicon,1024]'] ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('/admin/add_general_settings'));
+                }
 
-            // $result = UploadFile($_FILES['favicon']);
-            // if($result['status'] == true){
-            //     $favicon = $result['result']['file_url'];
-            // }else{
-            //     echo '0~'.$result['message'];exit;
-            //     }
+                $result = UploadFile($_FILES['favicon']);
+                if($result['status'] == true){
+                    $favicon = $result['result']['file_url'];
+                }else{
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('/admin/add_general_settings'));
+                }
+            }
+           
+            if ($_FILES['logo']['name'] != "") {
+                $rules=[ 'logo' =>['uploaded[logo]','max_size[logo,1024]' ]
+                ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('/admin/add_general_settings'));
+                }
 
-            // $result = UploadFile($_FILES['logo']);
-            // if($result['status'] == true){
-            //     $logo = $result['result']['file_url'];
-            // }else{
-            //     echo '0~'.$result['message'];exit;
-            // }
+                $result = UploadFile($_FILES['logo']);
+                if ($result['status'] == true) {
+                    $logo = $result['result']['file_url'];
+                } else {
+                    echo '0~'.$result['message'];
+                    exit;
+                }
+            }
 
             $data = array(
                 'application_name' => $this->request->getPost('application_name'),
                 'copyright' => $this->request->getPost('copyright'),
                 'email_from' => $this->request->getPost('email_from'),
-                'system_email' => $this->request->getPost('system_email'),
+                'system_email' => $this->request->getPost('admin_email'),
                 'smtp_host' => $this->request->getPost('smtp_host'),
                 'smtp_port' => $this->request->getPost('smtp_port'),
                 'smtp_user' => $this->request->getPost('smtp_user'),
@@ -1468,6 +1483,13 @@ class Admin extends BaseController
                 'updated_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s')
             );
+
+            if ($_FILES['favicon']['name'] != "") {
+                $data['favicon'] = $favicon;
+            }
+            if ($_FILES['logo']['name'] != "") {
+                $data['logo'] = $logo;
+            }
 
             $result = $this->adminModel->update_general_settings($data);
             if ($result) {
@@ -1494,6 +1516,7 @@ class Admin extends BaseController
         //redirect(base_url('admin/add_general_settings'),'refresh');
         else {
             $total_widgets = count($this->request->getPost('widget_field_title_add[]'));
+            $this->adminModel->delete_footer_all_setting();
 
             for ($i = 0; $i < $total_widgets; $i++) {
                 $footerdata = array(
