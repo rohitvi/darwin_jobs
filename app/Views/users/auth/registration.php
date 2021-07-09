@@ -76,6 +76,8 @@
       method: "POST",
       data: fields,
       success: function(responses){
+        console.log(responses);
+        return false;
         var response = responses.split('~');
         if ($.trim(response[0]) == 0) {
           $('#register').trigger("reset");
@@ -85,7 +87,7 @@
             $('#register').trigger("reset");
             toastr.success(response[1]);
             setTimeout(function() {
-              window.location.href = 'login';
+              window.location.href = "/darwin_jobs";
             }, 500);
         }
       }

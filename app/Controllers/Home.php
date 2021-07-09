@@ -107,8 +107,6 @@ class Home extends BaseController
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $logindata = $this->HomeAuthModel->login_validate($email, $password);
-            print_r($logindata);
-            exit;
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
@@ -233,7 +231,8 @@ class Home extends BaseController
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             } else {
-                $this->mailer->send_verification_email($user_id, 'user');
+                $res = $this->mailer->send_verification_email($user_id, 'user');
+                echo $res;
                 echo '1~User Successfully Registered  !';
                 exit;
             }
@@ -456,6 +455,8 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
             $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
@@ -466,7 +467,7 @@ class Home extends BaseController
                 'category' => $this->request->getPost('category'),
                 'job_title' => $this->request->getPost('job_title'),
                 'experience' => $this->request->getPost('experience'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => $skill,
                 'current_salary' => $this->request->getPost('current_salary'),
                 'expected_salary' => $this->request->getPost('expected_salary'),
                 'country' => $this->request->getPost('country'),
@@ -1031,6 +1032,45 @@ class Home extends BaseController
         return view('users/company-details', $data);
     }
 
+    public function setup_profile()
+    {
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $id = session('user_id');
+        $get['data'] = $this->HomeModel->perinfo_by_id($id);
+        $get['experiences'] = $this->HomeModel->get_user_experience($id);
+        $get['languages'] = $this->HomeModel->get_user_language($id);
+        $get['education'] = $this->HomeModel->get_user_education($id);
+        $get['title'] = 'Complete Profile';
+        return view('users/auth/setup_profile',$get);
+    }
+
+    public function setup_experience()
+    {
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['title'] = 'Complete Experience';
+        return view('users/auth/setup_experience',$get);
+    }
+
+    public function setup_education()
+    {
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['title'] = 'Complete Education';
+        return view('users/auth/setup_education',$get);
+    }
+
+    public function setup_languages()
+    {
+        $get['title'] = 'Complete Languages';
+        return view('users/auth/setup_languages',$get);
+    }
+
+    public function setup_resume()
+    {
+        $get['title'] = 'Complete Resume';
+        return view('users/auth/setup_resume',$get);
+    }
+    
     // Company Detail
     public function contactus()
     {
