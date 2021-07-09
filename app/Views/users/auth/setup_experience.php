@@ -32,6 +32,7 @@
                 <div id="home" class="container tab-pane active">
                     <h3>Experience</h3>
                     <div class="container">
+                        <form action="<?= base_url('home/setup/experience') ?>" method="post">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Job Title</label>
@@ -91,9 +92,10 @@
                                 <textarea name="description" class="form-control" rows="2"></textarea>
                             </div>
                             <div class="col-md-12 text-right">
-                                <button onclick="profile()" class='btn btn-primary my-3'>Submit</button>
+                                <button class='btn btn-primary my-3'>Submit</button>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -103,7 +105,11 @@
 
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
 <script>
-    function profile(){
-        window.location = 'education';
-    }
+    $(document).on('click','.currently_working_here',function(){
+        $this = $(this);
+        if($this.is(':checked'))
+            $('.exp-end-field').hide();
+        else
+            $('.exp-end-field').show();
+        });
 </script>

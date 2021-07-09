@@ -32,8 +32,8 @@
                 <div id="home" class="container tab-pane active">
                     <h3>Profile</h3>
                     <div class="container">
+                        <form action="<?= base_url('home/setup/profile') ?>" method="post" enctype="multipart/form-data">
                         <div class="row">
-                            <form action="<?= base_url('') ?>">
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label  >Profile Picture</label>
@@ -207,10 +207,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6 text-right mt-3">
-                                <button onclick="profile()" class="btn btn-primary btn-sm">Update</button>
+                                <button class="btn btn-primary btn-sm">Update</button>
                             </div>
-                            </form>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -224,43 +224,40 @@
       tagin(el)
     }
 
-    function profile(){
-        window.location = 'experience';
-    }
     var csfr_token_name = '<?= csrf_token() ?>';
-  var csfr_token_value = '<?= csrf_hash() ?>';
-  $(document).ready(function() {
-    $('#country').on('change', function() {
-      var data = {
-        country: this.value,
-      }
-      data[csfr_token_name] = csfr_token_value;
-      $.ajax({
-        url: '<?= base_url('home/get_country_states'); ?>',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        cached: false,
-        success: function(obj) {
-          $('.state').html(obj.msg);
+    var csfr_token_value = '<?= csrf_hash() ?>';
+    $(document).ready(function() {
+        $('#country').on('change', function() {
+        var data = {
+            country: this.value,
         }
-      });
-    });
-    $('.state').on('change', function() {
-      var data = {
-        state: this.value,
-      }
-      data[csfr_token_name] = csfr_token_value;
-      $.ajax({
-        url: '<?= base_url('home/get_state_cities'); ?>',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        cached: false,
-        success: function(obj) {
-          $('.city').html(obj.msg);
+        data[csfr_token_name] = csfr_token_value;
+        $.ajax({
+            url: '<?= base_url('home/get_country_states'); ?>',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            cached: false,
+            success: function(obj) {
+            $('.state').html(obj.msg);
+            }
+        });
+        });
+        $('.state').on('change', function() {
+        var data = {
+            state: this.value,
         }
-      });
+        data[csfr_token_name] = csfr_token_value;
+        $.ajax({
+            url: '<?= base_url('home/get_state_cities'); ?>',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            cached: false,
+            success: function(obj) {
+            $('.city').html(obj.msg);
+            }
+        });
+        });
     });
-  });
 </script>
