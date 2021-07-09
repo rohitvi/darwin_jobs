@@ -76,6 +76,7 @@
       method: "POST",
       data: fields,
       success: function(responses){
+        //console.log(responses);
         var response = responses.split('~');
         if ($.trim(response[0]) == 0) {
           $('#login').trigger("reset");
