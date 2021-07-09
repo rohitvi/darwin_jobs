@@ -151,14 +151,14 @@ class Home extends BaseController
             $profilep = 'http://graph.facebook.com/' . $fb_user_info['id'] . '/picture';
             if (!empty($fb_user_info['id'])) {
                 $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep);
-                $employerdata = [
+                $userdata = [
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'profile_pic' => $logindata['profile_picture'],
                     'username' => $logindata['firstname'] . ' ' . $logindata['lastname'],
                     'profile_completed' => $logindata['profile_completed']
                 ];
-                session()->set($employerdata);
+                session()->set($userdata);
             }
         } else {
             session()->setFlashData('error', 'Something went wrong, Please try again!');
