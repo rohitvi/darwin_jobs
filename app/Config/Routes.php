@@ -34,6 +34,11 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 // Admin Edit Routes
 $routes->add('login','Home::login');
+$routes->add('home/setup/profile','Home::setup_profile');
+$routes->add('home/setup/experience','Home::setup_experience');
+$routes->add('home/setup/education','Home::setup_education');
+$routes->add('home/setup/language','Home::setup_languages');
+$routes->add('home/setup/resume','Home::setup_resume');
 $routes->add('admin/showadmin/(:num)','Admin::editadmin/$1');
 // Admin Update Routes
 $routes->add('admin/updateadmin/(:num)','Admin::updateadmin/$1');

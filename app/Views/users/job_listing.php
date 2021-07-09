@@ -115,7 +115,8 @@
             <h5>Browse Jobs in list</h5>
           </div>
           <div class="row full_width featured_box_outer">
-            <?php foreach ($jobs as $job) : ?>
+            <?php if(!isset($jobs)) : ?>
+             <?php foreach ($jobs as $job) : ?>
               <div class="col-sm-12">
                 <div class="featured_box ">
                   <div class="fb_image">
@@ -150,7 +151,12 @@
                   </div>
                 </div>
               </div>
-            <?php endforeach; ?>
+            <?php endforeach; 
+            else: ?>
+              <div class="col-sm-12">
+                <p>No Search Result</p>
+              </div>
+            <?php endif; ?>
           </div>
           <div class="section-divider">
             <?php if ($pager) : ?>

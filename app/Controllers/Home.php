@@ -75,7 +75,6 @@ class Home extends BaseController
                  //pre($g_data);
                 if(!empty($g_data['id'])){
                     $logindata = $this->HomeAuthModel->google_validate($g_data['id'],$g_data['given_name'],$g_data['family_name'],$g_data['email'],$g_data['picture']);
-                    //pre($logindata);
                     $userdata = [
                         'user_id' => $logindata['id'],
                         'user_logged_in' => true,
@@ -84,7 +83,7 @@ class Home extends BaseController
                         'profile_completed' => $logindata['profile_completed'],
                         'is_verify' =>  $logindata['is_verify']
                     ];
-                    session()->set($employerdata);
+                    session()->set($userdata);
                     session()->setFlashData('success', 'Login Success!');
                     return redirect()->to(base_url('home/profile'));
                 }
@@ -103,7 +102,6 @@ class Home extends BaseController
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $logindata = $this->HomeAuthModel->login_validate($email, $password);
-            print_r($logindata);exit;
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
@@ -115,7 +113,7 @@ class Home extends BaseController
                     'profile_completed' => $logindata['profile_completed'],
                     'is_verify' => $logindata['is_verify']
                 ];
-                $this->session->set($employerdata);
+                $this->session->set($userdata);
                 echo '1~You Have Successfully Logged in';
                 exit;
             }
@@ -146,14 +144,14 @@ class Home extends BaseController
             $profilep = 'http://graph.facebook.com/' . $fb_user_info['id'] . '/picture';
             if (!empty($fb_user_info['id'])) {
                 $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep);
-                $employerdata = [
+                $userdata = [
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
                     'profile_pic' => $logindata['profile_picture'],
                     'username' => $logindata['firstname'] . ' ' . $logindata['lastname'],
                     'profile_completed' => $logindata['profile_completed']
                 ];
-                session()->set($employerdata);
+                session()->set($userdata);
             }
         } else {
             session()->setFlashData('error', 'Something went wrong, Please try again!');
@@ -228,7 +226,8 @@ class Home extends BaseController
                 echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             } else {
-                $this->mailer->send_verification_email($user_id, 'user');
+                $res = $this->mailer->send_verification_email($user_id, 'user');
+                echo $res;
                 echo '1~User Successfully Registered  !';
                 exit;
             }
@@ -445,6 +444,8 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
             $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
@@ -455,7 +456,7 @@ class Home extends BaseController
                 'category' => $this->request->getPost('category'),
                 'job_title' => $this->request->getPost('job_title'),
                 'experience' => $this->request->getPost('experience'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => $skill,
                 'current_salary' => $this->request->getPost('current_salary'),
                 'expected_salary' => $this->request->getPost('expected_salary'),
                 'country' => $this->request->getPost('country'),
@@ -1015,5 +1016,44 @@ class Home extends BaseController
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
         return view('users/company-details', $data);
+    }
+
+    public function setup_profile()
+    {
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $id = session('user_id');
+        $get['data'] = $this->HomeModel->perinfo_by_id($id);
+        $get['experiences'] = $this->HomeModel->get_user_experience($id);
+        $get['languages'] = $this->HomeModel->get_user_language($id);
+        $get['education'] = $this->HomeModel->get_user_education($id);
+        $get['title'] = 'Complete Profile';
+        return view('users/auth/setup_profile',$get);
+    }
+
+    public function setup_experience()
+    {
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['title'] = 'Complete Experience';
+        return view('users/auth/setup_experience',$get);
+    }
+
+    public function setup_education()
+    {
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['title'] = 'Complete Education';
+        return view('users/auth/setup_education',$get);
+    }
+
+    public function setup_languages()
+    {
+        $get['title'] = 'Complete Languages';
+        return view('users/auth/setup_languages',$get);
+    }
+
+    public function setup_resume()
+    {
+        $get['title'] = 'Complete Resume';
+        return view('users/auth/setup_resume',$get);
     }
 }
