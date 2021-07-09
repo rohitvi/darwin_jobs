@@ -17,31 +17,6 @@
 	
 				<!-- <div class="col-md-3">
 					<div class="footer_widget_box">
-						<h2 data-aos="fade-up" data-aos-delay="400">Employers</h2>
-						<ul data-aos="fade-in" data-aos-delay="200">
-							<li>
-								<a href="emp-registration.html">Get a FREE Employer Account</a> 
-							</li>
-							<li>
-								<a href="post-a-job.html">Post a job</a>
-							</li>
-							<li>
-								<a href="find-staff.html">Find staff</a>
-							</li>
-							<li>
-								<a href="job-dashboard.html">Job dashboard</a>
-							</li>
-							<li>
-								<a href="emp-edit-profile.html">Update profile</a>
-							</li>
-							<li>
-								<a href="emp-edit-password.html">Change password</a>
-							</li>
-						</ul>
-					</div>
-				</div> -->
-				<!-- <div class="col-md-3">
-					<div class="footer_widget_box">
 						<h2 data-aos="fade-up" data-aos-delay="400">Community</h2>
 						<ul data-aos="fade-in" data-aos-delay="200">
 							<li> <a href="<?= base_url('home/contactus'); ?>">Help / Contact Us</a> 
@@ -56,21 +31,9 @@
 						
 					</div>
 				</div> -->
-				<div class="col-md-3">
-					<div class="footer_widget_box">
-						<h2 data-aos="fade-up" data-aos-delay="400">Get In Touch</h2>
-						<ul data-aos="fade-in" data-aos-delay="200" class="social_list">
-							<li> <a href="#"><i class="fab fa-twitter"></i></a> 
-							</li>
-							<li> <a href="#"><i class="fab fa-facebook"></i></a> 
-							</li>
-							<li> <a href="#"><i class="fab fa-linkedin"></i></a> 
-							</li>
-							<li> <a href="#"><i class="fab fa-youtube"></i></a> 
-							</li>
-						</ul>
+					<div class="col-md-9">
 					</div>
-					
+					<div class="col-md-3">
 						<div class="footer_widget_box">
 							<form id="subscriber" method="post" class='newsletter'>
 								<h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
