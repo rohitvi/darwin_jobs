@@ -268,6 +268,9 @@ class Home extends BaseController
     // Advance Search functionality
     public function search()
     {
+        if (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
         // pre($_POST);
         $search = array();
         if ($this->request->getMethod() == 'post') {
@@ -1042,6 +1045,75 @@ class Home extends BaseController
         $get['languages'] = $this->HomeModel->get_user_language($id);
         $get['education'] = $this->HomeModel->get_user_education($id);
         $get['title'] = 'Complete Profile';
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
+                'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
+                'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'mobile_no'         => ['label' => 'Phone Number', 'rules' => 'required|min_length[10]'],
+                'dob'               => ['label' => 'Date of Birth', 'rules' => 'required'],
+                'age'               => ['label' => 'Age', 'rules' => 'required'],
+                'category'          => ['label' => 'Category', 'rules' => 'required'],
+                'job_title'         => ['label' => 'Job Title', 'rules' => 'required'],
+                'experience'        => ['label' => 'Experience', 'rules' => 'required'],
+                'skills'            => ['label' => 'Skills', 'rules' => 'required'],
+                'current_salary'    => ['label' => 'Current Salary', 'rules' => 'required'],
+                'expected_salary'   => ['label' => 'Expected Salary', 'rules' => 'required'],
+                'country'           => ['label' => 'Country', 'rules' => 'required'],
+                'state'             => ['label' => 'State', 'rules' => 'required'],
+                'city'              => ['label' => 'City', 'rules' => 'required'],
+                'address'           => ['label' => 'Address', 'rules' => 'required'],
+                // 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
+            ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/setup/profile'));
+            }
+            if ($_FILES['profile_picture']['name'] != '') {
+                $result = UploadFile($_FILES['profile_picture']);
+                if ($result['status'] == true) {
+                    $url = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('home/setup/profile'));
+                }
+            }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
+            $update_user_info = array(
+                'firstname' => $this->request->getPost('firstname'),
+                'lastname' => $this->request->getPost('lastname'),
+                'email' => $this->request->getPost('email'),
+                'mobile_no' => $this->request->getPost('mobile_no'),
+                'dob' => $this->request->getPost('dob'),
+                'age' => $this->request->getPost('age'),
+                'category' => $this->request->getPost('category'),
+                'job_title' => $this->request->getPost('job_title'),
+                'experience' => $this->request->getPost('experience'),
+                'skills' => $skill,
+                'current_salary' => $this->request->getPost('current_salary'),
+                'expected_salary' => $this->request->getPost('expected_salary'),
+                'country' => $this->request->getPost('country'),
+                'state' => $this->request->getPost('state'),
+                'city' => $this->request->getPost('city'),
+                'address' => $this->request->getPost('address'),
+                'profile_completed' => 1,
+            );
+            if ($_FILES['profile_picture']['name'] != '') {
+                $update_user_info['profile_picture'] = $url;
+            }
+            $id = session('user_id');
+            $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
+
+            if ($update_per == 1) {
+                $this->session->set('profile_completed', 1);
+                $this->session->setFlashdata('success', 'Personal Information successfully Updated');
+                return redirect()->to(base_url('home/setup/experience'));
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('home/setup/profile'));
+            }
+        }
         return view('users/auth/setup_profile',$get);
     }
 

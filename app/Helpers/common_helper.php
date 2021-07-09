@@ -389,6 +389,14 @@ function user_vaidate($para='user_logged_in')
         else
             return TRUE;
     }
+    if($para == 'check_profile'){
+        if(session('profile_completed') == 1)
+            return TRUE;
+        else{
+            session()->setFlashdata('error', 'First Compelete Your Profile!');
+            return false;
+        }
+    }
     if($para == 'user_id')
     {
         if(empty(session('user_logged_in')))
