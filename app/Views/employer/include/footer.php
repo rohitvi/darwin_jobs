@@ -79,21 +79,6 @@
             </div> -->
             <div class="col-md-3">
                 <div class="footer_widget_box">
-                    <h2 data-aos="fade-up" data-aos-delay="400">Get In Touch</h2>
-                    <ul data-aos="fade-in" data-aos-delay="200" class="social_list">
-                        <li> <a href="#"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li> <a href="#"><i class="fab fa-facebook"></i></a>
-                        </li>
-                        <li> <a href="#"><i class="fab fa-linkedin"></i></a>
-                        </li>
-                        <li> <a href="#"><i class="fab fa-youtube"></i></a>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="footer_widget_box">
                     <form class="newsletter">
                         <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
                         <div data-aos="fade-in" data-aos-delay="200" class="d-flex">
