@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 require_once APPPATH . 'Libraries/razorpay-php/Razorpay.php';
 
 use App\Libraries\Mailer;
@@ -72,6 +73,9 @@ class Employer extends BaseController
 
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
+                exit;
+            } elseif ($logindata == 2) {
+                echo '2~Your Account is not active please, contact to support';
                 exit;
             } else {
                 $employerdata = [
@@ -222,7 +226,9 @@ class Employer extends BaseController
 
     public function cmp_info_update()
     {
-        if(!employer_vaidate())  return redirect()->to('/employer/login');
+        if (!employer_vaidate()) {
+            return redirect()->to('/employer/login');
+        }
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['company_logo']['name'] != '') {
                 $rules = ['company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'] ];
@@ -403,7 +409,7 @@ class Employer extends BaseController
             }
         }
         $get['title'] = 'Employer Registration';
-        return view('employer/auth/register',$get);
+        return view('employer/auth/register', $get);
     }
 
     public function shortlisted()
@@ -799,6 +805,21 @@ class Employer extends BaseController
         return view('employer/job/view_job_applicants', $data);
     }
 
+    public function resend_verification_email()
+    {
+        if (!employer_vaidate()) {
+            return redirect()->to(base_url('employer/login'));
+        }
+        $is_verify = get_direct_value('employers', 'is_verify', 'id', session('employer_id'));
+        if ($is_verify == 1) {
+            return redirect()->to(base_url('employer/dashboard'));
+            exit;
+        }
+        $this->mailer->send_verification_email(session('employer_id'), 'employer');
+        $this->session->setFlashdata('success', 'Email Verification Link Sent!');
+        return redirect()->to(base_url('employer/dashboard'));
+    }
+
     public function search()
     {
         if (!employer_vaidate()) {
@@ -807,7 +828,7 @@ class Employer extends BaseController
         $search = array();
         $get['profiles'] = array();
         $get['categories'] = $this->adminModel->get_all_categories();
-        $get['states'] = $this->EmployerModel->get_states_list();
+        $get['cities'] = get_country_cities(101);
         $get['education'] = get_education_list();
 
         if ($this->request->getMethod() == 'post') {
@@ -831,6 +852,10 @@ class Employer extends BaseController
 
             if (!empty($this->request->getPost('state'))) {
                 $search['state'] = $this->request->getPost('state');
+            }
+
+            if (!empty($this->request->getPost('city'))) {
+                $search['city'] = $this->request->getPost('city');
             }
 
             if (!empty($this->request->getPost('expected_salary'))) {
@@ -1022,7 +1047,8 @@ class Employer extends BaseController
         if ($this->request->isAJAX()) {
             if (isset($_POST['razorpay_payment_id']) === false) {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                echo "0";exit;
+                echo "0";
+                exit;
             }
             $payment_amount = $this->EmployerModel->getPackageInfo($this->request->getPost("package_id"));
             $razorpay_key = get_g_setting_val('razorpay_key');
@@ -1076,10 +1102,12 @@ class Employer extends BaseController
             session()->remove('payment_id');
             if ($pay_query->resultID == 1) {
                 $this->session->setFlashdata('success', 'Package Successfully Purchased');
-                echo "1";exit;
+                echo "1";
+                exit;
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
-                echo "0";exit;
+                echo "0";
+                exit;
             }
         }
     }
@@ -1092,7 +1120,8 @@ class Employer extends BaseController
         $builder->where('id', $payment_id);
         $builder->delete();
         $this->session->setFlashdata('error', 'Something went wrong, please try again');
-        echo "0";exit;
+        echo "0";
+        exit;
     }
 
     public function verify($token)

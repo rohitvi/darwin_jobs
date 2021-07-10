@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class HomeModel extends Model
 {
-    protected $table = NULL;
+    protected $table = null;
 
     public function add_subscriber($data)
     {
@@ -62,37 +62,42 @@ class HomeModel extends Model
 
         if (!empty($search['title'])) {
             $search_text = explode('-', $search['title']);
-            // pre($search_text);
-            foreach ($search_text as $search) {
+            foreach ($search_text as $srch) {
                 $builder->groupStart();
-                $builder->orLike('title', $search);
-                $builder->orLike('skills', $search);
-                $builder->orLike('job_slug', $search);
+                $builder->orLike('title', $srch);
+                $builder->orLike('skills', $srch);
+                $builder->orLike('job_slug', $srch);
                 $builder->groupEnd();
             }
         }
 
-        if (!empty($search['state']))
+        if (!empty($search['state'])) {
             $builder->where('state', $search['state']);
+        }
 
-        if (!empty($search['city']))
+        if (!empty($search['city'])) {
             $builder->where('city', $search['city']);
+        }
 
-        if (!empty($search['category']))
+        if (!empty($search['category'])) {
             $builder->where('category', $search['category']);
+        }
 
-        if (!empty($search['industry']))
+        if (!empty($search['industry'])) {
             $builder->where('industry', $search['industry']);
+        }
 
-        if (!empty($search['experience']))
+        if (!empty($search['experience'])) {
             $builder->where('experience', $search['experience']);
+        }
 
-        if (!empty($search['job_type']))
+        if (!empty($search['job_type'])) {
             $builder->where('job_type', $search['job_type']);
+        }
 
-        if (!empty($search['employment_type']))
+        if (!empty($search['employment_type'])) {
             $builder->where('employment_type', $search['employment_type']);
-
+        }
         $builder->where('is_status', 'active');
         $builder->where('curdate() <  expiry_date');
         $builder->orderBy('created_date', 'desc');
@@ -224,8 +229,9 @@ class HomeModel extends Model
                 $ndata[] = $value['job_id'];
             }
             return $ndata;
-        } else
+        } else {
             return array();
+        }
     }
 
     public function getTopCategory()

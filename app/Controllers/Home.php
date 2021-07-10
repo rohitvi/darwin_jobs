@@ -55,7 +55,7 @@ class Home extends BaseController
     public function login()
     {
         $fb_permission = ['email'];
-        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?', $fb_permission);
+        $data['fb_btn'] = $this->fb_helper->getLoginUrl(base_url().'/home/authWithFb?', $fb_permission);
 
         $google_client = new \Google_Client();
         $google_client->setClientId('192651661990-ivaf8o78h2caano4r29uktnl1l9oapc8.apps.googleusercontent.com');
@@ -107,10 +107,11 @@ class Home extends BaseController
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $logindata = $this->HomeAuthModel->login_validate($email, $password);
-            print_r($logindata);
-            exit;
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
+                exit;
+            }else if($logindata == 2) {
+                echo '0~Your Account is not active please, contact to support';
                 exit;
             } else {
                 $userdata = [
@@ -242,6 +243,20 @@ class Home extends BaseController
         return view('users/auth/registration', $data);
     }
 
+    public function resend_verification_email()
+    {
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
+        $is_verify = get_direct_value('users','is_verify','id',session('user_id'));
+        if($is_verify == 1){
+            return redirect()->to(base_url('home/profile'));exit;
+        }
+        $this->mailer->send_verification_email(session('user_id'), 'user');
+        $this->session->setFlashdata('success', 'Email Verification Link Sent!');
+        return redirect()->to(base_url('home/profile'));
+    }
+
     public function logout()
     {
         $this->session->destroy();
@@ -269,7 +284,6 @@ class Home extends BaseController
     // Advance Search functionality
     public function search()
     {
-        // pre($_POST);
         $search = array();
         if ($this->request->getMethod() == 'post') {
             // search job title
@@ -318,7 +332,6 @@ class Home extends BaseController
         // $uri = new \CodeIgniter\HTTP\URI(current_url(true));
         $query_str = parse_url(current_url(true), PHP_URL_QUERY);
         parse_str($query_str, $search);
-        // pre($search);
         $Jobs = new HomeModel();
         $Jobs->setTable('job_post');
         $data = [
@@ -332,7 +345,6 @@ class Home extends BaseController
             'pager' => $Jobs->pager,
             'saved_job' => $this->HomeModel->saved_job_search(session('user_id'))
         ];
-        // pre($data['jobs']);
         return view('users/job_listing', $data);
     }
 
@@ -953,6 +965,9 @@ class Home extends BaseController
 
     public function save_job()
     {
+        if (!user_vaidate()) {
+            echo "0";exit;
+        }
         if ($this->request->isAjax()) {
             $rules = [
                 'job_id' => ['label' => 'job_id', 'rules' => 'required'],
@@ -1009,7 +1024,6 @@ class Home extends BaseController
     public function companies($letter = 'A')
     {
         $data['companies'] = $this->HomeModel->get_companies($letter);
-
         $data['title'] = 'Top Companies';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
@@ -1020,8 +1034,10 @@ class Home extends BaseController
     // Company Detail
     public function company_detail($company_id)
     {
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
         $data['company_info'] = $this->HomeModel->get_company_detail($company_id);
-
         $data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
         $data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
 

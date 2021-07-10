@@ -94,8 +94,7 @@
 				</div>
 				<div class="col-md-12">
 					<div class="footer_widget_box"  >
-						<p class="copyright-text">© Copyright 2021 by JoDice. All rights reserved.
-						</p>
+						<p class="copyright-text">© <?= get_g_setting_val('copyright') ?></p>
 					</div>
 				</div>
 			</div>

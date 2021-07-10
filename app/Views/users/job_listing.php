@@ -65,6 +65,7 @@
                     $types = get_job_type_list();
                     ?>
                     <select class="js-example-basic-single" name="job_type">
+                      <option value="">Select job type</option>
                       <?php foreach ($types as $type) : ?>
                         <option value="<?= $type['id'] ?>" <?= (isset($_GET['job_type']) && $_GET['job_type'] == $type['id']) ? 'selected' : '' ?>><?= $type['type'] ?></option>
                       <?php endforeach; ?>
@@ -73,7 +74,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Job Type</label>
+                  <label>Employment Type</label>
                   <div class="field">
                     <i class="fas fa-briefcase"></i>
                     <?php
@@ -81,6 +82,7 @@
                     $emp_type = get_employment_type_list();
                     ?>
                     <select class="js-example-basic-single" name="job_type">
+                    <option value="">Select Employment</option>
                       <?php foreach ($emp_type as $type) : ?>
                         <option value="<?= $type['id'] ?>"><?= $type['type'] ?></option>
                       <?php endforeach; ?>
