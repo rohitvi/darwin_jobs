@@ -117,7 +117,7 @@
             <h5>Browse Jobs in list</h5>
           </div>
           <div class="row full_width featured_box_outer">
-            <?php if(!isset($jobs)) : ?>
+            <?php if (count($jobs) > 0) : ?>
              <?php foreach ($jobs as $job) : ?>
               <div class="col-sm-12">
                 <div class="featured_box ">
@@ -153,7 +153,7 @@
                   </div>
                 </div>
               </div>
-            <?php endforeach; 
+            <?php endforeach;
             else: ?>
               <div class="col-sm-12">
                 <p>No Search Result</p>
@@ -184,8 +184,14 @@
       url: '<?= base_url('home/save_job') ?>',
       method: 'POST',
       data: data,
-      success: function(response) {
-        $("#save" + id).toggleClass("fas far");
+      success: function(responses) {
+        var response = responses.split('~');
+        if ($.trim(response[0]) == 0) {
+          toastr.error(response[1]);
+        }else{
+          toastr.success(response[1]);
+          $("#save" + id).toggleClass("fas far");
+        }
       }
     });
   }

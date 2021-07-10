@@ -358,6 +358,7 @@ class Employer extends BaseController
     public function my_package_details($package_id)
     {
         $get['data'] = $this->EmployerModel->mypackagedetails($package_id);
+        $get['title'] = 'My Packages';
         return view('employer/packages/my_package_details', $get);
     }
 

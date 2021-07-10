@@ -215,7 +215,7 @@ class HomeModel extends Model
     {
         if ($this->db->table('saved_jobs')->where(array('seeker_id' => $data['seeker_id'], 'job_id' => $data['job_id']))->get()->getNumRows() > 0) {
             $this->db->table('saved_jobs')->where(array('seeker_id' => $data['seeker_id'], 'job_id' => $data['job_id']))->delete();
-            return '0~UnSaved';
+            return '1~Removed From Save List';
         } else {
             $this->db->table('saved_jobs')->insert($data);
             return '1~Saved';

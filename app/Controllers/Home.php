@@ -531,9 +531,6 @@ class Home extends BaseController
 
     public function jobdetails($id)
     {
-        if (!user_vaidate()) {
-            return redirect()->to(base_url('login'));
-        }
         $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
@@ -600,6 +597,9 @@ class Home extends BaseController
     public function apply_job()
     {
         if ($this->request->isAJAX()) {
+            if (!user_vaidate()) {
+                echo "0~Please Login to apply this job";exit;
+            }
             $rules = [
                 'job_id' => ['label' => 'job_id', 'rules' => 'required'],
                 'cover_letter' => ['label' => 'cover_letter', 'rules' => 'required'],
@@ -999,7 +999,7 @@ class Home extends BaseController
     public function save_job()
     {
         if (!user_vaidate()) {
-            echo "0";exit;
+            echo "0~Please Login to save this job";exit;
         }
         if ($this->request->isAjax()) {
             $rules = [
