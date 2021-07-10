@@ -134,9 +134,9 @@ class HomeModel extends Model
         return $this->db->table('seeker_applied_job')->insert($data);
     }
 
-    public function delete_experience($id)
+    public function delete_experience($id,$user_id)
     {
-        $this->db->table('seeker_experience')->where('id', $id)->delete();
+        $this->db->table('seeker_experience')->where(array('id'=>$id,'user_id'=>$user_id))->delete();
     }
 
     public function user_info_update($update_user_info, $id)
@@ -170,9 +170,9 @@ class HomeModel extends Model
         return $this->db->table('seeker_languages')->insert($data);
     }
 
-    public function delete_language($id)
+    public function delete_language($id,$user_id)
     {
-        return $this->db->table('seeker_languages')->where('id', $id)->delete();
+        return $this->db->table('seeker_languages')->where(array('id'=>$id,'user_id'=>$user_id))->delete();
     }
 
     public function get_language_by_id($id)
@@ -195,9 +195,10 @@ class HomeModel extends Model
         return $this->db->table('seeker_education')->insert($data);
     }
 
-    public function delete_education($id)
+    public function delete_education($id,$user_id)
     {
-        return $this->db->table('seeker_education')->where('id', $id)->delete();
+        return $this->db->table('seeker_education')->where(array('id'=>$id,'user_id'=>$user_id))->delete();
+
     }
 
     public function get_education_by_id($id)

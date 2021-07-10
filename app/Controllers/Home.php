@@ -44,6 +44,9 @@ class Home extends BaseController
 
     public function dashboard()
     {
+        if (user_vaidate() && !user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
         $data['posts'] = $this->HomeModel->getLastPost();
@@ -285,7 +288,7 @@ class Home extends BaseController
     // Advance Search functionality
     public function search()
     {
-        if (!user_vaidate('check_profile')) {
+        if (user_vaidate() && !user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
         $search = array();
@@ -382,6 +385,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
@@ -430,6 +435,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
@@ -514,6 +521,9 @@ class Home extends BaseController
 
     public function saved_jobs()
     {
+        if (user_vaidate() && !user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
         $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
         $get['title'] = 'Saved Jobs';
         return view('users/auth/saved_jobs', $get);
@@ -578,6 +588,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
@@ -634,7 +646,12 @@ class Home extends BaseController
 
     public function delete_experience($id)
     {
-        $query = $this->HomeModel->delete_experience($id);
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
+        $query = $this->HomeModel->delete_experience($id,session('user_id'));
         if ($query == 1) {
             $this->session->setFlashdata('success', 'Experience successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -823,7 +840,12 @@ class Home extends BaseController
 
     public function delete_language($id)
     {
-        $query = $this->HomeModel->delete_language($id);
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
+        $query = $this->HomeModel->delete_language($id,session('user_id'));
         if ($query == true) {
             $this->session->setFlashdata('success', 'Language successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -911,7 +933,12 @@ class Home extends BaseController
 
     public function delete_education($id)
     {
-        $query = $this->HomeModel->delete_education($id);
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
+        $query = $this->HomeModel->delete_education($id,session('user_id'));
         if ($query) {
             $this->session->setFlashdata('success', 'Education successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -1042,6 +1069,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $data['company_info'] = $this->HomeModel->get_company_detail($company_id);
         $data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);

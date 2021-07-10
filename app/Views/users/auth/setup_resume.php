@@ -36,10 +36,10 @@
                         <div class="row">
                             <div class='col-md-6'>
                                 <h5>Resume * <small>(Maximum file size is 1MB, pdf only)</small></h5>
-                                <input class="my-3" type="file" name="user_resume">
+                                <input class="my-3" type="file" accept="application/pdf" name="user_resume">
                             </div>
                             <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-primary my-3">Submit</button>
+                                <button type="submit" class="btn btn-primary my-3">Update</button>
                             </div>
                         </div>
                         </form>

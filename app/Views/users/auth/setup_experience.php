@@ -92,7 +92,7 @@
                                 <textarea name="description" class="form-control" rows="2"><?= $experience['description'] ?></textarea>
                             </div>
                             <div class="col-md-12 text-right">
-                                <button class='btn btn-primary my-3'>Submit</button>
+                                <button class='btn btn-primary my-3'>Next</button>
                             </div>
                         </div>
                     </form>

@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 text-right mt-3">
-                                <button class="btn btn-primary btn-sm">Update</button>
+                                <button class="btn btn-primary btn-sm">Next</button>
                             </div>
                         </div>
                         </form>
