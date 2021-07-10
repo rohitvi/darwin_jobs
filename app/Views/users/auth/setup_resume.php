@@ -32,15 +32,17 @@
                 <div id="home" class="container tab-pane active">
                     <h3>Resume</h3>
                     <div class="container">
+                        <form action="<?= base_url('home/setup/resume') ?>" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class='col-md-6'>
                                 <h5>Resume * <small>(Maximum file size is 1MB, pdf only)</small></h5>
                                 <input class="my-3" type="file" name="user_resume">
                             </div>
                             <div class="col-md-12 text-right">
-                                <button onclick="profile()" type="submit" class="btn btn-primary my-3">Submit</button>
+                                <button type="submit" class="btn btn-primary my-3">Submit</button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -49,8 +51,3 @@
 </main>
 
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
-<script>
-    function profile(){
-        window.location.href = "/darwin_jobs";
-    }
-</script>
