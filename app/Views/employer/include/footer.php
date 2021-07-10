@@ -3,7 +3,18 @@
 <footer id="colophon" class="site-footer custom_footer dark_footer">
     <div class="container">
         <div class="row footer_widget">
-            <div class="col-md-3">
+
+        <?php $footer =  get_footer_settings(); ?>
+
+        <?php foreach($footer as $col):  ?>
+            <div class="col-md-<?= $col['grid_column'] ?>">
+                <div class="footer_widget_box">
+                    <h2 data-aos="fade-up" data-aos-delay="400"><?= $col['title'] ?></h2>
+                    <?= $col['content'] ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+            <!-- <div class="col-md-3">
                 <div class="footer_widget_box">
                     <h2 data-aos="fade-up" data-aos-delay="400">Job seekers</h2>
                     <ul data-aos="fade-in" data-aos-delay="200">
@@ -24,8 +35,8 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div class="col-md-3">
+            </div> -->
+            <!-- <div class="col-md-3">
                 <div class="footer_widget_box">
                     <h2 data-aos="fade-up" data-aos-delay="400">Employers</h2>
                     <ul data-aos="fade-in" data-aos-delay="200">
@@ -49,8 +60,8 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-            <div class="col-md-3">
+            </div> -->
+            <!-- <div class="col-md-3">
                 <div class="footer_widget_box">
                     <h2 data-aos="fade-up" data-aos-delay="400">Community</h2>
                     <ul data-aos="fade-in" data-aos-delay="200">
@@ -65,23 +76,8 @@
                     </ul>
 
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-3">
-                <div class="footer_widget_box">
-                    <h2 data-aos="fade-up" data-aos-delay="400">Get In Touch</h2>
-                    <ul data-aos="fade-in" data-aos-delay="200" class="social_list">
-                        <li> <a href="#"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li> <a href="#"><i class="fab fa-facebook"></i></a>
-                        </li>
-                        <li> <a href="#"><i class="fab fa-linkedin"></i></a>
-                        </li>
-                        <li> <a href="#"><i class="fab fa-youtube"></i></a>
-                        </li>
-                    </ul>
-
-                </div>
-
                 <div class="footer_widget_box">
                     <form class="newsletter">
                         <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>

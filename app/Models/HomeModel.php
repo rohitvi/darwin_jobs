@@ -310,4 +310,52 @@ class HomeModel extends Model
     {
         return $builder = $this->db->table('contact_us')->insert($data);
     }
+
+    public function get_last_experience_by_id($id)
+    {
+        return $this->db->table('seeker_experience')->where('user_id',$id)->get()->getRowArray();
+    }
+    
+    public function insert_setup_experience($data, $id)
+    {
+        $builder = $this->db->table('seeker_experience');
+        $builder->where('user_id', $id);
+        if ($builder->countAllResults() > 0) {
+            return $this->db->table('seeker_experience')->where('id', $id)->update($data);
+        } else {
+            return $this->db->table('seeker_experience')->insert($data);
+        }
+    }
+
+    public function get_last_education_by_id($user_id)
+    {
+        return $this->db->table('seeker_education')->where('user_id',$user_id)->get()->getRowArray();
+    }
+
+    public function insert_setup_education($data,$user_id)
+    {
+        $builder = $this->db->table('seeker_education');
+        $builder->where('user_id', $user_id);
+        if ($builder->countAllResults() > 0) {
+            return $this->db->table('seeker_education')->where('id', $user_id)->update($data);
+        } else {
+            return $this->db->table('seeker_education')->insert($data);
+        }
+    }
+
+    public function get_last_language_by_id($user_id)
+    {
+        return $this->db->table('seeker_languages')->where('user_id',$user_id)->get()->getRowArray();
+    }
+
+    public function insert_setup_language($data,$user_id)
+    {
+        $builder = $this->db->table('seeker_languages');
+        $builder->where('user_id', $user_id);
+        if ($builder->countAllResults() > 0) {
+            return $this->db->table('seeker_languages')->where('id', $user_id)->update($data);
+        } else {
+            return $this->db->table('seeker_languages')->insert($data);
+        }
+    }
 }
