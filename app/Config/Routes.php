@@ -40,6 +40,8 @@ $routes->add('home/setup/education','Home::setup_education');
 $routes->add('home/setup/language','Home::setup_languages');
 $routes->add('home/setup/resume','Home::setup_resume');
 $routes->add('admin/showadmin/(:num)','Admin::editadmin/$1');
+$routes->add('employer/setup/profile','Employer::setup_profile');
+$routes->add('employer/setup/company','Employer::setup_company');
 // Admin Update Routes
 $routes->add('admin/updateadmin/(:num)','Admin::updateadmin/$1');
 // Admin Delete Routes

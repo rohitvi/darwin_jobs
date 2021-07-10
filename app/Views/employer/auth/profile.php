@@ -37,10 +37,10 @@
         <!-- <input type="hidden" name="_method" value="PUT" /> -->
         <div class="big_form_group">
           <div class="row">
-          <div class="col-md-6">
-              <div class="form-group text-center">
-             <img src="<?= $data[0]['profile_picture'] ?>" alt="Company Logo" width="80px">
-              </div>
+            <div class="col-md-6">
+                <div class="form-group text-center">
+                  <img src="<?= $data[0]['profile_picture'] ?>" alt="Company Logo" width="80px">
+                </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">

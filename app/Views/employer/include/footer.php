@@ -77,17 +77,19 @@
 
                 </div>
             </div> -->
-            <div class="col-md-3">
-                <div class="footer_widget_box">
-                    <form class="newsletter">
-                        <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
-                        <div data-aos="fade-in" data-aos-delay="200" class="d-flex">
-                            <input class="form-control" type="email" placeholder="Enter your email">
-                            <button class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    <div class="col-md-9">
+                    </div>
+					<div class="col-md-3">
+						<div class="footer_widget_box">
+							<form id="subscriber" method="post" class='newsletter'>
+								<h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
+								<div data-aos="fade-in" data-aos-delay="200" class="d-flex">
+									<input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
+									<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+								</div>
+							</form>
+						</div> 
+				 	</div> <!--col-md-3 end -->
             <div class="col-md-12">
                 <div class="footer_widget_box">
                     <p class="copyright-text">© <?= get_g_setting_val('copyright') ?></p>
@@ -115,6 +117,29 @@
     <?= (session()->getFlashdata('success')) ? "toastr.success('" . session()->getFlashdata('success') . "')" : '' ?>
     <?= (session()->getFlashdata('error')) ? "toastr.error('" . session()->getFlashdata('error') . "')" : '' ?>
     <?= (session()->getFlashdata('denied')) ? "toastr.warning('" . session()->getFlashdata('denied') . "')" : '' ?>
+</script>
+<script>
+$('#subscriber').on('submit',function(){
+    event.preventDefault();
+    var fields = $('#subscriber').serialize();
+    $.ajax({
+        url: "<?= base_url('home/add_subscriber'); ?>",
+        method: "POST",
+        data: fields,
+         success:function(responses){
+			console.log(responses);
+            var response = responses.split('~');
+            $('#subscriber').trigger("reset");
+              if ($.trim(response[0]) == 0) {
+                toastr.error(response[1]);
+              }
+              if ($.trim(response[0]) == 1) {
+				toastr.success(response[1]);
+              }
+         }
+    });
+
+});
 </script>
 </body>
 
