@@ -1112,4 +1112,163 @@ class Employer extends BaseController
             return redirect()->to(base_url('home'));
         }
     }
+
+    public function setup_profile()
+    {  
+        $id = session('employer_id');
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['data'] = $this->EmployerAuthModel->personal_info($id);
+        $get['title'] = 'Personal Information';
+
+        if ($this->request->getMethod() == 'post') {
+            if ($_FILES['profile_picture']['name'] != '') {
+                $result = UploadFile($_FILES['profile_picture']);
+                if ($result['status'] == true) {
+                    $url = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('employer/setup/profile'));
+                }
+                $rules = [ 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'] ];
+            }
+            $rules = [
+                    'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
+                    'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
+                    'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                    'designation'       => ['label' => 'Designation', 'rules' => 'required'],
+                    'mobile_no'         => ['label' => 'Mobile No.', 'rules' => 'required'],
+                    'country'           => ['label' => 'Country', 'rules' => 'required'],
+                    'state'             => ['label' => 'State', 'rules' => 'required'],
+                    'city'              => ['label' => 'City', 'rules' => 'required'],
+                    'address'           => ['label' => 'Address', 'rules' => 'required']
+                ];
+            
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/setup/profile'));
+            }
+            $update_per_info = array(
+                    'firstname' => $this->request->getPost('firstname'),
+                    'lastname' => $this->request->getPost('lastname'),
+                    'email' => $this->request->getPost('email'),
+                    'designation' => $this->request->getPost('designation'),
+                    'mobile_no' => $this->request->getPost('mobile_no'),
+                    'country' => $this->request->getPost('country'),
+                    'state' => $this->request->getPost('state'),
+                    'city' => $this->request->getPost('city'),
+                    'address' => $this->request->getPost('address'),
+                    'profile_completed' => 1,
+                );
+
+            if ($_FILES['profile_picture']['name'] != '') {
+                $update_per_info['profile_picture'] = $url;
+            }
+            $id = session('employer_id');
+            $update_per = $this->EmployerAuthModel->personal_info_update($update_per_info, $id);
+            if ($update_per == 1) {
+                $this->session->set('profile_completed', 1);
+                $this->session->setFlashdata('success', 'Personal Information successfully Updated');
+                return redirect()->to(base_url('employer/setup/company'));
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('employer/setup/profile'));
+            }
+        }
+        return view('employer/auth/setup_profile',$get);
+    }
+
+    public function setup_company()
+    {
+        $id = session('employer_id');
+        $get['categories'] = $this->adminModel->get_all_categories();
+        $get['countries'] = $this->adminModel->get_countries_list();
+        $get['data'] = $this->EmployerAuthModel->cmp_info($id);
+        $get['title'] = 'Company Information';
+
+        if ($this->request->getMethod() == 'post') {
+            if ($_FILES['company_logo']['name'] != '') {
+                $rules = ['company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'] ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('employer/setup/company'));
+                }
+                $result = UploadFile($_FILES['company_logo']);
+                if ($result['status'] == true) {
+                    $url = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('employer/setup/company'));
+                }
+            }
+            $rules = [
+                'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
+                'email'             => ['label' => 'Company Email', 'rules' => 'required'],
+                'phone_no'          => ['label' => 'Phone No', 'rules' => 'required'],
+                'website'           => ['label' => 'Company Website', 'rules' => 'required'],
+                'category'          => ['label' => 'Category', 'rules' => 'required'],
+                'founded_date'      => ['label' => 'Founded Date', 'rules' => 'required'],
+                'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
+                'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
+                'description'       => ['label' => 'Comapany Description', 'rules' => 'required'],
+                'country'           => ['label' => 'Country', 'rules' => 'required'],
+                'state'             => ['label' => 'State', 'rules' => 'required'],
+                'city'              => ['label' => 'City', 'rules' => 'required'],
+                'postcode'          => ['label' => 'Pin Code', 'rules' => 'required'],
+                'address'           => ['label' => 'Address', 'rules' => 'required'],
+                'facebook_link'     => ['label' => 'Facebook', 'rules' => 'trim'],
+                'twitter_link'      => ['label' => 'Twitter', 'rules' => 'trim'],
+                'youtube_link'      => ['label' => 'Youtube', 'rules' => 'trim'],
+                'linkedin_link'     => ['label' => 'LinkedIn', 'rules' => 'trim']
+
+            ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('employer/setup/company'));
+            }
+
+            $cmp_info_update = array(
+                'company_name' => $this->request->getPost('company_name'),
+                'email' => $this->request->getPost('email'),
+                'phone_no' => $this->request->getPost('phone_no'),
+                'website' => $this->request->getPost('website'),
+                'category' => $this->request->getPost('category'),
+                'founded_date' => $this->request->getPost('founded_date'),
+                'org_type' => $this->request->getPost('org_type'),
+                'no_of_employers' => $this->request->getPost('no_of_employers'),
+                'description' => $this->request->getPost('description'),
+                'country' => $this->request->getPost('country'),
+                'state' => $this->request->getPost('state'),
+                'city' => $this->request->getPost('city'),
+                'postcode' => $this->request->getPost('postcode'),
+                'address' => $this->request->getPost('address'),
+                'facebook_link' => $this->request->getPost('facebook_link'),
+                'twitter_link' => $this->request->getPost('twitter_link'),
+                'youtube_link' => $this->request->getPost('youtube_link'),
+                'linkedin_link' => $this->request->getPost('linkedin_link'),
+            );
+
+            if ($_FILES['company_logo']['name'] != '') {
+                $cmp_info_update['company_logo'] = $url;
+            }
+            $id = session('employer_id');
+            $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
+            if ($update_per == 1) {
+                $this->EmployerAuthModel->cmpy_cmpld($id);
+                $this->session->set('company_completed', 1);
+                $this->session->setFlashdata('success', 'Company Information Successfully Updated');
+                return redirect()->to(base_url('employer/dashboard'));
+            } else {
+                $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again!');
+                return redirect()->to(base_url('employer/setup/company'));
+            }
+        }
+        if ($this->request->isAJAX()) {
+            $country_id = $this->request->getPost('country_id');
+            $states = $this->adminModel->get_states_list($country_id);
+            return json_encode($states);
+            exit();
+        }
+        return view('employer/auth/setup_company',$get);
+    }
 }
