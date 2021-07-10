@@ -336,4 +336,20 @@ class HomeModel extends Model
             return $this->db->table('seeker_education')->insert($data);
         }
     }
+
+    public function get_last_language_by_id($user_id)
+    {
+        return $this->db->table('seeker_languages')->where('user_id',$user_id)->get()->getRowArray();
+    }
+
+    public function insert_setup_language($data,$user_id)
+    {
+        $builder = $this->db->table('seeker_languages');
+        $builder->where('user_id', $user_id);
+        if ($builder->countAllResults() > 0) {
+            return $this->db->table('seeker_languages')->where('id', $user_id)->update($data);
+        } else {
+            return $this->db->table('seeker_languages')->insert($data);
+        }
+    }
 }

@@ -32,13 +32,14 @@
                 <div id="home" class="container tab-pane active">
                     <h3>Language</h3>
                     <div class="container">
+                        <form action="<?= base_url('home/setup/language') ?>" method="post">
                         <div class="row">
                             <div class='col-md-6'>
                                 <label for="Language">Language</label>
                                 <?php
                                     $educations = get_languages_list();
                                     $options = array('' => 'Select Option') + array_column($educations, 'lang_name', 'lang_id');
-                                    echo form_dropdown('language', $options,'', 'class="form-control" ');
+                                    echo form_dropdown('language', $options, $userlang['language'] , 'class="form-control" ');
                                 ?>
                             </div>
 
@@ -46,13 +47,20 @@
                                 <label for="Language">Proficiency with this language</label>
                                 <?php
                                     $options = get_language_levels();
-                                    echo form_dropdown('lang_level', $options, '', 'class="form-control" ');
+                                    echo form_dropdown('lang_level', $options, $userlang['proficiency'] , 'class="form-control" ');
                                 ?>
                             </div>
+                            <div class='col-md-6'>
+                                <button type="submit" class="btn-sm btn-primary" name='update_resume'>Update</button>
+                                    <?php if ($data[0]['resume'] != '') { ?>
+                                <a href="<?= $data[0]['resume']; ?>"><button type="button" class="btn-sm btn-primary" name='update_resume'><i class="fa fa-download"></i> Download CV</button></a>
+                                <?php }?>
+                            </div>
                             <div class='col-md-12'>
-                                <button onclick="profile()" type="submit" class="btn btn-primary my-3" >Submit</button>
+                                <button type="submit" class="btn btn-primary my-3" >Next</button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -61,8 +69,3 @@
 </main>
 
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
-<script>
-    function profile(){
-        window.location = 'resume';
-    }
-</script>

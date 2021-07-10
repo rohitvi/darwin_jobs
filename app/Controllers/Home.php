@@ -665,7 +665,7 @@ class Home extends BaseController
             $id = session('user_id');
             $userresume = $this->HomeModel->update_user_resume($update_resume, $id);
             if ($userresume == 1) {
-                $this->session->setFlashdata('success', 'Update Success');
+                $this->session->setFlashdata('success', 'Resume Successfully Updated');
                 return redirect()->to(base_url('home/profile'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
@@ -1106,7 +1106,6 @@ class Home extends BaseController
             $update_per = $this->HomeModel->user_info_update($update_user_info, $id);
 
             if ($update_per == 1) {
-                // $this->session->set('profile_completed', 1);
                 $this->session->setFlashdata('success', 'Personal Information successfully Updated');
                 return redirect()->to(base_url('home/setup/experience'));
             } else {
@@ -1154,7 +1153,7 @@ class Home extends BaseController
             ];
             $query = $this->HomeModel->insert_setup_experience($data, $id);
             if ($query == 1) {
-                $this->session->setFlashdata('success', 'Personal Information successfully Updated');
+                $this->session->setFlashdata('success', 'Experience successfully Updated');
                 return redirect()->to(base_url('home/setup/education'));
             } else {
                 $this->session->setFlashdata('error', 'Something went wrong, please try again');
@@ -1182,7 +1181,7 @@ class Home extends BaseController
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                return redirect()->to(base_url('home/profile'));
+                return redirect()->to(base_url('home/setup/education'));
             }
             $user_id = session('user_id');
             $data = [
@@ -1209,7 +1208,33 @@ class Home extends BaseController
 
     public function setup_languages()
     {
-        $get['userlang'] = $this->HomeModel->get_language_by_id($lang_id);
+        $id = session('user_id');
+        $get['userlang'] = $this->HomeModel->get_last_language_by_id($id);
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'language' =>  ['label' => 'Language', 'rules' => 'required'],
+                'lang_level' => ['label' => 'Proficiency with this language', 'rules' => 'required']
+            ];
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/setup/language'));
+            }
+            $user_id = session('user_id');
+            $data = [
+                'user_id' => $user_id,
+                'language' => $this->request->getPost('language'),
+                'proficiency' => $this->request->getPost('lang_level'),
+                'updated_date' => date('Y-m-d'),
+            ];
+            $query = $this->HomeModel->insert_setup_language($data, $id);
+            if ($query == true) {
+                $this->session->setFlashdata('success', 'Language Updated !');
+                return redirect()->to(base_url('home/setup/resume'));
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again !');
+                return redirect()->to(base_url('home/setup/language'));
+            }
+        }
         $get['title'] = 'Complete Languages';
         return view('users/auth/setup_languages',$get);
     }
@@ -1217,6 +1242,38 @@ class Home extends BaseController
     public function setup_resume()
     {
         $get['title'] = 'Complete Resume';
+        if ($this->request->getMethod() == 'post') {
+            if ($_FILES['user_resume']['name'] != '') {
+                $rules = [
+                    'user_resume' => ['uploaded[user_resume]', 'max_size[user_resume,1024]'],
+                ];
+            }
+            if ($this->validate($rules) == false) {
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('home/setup/resume'));
+            }
+            $result = UploadFile($_FILES['user_resume']);
+            if ($result['status'] == true) {
+                $url = $result['result']['file_url'];
+            } else {
+                $this->session->setFlashdata('error', $result['message']);
+                return redirect()->to(base_url('home/setup/resume'));
+            }
+            if ($_FILES['user_resume']['name'] != '') {
+                $update_resume['user_resume'] = $url;
+            }
+            $id = session('user_id');
+            $userresume = $this->HomeModel->update_user_resume($update_resume, $id);
+            if ($userresume == 1) {
+                $this->HomeAuthModel->profile_completed($id);
+                $this->session->set('profile_completed', 1);
+                $this->session->setFlashdata('success', 'Resume Successfully Updated');
+                return redirect()->to(base_url('home/profile'));
+            } else {
+                $this->session->setFlashdata('error', 'Something went wrong, please try again');
+                return redirect()->to(base_url('home/setup/resume'));
+            }
+        }
         return view('users/auth/setup_resume',$get);
     }
     

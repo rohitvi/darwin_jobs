@@ -87,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Category</label>
-                                    <select class="form-control  " name="category">
+                                    <select class="form-control" name="category">
                                     <option value="">Select Category</option>
                                     <?php foreach ($categories as $category) : ?>
                                         <?php if ($data[0]['category'] == $category['id']) : ?>

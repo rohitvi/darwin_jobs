@@ -112,6 +112,10 @@ class HomeAuthModel extends Model
                     }
             
             }
+    }
 
+    public function profile_completed($user_id)
+    {
+        return $this->db->table('users')->where('id',$user_id)->update(array('profile_completed'=>1));
     }
 }
