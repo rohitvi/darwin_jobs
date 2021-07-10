@@ -32,6 +32,7 @@
                 <div id="home" class="container tab-pane active">
                     <h3>Education</h3>
                     <div class="container">
+                    <form action="<?= base_url('home/setup/education') ?>" method="post">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Degree Level</label>
@@ -43,23 +44,23 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Degree Title</label>
-                                <input class="form-control" name="title" type="text" placeholder="e.g., Computer Science">
+                                <input class="form-control" name="title" type="text" value="<?= $edu['degree_title'] ?>" placeholder="e.g., Computer Science">
                             </div>
                             <div class="col-md-6">
                                 <label>Major Subjects</label>
-                                <input class="form-control" name="majors" type="text" placeholder="please specify your major subjects">
+                                <input class="form-control" name="majors" type="text" value="<?= $edu['major_subjects'] ?>" placeholder="please specify your major subjects">
                             </div>
                             <div class="col-md-6">
                                 <label>Institution</label>
-                                <input class="form-control" name="institution" type="text" placeholder="Institution">
+                                <input class="form-control" name="institution" type="text" value="<?= $edu['institution'] ?>" placeholder="Institution">
                             </div>
                             <div class="col-md-6">
                                 <label>Country</label>
                                 <select class="form-control select" name="country">
-                                    <option value="">Select Country</option>
-                                    <?php foreach ($countries as $country) : ?>
-                                        <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                    <?php endforeach; ?>
+                                <option value="">Select Country</option>
+                                <?php foreach ($countries as $country) : ?>
+                                    <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                                <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -67,9 +68,10 @@
                                 <?= year_dropdown('year', '1985', ''); ?>
                             </div>
                             <div class='col-md-12 text-right'>
-                                <button onclick="profile()" type="submit" class="btn btn-primary my-3" >Submit</button>
+                                <button type="submit" class="btn btn-primary my-3" >Submit</button>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -78,8 +80,3 @@
 </main>
 
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
-<script>
-    function profile(){
-        window.location = 'language';
-    }
-</script>

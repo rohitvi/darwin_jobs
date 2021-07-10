@@ -36,11 +36,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Job Title</label>
-                                <input class="form-control valid" name="job_title" type="text">
+                                <input class="form-control valid" name="job_title" value="<?= $experience['job_title'] ?>" type="text">
                             </div>
                             <div class="col-md-6">
                                 <label>Company</label>
-                                <input class="form-control valid" name="company" type="text">
+                                <input class="form-control valid" name="company" value="<?= $experience['company'] ?>" type="text">
                             </div>
                             <div class="col-md-6">
                                 <label>Country</label>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="col-md-12">
                                 <h5>Description</h5>
-                                <textarea name="description" class="form-control" rows="2"></textarea>
+                                <textarea name="description" class="form-control" rows="2"><?= $experience['description'] ?></textarea>
                             </div>
                             <div class="col-md-12 text-right">
                                 <button class='btn btn-primary my-3'>Submit</button>
