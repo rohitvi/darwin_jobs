@@ -141,7 +141,7 @@
               <div class="col-sm-12">
                 <div class="featured_box ">
                   <div class="fb_image">
-                    <img alt="brand logo" src="<?= get_company_logo($job['company_id']) ?>">
+                    <img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($job['company_id']) ?>">
                   </div>
                   <div class="fb_content">
                     <h4><?= $job['title']; ?></h4>
