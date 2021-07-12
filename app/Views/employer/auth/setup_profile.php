@@ -17,7 +17,7 @@
                 <a class="nav-link active" data-toggle="pill" href="#home">Profile</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link">My Company</a>
+                <a class="nav-link">Company</a>
                 </li>
             </ul>
 

@@ -61,7 +61,7 @@
 
 <script>
   $('#login').on('submit',function(){
-        event.preventDefault();
+    event.preventDefault();
     var fields = $('#login').serialize();
     $.ajax({
       url: "<?= base_url('employer/login') ?>",
