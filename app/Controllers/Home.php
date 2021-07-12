@@ -803,7 +803,6 @@ class Home extends BaseController
             $id = $this->request->getPost('id');
             $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $query = $this->HomeAuthModel->update_reset_password($password, $id);
-            // pre($query);
             if ($query != 0) {
                 // Sending Email
                 $name = $query['data']['firstname'] . ' ' . $query['data']['lastname'];

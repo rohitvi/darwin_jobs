@@ -23,8 +23,8 @@
             <form method="post" id="reset">
               <div class="com_class_form">
                 <div class="form-group">
-                  <input type="hidden" name="id" value="<?= $data[0]['id'] ?>">
-                  <input class="form-control" type="password" name="password" size="40" placeholder="Email Password * ">
+                  <input type="hidden" name="id" value="<?= $data[0]['password_reset_code'] ?>">
+                  <input class="form-control" type="password" name="password" size="40" placeholder="Password * ">
                 </div>
                 <div class="form-group">
                   <input class="form-control" type="password" name="cpassword" size="40" placeholder="Confirm Password * ">
@@ -52,13 +52,15 @@
         type: 'POST',
         url: '<?= base_url("employer/update_reset_password"); ?>',
         success: function(response){
-          console.log(response);
             $("#reset").trigger('reset');
             var response = response.split('~');
             if ($.trim(response[0]) == 0) {
               toastr.error(response[1]);
             }else if ($.trim(response[0]) == 1) {
               toastr.success(response[1]);
+              setTimeout(function() {
+              window.location.href = "/employer/login";
+            }, 500);
             }
         }
     });

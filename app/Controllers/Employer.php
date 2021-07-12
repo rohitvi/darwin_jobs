@@ -1013,12 +1013,14 @@ class Employer extends BaseController
                 exit;
             }
         }
-        return view('employer/auth/password_reset');
+        $data['title'] = 'Password Recovery';
+        return view('employer/auth/password_reset',$data);
     }
 
     public function reset_password($reset_code)
     {
         $check_reset['data'] = $this->EmployerAuthModel->check_reset_code($reset_code);
+        $check_reset['title'] = 'Password Recovery';
         return view('employer/auth/reset_password', $check_reset);
     }
 
@@ -1037,10 +1039,21 @@ class Employer extends BaseController
             $id = $this->request->getPost('id');
             $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $query = $this->EmployerAuthModel->update_reset_password($password, $id);
-            if ($query) {
+            if ($query != 0) {
+                // Sending Email
+                $name = $query['data']['firstname'] . ' ' . $query['data']['lastname'];
+                $email = $query['data']['email'];
+                $body = $this->mailer->pwd_reset_message($name);
+                $mail_data['receiver_email'] = $email;
+                $mail_data['mail_subject'] = 'Password Changed';
+                $mail_data['mail_body'] = $body;
+
+                sendEmail($mail_data);
                 echo '1~Password changed successfully !';
+                exit;
             } else {
                 echo '0~Something went wrong, please try again !';
+                exit;
             }
         }
     }
