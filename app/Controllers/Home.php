@@ -229,8 +229,7 @@ class Home extends BaseController
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'is_verify' => 0,
                 'token' => md5(rand(0, 1000)),
-                'created_date' => date('Y-m-d : h:m:s'),
-                'updated_date' => date('Y-m-d : h:m:s')
+                'created_date' => date('Y-m-d : h:m:s')
             ];
             $user_id = $this->HomeAuthModel->register($data);
             if (!$user_id) {
@@ -498,6 +497,7 @@ class Home extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'address' => $this->request->getPost('address'),
+                'updated_date' => date('Y-m-d h:i:s'),
                 'profile_completed' => 1,
             );
             if ($_FILES['profile_picture']['name'] != '') {
