@@ -49,12 +49,12 @@
               <p class="or_span"><span>or</span></p>
               <?php
                 if($fb_btn) {
-                  echo "<a href='".$fb_btn."' class='btn btn-facebook'><i class='fab fa-facebook-f'></i> Log In via Facebook</a>";
+                  echo "<a href='".$fb_btn."' class='btn btn-facebook'><i class='fab fa-facebook-f'></i> Login via Facebook</a>";
                 } 
               ?>
               
               <?php if(isset($loginButton)):?>
-              <a href="<?=$loginButton; ?>" class="btn btn-google"><i class="fab fa-google-plus-g"></i>Login via Google +</a>
+              <a href="<?=$loginButton; ?>" class="btn btn-google"><i class="fab fa-google-plus-g"></i> Login via Google +</a>
               <!-- <button class="btn btn-google"><i class="fab fa-google-plus-g"></i> Register via Google+</button> -->
               <?php endif; ?>
             </div>
