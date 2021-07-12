@@ -24,7 +24,7 @@
             <form method="post" id="reset">
               <div class="com_class_form">
                 <div class="form-group">
-                  <input type="hidden" name="id" value="<?= $data[0]['id'] ?>">
+                  <input type="hidden" name="id" value="<?= $data[0]['password_reset_code'] ?>">
                   <input class="form-control" type="password" name="password" size="40" placeholder="Email Password * ">
                 </div>
                 <div class="form-group">
