@@ -25,7 +25,7 @@
               <div class="com_class_form">
                 <div class="form-group">
                   <input type="hidden" name="id" value="<?= $data[0]['id'] ?>">
-                  <input class="form-control" type="password" name="password" size="40" placeholder="Email Password * ">
+                  <input class="form-control" type="password" name="password" size="40" placeholder="Password * ">
                 </div>
                 <div class="form-group">
                   <input class="form-control" type="password" name="cpassword" size="40" placeholder="Confirm Password * ">

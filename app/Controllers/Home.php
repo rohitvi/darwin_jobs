@@ -100,8 +100,8 @@ class Home extends BaseController
 
         if ($this->request->isAJAX()) {
             $rules = [
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required']
+                'email' => ['label' => 'email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'password', 'rules' => 'required|min_length[8]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -214,8 +214,8 @@ class Home extends BaseController
             $rules = [
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
                 'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'email' => ['label' => 'email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Password', 'rules' => 'required|matches[password]'],
                 'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
             ];
@@ -1355,15 +1355,6 @@ class Home extends BaseController
                         ];
                 $result = $this->HomeModel->contactus($data);
                 if ($result) {
-
-                            // email code
-                    // $to = $this->general_settings['admin_email'];
-                    // $subject = 'Contact Us | '.$this->general_settings['application_name'];
-                    // $message =  '<p>Username: '.$data['username'].'</p>
-                    // <p>Email: '.$data['email'].'</p>
-                    // <p>Message: '.$data['message'].'</p>' ;
-                    // sendEmail($to, $subject, $message, $file = '' , $cc = '');
-
                     $this->session->setFlashdata('success', 'Your Message Has Been Sent Successfully !');
                     return redirect()->to(base_url('home/contactus'));
                 }
