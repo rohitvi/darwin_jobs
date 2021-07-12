@@ -100,7 +100,7 @@
                       <?php endforeach; ?>
                     </select>
                   </div>
-                </div><br><br>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
             </li>
           </ul>
@@ -118,7 +118,7 @@
                 <?php endforeach; ?>
               </select>
             </div>
-            <div class="fild-wrap fw-submit">
+            <div class="fild-wrap ml-1 fw-submit">
               <button type="submit" class="btn btn-primary">
                 <i class="material-icons">search</i> SEARCH JOBS
               </button>
