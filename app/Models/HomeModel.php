@@ -302,9 +302,9 @@ class HomeModel extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function getLastPost()
+    public function getLastestPost()
     {
-        return $this->db->table('job_post')->where('is_featured', 'yes')->orderBy('id', 'DESC')->get(8)->getResultArray();
+        return $this->db->table('job_post')->orderBy('id', 'DESC')->get(8)->getResultArray();
     }
 
     public function contactus($data)

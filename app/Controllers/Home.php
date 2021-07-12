@@ -49,7 +49,7 @@ class Home extends BaseController
         }
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
-        $data['posts'] = $this->HomeModel->getLastPost();
+        $data['posts'] = $this->HomeModel->getLastestPost();
         $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
@@ -234,7 +234,7 @@ class Home extends BaseController
             ];
             $user_id = $this->HomeAuthModel->register($data);
             if (!$user_id) {
-                echo '0~Something Went Wrong, Please Try Again !';
+                echo '0~Email Already Exists, Please Login !';
                 exit;
             } else {
                 $res = $this->mailer->send_verification_email($user_id, 'user');

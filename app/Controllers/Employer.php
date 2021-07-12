@@ -607,6 +607,8 @@ class Employer extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/post'));
             }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
                 'company_id' => $this->request->getPost('company_id'),
@@ -623,7 +625,7 @@ class Employer extends BaseController
                 'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
                 'gender' => $this->request->getPost('gender'),
                 'total_positions' => $this->request->getPost('total_positions'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => $skill,
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
@@ -679,13 +681,13 @@ class Employer extends BaseController
 
         $i = 1;
         foreach ($records['data'] as $row) {
-            $buttoncontroll = '<a class="btn btn-sm btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
-                 <i class="fas fa-eye"></i></a>&nbsp
+            $buttoncontroll = '<a class="btnn btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
+                 <i class="fas fa-eye"></i></a>&nbsp;
 
-                  <a class="edit btn btn-sm btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
+                  <a class="edit btnn btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
                  <i class="fas fa-edit"></i></a>&nbsp;
 
-                 <a class="btn-delete btn btn-sm btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
+                 <a class="btn-delete btnn btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
                  <i class="fas fa-trash"></i></a>';
 
             $data[] = array(
@@ -746,11 +748,14 @@ class Employer extends BaseController
                 "state" => ["label" => "state", "rules" => "trim|required"],
                 "city" => ["label" => "city", "rules" => "trim|required"],
                 "location" => ["label" => "location", "rules" => "trim|required"],
+                "is_status" => ["label" => "is_status", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/list_jobs'));
             }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
                 'company_id' => $this->request->getPost('company_id'),
@@ -767,13 +772,13 @@ class Employer extends BaseController
                 'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
                 'gender' => $this->request->getPost('gender'),
                 'total_positions' => $this->request->getPost('total_positions'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => $skill,
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'location' => $this->request->getPost('location'),
                 'is_featured' => $this->request->getPost('is_featured'),
-                'created_date' => date('Y-m-d : H:i:s'),
+                'is_status' => $this->request->getPost('is_status'),
                 'updated_date' => date('Y-m-d : H:i:s'),
             );
             $query = $this->EmployerModel->updatejob($id, $data);

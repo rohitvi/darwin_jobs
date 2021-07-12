@@ -1,5 +1,17 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
 
+<style>
+  .select2-container .select2-selection--single .select2-selection__rendered{
+    line-height: 45px!important;
+  }
+  .select2-selection__rendered{
+    line-height: 45px!important;
+  }
+  .btn, button {
+    padding: 9px 20px!important;
+  }
+</style>
+
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Browse Jobs</h2>
