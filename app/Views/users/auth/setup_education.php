@@ -68,7 +68,7 @@
                                 <?= year_dropdown('year', '1985', ''); ?>
                             </div>
                             <div class='col-md-12 text-right'>
-                                <button type="submit" class="btn btn-primary my-3" >Submit</button>
+                                <button type="submit" class="btn btn-primary my-3" >Next</button>
                             </div>
                         </div>
                     </form>

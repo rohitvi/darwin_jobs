@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class HomeModel extends Model
 {
-    protected $table = NULL;
+    protected $table = null;
 
     public function add_subscriber($data)
     {
@@ -62,37 +62,42 @@ class HomeModel extends Model
 
         if (!empty($search['title'])) {
             $search_text = explode('-', $search['title']);
-            // pre($search_text);
-            foreach ($search_text as $search) {
+            foreach ($search_text as $srch) {
                 $builder->groupStart();
-                $builder->orLike('title', $search);
-                $builder->orLike('skills', $search);
-                $builder->orLike('job_slug', $search);
+                $builder->orLike('title', $srch);
+                $builder->orLike('skills', $srch);
+                $builder->orLike('job_slug', $srch);
                 $builder->groupEnd();
             }
         }
 
-        if (!empty($search['state']))
+        if (!empty($search['state'])) {
             $builder->where('state', $search['state']);
+        }
 
-        if (!empty($search['city']))
+        if (!empty($search['city'])) {
             $builder->where('city', $search['city']);
+        }
 
-        if (!empty($search['category']))
+        if (!empty($search['category'])) {
             $builder->where('category', $search['category']);
+        }
 
-        if (!empty($search['industry']))
+        if (!empty($search['industry'])) {
             $builder->where('industry', $search['industry']);
+        }
 
-        if (!empty($search['experience']))
+        if (!empty($search['experience'])) {
             $builder->where('experience', $search['experience']);
+        }
 
-        if (!empty($search['job_type']))
+        if (!empty($search['job_type'])) {
             $builder->where('job_type', $search['job_type']);
+        }
 
-        if (!empty($search['employment_type']))
+        if (!empty($search['employment_type'])) {
             $builder->where('employment_type', $search['employment_type']);
-
+        }
         $builder->where('is_status', 'active');
         $builder->where('curdate() <  expiry_date');
         $builder->orderBy('created_date', 'desc');
@@ -129,9 +134,9 @@ class HomeModel extends Model
         return $this->db->table('seeker_applied_job')->insert($data);
     }
 
-    public function delete_experience($id)
+    public function delete_experience($id,$user_id)
     {
-        $this->db->table('seeker_experience')->where('id', $id)->delete();
+        $this->db->table('seeker_experience')->where(array('id'=>$id,'user_id'=>$user_id))->delete();
     }
 
     public function user_info_update($update_user_info, $id)
@@ -165,9 +170,9 @@ class HomeModel extends Model
         return $this->db->table('seeker_languages')->insert($data);
     }
 
-    public function delete_language($id)
+    public function delete_language($id,$user_id)
     {
-        return $this->db->table('seeker_languages')->where('id', $id)->delete();
+        return $this->db->table('seeker_languages')->where(array('id'=>$id,'user_id'=>$user_id))->delete();
     }
 
     public function get_language_by_id($id)
@@ -190,9 +195,10 @@ class HomeModel extends Model
         return $this->db->table('seeker_education')->insert($data);
     }
 
-    public function delete_education($id)
+    public function delete_education($id,$user_id)
     {
-        return $this->db->table('seeker_education')->where('id', $id)->delete();
+        return $this->db->table('seeker_education')->where(array('id'=>$id,'user_id'=>$user_id))->delete();
+
     }
 
     public function get_education_by_id($id)
@@ -209,7 +215,7 @@ class HomeModel extends Model
     {
         if ($this->db->table('saved_jobs')->where(array('seeker_id' => $data['seeker_id'], 'job_id' => $data['job_id']))->get()->getNumRows() > 0) {
             $this->db->table('saved_jobs')->where(array('seeker_id' => $data['seeker_id'], 'job_id' => $data['job_id']))->delete();
-            return '0~UnSaved';
+            return '1~Removed From Save List';
         } else {
             $this->db->table('saved_jobs')->insert($data);
             return '1~Saved';
@@ -224,8 +230,9 @@ class HomeModel extends Model
                 $ndata[] = $value['job_id'];
             }
             return $ndata;
-        } else
+        } else {
             return array();
+        }
     }
 
     public function getTopCategory()
@@ -295,9 +302,9 @@ class HomeModel extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function getLastPost()
+    public function getLastestPost()
     {
-        return $this->db->table('job_post')->where('is_featured', 'yes')->orderBy('id', 'DESC')->get(8)->getResultArray();
+        return $this->db->table('job_post')->orderBy('id', 'DESC')->get(8)->getResultArray();
     }
 
     public function contactus($data)

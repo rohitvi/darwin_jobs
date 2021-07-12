@@ -44,9 +44,12 @@ class Home extends BaseController
 
     public function dashboard()
     {
+        if (user_vaidate() && !user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
-        $data['posts'] = $this->HomeModel->getLastPost();
+        $data['posts'] = $this->HomeModel->getLastestPost();
         $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
@@ -55,7 +58,7 @@ class Home extends BaseController
     public function login()
     {
         $fb_permission = ['email'];
-        $data['fb_btn'] = $this->fb_helper->getLoginUrl('https://jobs.darwindevs.com/home/authWithFb?', $fb_permission);
+        $data['fb_btn'] = $this->fb_helper->getLoginUrl(base_url().'/home/authWithFb?', $fb_permission);
 
         $google_client = new \Google_Client();
         $google_client->setClientId('192651661990-ivaf8o78h2caano4r29uktnl1l9oapc8.apps.googleusercontent.com');
@@ -109,6 +112,9 @@ class Home extends BaseController
             $logindata = $this->HomeAuthModel->login_validate($email, $password);
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
+                exit;
+            }else if($logindata == 2) {
+                echo '0~Your Account is not active please, contact to support';
                 exit;
             } else {
                 $userdata = [
@@ -223,12 +229,11 @@ class Home extends BaseController
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'is_verify' => 0,
                 'token' => md5(rand(0, 1000)),
-                'created_date' => date('Y-m-d : h:m:s'),
-                'updated_date' => date('Y-m-d : h:m:s')
+                'created_date' => date('Y-m-d : h:m:s')
             ];
             $user_id = $this->HomeAuthModel->register($data);
             if (!$user_id) {
-                echo '0~Something Went Wrong, Please Try Again !';
+                echo '0~Email Already Exists, Please Login !';
                 exit;
             } else {
                 $res = $this->mailer->send_verification_email($user_id, 'user');
@@ -239,6 +244,20 @@ class Home extends BaseController
         }
         $data['title'] = 'Job Seeker Register';
         return view('users/auth/registration', $data);
+    }
+
+    public function resend_verification_email()
+    {
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }
+        $is_verify = get_direct_value('users','is_verify','id',session('user_id'));
+        if($is_verify == 1){
+            return redirect()->to(base_url('home/profile'));exit;
+        }
+        $this->mailer->send_verification_email(session('user_id'), 'user');
+        $this->session->setFlashdata('success', 'Email Verification Link Sent!');
+        return redirect()->to(base_url('home/profile'));
     }
 
     public function logout()
@@ -268,10 +287,9 @@ class Home extends BaseController
     // Advance Search functionality
     public function search()
     {
-        if (!user_vaidate('check_profile')) {
+        if (user_vaidate() && !user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
-        // pre($_POST);
         $search = array();
         if ($this->request->getMethod() == 'post') {
             // search job title
@@ -320,7 +338,6 @@ class Home extends BaseController
         // $uri = new \CodeIgniter\HTTP\URI(current_url(true));
         $query_str = parse_url(current_url(true), PHP_URL_QUERY);
         parse_str($query_str, $search);
-        // pre($search);
         $Jobs = new HomeModel();
         $Jobs->setTable('job_post');
         $data = [
@@ -334,7 +351,6 @@ class Home extends BaseController
             'pager' => $Jobs->pager,
             'saved_job' => $this->HomeModel->saved_job_search(session('user_id'))
         ];
-        // pre($data['jobs']);
         return view('users/job_listing', $data);
     }
 
@@ -368,6 +384,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $user_id = session('user_id');
         $skills = get_user_skills($user_id); // helper function
@@ -416,6 +434,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
@@ -477,6 +497,7 @@ class Home extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'address' => $this->request->getPost('address'),
+                'updated_date' => date('Y-m-d h:i:s'),
                 'profile_completed' => 1,
             );
             if ($_FILES['profile_picture']['name'] != '') {
@@ -500,6 +521,9 @@ class Home extends BaseController
 
     public function saved_jobs()
     {
+        if (user_vaidate() && !user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
         $get['data'] = $this->HomeModel->saved_jobs(session('user_id'));
         $get['title'] = 'Saved Jobs';
         return view('users/auth/saved_jobs', $get);
@@ -507,9 +531,6 @@ class Home extends BaseController
 
     public function jobdetails($id)
     {
-        if (!user_vaidate()) {
-            return redirect()->to(base_url('login'));
-        }
         $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
@@ -564,6 +585,8 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
         }
         $user_id = session('user_id');
         $get['data'] = $this->HomeModel->applied_jobs($user_id);
@@ -574,6 +597,9 @@ class Home extends BaseController
     public function apply_job()
     {
         if ($this->request->isAJAX()) {
+            if (!user_vaidate()) {
+                echo "0~Please Login to apply this job";exit;
+            }
             $rules = [
                 'job_id' => ['label' => 'job_id', 'rules' => 'required'],
                 'cover_letter' => ['label' => 'cover_letter', 'rules' => 'required'],
@@ -620,7 +646,12 @@ class Home extends BaseController
 
     public function delete_experience($id)
     {
-        $query = $this->HomeModel->delete_experience($id);
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
+        $query = $this->HomeModel->delete_experience($id,session('user_id'));
         if ($query == 1) {
             $this->session->setFlashdata('success', 'Experience successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -809,7 +840,12 @@ class Home extends BaseController
 
     public function delete_language($id)
     {
-        $query = $this->HomeModel->delete_language($id);
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
+        $query = $this->HomeModel->delete_language($id,session('user_id'));
         if ($query == true) {
             $this->session->setFlashdata('success', 'Language successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -897,7 +933,12 @@ class Home extends BaseController
 
     public function delete_education($id)
     {
-        $query = $this->HomeModel->delete_education($id);
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
+        $query = $this->HomeModel->delete_education($id,session('user_id'));
         if ($query) {
             $this->session->setFlashdata('success', 'Education successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -957,6 +998,9 @@ class Home extends BaseController
 
     public function save_job()
     {
+        if (!user_vaidate()) {
+            echo "0~Please Login to save this job";exit;
+        }
         if ($this->request->isAjax()) {
             $rules = [
                 'job_id' => ['label' => 'job_id', 'rules' => 'required'],
@@ -1013,7 +1057,6 @@ class Home extends BaseController
     public function companies($letter = 'A')
     {
         $data['companies'] = $this->HomeModel->get_companies($letter);
-
         $data['title'] = 'Top Companies';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
@@ -1024,8 +1067,12 @@ class Home extends BaseController
     // Company Detail
     public function company_detail($company_id)
     {
+        if (!user_vaidate()) {
+            return redirect()->to(base_url('login'));
+        }elseif (!user_vaidate('check_profile')) {
+            return redirect()->to(base_url('home/setup/profile'));
+        }
         $data['company_info'] = $this->HomeModel->get_company_detail($company_id);
-
         $data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
         $data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
 

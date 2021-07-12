@@ -1256,6 +1256,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
+                $skills = $this->request->getPost('skills');
+                $skill = str_replace(" ", ",",$skills);
                 $data = array(
                     'admin_id' => $admin_id,
                     'employer_id' => get_direct_value('companies', 'employer_id', 'id', $this->request->getPost('employer_id')),
@@ -1269,7 +1271,7 @@ class Admin extends BaseController
                     'max_salary' => $this->request->getPost('max_salary'),
                     'salary_period' => $this->request->getPost('salary_period'),
                     'description' => $this->request->getPost('description'),
-                    'skills' => $this->request->getPost('skills'),
+                    'skills' => $skill,
                     'total_positions' => $this->request->getPost('total_positions'),
                     'gender' => $this->request->getPost('gender'),
                     'education' => $this->request->getPost('education'),
@@ -1333,6 +1335,8 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
+                $skills = $this->request->getPost('skills');
+                $skill = str_replace(" ", ",",$skills);
                 $data = array(
                     'title' => $this->request->getPost('job_title'),
                     'job_type' => $this->request->getPost('job_type'),
@@ -1343,7 +1347,7 @@ class Admin extends BaseController
                     'max_salary' => $this->request->getPost('max_salary'),
                     'salary_period' => $this->request->getPost('salary_period'),
                     'description' => $this->request->getPost('description'),
-                    'skills' => $this->request->getPost('skills'),
+                    'skills' => $skill,
                     'total_positions' => $this->request->getPost('total_positions'),
                     'gender' => $this->request->getPost('gender'),
                     'education' => $this->request->getPost('education'),

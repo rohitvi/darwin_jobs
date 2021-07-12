@@ -270,6 +270,20 @@ class EmployerModel extends Model
     public function get_user_profiles($search)
     {
         $builder = $this->table('users');
+
+        if (!empty($search['job_title'])) {
+            $search_text = explode('-', $search['job_title']);
+            foreach ($search_text as $srch) {
+                $builder->groupStart();
+                $builder->like('job_title', $srch);
+                $builder->orLike('skills', $srch);
+                $builder->groupEnd();
+            }
+        }
+        if (!empty($search['city'])) {
+            $builder->where('city', $search['city']);
+        }
+
         if (!empty($search['state'])) {
             $builder->where('state', $search['state']);
         }
@@ -290,15 +304,6 @@ class EmployerModel extends Model
             $builder->where('experience', $search['experience']);
         }
 
-        if (!empty($search['job_title'])) {
-            $search_text = explode('-', $search['job_title']);
-            foreach ($search_text as $search) {
-                $builder->groupStart();
-                $builder->like('job_title', $search);
-                $builder->orLike('skills', $search);
-                $builder->groupEnd();
-            }
-        }
         $builder->where('is_active', '1');
         $builder->where('profile_completed', '1');
         $builder->orderBy('created_date', 'desc');

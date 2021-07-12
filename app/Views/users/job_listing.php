@@ -1,5 +1,24 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
 
+<style>
+  .select2-container .select2-selection--single .select2-selection__rendered{
+    line-height: 45px!important;
+  }
+  .select2-selection__rendered{
+    line-height: 45px!important;
+  }
+  .btn, button {
+    padding: 9px 20px!important;
+  }
+  .page-item.active .page-link{
+    background-color: #ff6158;
+    border: #ff6158;
+  }
+  .page-link{
+    color: #ff6158;
+  }
+</style>
+
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Browse Jobs</h2>
@@ -65,6 +84,7 @@
                     $types = get_job_type_list();
                     ?>
                     <select class="js-example-basic-single" name="job_type">
+                      <option value="">Select job type</option>
                       <?php foreach ($types as $type) : ?>
                         <option value="<?= $type['id'] ?>" <?= (isset($_GET['job_type']) && $_GET['job_type'] == $type['id']) ? 'selected' : '' ?>><?= $type['type'] ?></option>
                       <?php endforeach; ?>
@@ -73,7 +93,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Job Type</label>
+                  <label>Employment Type</label>
                   <div class="field">
                     <i class="fas fa-briefcase"></i>
                     <?php
@@ -81,12 +101,13 @@
                     $emp_type = get_employment_type_list();
                     ?>
                     <select class="js-example-basic-single" name="job_type">
+                    <option value="">Select Employment</option>
                       <?php foreach ($emp_type as $type) : ?>
                         <option value="<?= $type['id'] ?>"><?= $type['type'] ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
-                </div><br><br>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
             </li>
           </ul>
@@ -104,7 +125,7 @@
                 <?php endforeach; ?>
               </select>
             </div>
-            <div class="fild-wrap fw-submit">
+            <div class="fild-wrap ml-1 fw-submit">
               <button type="submit" class="btn btn-primary">
                 <i class="material-icons">search</i> SEARCH JOBS
               </button>
@@ -115,7 +136,7 @@
             <h5>Browse Jobs in list</h5>
           </div>
           <div class="row full_width featured_box_outer">
-            <?php if(!isset($jobs)) : ?>
+            <?php if (count($jobs) > 0) : ?>
              <?php foreach ($jobs as $job) : ?>
               <div class="col-sm-12">
                 <div class="featured_box ">
@@ -151,7 +172,7 @@
                   </div>
                 </div>
               </div>
-            <?php endforeach; 
+            <?php endforeach;
             else: ?>
               <div class="col-sm-12">
                 <p>No Search Result</p>
@@ -182,8 +203,14 @@
       url: '<?= base_url('home/save_job') ?>',
       method: 'POST',
       data: data,
-      success: function(response) {
-        $("#save" + id).toggleClass("fas far");
+      success: function(responses) {
+        var response = responses.split('~');
+        if ($.trim(response[0]) == 0) {
+          toastr.error(response[1]);
+        }else{
+          toastr.success(response[1]);
+          $("#save" + id).toggleClass("fas far");
+        }
       }
     });
   }

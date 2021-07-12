@@ -79,9 +79,6 @@
               <div class="ac_nav">
                 <!--Not logedin-->
                 <?php if (session('user_logged_in')) : ?>
-                  <div class="">
-                    <a class="btn btn-primary" href="<?= base_url('employer/login'); ?>">Employer Login</a>
-                  </div>
                 <?php else : ?>
                   <div class="dropdown login_pop">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>

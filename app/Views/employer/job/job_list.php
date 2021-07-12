@@ -1,10 +1,14 @@
 <?php include(VIEWPATH . 'employer/include/header.php'); ?>
 <style>
-.btn, button {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    padding: 0px 1px;
+  .btnn {
+  background-color: #17a2b8;
+  border: none;
+  color: white;
+  display: inline-block;
+  padding: 12px 16px;
+  margin-top: 2px;  
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>
 <div class='header_inner '>

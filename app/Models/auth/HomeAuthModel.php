@@ -13,8 +13,12 @@ class HomeAuthModel extends Model
         $result = $builder->where(array('email' => $email))->get()->getResultArray();
         if (count($result) == 1) {
             if (password_verify($password, $result[0]['password'])) {
-                $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname'],'profile_completed' => $result[0]['profile_completed'],'is_verify' => $result[0]['is_verify']);
-                return $array;
+                if ($result[0]['is_active'] == 1) {
+                    $array = array('id' => $result[0]['id'], 'username' => $result[0]['firstname'],'profile_completed' => $result[0]['profile_completed'],'is_verify' => $result[0]['is_verify']);
+                    return $array;
+                }else{
+                    return 2;
+                }
             } else {
                 return 0;
             }
@@ -23,21 +27,21 @@ class HomeAuthModel extends Model
         }
     }
 
-    public function facebook_validate($id,$name,$email,$profile_picture)
+    public function facebook_validate($id, $name, $email, $profile_picture)
     {
         $builder = $this->db->table('users');
-        $get_id = $builder->where('fb_id',$id)->get()->getResultArray();
-        $result = $builder->where('email',$email)->get()->getResultArray();
-        if(count($result) == 1){
+        $get_id = $builder->where('fb_id', $id)->get()->getResultArray();
+        $result = $builder->where('email', $email)->get()->getResultArray();
+        if (count($result) == 1) {
             return $result[0];
-        }else{
-            if(count($get_id) == 1){
+        } else {
+            if (count($get_id) == 1) {
                 return $get_id[0];
-            }else{
-                $names = explode(' ',$name);
+            } else {
+                $names = explode(' ', $name);
                 $this->db->table('users')->insert(array('fb_id'=> $id,'firstname'=>$names[0],'lastname'=>$names[1],'email'=> $email,'profile_picture'=>$profile_picture));
                 $lastid = $this->db->insertID();
-                $reg = $builder->where('id',$lastid)->get()->getResultArray();
+                $reg = $builder->where('id', $lastid)->get()->getResultArray();
                 return $reg[0];
             }
         }
@@ -45,8 +49,14 @@ class HomeAuthModel extends Model
 
     public function register($data)
     {
-        $this->db->table('users')->insert($data);
-        return $this->db->insertID();
+        $builder = $this->db->table('users');
+        $get_email = $builder->where('email',$data['email'])->get()->getResultArray();
+        if(count($get_email) > 0){
+            return 0;
+        }else{
+            $this->db->table('users')->insert($data);
+            return $this->db->insertID();
+        }
     }
 
     public function email_verification($token)
@@ -94,24 +104,23 @@ class HomeAuthModel extends Model
         return $this->db->table('users')->where('id', $id)->update(array('password'=>$password,'password_reset_code'=>''));
     }
 
-    public function google_validate($id,$given_name,$family_name,$email,$picture)
+    public function google_validate($id, $given_name, $family_name, $email, $picture)
     {
         $builder = $this->db->table('users');
-        $get_id = $builder->where('google_id',$id)->get()->getResultArray();
-        $result = $builder->where('email',$email)->get()->getResultArray();
-        if(count($result) == 1){
+        $get_id = $builder->where('google_id', $id)->get()->getResultArray();
+        $result = $builder->where('email', $email)->get()->getResultArray();
+        if (count($result) == 1) {
             return $result[0];
-        }else{
-                if (count($get_id) == 1) {
-                    return $get_id[0];
-                }else{
+        } else {
+            if (count($get_id) == 1) {
+                return $get_id[0];
+            } else {
                 $this->db->table('users')->insert(array('google_id'=> $id,'firstname'=>$given_name,'lastname'=>$family_name,'email'=> $email,'profile_picture'=>$picture,'is_verify'=>1));
                 $lastid = $this->db->insertID();
-                $reg = $builder->where('id',$lastid)->get()->getResultArray();
+                $reg = $builder->where('id', $lastid)->get()->getResultArray();
                 return $reg[0];
-                    }
-            
             }
+        }
     }
 
     public function profile_completed($user_id)

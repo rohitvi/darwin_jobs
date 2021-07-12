@@ -50,12 +50,6 @@
                                     echo form_dropdown('lang_level', $options, $userlang['proficiency'] , 'class="form-control" ');
                                 ?>
                             </div>
-                            <div class='col-md-6'>
-                                <button type="submit" class="btn-sm btn-primary" name='update_resume'>Update</button>
-                                    <?php if ($data[0]['resume'] != '') { ?>
-                                <a href="<?= $data[0]['resume']; ?>"><button type="button" class="btn-sm btn-primary" name='update_resume'><i class="fa fa-download"></i> Download CV</button></a>
-                                <?php }?>
-                            </div>
                             <div class='col-md-12'>
                                 <button type="submit" class="btn btn-primary my-3" >Next</button>
                             </div>

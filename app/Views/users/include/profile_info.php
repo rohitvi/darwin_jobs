@@ -9,6 +9,7 @@
 <?php if (session('is_verify') == 0) : ?>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Verify Email!</strong> Please Check Your Email.
+        Click <a href="<?= base_url('home/resend_verification_email'); ?>">here</a> to resend.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

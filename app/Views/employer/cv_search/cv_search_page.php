@@ -8,9 +8,18 @@
     box-shadow: 2px 14px 14px 12px rgb(14 13 13 / 11%);
     padding-left: 20px;
   }
-  nav{
-    margin-top: 50px;
+
+  body {
+    overflow-x: hidden;
   }
+
+  .pagination {
+    margin-top: 1.5rem!important;
+  }
+  .select2-container .select2-selection--single .select2-selection__rendered {
+	  height: 45px!important;
+}
+
 </style>
 <div class='header_inner '>
   <div class="header_btm">
@@ -65,10 +74,10 @@
                       <div class="form-group">
                         <div class="field">
                           <i class="fas fa-map-marker-alt"></i>
-                          <select name="state" class="form-control js-example-basic-single">
+                          <select name="city" class="form-control js-example-basic-single">
                             <option value="">Select Location</option>
-                            <?php foreach ($states as $state) : ?>
-                              <option value="<?= $state['id']; ?>" <?= (isset($_GET['state']) && $_GET['state'] == $state['id']) ? 'selected' : '' ?>> <?= $state['name']; ?> </option>
+                            <?php foreach ($cities as $city) : ?>
+                              <option value="<?= $city['id']; ?>" <?= (isset($_GET['city']) && $_GET['city'] == $city['id']) ? 'selected' : '' ?>> <?= $city['name']; ?> </option>
                             <?php endforeach; ?>
                           </select>
                         </div>
