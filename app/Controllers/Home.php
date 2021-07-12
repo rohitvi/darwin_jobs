@@ -790,7 +790,7 @@ class Home extends BaseController
         if ($this->request->isAJAX()) {
             $rules = [
                 'id' => ['label' => 'id', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
+                'password' => ['label' => 'password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == false) {
