@@ -2640,7 +2640,8 @@ padding-bottom: 0;*/
 
 
 /*     FOOTER START      */
-.custom_footer{padding: 70px 0 30px;background: #ffffff;position: relative; border-top: 1px solid #efefef}
+.custom_footer{padding: 40px 0 30px;background: #ffffff;position: relative; border-top: 1px solid #efefef}
+#subscriber{margin-bottom: 40px;}
 .custom_footer .container{position: relative;z-index: 9;}
 .custom_footer span.site-title{display: none;}
 .footer_widget_box h2 {font-size: 18px;position: relative;font-weight: 600;margin-bottom: 40px;letter-spacing: 0.5px;}

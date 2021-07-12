@@ -210,7 +210,7 @@ class Home extends BaseController
                 'email' => ['label' => 'email', 'rules' => 'required'],
                 'password' => ['label' => 'Password', 'rules' => 'required'],
                 'cpassword' => ['label' => 'Password', 'rules' => 'required|matches[password]'],
-                'termsncondition' => ['label' => 'termsncondition', 'rules' => 'required']
+                'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -232,7 +232,7 @@ class Home extends BaseController
                 exit;
             } else {
                 $res = $this->mailer->send_verification_email($user_id, 'user');
-                echo $res;
+                //echo $res;
                 echo '1~User Successfully Registered  !';
                 exit;
             }

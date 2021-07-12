@@ -32,19 +32,19 @@
               </label>
             </div>
             <div class="form-group">
-							<input class="form-control" name="firstname" type="text" size="40" placeholder="Firstname * " required>
+							<input class="form-control" name="firstname" type="text" size="40" placeholder="Firstname * " >
 						</div>
             <div class="form-group">
-              <input class="form-control" name="lastname" type="text"  size="40" placeholder="Lastname * " required>
+              <input class="form-control" name="lastname" type="text"  size="40" placeholder="Lastname * " >
             </div>
 						<div class="form-group">
-							<input class="form-control" name="email" type="email" placeholder="Email * " required>
+							<input class="form-control" name="email" type="email" placeholder="Email * " >
 						</div>
             <div class="form-group">
-              <input class="form-control" name="password" type="password" placeholder="Password * " required>
+              <input class="form-control" name="password" type="password" placeholder="Password * " >
             </div>
             <div class="form-group">
-              <input class="form-control" name="cpassword" type="password" placeholder="Re-enter Password * " required>
+              <input class="form-control" name="cpassword" type="password" placeholder="Re-enter Password * " >
             </div>
             <div class="form-group form-check">
               <label class="form-check-label">
@@ -77,7 +77,7 @@
       data: fields,
       success: function(responses){
         console.log(responses);
-        return false;
+        //return false;
         var response = responses.split('~');
         if ($.trim(response[0]) == 0) {
           $('#register').trigger("reset");

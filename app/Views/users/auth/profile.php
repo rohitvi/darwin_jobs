@@ -37,7 +37,7 @@
                   <div class="row">
 
                   <div class="col-md-6">
-                      <div class="form-group text-center">
+                      <div class="form-group">
 
                         <img src="<?= $data[0]['profile_picture']; ?>" alt="company logo" width='80px'>
                         <!-- <label  >Profile Picture</label>

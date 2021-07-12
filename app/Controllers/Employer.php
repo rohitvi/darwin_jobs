@@ -364,6 +364,7 @@ class Employer extends BaseController
                 'email' => ['label' => 'Email', 'rules' => 'required'],
                 'password' => ['label' => 'Password', 'rules' => 'required'],
                 'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
+                'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -378,10 +379,11 @@ class Employer extends BaseController
                 'created_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
+            $emp_id = $this->request->getPost('email');
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name'),
             ];
-            $cmpny['employer_id'] = $this->EmployerAuthModel->register($user_details);
+            $cmpny['employer_id'] = $this->EmployerAuthModel->register($user_details,$emp_id);
             $result = $this->EmployerAuthModel->registercmpny($cmpny);
             // Add Free Packages
             $package_details = $this->EmployerModel->get_free_package();

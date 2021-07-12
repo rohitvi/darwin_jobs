@@ -59,10 +59,16 @@ class EmployerAuthModel extends Model
         return $lastid;
     }
 
-    public function register($data)
+    public function register($data,$emp_id)
     {
-        $this->db->table('employers')->insert($data);
-        return $this->db->insertID();
+        $builder = $this->db->table('employers');
+        $builder->where('email',$emp_id);
+        if ($builder->countAllResults() > 0) {
+            return true;
+        }else{
+            $this->db->table('employers')->insert($data);
+            return $this->db->insertID();
+        }
     }
 
     public function registercmpny($data)

@@ -4,6 +4,22 @@
 	<div class="container">
 		<div class="row footer_widget">
 
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-5">
+						<!-- <div class="footer_widget_box"> -->
+							<form id="subscriber" method="post">
+								<!-- <h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2> -->
+								<div data-aos="fade-in" data-aos-delay="200" class="d-flex">
+									<input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
+									<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
+								</div>
+							</form>
+						<!-- </div>  -->
+				 	</div> <!--col-md-3 end -->
+					 <div class="col-md-4">
+					</div>
+
 				<?php $footer =  get_footer_settings(); ?>
 
 				<?php foreach($footer as $col):  ?>
@@ -31,23 +47,10 @@
 						
 					</div>
 				</div> -->
-					<div class="col-md-9">
-					</div>
-					<div class="col-md-3">
-						<div class="footer_widget_box">
-							<form id="subscriber" method="post" class='newsletter'>
-								<h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
-								<div data-aos="fade-in" data-aos-delay="200" class="d-flex">
-									<input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
-									<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
-								</div>
-							</form>
-						</div> 
-				 	</div> <!--col-md-3 end -->
-
+				
 				<div class="col-md-12">
 					<div class="footer_widget_box"  >
-						<p class="copyright-text">© Copyright 2021 by JoDice. All rights reserved.
+						<p class="copyright-text text-center">© Copyright 2021 by JoDice. All rights reserved.
 						</p>
 					</div>
 				</div>
