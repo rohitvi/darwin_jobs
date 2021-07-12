@@ -782,6 +782,7 @@ class Home extends BaseController
     public function reset_password($reset_code)
     {
         $check_reset['data'] = $this->HomeAuthModel->check_reset_code($reset_code);
+        $check_reset['title'] = 'Password Recovery';
         return view('users/auth/reset_password', $check_reset);
     }
 
