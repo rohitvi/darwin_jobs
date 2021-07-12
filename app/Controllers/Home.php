@@ -790,7 +790,7 @@ class Home extends BaseController
 
     public function update_reset_password()
     {
-        if ($this->request->getMethod()=='post') {
+        if ($this->request->isAjax()) {
             $rules = [
                 'id' => ['label' => 'id', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required|min_length[8]'],
