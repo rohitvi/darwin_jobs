@@ -136,7 +136,7 @@
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->
-        <div class="col-md-6">
+        <div class="col-lg-6 col-6">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Latest Users</h3>
@@ -148,7 +148,6 @@
                   <tr>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Number</th>
                     <th>Job Title</th>
                   </tr>
                 </thead>
@@ -159,14 +158,13 @@
                       <td>
                         <p><?= $row['email']; ?>
                       </td>
-                      <td><?= $row['mobile_no']; ?></td>
                       <td><?= $row['job_title']; ?></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
               </table>
-              <div class="card-footer clearfix">
-                <div class="box-footer clearfix">
+              <div class="card-footer">
+                <div class="box-footer">
                   <a href="<?= base_url('admin/users'); ?>" class="btn btn-sm btn-default btn-flat pull-right">View All Users</a>
                 </div>
               </div>
@@ -176,7 +174,7 @@
           <!-- /.card -->
         </div>
         <!-- /.col -->
-        <div class="col-md-6">
+        <div class="col-lg-6 col-6">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Latest Jobs</h3>
