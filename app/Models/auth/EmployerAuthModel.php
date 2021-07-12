@@ -62,12 +62,12 @@ class EmployerAuthModel extends Model
         return $lastid;
     }
 
-    public function register($data,$emp_id)
+    public function register($data)
     {
         $builder = $this->db->table('employers');
-        $builder->where('email',$emp_id);
-        if ($builder->countAllResults() > 0) {
-            return true;
+        $get_email = $builder->where('email',$data['email'])->get()->getResultArray();
+        if(count($get_email) > 0){
+            return 0;
         }else{
             $this->db->table('employers')->insert($data);
             return $this->db->insertID();

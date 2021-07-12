@@ -921,6 +921,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d')
             ];
             $query = $this->HomeModel->add_education($data);
+            //pre($query);
             if ($query) {
                 $this->session->setFlashdata('success', 'Education Added Successfully');
                 return redirect()->to(base_url('home/profile'));
@@ -1199,7 +1200,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $query = $this->HomeModel->insert_setup_experience($data, $id);
-            if ($query == 1) {
+            if ($query == true) {
                 $this->session->setFlashdata('success', 'Experience successfully Updated');
                 return redirect()->to(base_url('home/setup/education'));
             } else {

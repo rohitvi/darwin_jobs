@@ -386,11 +386,10 @@ class Employer extends BaseController
                 'created_date' => date('Y-m-d : h:m:s'),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
-            $emp_id = $this->request->getPost('email');
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name'),
             ];
-            $cmpny['employer_id'] = $this->EmployerAuthModel->register($user_details,$emp_id);
+            $cmpny['employer_id'] = $this->EmployerAuthModel->register($user_details);
             $result = $this->EmployerAuthModel->registercmpny($cmpny);
             // Add Free Packages
             $package_details = $this->EmployerModel->get_free_package();
@@ -402,12 +401,13 @@ class Employer extends BaseController
                 'buy_date' => date('Y-m-d : h:m:s'),
             ];
             $package_bought = $this->EmployerModel->packages_bought($buyer_array);
-            if ($result->resultID == 1) {
+            //if ($result->resultID == 1) {
+                if (!$cmpny['employer_id']) {   
+                    echo '0~Email Already Exists, Please Login !';
+                    exit;
+            } else {
                 $this->mailer->send_verification_email($cmpny['employer_id'], 'employer');
                 echo '1~Employer Successfully Registered !';
-                exit;
-            } else {
-                echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             }
         }

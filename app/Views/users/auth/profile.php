@@ -38,10 +38,12 @@
 
                   <div class="col-md-6">
                       <div class="form-group">
-
-                        <img src="<?= $data[0]['profile_picture']; ?>" alt="company logo" width='80px'>
-                        <!-- <label  >Profile Picture</label>
-                        <input type="file" name="profile_picture" class="form-control"> -->
+                        
+                      <?php if($data[0]['profile_picture'] == "")  :?>
+                        <img src="<?= base_url('/public/users/images/ava.jpg') ?>" alt="No Image" width='80px'>
+                      <?php else :?>
+                        <img src="<?= $data[0]['profile_picture']; ?>" alt="No Image" width='80px'>
+                      <?php endif ;?>
                       </div>
                     </div>
                     <div class="col-md-6">
