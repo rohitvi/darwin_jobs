@@ -61,7 +61,7 @@
             }else if ($.trim(response[0]) == 1) {
               toastr.success(response[1]);
               setTimeout(function() {
-                window.location.href = 'login';
+                window.location.href = '/darwin_jobs/login';
               }, 500);
             }
         }
