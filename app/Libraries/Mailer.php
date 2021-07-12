@@ -189,4 +189,14 @@ class Mailer
     ';
         return $tpl;
     }
+
+    function pwd_reset_message($username)
+    {
+        $body = '<h3>Hi ' . strtoupper($username) . ',</h3>
+            <p>Your Password Changed Successfully !</p>';
+        $data['content'] = $body;
+        $data['head'] = $data['title'] = 'Password Changed';
+        return  view('admin/general_settings/email_preview', $data);
+    }
+
 }

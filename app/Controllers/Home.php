@@ -113,7 +113,7 @@ class Home extends BaseController
             if ($logindata == 0) {
                 echo '0~Invalid email or password';
                 exit;
-            }else if($logindata == 2) {
+            } elseif ($logindata == 2) {
                 echo '0~Your Account is not active please, contact to support';
                 exit;
             } else {
@@ -252,9 +252,10 @@ class Home extends BaseController
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
         }
-        $is_verify = get_direct_value('users','is_verify','id',session('user_id'));
-        if($is_verify == 1){
-            return redirect()->to(base_url('home/profile'));exit;
+        $is_verify = get_direct_value('users', 'is_verify', 'id', session('user_id'));
+        if ($is_verify == 1) {
+            return redirect()->to(base_url('home/profile'));
+            exit;
         }
         $this->mailer->send_verification_email(session('user_id'), 'user');
         $this->session->setFlashdata('success', 'Email Verification Link Sent!');
@@ -385,7 +386,7 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
         $user_id = session('user_id');
@@ -435,7 +436,7 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
         $get['categories'] = $this->adminModel->get_all_categories();
@@ -480,7 +481,7 @@ class Home extends BaseController
                 }
             }
             $skills = $this->request->getPost('skills');
-            $skill = str_replace(" ", ",",$skills);
+            $skill = str_replace(" ", ",", $skills);
             $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
@@ -586,7 +587,7 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
         $user_id = session('user_id');
@@ -599,7 +600,8 @@ class Home extends BaseController
     {
         if ($this->request->isAJAX()) {
             if (!user_vaidate()) {
-                echo "0~Please Login to apply this job";exit;
+                echo "0~Please Login to apply this job";
+                exit;
             }
             $rules = [
                 'job_id' => ['label' => 'job_id', 'rules' => 'required'],
@@ -649,10 +651,10 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
-        $query = $this->HomeModel->delete_experience($id,session('user_id'));
+        $query = $this->HomeModel->delete_experience($id, session('user_id'));
         if ($query == 1) {
             $this->session->setFlashdata('success', 'Experience successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -788,7 +790,7 @@ class Home extends BaseController
 
     public function update_reset_password()
     {
-        if ($this->request->isAJAX()) {
+        if ($this->request->isAjax()) {
             $rules = [
                 'id' => ['label' => 'id', 'rules' => 'required'],
                 'password' => ['label' => 'password', 'rules' => 'required|min_length[8]'],
@@ -801,7 +803,17 @@ class Home extends BaseController
             $id = $this->request->getPost('id');
             $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
             $query = $this->HomeAuthModel->update_reset_password($password, $id);
-            if ($query) {
+            // pre($query);
+            if ($query != 0) {
+                // Sending Email
+                $name = $query['data']['firstname'] . ' ' . $query['data']['lastname'];
+                $email = $query['data']['email'];
+                $body = $this->mailer->pwd_reset_message($name);
+                $mail_data['receiver_email'] = $email;
+                $mail_data['mail_subject'] = 'Password Changed';
+                $mail_data['mail_body'] = $body;
+
+                sendEmail($mail_data);
                 echo '1~Password changed successfully !';
                 exit;
             } else {
@@ -844,10 +856,10 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
-        $query = $this->HomeModel->delete_language($id,session('user_id'));
+        $query = $this->HomeModel->delete_language($id, session('user_id'));
         if ($query == true) {
             $this->session->setFlashdata('success', 'Language successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -938,10 +950,10 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
-        $query = $this->HomeModel->delete_education($id,session('user_id'));
+        $query = $this->HomeModel->delete_education($id, session('user_id'));
         if ($query) {
             $this->session->setFlashdata('success', 'Education successfully deleted');
             return redirect()->to(base_url('home/profile'));
@@ -1002,7 +1014,8 @@ class Home extends BaseController
     public function save_job()
     {
         if (!user_vaidate()) {
-            echo "0~Please Login to save this job";exit;
+            echo "0~Please Login to save this job";
+            exit;
         }
         if ($this->request->isAjax()) {
             $rules = [
@@ -1072,7 +1085,7 @@ class Home extends BaseController
     {
         if (!user_vaidate()) {
             return redirect()->to(base_url('login'));
-        }elseif (!user_vaidate('check_profile')) {
+        } elseif (!user_vaidate('check_profile')) {
             return redirect()->to(base_url('home/setup/profile'));
         }
         $data['company_info'] = $this->HomeModel->get_company_detail($company_id);
@@ -1129,7 +1142,7 @@ class Home extends BaseController
                 }
             }
             $skills = $this->request->getPost('skills');
-            $skill = str_replace(" ", ",",$skills);
+            $skill = str_replace(" ", ",", $skills);
             $update_user_info = array(
                 'firstname' => $this->request->getPost('firstname'),
                 'lastname' => $this->request->getPost('lastname'),
@@ -1163,7 +1176,7 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/setup/profile'));
             }
         }
-        return view('users/auth/setup_profile',$get);
+        return view('users/auth/setup_profile', $get);
     }
 
     public function setup_experience()
@@ -1171,7 +1184,7 @@ class Home extends BaseController
         $id = session('user_id');
         $get['experience'] = $this->HomeModel->get_last_experience_by_id($id);
         $get['countries'] = $this->adminModel->get_countries_list();
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $rules = [
                 'job_title'     => ['label' => 'Job Title', 'rules' => 'required'],
                 'company'       => ['label' => 'Company', 'rules' => 'required'],
@@ -1211,7 +1224,7 @@ class Home extends BaseController
             }
         }
         $get['title'] = 'Complete Experience';
-        return view('users/auth/setup_experience',$get);
+        return view('users/auth/setup_experience', $get);
     }
 
     public function setup_education()
@@ -1244,7 +1257,7 @@ class Home extends BaseController
                 'completion_year' => $this->request->getPost('year'),
                 'updated_date' => date('Y-m-d')
             ];
-            $query = $this->HomeModel->insert_setup_education($data,$user_id);
+            $query = $this->HomeModel->insert_setup_education($data, $user_id);
             if ($query) {
                 $this->session->setFlashdata('success', 'Education Added Successfully');
                 return redirect()->to(base_url('home/setup/language'));
@@ -1253,7 +1266,7 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/setup/education'));
             }
         }
-        return view('users/auth/setup_education',$get);
+        return view('users/auth/setup_education', $get);
     }
 
     public function setup_languages()
@@ -1286,7 +1299,7 @@ class Home extends BaseController
             }
         }
         $get['title'] = 'Complete Languages';
-        return view('users/auth/setup_languages',$get);
+        return view('users/auth/setup_languages', $get);
     }
 
     public function setup_resume()
@@ -1324,7 +1337,7 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/setup/resume'));
             }
         }
-        return view('users/auth/setup_resume',$get);
+        return view('users/auth/setup_resume', $get);
     }
     
     // Company Detail
