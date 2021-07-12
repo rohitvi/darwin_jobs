@@ -39,7 +39,9 @@ class Employer extends BaseController
     public function dashboard()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
@@ -162,7 +164,9 @@ class Employer extends BaseController
     public function changepassword()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->getMethod() == 'put') {
             $rules = [
@@ -197,7 +201,9 @@ class Employer extends BaseController
     public function profile()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->isAJAX()) {
             $country_id = $this->request->getPost('country_id');
@@ -227,7 +233,9 @@ class Employer extends BaseController
     public function cmp_info_update()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['company_logo']['name'] != '') {
@@ -298,7 +306,6 @@ class Employer extends BaseController
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
             if ($update_per == 1) {
                 $this->EmployerAuthModel->cmpy_cmpld($id);
-                $this->session->set('company_completed', 1);
                 $this->session->setFlashdata('success', 'Company Information Successfully Updated');
                 return redirect()->to(base_url('employer/cmp_info_update'));
             } else {
@@ -325,7 +332,9 @@ class Employer extends BaseController
     public function packages()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $get['data'] = $this->EmployerModel->getpackages();
         $get['title'] = 'Membership Plans';
@@ -347,7 +356,9 @@ class Employer extends BaseController
     public function mypackages()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
@@ -418,7 +429,9 @@ class Employer extends BaseController
     public function shortlisted()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
@@ -670,7 +683,9 @@ class Employer extends BaseController
     public function list_jobs()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $data['title'] = 'Job List';
         return view('employer/job/job_list', $data);
@@ -816,7 +831,9 @@ class Employer extends BaseController
     public function resend_verification_email()
     {
         if (!employer_vaidate()) {
-            return redirect()->to(base_url('employer/login'));
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $is_verify = get_direct_value('employers', 'is_verify', 'id', session('employer_id'));
         if ($is_verify == 1) {
@@ -831,7 +848,9 @@ class Employer extends BaseController
     public function search()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $search = array();
         $get['profiles'] = array();

@@ -19,7 +19,7 @@
                 <a class="nav-link">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#mycompany">My Company</a>
+                <a class="nav-link active" data-toggle="pill" href="#mycompany">Company</a>
               </li>
             </ul>
 
@@ -200,7 +200,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label>.</label>
                             <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </div>

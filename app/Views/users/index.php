@@ -149,7 +149,7 @@
 					<div class="featured_box ">
 						<div class="fb_image">
 							<a href="<?= base_url('home/jobdetails/' . $post['id']) ?>">
-								<img alt="brand logo" src="<?= get_company_logo($post['company_id']) ?>">
+								<img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($post['company_id']) ?>">
 							</a>
 						</div>
 						<div class='fb_content'>

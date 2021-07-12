@@ -34,7 +34,7 @@
                 <div class="container">
                     <div class="header_top">
                         <div class="logo">
-                            <a href="<?= base_url('home') ?>">
+                            <a href="<?= base_url('employer/dashboard') ?>">
                                 <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
                             </a>
                         </div>

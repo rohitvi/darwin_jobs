@@ -153,8 +153,9 @@ class Home extends BaseController
             $graph_response = $this->facebook->get('/me?fields=name,email,picture.width(800).height(800)', $access_token);
             $fb_user_info = $graph_response->getGraphUser();
             $profilep = 'http://graph.facebook.com/' . $fb_user_info['id'] . '/picture';
+            $created_date = date('Y-m-d : h:m:s');
             if (!empty($fb_user_info['id'])) {
-                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep);
+                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep, $created_date);
                 $userdata = [
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
