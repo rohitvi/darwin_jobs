@@ -39,7 +39,9 @@ class Employer extends BaseController
     public function dashboard()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
@@ -59,8 +61,8 @@ class Employer extends BaseController
 
         if ($this->request->isAJAX()) {
             $rules = [
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
             ];
 
             if ($this->validate($rules) == false) {
@@ -162,7 +164,9 @@ class Employer extends BaseController
     public function changepassword()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->getMethod() == 'put') {
             $rules = [
@@ -197,7 +201,9 @@ class Employer extends BaseController
     public function profile()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->isAJAX()) {
             $country_id = $this->request->getPost('country_id');
@@ -227,7 +233,9 @@ class Employer extends BaseController
     public function cmp_info_update()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['company_logo']['name'] != '') {
@@ -298,7 +306,6 @@ class Employer extends BaseController
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
             if ($update_per == 1) {
                 $this->EmployerAuthModel->cmpy_cmpld($id);
-                $this->session->set('company_completed', 1);
                 $this->session->setFlashdata('success', 'Company Information Successfully Updated');
                 return redirect()->to(base_url('employer/cmp_info_update'));
             } else {
@@ -325,7 +332,9 @@ class Employer extends BaseController
     public function packages()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $get['data'] = $this->EmployerModel->getpackages();
         $get['title'] = 'Membership Plans';
@@ -347,7 +356,9 @@ class Employer extends BaseController
     public function mypackages()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
@@ -368,9 +379,10 @@ class Employer extends BaseController
             $rules = [
                 'firstname' => ['label' => 'First Name', 'rules' => 'required'],
                 'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
-                'email' => ['label' => 'Email', 'rules' => 'required'],
-                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
+                'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -400,12 +412,13 @@ class Employer extends BaseController
                 'buy_date' => date('Y-m-d : h:m:s'),
             ];
             $package_bought = $this->EmployerModel->packages_bought($buyer_array);
-            if ($result->resultID == 1) {
+            //if ($result->resultID == 1) {
+                if (!$cmpny['employer_id']) {   
+                    echo '0~Email Already Exists, Please Login !';
+                    exit;
+            } else {
                 $this->mailer->send_verification_email($cmpny['employer_id'], 'employer');
                 echo '1~Employer Successfully Registered !';
-                exit;
-            } else {
-                echo '0~Something Went Wrong, Please Try Again !';
                 exit;
             }
         }
@@ -416,7 +429,9 @@ class Employer extends BaseController
     public function shortlisted()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
@@ -607,6 +622,8 @@ class Employer extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/post'));
             }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
                 'company_id' => $this->request->getPost('company_id'),
@@ -623,7 +640,7 @@ class Employer extends BaseController
                 'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
                 'gender' => $this->request->getPost('gender'),
                 'total_positions' => $this->request->getPost('total_positions'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => $skill,
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
@@ -666,7 +683,9 @@ class Employer extends BaseController
     public function list_jobs()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $data['title'] = 'Job List';
         return view('employer/job/job_list', $data);
@@ -679,13 +698,13 @@ class Employer extends BaseController
 
         $i = 1;
         foreach ($records['data'] as $row) {
-            $buttoncontroll = '<a class="btn btn-sm btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
-                 <i class="fas fa-eye"></i></a>&nbsp
+            $buttoncontroll = '<a class="btnn btn-success" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="View" >
+                 <i class="fas fa-eye"></i></a>&nbsp;
 
-                  <a class="edit btn btn-sm btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
+                  <a class="edit btnn btn-primary" href=' . base_url("employer/edit_job/" . $row['id']) . ' title="Edit" >
                  <i class="fas fa-edit"></i></a>&nbsp;
 
-                 <a class="btn-delete btn btn-sm btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
+                 <a class="btn-delete btnn btn-danger" href=' . base_url("employer/delete_job/" . $row['id']) . ' title="Delete" onclick="return confirm(\'Do you want to delete ?\')">
                  <i class="fas fa-trash"></i></a>';
 
             $data[] = array(
@@ -746,11 +765,14 @@ class Employer extends BaseController
                 "state" => ["label" => "state", "rules" => "trim|required"],
                 "city" => ["label" => "city", "rules" => "trim|required"],
                 "location" => ["label" => "location", "rules" => "trim|required"],
+                "is_status" => ["label" => "is_status", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/list_jobs'));
             }
+            $skills = $this->request->getPost('skills');
+            $skill = str_replace(" ", ",",$skills);
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
                 'company_id' => $this->request->getPost('company_id'),
@@ -767,13 +789,13 @@ class Employer extends BaseController
                 'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
                 'gender' => $this->request->getPost('gender'),
                 'total_positions' => $this->request->getPost('total_positions'),
-                'skills' => $this->request->getPost('skills'),
+                'skills' => $skill,
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'location' => $this->request->getPost('location'),
                 'is_featured' => $this->request->getPost('is_featured'),
-                'created_date' => date('Y-m-d : H:i:s'),
+                'is_status' => $this->request->getPost('is_status'),
                 'updated_date' => date('Y-m-d : H:i:s'),
             );
             $query = $this->EmployerModel->updatejob($id, $data);
@@ -809,7 +831,9 @@ class Employer extends BaseController
     public function resend_verification_email()
     {
         if (!employer_vaidate()) {
-            return redirect()->to(base_url('employer/login'));
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $is_verify = get_direct_value('employers', 'is_verify', 'id', session('employer_id'));
         if ($is_verify == 1) {
@@ -824,7 +848,9 @@ class Employer extends BaseController
     public function search()
     {
         if (!employer_vaidate()) {
-            return redirect()->to('/employer/login');
+            return redirect()->to(base_url('/employer/login'));
+        }elseif (!employer_vaidate('check_profile')) {
+            return redirect()->to(base_url('employer/setup/profile'));
         }
         $search = array();
         $get['profiles'] = array();

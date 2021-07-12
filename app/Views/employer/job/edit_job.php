@@ -230,6 +230,18 @@
                 </select>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>Status *</label>
+                <select name="is_status" class="custom-select form-control" required>
+                  <option>Select Job Status</option>
+	                <option value="active">Active</option>
+	                <option value="inactive">InActive</option>
+	                <option value="pending">Pending</option>
+	                <option value="blocked">Blocked</option>
+                </select>
+              </div>
+            </div>
         </div>
         <div class="form-group row">
           <div class="col-md-12 text-right">

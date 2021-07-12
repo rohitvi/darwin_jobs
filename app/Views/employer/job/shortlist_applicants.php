@@ -35,7 +35,7 @@
             <?php $count = 0;
                   foreach ($applicants as $applicant) : ?>
               <tr>
-                <td><img src="<?= $applicant['profile_picture'] ?>" alt="" height="50"></td>
+                <td><img class="img img-fluid" src="<?= $applicant['profile_picture'] ?>" alt="" height="50"></td>
                 <td><?= $applicant['firstname'] . ' ' . $applicant['lastname']; ?><small> (<?= $applicant['job_title']; ?>)</small></td>
                 <td><?= get_category_name($applicant['category']); ?></td>
                 <td><?= get_city_name($applicant['city']); ?>, <?= get_country_name($applicant['country']); ?></td>

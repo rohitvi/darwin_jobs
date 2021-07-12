@@ -327,13 +327,13 @@ form {
     padding: 0 44px;
     font-size: 14px;
     border: 1px solid #ced4da;
-	height: 58px;
+	height: 45px;
 }
 .select2-container .select2-selection--single {
-    height: 58px;
+    height: 45px;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 58px;
+    height: 45px;
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
@@ -1312,13 +1312,13 @@ form {
     bottom: 0;
     left: 10px;
     z-index: 11;
-    line-height: 58px;
+    line-height: 45px;
     font-size: 23px;
 }
 .fild-wrap input {
 	width: 100%; 
 	padding: 0 17px;
-	height: 58px;
+	height: 45px;
 	line-height: 58px;
 	
 }
@@ -2639,7 +2639,14 @@ padding-bottom: 0;*/
 
 
 /*     FOOTER START      */
-.custom_footer{padding: 70px 0 30px;background: #ffffff;position: relative; border-top: 1px solid #efefef}
+.custom_footer{padding: 40px 0 30px;background: #ffffff;position: relative; border-top: 1px solid #efefef}
+#subscriber{
+    margin-bottom: 40px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 .custom_footer .container{position: relative;z-index: 9;}
 .custom_footer span.site-title{display: none;}
 .footer_widget_box h2 {font-size: 18px;position: relative;font-weight: 600;margin-bottom: 40px;letter-spacing: 0.5px;}

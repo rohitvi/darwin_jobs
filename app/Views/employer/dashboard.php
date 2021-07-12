@@ -42,7 +42,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-4">
+                      <div class="col-md-4 mt-4">
                         <div class="dashboard_box ">
                           <i class="fas fa-list"></i>
                           <h2>Active Package<span><?= $current_package['title'] ?></span> </h2>

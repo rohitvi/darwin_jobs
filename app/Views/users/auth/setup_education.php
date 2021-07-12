@@ -44,15 +44,15 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Degree Title</label>
-                                <input class="form-control" name="title" type="text" value="<?= $edu['degree_title'] ?>" placeholder="e.g., Computer Science">
+                                <input class="form-control" name="title" type="text" value="<?= (isset($edu['degree_title'])) ? $edu['degree_title'] : '' ?>" placeholder="e.g., Computer Science">
                             </div>
                             <div class="col-md-6">
                                 <label>Major Subjects</label>
-                                <input class="form-control" name="majors" type="text" value="<?= $edu['major_subjects'] ?>" placeholder="please specify your major subjects">
+                                <input class="form-control" name="majors" type="text" value="<?= (isset($edu['major_subjects'])) ? $edu['major_subjects'] : '' ?>" placeholder="please specify your major subjects">
                             </div>
                             <div class="col-md-6">
                                 <label>Institution</label>
-                                <input class="form-control" name="institution" type="text" value="<?= $edu['institution'] ?>" placeholder="Institution">
+                                <input class="form-control" name="institution" type="text" value="<?= (isset($edu['institution'])) ? $edu['institution'] : '' ?>" placeholder="Institution">
                             </div>
                             <div class="col-md-6">
                                 <label>Country</label>

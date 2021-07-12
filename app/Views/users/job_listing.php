@@ -1,5 +1,24 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
 
+<style>
+  .select2-container .select2-selection--single .select2-selection__rendered{
+    line-height: 45px!important;
+  }
+  .select2-selection__rendered{
+    line-height: 45px!important;
+  }
+  .btn, button {
+    padding: 9px 20px!important;
+  }
+  .page-item.active .page-link{
+    background-color: #ff6158;
+    border: #ff6158;
+  }
+  .page-link{
+    color: #ff6158;
+  }
+</style>
+
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Browse Jobs</h2>
@@ -88,7 +107,7 @@
                       <?php endforeach; ?>
                     </select>
                   </div>
-                </div><br><br>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">SEARCH</button>
             </li>
           </ul>
@@ -106,7 +125,7 @@
                 <?php endforeach; ?>
               </select>
             </div>
-            <div class="fild-wrap fw-submit">
+            <div class="fild-wrap ml-1 fw-submit">
               <button type="submit" class="btn btn-primary">
                 <i class="material-icons">search</i> SEARCH JOBS
               </button>
@@ -122,7 +141,7 @@
               <div class="col-sm-12">
                 <div class="featured_box ">
                   <div class="fb_image">
-                    <img alt="brand logo" src="<?= get_company_logo($job['company_id']) ?>">
+                    <img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($job['company_id']) ?>">
                   </div>
                   <div class="fb_content">
                     <h4><?= $job['title']; ?></h4>

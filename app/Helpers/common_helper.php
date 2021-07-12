@@ -394,7 +394,7 @@ function user_vaidate($para='user_logged_in')
             return TRUE;
         else{
             session()->setFlashdata('error', 'First Compelete Your Profile!');
-            return false;
+            return FALSE;
         }
     }
     if($para == 'user_id')
@@ -414,6 +414,14 @@ function employer_vaidate($para='employer_logged_in')
             return FALSE;
         else
             return TRUE;
+    }
+    if($para == 'check_profile'){
+        if(session('profile_completed') == 1 && session('company_completed') == 1)
+            return TRUE;
+        else{
+            session()->setFlashdata('error', 'First Compelete Your Profile!');
+            return FALSE;
+        }
     }
     if($para == 'employer_id')
     {

@@ -49,7 +49,7 @@ class Home extends BaseController
         }
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
-        $data['posts'] = $this->HomeModel->getLastPost();
+        $data['posts'] = $this->HomeModel->getLastestPost();
         $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);
@@ -100,8 +100,8 @@ class Home extends BaseController
 
         if ($this->request->isAJAX()) {
             $rules = [
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required']
+                'email' => ['label' => 'email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'password', 'rules' => 'required|min_length[8]']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -153,8 +153,9 @@ class Home extends BaseController
             $graph_response = $this->facebook->get('/me?fields=name,email,picture.width(800).height(800)', $access_token);
             $fb_user_info = $graph_response->getGraphUser();
             $profilep = 'http://graph.facebook.com/' . $fb_user_info['id'] . '/picture';
+            $created_date = date('Y-m-d : h:m:s');
             if (!empty($fb_user_info['id'])) {
-                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep);
+                $logindata = $this->HomeAuthModel->facebook_validate($fb_user_info['id'], $fb_user_info['name'], $fb_user_info['email'], $profilep, $created_date);
                 $userdata = [
                     'user_id' => $logindata['id'],
                     'user_logged_in' => true,
@@ -213,10 +214,10 @@ class Home extends BaseController
             $rules = [
                 'firstname' => ['label' => 'firstname', 'rules' => 'required'],
                 'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'email' => ['label' => 'email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Password', 'rules' => 'required|matches[password]'],
-                'termsncondition' => ['label' => 'termsncondition', 'rules' => 'required']
+                'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -229,16 +230,15 @@ class Home extends BaseController
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'is_verify' => 0,
                 'token' => md5(rand(0, 1000)),
-                'created_date' => date('Y-m-d : h:m:s'),
-                'updated_date' => date('Y-m-d : h:m:s')
+                'created_date' => date('Y-m-d : h:m:s')
             ];
             $user_id = $this->HomeAuthModel->register($data);
             if (!$user_id) {
-                echo '0~Something Went Wrong, Please Try Again !';
+                echo '0~Email Already Exists, Please Login !';
                 exit;
             } else {
                 $res = $this->mailer->send_verification_email($user_id, 'user');
-                echo $res;
+                //echo $res;
                 echo '1~User Successfully Registered  !';
                 exit;
             }
@@ -499,6 +499,7 @@ class Home extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'address' => $this->request->getPost('address'),
+                'updated_date' => date('Y-m-d h:i:s'),
                 'profile_completed' => 1,
             );
             if ($_FILES['profile_picture']['name'] != '') {
@@ -783,6 +784,7 @@ class Home extends BaseController
     public function reset_password($reset_code)
     {
         $check_reset['data'] = $this->HomeAuthModel->check_reset_code($reset_code);
+        $check_reset['title'] = 'Password Recovery';
         return view('users/auth/reset_password', $check_reset);
     }
 
@@ -791,7 +793,7 @@ class Home extends BaseController
         if ($this->request->getMethod()=='post') {
             $rules = [
                 'id' => ['label' => 'id', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
+                'password' => ['label' => 'password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == false) {
@@ -933,6 +935,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d')
             ];
             $query = $this->HomeModel->add_education($data);
+            //pre($query);
             if ($query) {
                 $this->session->setFlashdata('success', 'Education Added Successfully');
                 return redirect()->to(base_url('home/profile'));
@@ -1212,7 +1215,7 @@ class Home extends BaseController
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $query = $this->HomeModel->insert_setup_experience($data, $id);
-            if ($query == 1) {
+            if ($query == true) {
                 $this->session->setFlashdata('success', 'Experience successfully Updated');
                 return redirect()->to(base_url('home/setup/education'));
             } else {
@@ -1365,15 +1368,6 @@ class Home extends BaseController
                         ];
                 $result = $this->HomeModel->contactus($data);
                 if ($result) {
-
-                            // email code
-                    // $to = $this->general_settings['admin_email'];
-                    // $subject = 'Contact Us | '.$this->general_settings['application_name'];
-                    // $message =  '<p>Username: '.$data['username'].'</p>
-                    // <p>Email: '.$data['email'].'</p>
-                    // <p>Message: '.$data['message'].'</p>' ;
-                    // sendEmail($to, $subject, $message, $file = '' , $cc = '');
-
                     $this->session->setFlashdata('success', 'Your Message Has Been Sent Successfully !');
                     return redirect()->to(base_url('home/contactus'));
                 }

@@ -48,7 +48,7 @@
             </div>
             <div class="form-group form-check">
               <label class="form-check-label">
-                <input class="form-check-input" name="checkbox" type="checkbox"> Terms & Conditions
+                <input class="form-check-input" name="termsncondition" type="checkbox"> Terms & Conditions
               </label>
             </div>
 

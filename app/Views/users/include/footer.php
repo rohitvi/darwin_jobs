@@ -4,50 +4,30 @@
 	<div class="container">
 		<div class="row footer_widget">
 
-				<?php $footer =  get_footer_settings(); ?>
-
-				<?php foreach($footer as $col):  ?>
-					<div class="col-md-<?= $col['grid_column'] ?>">
-						<div class="footer_widget_box">
-							<h2 data-aos="fade-up" data-aos-delay="400"><?= $col['title'] ?></h2>
-							<?= $col['content'] ?>
-						</div>
-					</div>
-				<?php endforeach; ?>
-	
-				<!-- <div class="col-md-3">
-					<div class="footer_widget_box">
-						<h2 data-aos="fade-up" data-aos-delay="400">Community</h2>
-						<ul data-aos="fade-in" data-aos-delay="200">
-							<li> <a href="<?= base_url('home/contactus'); ?>">Help / Contact Us</a> 
-				            </li>
-				            <li> <a href="content-page.html">Guidelines</a> 
-				            </li>
-				            <li> <a href="content-page.html">Terms of Use</a> 
-				            </li>
-				            <li> <a href="content-page.html">Privacy &amp; Cookies </a> 
-				            </li>
-						</ul>
-						
-					</div>
-				</div> -->
-					<div class="col-md-9">
-					</div>
-					<div class="col-md-3">
-						<div class="footer_widget_box">
-							<form id="subscriber" method="post" class='newsletter'>
-								<h2 data-aos="fade-up" data-aos-delay="400">Newsletter</h2>
+						<div class="col-md-12">
+							<form id="subscriber" method="post">
 								<div data-aos="fade-in" data-aos-delay="200" class="d-flex">
 									<input class="form-control" name='subscriber_email' type="email" placeholder="Enter your email ">
 									<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i></button>
 								</div>
 							</form>
-						</div> 
-				 	</div> <!--col-md-3 end -->
+						</div>
+				 	
 
+				<?php $footer =  get_footer_settings(); ?>
+
+				<?php foreach($footer as $col):  ?>
+					<div class="col-md-<?= $col['grid_column'] ?>">
+						<div class="footer_widget_box text-center">
+							<h2 data-aos="fade-up" data-aos-delay="400"><?= $col['title'] ?></h2>
+							<?= $col['content'] ?>
+						</div>
+					</div>
+				<?php endforeach; ?>
+				
 				<div class="col-md-12">
 					<div class="footer_widget_box"  >
-						<p class="copyright-text">© <?= get_g_setting_val('copyright') ?></p>
+						<p class="copyright-text text-center">© <?= get_g_setting_val('copyright') ?></p>
 					</div>
 				</div>
 				

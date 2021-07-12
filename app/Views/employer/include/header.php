@@ -34,7 +34,7 @@
                 <div class="container">
                     <div class="header_top">
                         <div class="logo">
-                            <a href="<?= base_url('home') ?>">
+                            <a href="<?= base_url('employer/dashboard') ?>">
                                 <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
                             </a>
                         </div>
@@ -71,9 +71,6 @@
                                         <a class="btn btn-primary" href="<?= base_url('employer/login'); ?>">Employer Login</a>
                                     </div>
                                 <?php elseif (session('employer_logged_in')) : ?>
-                                    <div class="">
-                                        <a class="btn btn-primary" href="<?= base_url('employer/login'); ?>">Job Seeker Login</a>
-                                    </div>
                                 <?php else : ?>
                                     <div class="dropdown login_pop">
                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>

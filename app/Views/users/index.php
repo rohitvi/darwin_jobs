@@ -7,6 +7,9 @@
 		line-height: 58px;
 		border: none;
 	}
+	.fild-wrap > i {
+		line-height: 58px;
+	}
 </style>
 <div class="header_btm">
 	<!-- <div class="bg-v" >
@@ -139,14 +142,14 @@
 			</div>
 		</div>
 		<div class="container">
-			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h txt-blk">Featured Jobs</h2>
+			<h2 data-aos="fade-up" data-aos-delay="400" class="section_h txt-blk">Latest Jobs</h2>
 			<div class="row two_col featured_box_outer">
 			<?php foreach($posts as $post) : ?>
 				<div class="col-sm-6">
 					<div class="featured_box ">
 						<div class="fb_image">
 							<a href="<?= base_url('home/jobdetails/' . $post['id']) ?>">
-								<img alt="brand logo" src="<?= get_company_logo($post['company_id']) ?>">
+								<img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($post['company_id']) ?>">
 							</a>
 						</div>
 						<div class='fb_content'>
