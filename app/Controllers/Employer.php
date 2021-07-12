@@ -61,8 +61,8 @@ class Employer extends BaseController
 
         if ($this->request->isAJAX()) {
             $rules = [
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
             ];
 
             if ($this->validate($rules) == false) {
@@ -379,8 +379,8 @@ class Employer extends BaseController
             $rules = [
                 'firstname' => ['label' => 'First Name', 'rules' => 'required'],
                 'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
-                'email' => ['label' => 'Email', 'rules' => 'required'],
-                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
                 'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
             ];
