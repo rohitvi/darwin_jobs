@@ -10,6 +10,13 @@
   .btn, button {
     padding: 9px 20px!important;
   }
+  .page-item.active .page-link{
+    background-color: #ff6158;
+    border: #ff6158;
+  }
+  .page-link{
+    color: #ff6158;
+  }
 </style>
 
 <div class='header_inner '>
