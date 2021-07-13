@@ -456,3 +456,10 @@ function get_footer_settings()
     $builder = $db->table('footer_settings');
     return $builder->get()->getResultArray();
 }
+
+function get_no_of_applied_jobs($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('seeker_applied_job');
+    return $builder->select('COUNT(seeker_applied_job.job_id) as job_applicants')->getWhere(array('job_id' => $id))->getRowArray()['job_applicants'];
+}

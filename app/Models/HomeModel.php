@@ -303,7 +303,7 @@ class HomeModel extends Model
 
     public function getLastestPost()
     {
-        return $this->db->table('job_post')->select('COUNT(seeker_applied_job.job_id) as job_applicants,seeker_applied_job.job_id,job_post.*')->join('seeker_applied_job','seeker_applied_job.job_id = job_post.id')->groupBy('seeker_applied_job.job_id')->orderBy('id', 'DESC')->get(8)->getResultArray();
+        return $this->db->table('job_post')->where('is_status','active')->orderBy('created_date', 'desc')->get(8)->getResultArray();
     }
 
     public function contactus($data)
