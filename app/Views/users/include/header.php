@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
+  <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/jquery-ui.css"><!--for datepicker file require -->
 </head>
 
 <body>

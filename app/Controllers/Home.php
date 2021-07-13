@@ -1042,7 +1042,6 @@ class Home extends BaseController
         $data['title'] = 'Jobs by Category';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
-        // pre($data);
         return view('users/jobs_category_page', $data);
     }
 
