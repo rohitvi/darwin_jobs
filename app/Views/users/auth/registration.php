@@ -87,7 +87,7 @@
             $('#register').trigger("reset");
             toastr.success(response[1]);
             setTimeout(function() {
-              window.location.href = "/darwin_jobs/login";
+              window.location.href = "/login";
             }, 500);
         }
       }

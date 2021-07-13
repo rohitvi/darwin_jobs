@@ -97,7 +97,13 @@ class EmployerAuthModel extends Model
 
     public function update_reset_password($password,$id)
     {
-        return $this->db->table('employers')->where('id',$id)->update(array('password'=>$password,'password_reset_code'=>''));
+        $builder = $this->db->table('employers');
+        $data = $builder->select('firstname,lastname,email')->where('password_reset_code', $id)->get()->getResultArray();
+        $result = $builder->where('password_reset_code', $id)->update(array('password'=>$password,'password_reset_code'=>''));
+        if($this->db->affectedRows() == 1)
+            return array('status'=>1,'data'=>$data[0]);
+        else
+            return 0;
     }
 
     public function email_verification($token)

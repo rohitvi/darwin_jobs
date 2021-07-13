@@ -101,7 +101,13 @@ class HomeAuthModel extends Model
 
     public function update_reset_password($password, $id)
     {
-        return $this->db->table('users')->where('id', $id)->update(array('password'=>$password,'password_reset_code'=>''));
+        $builder = $this->db->table('users');
+        $data = $builder->select('firstname,lastname,email')->where('password_reset_code', $id)->get()->getResultArray();
+        $result = $builder->where('password_reset_code', $id)->update(array('password'=>$password,'password_reset_code'=>''));
+        if($this->db->affectedRows() == 1)
+            return array('status'=>1,'data'=>$data[0]);
+        else
+            return 0;
     }
 
     public function google_validate($id, $given_name, $family_name, $email, $picture)
