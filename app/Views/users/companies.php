@@ -14,7 +14,7 @@
                         <?php
                         $uri = new \CodeIgniter\HTTP\URI(current_url());
                         foreach (range('A', 'Z') as $char) { ?>
-                            <a href="<?= base_url('home/companies/' . $char) ?>" class="<?= $uri->getSegment(4) == $char ? 'current' : '' ?>"><?= $char ?></a>
+                            <a href="<?= base_url('home/companies/' . $char) ?>" class="<?= $uri->getSegment(3) == $char ? 'current' : '' ?>"><?= $char ?></a>
                         <?php } ?>
                     </div>
                 </div>
