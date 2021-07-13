@@ -34,16 +34,15 @@
                     
                   </div>
               </div>
-              <form class="newsletter">
+              <!-- <form class="newsletter">
                   <h5>Newsletter</h5>
                   <div class="d-flex">
                     <form id="subscriber" method="post" class='newsletter'>
                       <input class="form-control" name='subscriber_email' type="email">
                       <input class="btn btn-primary" type="submit" value="Subscribe">
                     </form>
-                  </div>
-                   
-                </form>
+                  </div> 
+              </form> -->
             </div>
             <div class="col-md-12 col-lg-6">
               <div class="only-form-box">
@@ -88,31 +87,4 @@
     </div>
   </div>
 </main>
-
-
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
-<script>
-$('#subscriber').on('submit',function(){
-    event.preventDefault();
-    var fields = $('#subscriber').serialize();
-    $.ajax({
-        url: "<?= base_url('home/add_subscriber'); ?>",
-        method: "POST",
-        data: fields,
-         success:function(responses){
-			console.log(responses);
-            var response = responses.split('~');
-            $('#subscriber').trigger("reset");
-          
-          
-            if ($.trim(response[0]) == 0) {
-                toastr.error(response[1]);
-              }
-              if ($.trim(response[0]) == 1) {
-				toastr.success(response[1]);
-              }
-         }
-    });
-
-});
-</script>	

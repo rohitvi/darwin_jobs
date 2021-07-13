@@ -120,7 +120,8 @@
 				<a href="<?= base_url('home/search?category='.$category['id']) ?>">
 					<div class="category_box">
 						<div class="cb_header">
-							<img alt="img" src="<?= base_url(); ?>/public/users/images/i-code.png">
+							<!-- <img alt="img" src="<?= base_url(); ?>/public/users/images/i-code.png"> -->
+							<i class="<?= $category['iconfield'] ?>"></i>
 							<span class="job_count"><?= getNumsJobThruCategory($category['id']) ?></span>
 						</div>
 						<div class="cb_bottom">
