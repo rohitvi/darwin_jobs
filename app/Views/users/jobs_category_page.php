@@ -13,7 +13,7 @@
                     <div class="col-auto">
                         <div class="status_box" data-aos="fade-in" data-aos-delay="1000">
                             <a href="<?= base_url('search?category=' . $category['category_id']); ?>">
-                                <img alt="" data-aos="fade-up" data-aos-delay="1400" src="<?= base_url(); ?>/public/users/images/i-company.png">
+                                <i class="<?= get_category_icon($category['category_id']) ?>"></i>
                                 <h3><?= $category['total_jobs'] ?></h3>
                                 <p><?= get_category_name($category['category_id']); ?></p>
                             </a>

@@ -463,3 +463,10 @@ function get_no_of_applied_jobs($id)
     $builder = $db->table('seeker_applied_job');
     return $builder->select('COUNT(seeker_applied_job.job_id) as job_applicants')->getWhere(array('job_id' => $id))->getRowArray()['job_applicants'];
 }
+
+function get_category_icon($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('categories');
+    return $builder->select('iconfield')->getWhere(array('id' => $id))->getRowArray()['iconfield'];
+}

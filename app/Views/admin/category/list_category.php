@@ -35,7 +35,8 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Industry Name</th>
+                      <th>Category Name</th>
+                      <th>Icons</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -45,6 +46,7 @@
                     <tr>
                       <td><?= ++$count; ?></td>
                       <td><?= $row['name']; ?></td>
+                      <td><i class="<?= $row['iconfield'] ?>"></i></td>
                       <td><?= ($row['status'] == 1)? '<span class="btn btn-success btn-xs">Active</span>': '<span class="btn btn-danger btn-xs">Inactive</span>'; ?></td>
 
                       <td><a title="Delete" onclick="return confirm('Are you Sure to Delete ?')" class="btn-delete btn btn-sm btn-danger pull-right" href="<?= base_url('admin/del_category/'.$row['id']); ?>"> <i class="nav-icon fas fa-trash"></i>Delete</a>
