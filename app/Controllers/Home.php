@@ -535,7 +535,8 @@ class Home extends BaseController
         $get['title'] = 'Job Details';
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
-        $get['title'] = 'Job Details';
+        $get['no_of_count'] = $this->HomeModel->no_of_count($id);
+        //pre($get['no_of_count']);
         return view('users/job_details', $get);
     }
 

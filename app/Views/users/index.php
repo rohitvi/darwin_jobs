@@ -179,6 +179,9 @@
 						</div>
 						<div class="fb_action">
 							<a class="btn btn-third" type="button" href="<?= base_url('home/jobdetails/' . $post['id']) ?>">Details</a>
+							<ul class="tags">
+								<li>Job Applicants : <?= $post['job_applicants'] ?></li>
+							</ul>
 						</div>
 					</div>
 				</div>

@@ -156,7 +156,6 @@ class HomeModel extends Model
 
     public function update_user_experience($data, $id)
     {
-        //return $this->db->table('users')->where('id', $id)->update($update_user_info);
         return $this->db->table('seeker_experience')->where('id', $id)->update($data);
     }
 
@@ -304,7 +303,7 @@ class HomeModel extends Model
 
     public function getLastestPost()
     {
-        return $this->db->table('job_post')->orderBy('id', 'DESC')->get(8)->getResultArray();
+        return $this->db->table('job_post')->select('COUNT(seeker_applied_job.job_id) as job_applicants,seeker_applied_job.job_id,job_post.*')->join('seeker_applied_job','seeker_applied_job.job_id = job_post.id')->groupBy('seeker_applied_job.job_id')->orderBy('id', 'DESC')->get(8)->getResultArray();
     }
 
     public function contactus($data)
@@ -358,5 +357,22 @@ class HomeModel extends Model
         } else {
             return $this->db->table('seeker_languages')->insert($data);
         }
+    }
+
+    public function no_of_count($id)
+    {
+        $builder = $this->db->table('seeker_applied_job');
+        $builder->select('job_id,seeker_id, COUNT(job_id) as job_applicants');
+        $builder->where('job_id',$id);
+        $builder->groupBy('job_id');
+        return $builder->get()->getResultArray();
+    }
+
+    public function no_of_job()
+    {
+        $builder = $this->db->table('seeker_applied_job');
+        $builder->select('job_id,seeker_id, COUNT(job_id) as job_applicants');
+        $builder->groupBy('job_id');
+        return $builder->get()->getResultArray();
     }
 }
