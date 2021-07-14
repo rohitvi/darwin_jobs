@@ -35,9 +35,10 @@
 		<!-- .site-info -->
 	</div>
 </footer>
-<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/jquery-3.4.1.min.js"></script><!--for datepicker file require -->
 <script src="<?= base_url(); ?>/public/users/js/tagin.min.js"></script>
 <script src="<?= base_url(); ?>/public/users/toastr/toastr.min.js"></script>
+<script src="<?= base_url(); ?>/public/users/js/jquery-ui.js"></script>  <!--for datepicker file require -->
 <script>
 	<?= (session()->getFlashdata('success')) ? "toastr.success('" . session()->getFlashdata('success') . "')" : '' ?>
     <?= (session()->getFlashdata('error')) ? "toastr.error('" . session()->getFlashdata('error') . "')" : '' ?>
@@ -66,6 +67,7 @@ $('#subscriber').on('submit',function(){
 
 });
 $('.alert').alert();
+
 </script>	
 <!-- End Footer Container
 ================================================== -->

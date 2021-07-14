@@ -81,13 +81,14 @@
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Date of Birth:</label>
-                        <input type="date" name="dob" onchange="mydob()" id="dob" value="<?= $data[0]['dob']; ?>" class="form-control">
+                        <input type="text" name="dob" id="dob" value="<?= $data[0]['dob']; ?>" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group ">
                         <label>Age * </label>
-                        <select name="age" class="form-control js-example-basic-single">
+                        <input type="text" name="age" id="age" value="<?= (isset($data[0]['age'])) ? $data[0]['age'] : '' ?>" class="form-control">
+                        <!-- <select name="age" class="form-control js-example-basic-single">
                           <?php for ($i = 11; $i < 80; $i++) : ?>
                             <?php if ($data[0]['age'] == $i) : ?>
                               <option selected><?= $i; ?></option>
@@ -95,7 +96,7 @@
                               <option><?= $i; ?></option>
                           <?php endif;
                           endfor; ?>
-                        </select>
+                        </select> -->
                       </div>
                     </div>
 
@@ -584,6 +585,17 @@
         }
       });
     });
+
+
+    $("#dob").datepicker({
+        onSelect: function(value, ui) {
+            var today = new Date(),
+                age = today.getFullYear() - ui.selectedYear;
+            $('#age').val(age);
+        },
+        dateFormat: 'dd/mm/yy',changeMonth: true,changeYear: true,yearRange:"c-100:c+0"
+        });
+
   });
 
 

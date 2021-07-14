@@ -138,15 +138,6 @@ function get_education($id)
     return $builder->getWhere(array('id' => $id))->getRowArray()['type'];
 }
 
-// Get Month by ID
-
-function get_month($id)
-{
-    $db      = \Config\Database::connect();
-    $builder = $db->table('months');
-    return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
-}
-
 // Get Category list
 
 function get_category_list()
@@ -271,6 +262,26 @@ function get_months_list()
         '11' => 'Nov',
         '12' => 'Dec',
     );
+}
+
+function get_month($id)
+{
+    $data = array(
+        '' => 'Month',
+        '1' => 'Jan',
+        '2' => 'Feb',
+        '3' => 'Mar',
+        '4' => 'Apr',
+        '5' => 'May',
+        '6' => 'Jun',
+        '7' => 'Jul',
+        '8' => 'Aug',
+        '9' => 'Sep',
+        '10' => 'Oct',
+        '11' => 'Nov',
+        '12' => 'Dec',
+    );
+    return $data[$id];
 }
 
 function get_years_list()
