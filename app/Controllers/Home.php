@@ -50,7 +50,6 @@ class Home extends BaseController
         $data['states'] = $this->adminModel->get_states_list(101);
         $data['categories'] = $this->HomeModel->getTopCategory();
         $data['posts'] = $this->HomeModel->getLastestPost();
-        // pre($data['posts']); 
         $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
         return view('users/index', $data);

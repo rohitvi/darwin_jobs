@@ -48,7 +48,6 @@ class Employer extends BaseController
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
         $data['current_package'] = $this->EmployerModel->get_active_package();
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
-        // pre($data);
         $data['title'] = 'Employer Dashboard';
         return view('employer/dashboard', $data);
     }
@@ -379,7 +378,7 @@ class Employer extends BaseController
             $rules = [
                 'firstname' => ['label' => 'First Name', 'rules' => 'required'],
                 'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
-                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employers.email]'],
                 'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
                 'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
@@ -400,25 +399,37 @@ class Employer extends BaseController
             $cmpny = [
                 'company_name' => $this->request->getPost('company_name'),
             ];
-            $cmpny['employer_id'] = $this->EmployerAuthModel->register($user_details);
+            $employer_id = $this->EmployerAuthModel->register($user_details);
+            if($employer_id == 0){
+                    echo '0~Error';exit;
+            }
+            $cmpny['employer_id'] = $employer_id;
             $result = $this->EmployerAuthModel->registercmpny($cmpny);
+            if($result == 0){
+                $this->EmployerAuthModel->delete_emp_cmpy();
+                echo '0~Error';exit;
+            }
             // Add Free Packages
             $package_details = $this->EmployerModel->get_free_package();
-            $buyer_array = [
-                'employer_id' => $cmpny['employer_id'],
-                'package_id' => $package_details[0]['id'],
-                'user_id' => 0,
-                'expire_date' => add_30_days($package_details[0]['no_of_days']),
-                'buy_date' => date('Y-m-d : h:m:s'),
-            ];
-            $package_bought = $this->EmployerModel->packages_bought($buyer_array);
-            //if ($result->resultID == 1) {
-                if (!$cmpny['employer_id']) {   
-                    echo '0~Email Already Exists, Please Login !';
+            if(count($package_details) > 0){
+                $buyer_array = [
+                    'employer_id' => $cmpny['employer_id'],
+                    'package_id' => $package_details['id'],
+                    'user_id' => 0,
+                    'expire_date' => add_30_days($package_details['no_of_days']),
+                    'buy_date' => date('Y-m-d : h:m:s'),
+                ];
+                $package_bought = $this->EmployerModel->packages_bought($buyer_array);
+                if ($package_bought != 0) {
+                    $this->mailer->send_verification_email($cmpny['employer_id'], 'employer');
+                    echo '1~Employer Successfully Registered !';
                     exit;
-            } else {
-                $this->mailer->send_verification_email($cmpny['employer_id'], 'employer');
-                echo '1~Employer Successfully Registered !';
+                } else {
+                    echo '0~Something Went Wrong, Please Try Again';
+                    exit;
+                }
+            }else{
+                echo '0~Something Went Wrong, Please Try Again';
                 exit;
             }
         }

@@ -216,3 +216,39 @@
     </div>
 </main>
 <?php include(VIEWPATH . 'employer/include/footer.php'); ?>
+<script>
+    var csfr_token_name = '<?= csrf_token() ?>';
+    var csfr_token_value = '<?= csrf_hash() ?>';
+    $(document).ready(function(){
+      $('#country').on('change', function() {
+      var data = {country: this.value,}
+      data[csfr_token_name] = csfr_token_value;
+      $.ajax({
+        url: '<?= base_url('home/get_country_states'); ?>',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        cached: false,
+        success: function(obj) {
+          $('.state').html(obj.msg);
+        }
+      });
+    });
+    $('.state').on('change', function() {
+      var data = {
+        state: this.value,
+      }
+      data[csfr_token_name] = csfr_token_value;
+      $.ajax({
+        url: '<?= base_url('home/get_state_cities'); ?>',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        cached: false,
+        success: function(obj) {
+          $('.city').html(obj.msg);
+        }
+      });
+    });
+    });
+  </script>

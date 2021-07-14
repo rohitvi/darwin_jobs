@@ -121,4 +121,14 @@ class EmployerAuthModel extends Model
     {
         return $this->db->table('employers')->where('id',$user_id)->update(array('company_completed' => 1));
     }
+    
+    public function delete_emp_cmpy()
+    {   
+        $lastid = $this->db->insertID();
+        $del_emp = $this->db->table('employers')->where('id',$lastid)->delete();
+        if($del_emp == 1)
+            return $this->db->table('companies')->where('id',$lastid)->delete();
+        else
+            return 0;
+    }
 }

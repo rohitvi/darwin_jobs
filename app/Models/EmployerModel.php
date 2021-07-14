@@ -11,7 +11,11 @@ class EmployerModel extends Model
 
     public function get_free_package()
     {
-        return $this->db->table('packages')->where('price', '0')->get()->getResultArray();
+        if($this->db->table('packages')->where('price', '0')->get()->getResultArray() > 0){
+            return $this->db->table('packages')->where('price', '0')->get()->getRowArray();
+        }else {
+            return 0;
+        }
     }
 
     public function getpackages()
