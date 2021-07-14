@@ -378,7 +378,7 @@ class Employer extends BaseController
             $rules = [
                 'firstname' => ['label' => 'First Name', 'rules' => 'required'],
                 'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
-                'email' => ['label' => 'Email', 'rules' => 'required|valid_email|is_unique[employers.email]'],
+                'email' => ['label' => 'Email', 'rules' => 'required|is_unique[employers.email]|valid_email'],
                 'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
                 'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
@@ -405,13 +405,13 @@ class Employer extends BaseController
             }
             $cmpny['employer_id'] = $employer_id;
             $result = $this->EmployerAuthModel->registercmpny($cmpny);
-            if($result == 0){
+            if($result->resultID != 1){
                 $this->EmployerAuthModel->delete_emp_cmpy();
                 echo '0~Error';exit;
             }
             // Add Free Packages
             $package_details = $this->EmployerModel->get_free_package();
-            if(count($package_details) > 0){
+            if($package_details != 0){
                 $buyer_array = [
                     'employer_id' => $cmpny['employer_id'],
                     'package_id' => $package_details['id'],
@@ -420,7 +420,7 @@ class Employer extends BaseController
                     'buy_date' => date('Y-m-d : h:m:s'),
                 ];
                 $package_bought = $this->EmployerModel->packages_bought($buyer_array);
-                if ($package_bought != 0) {
+                if ($package_bought->resultID == 1) {
                     $this->mailer->send_verification_email($cmpny['employer_id'], 'employer');
                     echo '1~Employer Successfully Registered !';
                     exit;
@@ -1260,7 +1260,7 @@ class Employer extends BaseController
 
     public function setup_company()
     {
-        $id = session('employer_id');
+        $id = get_companies_empid(session('employer_id'));
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->cmp_info($id);
@@ -1331,7 +1331,7 @@ class Employer extends BaseController
             if ($_FILES['company_logo']['name'] != '') {
                 $cmp_info_update['company_logo'] = $url;
             }
-            $id = session('employer_id');
+            $id = get_companies_empid(session('employer_id'));
             $update_per = $this->EmployerAuthModel->cmp_info_update($cmp_info_update, $id);
             if ($update_per == 1) {
                 $this->EmployerAuthModel->cmpy_cmpld($id);

@@ -53,7 +53,7 @@ class EmployerAuthModel extends Model
     }
 
     public function cmp_info_update($cmp_info,$id){
-        return $this->db->table('companies')->where('id', $id)->update($cmp_info);
+        return $this->db->table('companies')->where('employer_id', $id)->update($cmp_info);
     }
 
     public function getlastid()
@@ -64,14 +64,8 @@ class EmployerAuthModel extends Model
 
     public function register($data)
     {
-        $builder = $this->db->table('employers');
-        $get_email = $builder->where('email',$data['email'])->get()->getResultArray();
-        if(count($get_email) > 0){
-            return 0;
-        }else{
-            $this->db->table('employers')->insert($data);
-            return $this->db->insertID();
-        }
+        $this->db->table('employers')->insert($data);
+        return $this->db->insertID();
     }
 
     public function registercmpny($data)

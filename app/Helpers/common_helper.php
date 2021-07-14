@@ -470,3 +470,10 @@ function get_category_icon($id)
     $builder = $db->table('categories');
     return $builder->select('iconfield')->getWhere(array('id' => $id))->getRowArray()['iconfield'];
 }
+
+function get_companies_empid($id)
+{
+    $db = \Config\Database::connect();
+    $builder = $db->table('companies');
+    return $builder->getWhere(array('employer_id' => $id))->getRowArray()['employer_id'];
+}
