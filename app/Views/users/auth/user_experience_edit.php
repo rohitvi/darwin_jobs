@@ -15,9 +15,9 @@
     <div class="row">
         <div class="col-md-6">
             <label>Country</label>
-            <select class="form-control select" id="country" name="country">
-                    <option value="">Select Country</option>
-                    <?php foreach($countries as $country):?>
+                    <select class="form-control select" id="country" name="country">
+                        <option value="">Select Country</option>
+                        <?php foreach($countries as $country):?>
                         <?php if($expedit['country'] == $country['id']): ?>
                         <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
                         <?php else: ?>
