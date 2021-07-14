@@ -18,7 +18,6 @@ class Employer extends BaseController
         $this->EmployerAuthModel = new EmployerAuthModel();
         $this->adminModel = new AdminModel();
         $this->mailer = new Mailer();
-        $this->mailer = new Mailer();
     }
 
     public function checklogin()
@@ -459,6 +458,12 @@ class Employer extends BaseController
             $experience = $this->EmployerModel->get_user_experience($id);
             $language = $this->EmployerModel->get_user_language($id);
             $query = $this->EmployerModel->userdetails($id);
+            if(isset($experience[0]['ending_month'])){
+                $end_month = $experience[0]['ending_month'];
+            }
+            if(isset($experience[0]['ending_year'])){
+                $end_year = $experience[0]['ending_year'];
+            }
             $html = '';
             $html .= '<div class="row">
                         <div class="col-6">
@@ -544,7 +549,7 @@ class Employer extends BaseController
                             <hr>
                             <p>' . $experience[0]["job_title"] . '</p>
                             <p>' . $experience[0]["company"] . '</p>
-                            <p>' . get_month($experience[0]["starting_month"]) . ' ' . $experience[0]["starting_year"] . ' - ' . $experience[0]["ending_month"] . ' ' . $experience[0]["ending_year"] . ' | ' . get_country_name($experience[0]["country"]) . '</p>
+                            <p>' . get_month($experience[0]["starting_month"]) . ' ' . $experience[0]["starting_year"] . ' - ' . $end_month . ' ' . $end_year . ' | ' . get_country_name($experience[0]["country"]) . '</p>
                             <p>' . $experience[0]["job_title"] . '</p>
                             <p>' . $experience[0]["description"] . '</p>
                             ';

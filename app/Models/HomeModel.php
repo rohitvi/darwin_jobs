@@ -303,7 +303,7 @@ class HomeModel extends Model
 
     public function getLastestPost()
     {
-        return $this->db->table('job_post')->where('is_status','active')->orderBy('created_date', 'desc')->get(8)->getResultArray();
+        return $this->db->table('job_post')->where('is_status','active')->orderBy('created_date', 'desc')->get(6)->getResultArray();
     }
 
     public function contactus($data)
