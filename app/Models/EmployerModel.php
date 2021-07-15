@@ -131,7 +131,7 @@ class EmployerModel extends Model
             $wh[] = " job_post.created_date <= '" . date('Y-m-d', strtotime(session('job_search_to'))) . "'";
         }
 
-        $wh[] = " job_post.employer_id ='" . session('employer_id') . "'";
+        $wh[] = " job_post.employer_id ='" . get_companies_empid(session('employer_id')) . "'";
 
         $SQL = 'SELECT
         job_post.*,
@@ -139,7 +139,7 @@ class EmployerModel extends Model
         SUM(CASE WHEN seeker_applied_job.is_shortlisted > 0 THEN 1 ELSE 0 END) as total_shortlisted,
         SUM(CASE WHEN seeker_applied_job.is_interviewed > 0 THEN 1 ELSE 0 END) as total_interviewed
         FROM
-          job_post left Join  seeker_applied_job
+          job_post left Join seeker_applied_job
           On seeker_applied_job.job_id = job_post.id';
 
         $GROUP_BY = ' GROUP BY job_post.id ';
@@ -169,7 +169,7 @@ class EmployerModel extends Model
 
     public function get_applicants($job_id)
     {
-        $array = array('seeker_applied_job.job_id' => $job_id, 'employer_id' => session('employer_id'));
+        $array = array('seeker_applied_job.job_id' => $job_id, 'employer_id' => get_companies_empid(session('employer_id')));
         $builder = $this->db->table('seeker_applied_job');
         $builder->select('seeker_applied_job.id,
         seeker_applied_job.job_id,
