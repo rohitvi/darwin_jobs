@@ -56,7 +56,7 @@ class EmployerModel extends Model
 
     public function mypackagedetails($id)
     {
-        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('packages_bought.package_id', $id)->where('packages_bought.employer_id', session('employer_id'))->get()->getResultArray();
+        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('packages_bought.package_id', $id)->where('packages_bought.employer_id', get_companies_empid(session('employer_id')))->get()->getResultArray();
     }
 
     public function shortlisted($id)

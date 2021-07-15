@@ -593,6 +593,7 @@ class Employer extends BaseController
     {
         $pkg = $this->EmployerModel->get_active_package(session('employer_id'));
         $pkg_id = $pkg['package_id'];
+        // pre($pkg);
         if (empty($pkg['package_id'])) {
             $this->session->setFlashdata('error', 'Package is Expired');
             return redirect()->to(base_url('employer/packages'));
