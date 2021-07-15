@@ -45,7 +45,7 @@ class HomeModel extends Model
 
     public function jobdetails($id)
     {
-        return $this->db->table('job_post')->select('job_post.*,companies.company_logo,companies.company_name,companies.description as cdescription,companies.website,companies.email')->join('companies', 'job_post.company_id = companies.id')->where('job_post.id =' . $id)->get()->getRowArray();
+        return $this->db->table('job_post')->select('job_post.*,companies.company_logo,companies.company_name,companies.description as cdescription,companies.website,companies.email')->join('companies', 'job_post.company_id = companies.employer_id')->where('job_post.id =' . $id)->get()->getRowArray();
     }
 
     public function perinfo_by_id($id)

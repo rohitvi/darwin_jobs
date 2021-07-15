@@ -4,6 +4,7 @@
     <div class="header_job_single_inner container">
       <div class="poster_company">
         <img alt="brand logo" class="img img-fluid" src="<?= $data['company_logo'] ?>">
+        
       </div>
       <div class="poster_details">
         <h2><?= $data['title'] ?></h2>
