@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group text-center">
-                        <img src="<?= $data[0]['profile_picture'] ?>" alt="Company Logo" width="80px">
+                        <img src="<?= $data[0]['profile_picture'] ?>" alt="Profile Image" width="80px">
                       </div>
                     </div>
                     <div class="col-md-6">

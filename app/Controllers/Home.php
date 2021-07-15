@@ -1125,7 +1125,7 @@ class Home extends BaseController
                 'state'             => ['label' => 'State', 'rules' => 'required'],
                 'city'              => ['label' => 'City', 'rules' => 'required'],
                 'address'           => ['label' => 'Address', 'rules' => 'required'],
-                // 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
+                'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));

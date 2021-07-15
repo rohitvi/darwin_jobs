@@ -46,23 +46,26 @@
                                 <label>Country</label>
                                 <select class="form-control select" id="country" name="country">
                                     <option value="">Select Country</option>
-                                    <?php foreach ($countries as $country) : ?>
-                                        <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                    <?php endforeach; ?>
+                                    <?php foreach($countries as $country):?>
+                                    <?php if($experience['country'] == $country['id']): ?>
+                                    <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
+                                    <?php else: ?>
+                                    <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
+                                    <?php endif; endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label>Start Month</label>
                                 <?php
                                     $options = get_months_list();
-                                    echo form_dropdown('starting_month', $options, '', 'class="form-control"');
+                                    echo form_dropdown('starting_month', $options, (isset($experience['starting_month'])) ? $experience['starting_month'] : '', 'class="form-control"');
                                 ?>
                             </div>
                             <div class="col-md-3">
                                 <label>Start Year</label>
                                 <?php
                                     $options = get_years_list();
-                                    echo form_dropdown('starting_year', $options, '', 'class="form-control"');
+                                    echo form_dropdown('starting_year', $options, (isset($experience['starting_year'])) ? $experience['starting_year'] : '', 'class="form-control"');
                                 ?>
                             </div>
                             <div class="col-md-3">
@@ -70,7 +73,7 @@
                                     <label>End Month</label>
                                     <?php
                                         $options = get_months_list();
-                                        echo form_dropdown('ending_month', $options, '', 'class="form-control "');
+                                        echo form_dropdown('ending_month', $options, (isset($experience['ending_month'])) ? $experience['ending_month'] : '', 'class="form-control "');
                                     ?>
                                 </div>
                             </div>
@@ -79,7 +82,7 @@
                                     <label>End Year</label>
                                     <?php
                                         $options = get_years_list();
-                                        echo form_dropdown('ending_year', $options, '', 'class="form-control "');
+                                        echo form_dropdown('ending_year', $options, (isset($experience['ending_year'])) ? $experience['ending_year'] : '', 'class="form-control "');
                                     ?>
                                 </div>
                             </div>

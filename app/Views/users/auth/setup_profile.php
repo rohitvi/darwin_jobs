@@ -34,11 +34,20 @@
                     <div class="container">
                         <form action="<?= base_url('home/setup/profile') ?>" method="post" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group ">
                                     <label  >Profile Picture</label>
                                     <input type="file" name="profile_picture" class="form-control">
                                 </div>
+                            </div>
+                            <div class="col-md-3">
+                            <div class="form-group text-center">
+                            <?php if($data[0]['profile_picture'] == "")  :?>
+                                <img src="<?= base_url('/public/users/images/ava.jpg') ?>" alt="No Image" width='80px'>
+                            <?php else :?>
+                                <img src="<?= $data[0]['profile_picture']; ?>" alt="No Image" width='80px'>
+                            <?php endif ;?>
+                            </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">

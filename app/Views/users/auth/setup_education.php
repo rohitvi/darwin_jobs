@@ -39,7 +39,7 @@
                                 <?php 
                                     $educations = get_education_list();
                                     $options = array('' => 'Select Option') + array_column($educations,'type','id');
-                                    echo form_dropdown('level',$options,'','class="form-control"');
+                                    echo form_dropdown('level',$options,(isset($edu['degree'])) ? $edu['degree'] : '','class="form-control"');
                                 ?>
                             </div>
                             <div class="col-md-6">
@@ -56,11 +56,14 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Country</label>
-                                <select class="form-control select" name="country">
-                                <option value="">Select Country</option>
-                                <?php foreach ($countries as $country) : ?>
+                                <select class="form-control select" id="country" name="country">
+                                    <option value="">Select Country</option>
+                                    <?php foreach($countries as $country):?>
+                                    <?php if($edu['country'] == $country['id']): ?>
+                                    <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
+                                    <?php else: ?>
                                     <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                <?php endforeach; ?>
+                                    <?php endif; endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-md-6">

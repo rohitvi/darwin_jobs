@@ -1215,9 +1215,10 @@ class Employer extends BaseController
                     $this->session->setFlashdata('error', $result['message']);
                     return redirect()->to(base_url('employer/setup/profile'));
                 }
-                $rules = [ 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'] ];
+                //$rules = [  ];
             }
             $rules = [
+                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'],
                     'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
                     'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
                     'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
@@ -1273,11 +1274,6 @@ class Employer extends BaseController
 
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['company_logo']['name'] != '') {
-                $rules = ['company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'] ];
-                if ($this->validate($rules) == false) {
-                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                    return redirect()->to(base_url('employer/setup/company'));
-                }
                 $result = UploadFile($_FILES['company_logo']);
                 if ($result['status'] == true) {
                     $url = $result['result']['file_url'];
@@ -1287,6 +1283,7 @@ class Employer extends BaseController
                 }
             }
             $rules = [
+                'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
                 'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
                 'email'             => ['label' => 'Company Email', 'rules' => 'required'],
                 'phone_no'          => ['label' => 'Phone No', 'rules' => 'required'],
