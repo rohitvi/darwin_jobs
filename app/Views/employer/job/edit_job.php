@@ -223,26 +223,31 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Is Featured *</label>
-                <select name="is_featured" class="custom-select form-control" required>
-                  <option>Select Job Featured</option>
-	                <option value="yes">Yes</option>
-	                <option value="no">No</option>
+                <select name="is_featured" class="custom-select form-control">
+                  <option value="">Select Job Featured</option>
+	                <option value="yes" <?= ($data[0]['is_featured'] == 'yes') ? 'selected' : '' ?>>Yes</option>
+	                <option value="no" <?= ($data[0]['is_featured'] == 'no') ? 'selected' : '' ?>>No</option>
                 </select>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Status *</label>
-                <select name="is_status" class="custom-select form-control" required>
-                  <option>Select Job Status</option>
-	                <option value="active">Active</option>
-	                <option value="inactive">InActive</option>
-	                <option value="pending">Pending</option>
-	                <option value="blocked">Blocked</option>
+                <select name="is_status" class="custom-select form-control">
+                  <option value="">Select Job Status</option>
+	                <option value="active" <?= ($data[0]['is_status'] == 'active') ? 'selected' : '' ?>>Active</option>
+	                <option value="inactive" <?= ($data[0]['is_status'] == 'inactive') ? 'selected' : '' ?>>InActive</option>
+	                <option value="pending" <?= ($data[0]['is_status'] == 'pending') ? 'selected' : '' ?>>Pending</option>
+	                <option value="blocked" <?= ($data[0]['is_status'] == 'blocked') ? 'selected' : '' ?>>Blocked</option>
                 </select>
               </div>
             </div>
         </div>
+
+
+
+      
+
         <div class="form-group row">
           <div class="col-md-12 text-right">
             <button type="submit" class="btn btn-primary">Update</button>

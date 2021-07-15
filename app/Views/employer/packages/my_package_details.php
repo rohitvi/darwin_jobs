@@ -39,7 +39,7 @@
                       <li>
                         <h6>Price</h6>
                         <i class="fas fa-rupee-sign"></i>
-                        <span><?= ($value['price'] == 0) ? 'Free' : '' ?></span>
+                        <span><?= ($value['price'] == 0) ? 'Free' : $value['price'] ?></span>
                       </li>
                     </ul>
                   </div>

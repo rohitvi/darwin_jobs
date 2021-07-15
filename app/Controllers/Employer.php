@@ -45,9 +45,10 @@ class Employer extends BaseController
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
-        $data['current_package'] = $this->EmployerModel->get_active_package();
+        $data['current_package'] = $this->EmployerModel->get_active_package($id);
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
         $data['title'] = 'Employer Dashboard';
+        //pre($data['current_package']);
         return view('employer/dashboard', $data);
     }
 
@@ -590,7 +591,7 @@ class Employer extends BaseController
 
     public function post()
     {
-        $pkg = $this->EmployerModel->get_active_package();
+        $pkg = $this->EmployerModel->get_active_package(session('employer_id'));
         $pkg_id = $pkg['package_id'];
         if (empty($pkg['package_id'])) {
             $this->session->setFlashdata('error', 'Package is Expired');
@@ -633,6 +634,7 @@ class Employer extends BaseController
                 "state" => ["label" => "state", "rules" => "trim|required"],
                 "city" => ["label" => "city", "rules" => "trim|required"],
                 "location" => ["label" => "location", "rules" => "trim|required"],
+                "is_featured" => ["label" => "Featured", "rules" => "required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -661,6 +663,7 @@ class Employer extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'location' => $this->request->getPost('location'),
+                'is_featured' => $this->request->getPost('is_featured'),
                 'expiry_date' => $pkg['expire_date'],
                 'created_date' => date('Y-m-d : H:i:s'),
                 'updated_date' => date('Y-m-d : H:i:s'),
@@ -781,12 +784,13 @@ class Employer extends BaseController
                 "country" => ["label" => "country", "rules" => "trim|required"],
                 "state" => ["label" => "state", "rules" => "trim|required"],
                 "city" => ["label" => "city", "rules" => "trim|required"],
-                "location" => ["label" => "location", "rules" => "trim|required"],
-                "is_status" => ["label" => "is_status", "rules" => "trim|required"],
+                "location" => ["label" => "Location", "rules" => "trim|required"],
+                "is_featured" => ["label" => "Is Featured", "rules" => "required"],
+                "is_status" => ["label" => "Status", "rules" => "required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                return redirect()->to(base_url('employer/list_jobs'));
+                return redirect()->to(base_url('employer/edit_job/'.$id));
             }
             $skills = $this->request->getPost('skills');
             $skill = str_replace(" ", ",",$skills);

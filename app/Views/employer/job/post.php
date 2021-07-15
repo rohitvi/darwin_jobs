@@ -26,7 +26,7 @@
 	    <input type="hidden" name="company_id" value="<?= session('employer_id') ?>">
         <div class="big_form_group">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Job Title *</label>
                 <input type="text" name="job_title" class="form-control" placeholder="Enter your job title" required>
@@ -123,13 +123,13 @@
                 <input type="text" name="skills" class="form-control" placeholder="Skills" required>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Job Description *</label>
                 <textarea name="description" class="form-control" placeholder="Type your message here ..." required></textarea>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Gender Requirement *</label>
                 <select name="gender" class="custom-select form-control" required>
@@ -139,7 +139,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Employment Type *</label>
                 <select name="employment_type" class="custom-select form-control" required>
@@ -149,7 +149,7 @@
 	            </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Education *</label>
                 <select name="education" class="custom-select form-control" required>
@@ -160,7 +160,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Country *</label>
                 <select name="country" id="country" class="custom-select form-control" required>
@@ -171,7 +171,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>State *</label>
                 <select name="state" class="custom-select form-control" id="state" required>
@@ -179,21 +179,35 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group ">
-                <label>City *</label>
-                <select name="city" class="custom-select form-control" id="city" required>
-                    <option value="">Select City</option>
-                </select>
+                  <label>City *</label>
+                  <select name="city" class="custom-select form-control" id="city" required>
+                      <option value="">Select City</option>
+                  </select>
               </div>
             </div>
-          </div>
-          <div class="col-md-12">
+
+            <div class="col-md-6">
               <div class="form-group ">
                 <label>Location *</label>
                 <input type="text" name="location" class="form-control" placeholder="Enter your location" required>
               </div>
             </div>
+
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label>Is Featured *</label>
+                <select name="is_featured" class="custom-select form-control">
+                  <option value="">Select Job Featured</option>
+	                <option value="yes">Yes</option>
+	                <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
           </div>
         </div>
         <div class="form-group row">

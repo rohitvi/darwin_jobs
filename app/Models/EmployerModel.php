@@ -248,9 +248,9 @@ class EmployerModel extends Model
         }
     }
 
-    public function get_active_package()
+    public function get_active_package($id)
     {
-        return $this->db->table('packages_bought')->select('packages_bought.*,packages.title,packages.no_of_posts,packages.no_of_days,packages.price')->join('packages', 'packages.id = packages_bought.package_id')->where('package_for', 1)->orderBy("packages_bought.buy_date", "DESC")->get()->getRowArray();
+        return $this->db->table('packages_bought')->select('packages_bought.*,packages.title,packages.no_of_posts,packages.no_of_days,packages.price')->join('packages', 'packages.id = packages_bought.package_id')->where('packages_bought.employer_id',$id)->orderBy("packages_bought.buy_date", "DESC")->get()->getRowArray();
     }
 
     public function getPackageInfo($package_id)
@@ -260,7 +260,7 @@ class EmployerModel extends Model
 
     public function count_posted_jobs($pkg_id, $is_featured, $payment_id)
     {
-        $where = ['package_id' => $pkg_id, 'payment_id' => $payment_id, 'is_featured' => $is_featured];
+        $where = ['package_id' => $pkg_id, 'payment_id' => $payment_id, 'is_featured' => $is_featured,'employer_id'=>get_companies_empid(session('employer_id'))];
         return $this->db->table('job_post_featured')->where($where)->countAllResults();
     }
 
