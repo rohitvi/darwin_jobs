@@ -593,7 +593,6 @@ class Employer extends BaseController
     {
         $pkg = $this->EmployerModel->get_active_package(session('employer_id'));
         $pkg_id = $pkg['package_id'];
-        // pre($pkg);
         if (empty($pkg['package_id'])) {
             $this->session->setFlashdata('error', 'Package is Expired');
             return redirect()->to(base_url('employer/packages'));
@@ -602,6 +601,7 @@ class Employer extends BaseController
         // Free Job post
         $total_free_jobs = $this->EmployerModel->count_posted_jobs($pkg_id, 0, $pkg['payment_id']);
         if ($total_free_jobs >= $pkg['no_of_posts']) {
+            $this->EmployerModel->set_expired(session('employer_id'),$pkg_id);
             $this->session->setFlashdata('error', 'Post Limit Exceeded');
             return redirect()->to(base_url('employer/packages'));
         }

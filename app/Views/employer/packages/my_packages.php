@@ -34,7 +34,7 @@
                             <tr>
                                 <td><?= $value['id']; ?></td>
                                 <td><?= $value['title']; ?></td>
-                                <td><?= ($value['is_active'] == 1) ? "Active" : "InActive" ?></td>
+                                <td><?= ($value['is_active'] == 1) ? "Active" : "Expired" ?></td>
                                 <td><a type="button" href="<?= base_url('employer/my_package_details/'.$value['package_id']) ?>" class="btn-sm btn-primary">View</a></td>
                             </tr>
                             <?php endforeach; ?>

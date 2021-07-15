@@ -51,7 +51,7 @@ class EmployerModel extends Model
 
     public function mypackages($employer_id)
     {
-        return $this->db->table('packages_bought')->select('*')->join('packages', 'packages.id = packages_bought.package_id')->where('employer_id', $employer_id)->get()->getResultArray();
+        return $this->db->table('packages_bought')->select('packages.id,packages.title,packages_bought.is_active,packages_bought.package_id')->join('packages', 'packages.id = packages_bought.package_id')->where('employer_id', $employer_id)->get()->getResultArray();
     }
 
     public function mypackagedetails($id)
@@ -344,4 +344,10 @@ class EmployerModel extends Model
         $builder = $this->db->table('seeker_applied_job');
         return $builder->where('employer_id', $id)->countAllResults();
     }
+
+    public function set_expired($emp_id,$pkg_id){
+        $where = ['employer_id'=> $emp_id,'package_id'=>$pkg_id];
+        return $this->db->table('packages_bought')->where($where)->update(array('is_active'=>0));
+    }
+
 }
