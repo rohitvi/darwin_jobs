@@ -64,8 +64,11 @@ class EmployerAuthModel extends Model
 
     public function register($data)
     {
-        $this->db->table('employers')->insert($data);
-        return $this->db->insertID();
+        if($this->db->table('employers')->insert($data)){
+            return $this->db->insertID();
+        }else{
+            return 0;
+        }
     }
 
     public function registercmpny($data)
@@ -105,6 +108,7 @@ class EmployerAuthModel extends Model
         $builder = $this->db->table('employers')->where('token', $token)->get()->getRowArray();
         if (count($builder) > 0) {
             $this->db->table('employers')->where('token', $token)->update(array('is_verify'=>1,'token'=>''));
+            $this->session->set('is_verify', 1);
             return $builder;
         } else {
             return false;

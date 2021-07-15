@@ -48,6 +48,7 @@ class Employer extends BaseController
         $data['current_package'] = $this->EmployerModel->get_active_package();
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
         $data['title'] = 'Employer Dashboard';
+        pre($data['total_featured_jobs']);
         return view('employer/dashboard', $data);
     }
 
@@ -592,6 +593,7 @@ class Employer extends BaseController
     {
         $pkg = $this->EmployerModel->get_active_package();
         $pkg_id = $pkg['package_id'];
+        // pre($pkg);
         if (empty($pkg['package_id'])) {
             $this->session->setFlashdata('error', 'Package is Expired');
             return redirect()->to(base_url('employer/packages'));
