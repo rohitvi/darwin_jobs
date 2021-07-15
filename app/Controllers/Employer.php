@@ -742,6 +742,7 @@ class Employer extends BaseController
             );
         }
         $records['data'] = $data;
+        
         echo json_encode($records);
     }
 
