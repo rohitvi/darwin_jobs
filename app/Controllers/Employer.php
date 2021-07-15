@@ -48,7 +48,6 @@ class Employer extends BaseController
         $data['current_package'] = $this->EmployerModel->get_active_package();
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
         $data['title'] = 'Employer Dashboard';
-        pre($data['total_featured_jobs']);
         return view('employer/dashboard', $data);
     }
 
