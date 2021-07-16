@@ -353,7 +353,8 @@ class EmployerModel extends Model
     public function set_expired_time($emp_id,$pkg_id)
     {
         $builder = $this->db->table('packages_bought');
-        $where = ['curdate() > expiry_date','employer_id' => $emp_id,'package_id' => $pkg_id];
+        $where = ['curdate() <' => 'expire_date','employer_id' => $emp_id,'package_id' => $pkg_id];
+        $builder->where($where)->get()->getRowArray();
         if($builder->where($where)->get()->getRowArray() > 0){
             return $builder->update(array('is_active'=>0));
         }else{
