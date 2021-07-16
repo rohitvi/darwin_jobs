@@ -3,23 +3,23 @@
     <div class="header_btm header_job_single">
         <div class="header_job_single_inner container">
             <div class="poster_company">
-                <img alt="brand logo" src="<?= $company_info['company_logo']; ?>">
+                <img alt="brand logo" src="<?= $company_info[0]['company_logo']; ?>">
             </div>
             <div class="poster_details">
-                <h2><?= $company_info['company_name']; ?> <span class="varified"><i class="fas fa-check"></i>Verified</span></h2>
+                <h2><?= $company_info[0]['company_name']; ?> <span class="varified"><i class="fas fa-check"></i>Verified</span></h2>
                 <h5>About Company</h5>
                 <ul>
                     <li>
                         <i class="fas fa-building"></i>
-                        <?= get_category_name($company_info['category']); ?>
+                        <?= get_category_name($company_info[0]['category']); ?>
                     </li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <?= get_city_name($company_info['city']); ?>, <?= get_country_name($company_info['country']); ?>
+                        <?= get_city_name($company_info[0]['city']); ?>, <?= get_country_name($company_info[0]['country']); ?>
                     </li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <?= $company_info['address']; ?>
+                        <?= $company_info[0]['address']; ?>
                     </li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
                     <div class="row ">
                         <div class="col-md-12 single_job_main">
                             <h2>About Company</h2>
-                            <?= $company_info['description']; ?>
+                            <?= $company_info[0]['description']; ?>
                         </div>
                         <div class="section-divider"></div>
                         <div class="col-md-12 single_job_main">
@@ -51,7 +51,7 @@
                                         <div class="col-sm-6">
                                             <div class="featured_box ">
                                                 <div class="fb_image">
-                                                    <img alt="brand logo" src="<?= $company_info['company_logo']; ?>">
+                                                    <img alt="brand logo" src="<?= $value['company_logo']; ?>">
                                                 </div>
                                                 <div class="fb_content">
                                                     <h4><?= $value['title'] ?></h4>

@@ -537,7 +537,7 @@ class Home extends BaseController
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
         $get['no_of_count'] = $this->HomeModel->no_of_count($id);
-        // pre($get['data']);
+        //pre($get['no_of_count']);
         return view('users/job_details', $get);
     }
 
@@ -1075,7 +1075,6 @@ class Home extends BaseController
         $data['title'] = 'Top Companies';
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
-        // pre($data);
         return view('users/companies', $data);
     }
 
@@ -1090,8 +1089,8 @@ class Home extends BaseController
         $data['company_info'] = $this->HomeModel->get_company_detail($company_id);
         $data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
         $data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
-
         $data['title'] = 'company_details';
+        //pre($data['company_info'] );
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
         return view('users/company-details', $data);
