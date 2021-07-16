@@ -361,14 +361,14 @@ class Employer extends BaseController
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
-        $get['title'] = 'My Packages';
+        $get['title'] = 'My Packages List';
         return view('employer/packages/my_packages', $get);
     }
 
     public function my_package_details($package_id)
     {
         $get['data'] = $this->EmployerModel->mypackagedetails($package_id);
-        $get['title'] = 'My Packages';
+        $get['title'] = 'Packages Details';
         return view('employer/packages/my_package_details', $get);
     }
 
@@ -609,6 +609,7 @@ class Employer extends BaseController
         //Featured Job Post
         $total_featured_jobs = $this->EmployerModel->count_posted_jobs($pkg_id, 1, $pkg['payment_id']);
         if ($total_featured_jobs >= $pkg['no_of_posts']) {
+            $this->EmployerModel->set_expired(session('employer_id'),$pkg_id);
             $this->session->setFlashdata('error', 'Package Expired');
             return redirect()->to(base_url('employer/packages'));
         }

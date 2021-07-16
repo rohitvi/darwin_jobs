@@ -1,7 +1,6 @@
 <?php $ap = basename($_SERVER['PHP_SELF'], ".php"); ?>
 
 <div class="sidebar">
-
           <ul class="user_navigation">
             <li class="<?= ($ap === 'dashboard') ? 'is-active' : '' ?>">
               <a href="<?= base_url('employer') ?>">
@@ -28,7 +27,6 @@
               <li class="<?= ($ap === 'list_jobs') ? 'is-active' : '' ?>">
                 <a href="<?= base_url('employer/list_jobs') ?>"><i class="far fa-list-alt"></i> My job listings</a>
               </li>
-              
               
           </ul>
           <h5>Account</h5>
