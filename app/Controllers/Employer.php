@@ -42,13 +42,17 @@ class Employer extends BaseController
         }elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
+        
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
         $data['current_package'] = $this->EmployerModel->get_active_package($id);
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
         $data['title'] = 'Employer Dashboard';
-        //pre($data['current_package']);
+        $data['result'] = $this->EmployerModel->set_expired_time($id,$data['current_package']['package_id']);
+        if($data['result'] == 1 ){
+            $this->session->setFlashdata('error', 'Time Expired');
+        }
         return view('employer/dashboard', $data);
     }
 
