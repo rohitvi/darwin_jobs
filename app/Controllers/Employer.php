@@ -361,14 +361,14 @@ class Employer extends BaseController
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->mypackages($id);
-        $get['title'] = 'My Packages';
+        $get['title'] = 'My Packages List';
         return view('employer/packages/my_packages', $get);
     }
 
     public function my_package_details($package_id)
     {
         $get['data'] = $this->EmployerModel->mypackagedetails($package_id);
-        $get['title'] = 'My Packages';
+        $get['title'] = 'Packages Details';
         return view('employer/packages/my_package_details', $get);
     }
 
