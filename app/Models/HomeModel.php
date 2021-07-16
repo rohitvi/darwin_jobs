@@ -275,17 +275,14 @@ class HomeModel extends Model
         $builder = $this->db->table('companies');
         $builder->select('id, company_name, company_slug, company_logo');
         $builder->like('company_name', $letter, 'after');
-        $builder->groupBy('companies.company_slug');
+        $builder->groupBy('companies.company_name');
         return $builder->get()->getResultArray();
     }
 
     // Get company detail
     public function get_company_detail($id)
     {
-        $builder = $this->db->table('companies');
-        $builder->Where(array('id' => $id));
-        $data = $builder->get()->getResultArray();
-        return $data[0];
+        return $this->db->table('companies')->where('id',$id)->get()->getResultArray();
     }
 
     //----------------------------------------------------
