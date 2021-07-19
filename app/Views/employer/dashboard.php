@@ -45,7 +45,7 @@
                       <div class="col-md-4 mt-4">
                         <div class="dashboard_box ">
                           <i class="fas fa-list"></i>
-                          <h2>Active Package<span><?= $current_package['title'] ?></span> </h2>
+                          <h2><?php if($current_package['is_active'] == 1){ echo 'Active Package';} else{ echo 'Package Expired';}  ?><span><?= $current_package['title'] ?></span> </h2>
                           <p>Total No. of Posts (<?= $current_package['no_of_posts'] ?>)</p>
                         </div>
                       </div> 
