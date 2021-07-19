@@ -104,12 +104,12 @@
       method: 'POST',
       data: data,
       success: function(responses) {
-        $("#save").toggleClass("fas far");
         var response = responses.split('~');
         if ($.trim(response[0]) == 0) {
           toastr.error(response[1]);
         }
         if ($.trim(response[0]) == 1) {
+          $("#save").toggleClass("fas far");
           toastr.success(response[1]);
         }
       }
