@@ -115,11 +115,12 @@
         <div class=" job_main_right">
           <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
             <div class="fild-wrap fw-job-title">
-              <input class="form-control" value="<?= isset($_GET['title']) ? $_GET['title'] : '' ?>" type="text" name="job_title" placeholder="Job Title" required>
+              <input class="form-control" value="<?= isset($_GET['title']) ? $_GET['title'] : '' ?>" type="text" name="job_title" placeholder="Job Title">
             </div>
             <div class="fild-wrap fw-job-location">
               <i class="fas fa-map-marker-alt"></i>
               <select class="js-example-basic-single" name="city">
+                <option value=''>Select City</option>
                 <?php foreach ($cities as $key => $city) : ?>
                   <option value="<?= $city['id'] ?>" <?= (isset($_GET['city']) && $_GET['city'] == $city['id']) ? 'selected' : '' ?>><?= $city['name'] ?></option>
                 <?php endforeach; ?>
