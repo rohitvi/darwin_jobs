@@ -51,7 +51,7 @@ class Employer extends BaseController
         $data['title'] = 'Employer Dashboard';
         $data['result'] = $this->EmployerModel->set_expired_time($id,$data['current_package']['package_id']);
         if($data['result'] == 1 ){
-            $this->session->setFlashdata('error', 'Time Expired');
+            $this->session->setFlashdata('error', 'Package Days Expired');
         }
         return view('employer/dashboard', $data);
     }
