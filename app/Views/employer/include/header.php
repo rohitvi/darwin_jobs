@@ -56,17 +56,14 @@
                                     <li class="current_page"><a href="<?= base_url('employer') ?>"> HOME </a></li>
 									<li><a href="#">ABOUT US</a> </li>
                                     <li><a href="<?= base_url('employer/post') ?>"> POST A JOBS </a></li>
-                                    <?php else : ?>
+                                    <?php endif; ?>
+                                    <?php if (session('employer_logged_in')) : ?>
                                     <li><a href="<?= base_url('employer/dashboard') ?>"> Dashboard </a></li>
                                     <li><a href="<?= base_url('employer/list_jobs') ?>"> Manage Jobs</a></li>
                                     <li><a href="<?= base_url('employer/search') ?>"> Find Candidate</a></li>
 									
                                     <li class="has-sub-menu login_pop after_login">
-                                        <button class="btn btn-primary withdp">
-                                            <a style="color:#fff;" href="#">
-                                            <?= session('employer_username'); ?>&nbsp;
-                                            <i class="fas fa-caret-down"></i>
-                                        </button>
+                                        <button class="btn btn-primary withdp"><a style="color:#fff;" href="#"><img class="" src="<?= get_employer_profile(session('employer_id')) != '' ? get_employer_profile(session('employer_id')) : base_url('public/users/images/user.png') ?>"><?= session('employer_username'); ?>&nbsp;<i class="fas fa-caret-down"></i></a></button>
                                         <ul class="sub-menu">
                                             <li><a href="<?= base_url('employer/profile'); ?>">My Profile</a></li>
                                             <li><a href="<?= base_url('employer/logout') ?>">Logout</a></li>

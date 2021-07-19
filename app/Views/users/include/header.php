@@ -23,10 +23,15 @@
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
-  <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/jquery-ui.css"><!--for datepicker file require -->
 </head>
+<div id="loader-wrapper">
+			<div id="loader"></div>
 
-<body>
+			<div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+
+		</div>
+<body style="overflow-x:hidden;">
 
   <!-- Header 01
 ================================================== -->
@@ -49,10 +54,13 @@
                 </div>
                 <ul>
                   <li class="current_page">
-                    <a href="<?= base_url() ?>">Home</a>
+                    <a href="<?= base_url() ?>">HOME</a>
+                  </li>
+				  <li>
+                    <a href="#">ABOUT US</a>
                   </li>
                   <li class="has-sub-menu">
-                    <a href="#">Jobs</a>
+                    <a href="#">JOBS</a>
                     <ul class="sub-menu">
                       <li><a href="<?= base_url('home/search') ?>">Search Job</a></li>
                       <li><a href="<?= base_url('home/jobs_by_category') ?>">Job By Category</a></li>
@@ -61,10 +69,11 @@
                       <li><a href="<?= base_url('home/search') ?>">Browse All Jobs</a></li>
                     </ul>
                   </li>
-                  <li class=""><a href="<?= base_url('home/companies'); ?>"><?= 'Companies' ?></a></li>
+                  <li class=""><a href="<?= base_url('home/companies'); ?>"><?= 'COMPANIES' ?></a></li>
                   <?php if (session('user_logged_in')) : ?>
-                    <li class="has-sub-menu">
-                      <a href="#"><?= session('username'); ?></a>
+                    <li class="has-sub-menu login_pop login_fixed after_login">
+					   
+                      <button class="btn btn-primary resp_change withdp"><a style="color:#fff;" href="#"><img class="" src="<?= get_user_profile(session('user_id')) != '' ? get_user_profile(session('user_id')) : base_url('public/users/images/user.png')?>"><?= session('username'); ?>&nbsp;<i class="fas fa-caret-down"></i></a></button>
                       <ul class="sub-menu">
                         <li><a href="<?= base_url('home/profile'); ?>">My Profile</a></li>
                         <li><a href="<?= base_url('home/applied_jobs'); ?>">My Applications</a></li>
@@ -76,21 +85,30 @@
                     </li>
                   <?php endif; ?>
                 </ul>
+				
               </nav>
-              <div class="ac_nav">
-                <!--Not logedin-->
-                <?php if (session('user_logged_in')) : ?>
-                <?php else : ?>
-                  <div class="dropdown login_pop">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="<?= base_url('login'); ?>">Job Seeker Login</a>
-                      <a class="dropdown-item" href="<?= base_url('employer/login'); ?>">Employer Login</a>
-                    </div>
-                  </div>
-                <?php endif; ?>
-                <!--end logedin-->
-              </div>
+			  <div class="ac_nav">
+				<!--Not logedin-->
+				<?php if (session('user_logged_in')) : ?>
+				<?php else : ?>
+					<div class="login_pop">
+						<button class="btn btn-primary">Login<i class="fas fa-caret-down ml_5"></i></button>
+						<div class="login_pop_box">
+							<span class="twobtn_cont">
+								<a class=" signjs_btn" href="<?= base_url('login'); ?>">				 
+								<span>Job seekers</span> Sign up
+								<i class="far fa-user"></i>
+								</a>
+							<a class=" signrs_btn" href="<?= base_url('employer/login'); ?>">	<span>EMPLOYERS</span> Sign up
+								<i class="fas fa-landmark"></i>
+							</a>
+							</span>
+
+						</div>
+					</div>
+					<?php endif; ?>
+				<!--end logedin-->
+			</div>
             </div>
           </div>
         </div>
