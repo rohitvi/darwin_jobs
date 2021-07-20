@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
-                                    <button type="button" class="btn btn-third btn-block" id="paynow">BUY NOW</button>
+                                    <button type="button" class="btn btn-third btn-block" <?= $data[0]['price'] == 0 ? 'disabled' : '' ?> id="paynow"><?= $data[0]['price'] == 0 ? 'FREE' : 'BUY NOW' ?></button>
                                 </div>
                             </div>
                         </div>

@@ -20,7 +20,7 @@ class EmployerModel extends Model
 
     public function getpackages()
     {
-        return $this->db->table('packages')->get()->getResultArray();
+        return $this->db->table('packages')->where('is_active',1)->get()->getResultArray();
     }
 
     public function package_confirmation($id)
