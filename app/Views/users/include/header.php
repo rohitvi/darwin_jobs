@@ -59,7 +59,7 @@
                   <li class="<?= (uri_string(true) == "home/aboutus") ? "current_page" : '' ?>">
                     <a href="<?= base_url('home/aboutus') ?>">ABOUT US</a>
                   </li>
-                  <li class="has-sub-menu">
+                  <li class="has-sub-menu <?= (uri_string(true) == "home/search" || uri_string(true) == "home/jobs_by_category" || uri_string(true) == "home/jobs_by_industry" || uri_string(true) == "home/jobs_by_location") ? "current_page" : '' ?>">
                     <a href="#">JOBS</a>
                     <ul class="sub-menu">
                       <li class="<?= (uri_string(true) == "home/search") ? "current_page" : '' ?>"><a href="<?= base_url('home/search') ?>">Search Job</a></li>
