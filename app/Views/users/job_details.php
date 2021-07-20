@@ -22,12 +22,16 @@
             <?= time_ago($data['created_date']) ?>
           </li>
           <li>
+            <i class="far fa-envelope-open"></i>
+            Openings  : <?= $data['total_positions'] ?>
+          </li>
+          <li>
             <i class="far fa-user"></i>
             Job Applicants : <?= (empty($no_of_count[0]['job_applicants'])) ? '0' : $no_of_count[0]['job_applicants'] ?>
           </li>
         </ul>
 
-          <?php  $skills = explode("," , $data['skills']);?>
+            <?php  $skills = explode("," , $data['skills']);?>
               <ul class="tags mt-3">
 							<?php foreach($skills as $skill): ?>
 							<li style="background-color:rgb(104 82 136)" >
