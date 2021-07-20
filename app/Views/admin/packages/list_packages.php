@@ -42,7 +42,7 @@
                     <th>No. of Posts</th>
                     <th>Package For</th>
                     <th>Status</th>
-                    <th style="width: 150px;" class="text-right">Action</th>
+                    <th style="width: 150px;" class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -53,9 +53,9 @@
                       <td><?= $package['price']; ?></td>
                       <td><?= $package['no_of_days']; ?></td>
                       <td><?= $package['no_of_posts']; ?></td>
-                      <td><?= ($package['package_for'] == 0) ? '<span class="btn btn-primary btn-xs">JobSeeker</span>' : '<span class="btn btn-primary btn-xs">Employer</span>' ?></td>
-                      <td><?= ($package['is_active'] == 1) ? '<span class="btn btn-success btn-xs">Active</span>' : '<span class="btn btn-warning btn-xs">Inactive'; ?></td>
-                      <td class="text-right"><a class="btn btn-info btn-xs" href="<?= base_url('admin/edit_packages/' . $package['id']); ?>">Edit</a></td>
+                      <td><?= ($package['package_for'] == 0) ? '<span class="btn btn-primary btn-xs">JobSeeker</span>' : '<span class="btn btn-info btn-xs">Employer</span>' ?></td>
+                      <td><?= ($package['is_active'] == 1) ? '<span class="btn btn-success btn-xs">Active</span>' : '<span class="btn btn-danger btn-xs">Inactive'; ?></td>
+                      <td class="text-center"><a class="btn-sm btn-primary" href="<?= base_url('admin/edit_packages/' . $package['id']); ?>"><i class="nav-icon fas fa-edit"></i> Edit</a></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
