@@ -114,8 +114,8 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Salary *</label>
-                <input type="number" name="min_salary" class="form-control" placeholder="Minimum Salary" value="<?= set_value('min_salary',$data[0]['min_salary']) ?>" >
-                <input type="number" name="max_salary" class="form-control" placeholder="Maximum Salary" value="<?= set_value('max_salary',$data[0]['max_salary']) ?>" >
+                <input type="number" name="min_salary" class="form-control" placeholder="Minimum Salary" value="<?= set_value('min_salary',$data[0]['min_salary']) ?>" required>
+                <input type="number" name="max_salary" class="form-control" placeholder="Maximum Salary" value="<?= set_value('max_salary',$data[0]['max_salary']) ?>" required>
               </div>
             </div>
             <div class="col-md-6">
