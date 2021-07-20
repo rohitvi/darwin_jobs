@@ -96,10 +96,10 @@
             <div class="login_pop_box">
               <span class="twobtn_cont">
                 <a class=" signjs_btn" href="<?= base_url('login'); ?>">         
-                <span>Job seekers</span> Sign up
+                <span>Job seekers</span> Sign in
                 <i class="far fa-user"></i>
                 </a>
-              <a class=" signrs_btn" href="<?= base_url('employer/login'); ?>"> <span>EMPLOYERS</span> Sign up
+              <a class=" signrs_btn" href="<?= base_url('employer/login'); ?>"> <span>EMPLOYERS</span> Sign in
                 <i class="fas fa-landmark"></i>
               </a>
               </span>
