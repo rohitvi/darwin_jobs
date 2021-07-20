@@ -1256,7 +1256,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
-                $skills = $this->request->getPost('skills');
+                $skills = ucwords($this->request->getPost('skills'));
                 $skill = str_replace(" ", ",",$skills);
                 $data = array(
                     'admin_id' => $admin_id,
@@ -1335,7 +1335,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
-                $skills = $this->request->getPost('skills');
+                $skills = ucwords($this->request->getPost('skills'));
                 $skill = str_replace(" ", ",",$skills);
                 $data = array(
                     'title' => ucwords($this->request->getPost('job_title')),

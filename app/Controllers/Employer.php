@@ -652,7 +652,7 @@ class Employer extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/post'));
             }
-            $skills = $this->request->getPost('skills');
+            $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",",$skills);
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
@@ -670,7 +670,7 @@ class Employer extends BaseController
                 'experience' => $this->request->getPost('min_experience') . '-' . $this->request->getPost('max_experience'),
                 'gender' => $this->request->getPost('gender'),
                 'total_positions' => $this->request->getPost('total_positions'),
-                'skills' => $skill,
+                'skills' => ucwords($skill),
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
@@ -804,7 +804,7 @@ class Employer extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/edit_job/'.$id));
             }
-            $skills = $this->request->getPost('skills');
+            $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",",$skills);
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),

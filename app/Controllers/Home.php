@@ -479,7 +479,7 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
-            $skills = $this->request->getPost('skills');
+            $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",", $skills);
             $update_user_info = array(
                 'firstname' => ucwords($this->request->getPost('firstname')),
@@ -1137,7 +1137,7 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/setup/profile'));
                 }
             }
-            $skills = $this->request->getPost('skills');
+            $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",", $skills);
             $update_user_info = array(
                 'firstname' => ucwords($this->request->getPost('firstname')),
