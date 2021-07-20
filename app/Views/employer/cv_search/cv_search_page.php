@@ -40,8 +40,8 @@
               <div class="jm_headings">
                 <h5>Search Candidates</h5>
               </div>
-              <?php if (isset($_POST['search']) && empty($profiles)) : ?>
-                <p class="alert alert-danger">Sorry, we could not find any profile for the keywords that you entered</p>
+              <?php if (empty($profiles)) : ?>
+                <p class="alert alert-danger">Sorry, we could not find any profile for the keywords that you entered.</p>
               <?php endif; ?>
               <form action='search' method='post'>
                 <div class="big_form_group">

@@ -12,10 +12,10 @@
 								</div>
 							</form>
 						</div>
+						
 				 	
 
 				<?php $footer =  get_footer_settings(); ?>
-
 				<?php foreach($footer as $col):  ?>
 					<div class="col-md-<?= $col['grid_column'] ?>">
 						<div class="footer_widget_box text-center">

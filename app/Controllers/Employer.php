@@ -902,7 +902,6 @@ class Employer extends BaseController
                 exit;
             }
 
-            // search job title, keyword
             if (!empty($this->request->getPost('job_title'))) {
                 $search['job_title'] = $this->request->getPost('job_title');
             }
@@ -944,6 +943,7 @@ class Employer extends BaseController
         $get['pager'] = $Users->pager;
 
         $get['title'] = 'Find Candidates';
+        //pre($get['pager']); 
         return view('employer/cv_search/cv_search_page', $get);
     }
 
