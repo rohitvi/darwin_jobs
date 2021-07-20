@@ -224,8 +224,8 @@ class Home extends BaseController
                 exit;
             }
             $data = [
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'is_verify' => 0,
@@ -465,7 +465,6 @@ class Home extends BaseController
                 'state'             => ['label' => 'State', 'rules' => 'required'],
                 'city'              => ['label' => 'City', 'rules' => 'required'],
                 'address'           => ['label' => 'Address', 'rules' => 'required'],
-                // 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -480,19 +479,19 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/profile'));
                 }
             }
-            $skills = $this->request->getPost('skills');
+            $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",", $skills);
             $update_user_info = array(
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'dob' => $this->request->getPost('dob'),
                 'age' => $this->request->getPost('age'),
-                'category' => $this->request->getPost('category'),
-                'job_title' => $this->request->getPost('job_title'),
+                'category' => ucwords($this->request->getPost('category')),
+                'job_title' => ucwords($this->request->getPost('job_title')),
                 'experience' => $this->request->getPost('experience'),
-                'skills' => $skill,
+                'skills' => ucwords($skill),
                 'current_salary' => $this->request->getPost('current_salary'),
                 'expected_salary' => $this->request->getPost('expected_salary'),
                 'country' => $this->request->getPost('country'),
@@ -537,7 +536,6 @@ class Home extends BaseController
         $get['data'] = $this->HomeModel->jobdetails($id);
         $get['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
         $get['no_of_count'] = $this->HomeModel->no_of_count($id);
-        //pre($get['no_of_count']);
         return view('users/job_details', $get);
     }
 
@@ -563,15 +561,15 @@ class Home extends BaseController
             $id = session('user_id');
             $data = [
                 'user_id' => $id,
-                'job_title' => $this->request->getPost('job_title'),
-                'company' => $this->request->getPost('company'),
+                'job_title' => ucwords($this->request->getPost('job_title')),
+                'company' => ucwords($this->request->getPost('company')),
                 'country' => $this->request->getPost('country'),
                 'starting_month' => $this->request->getPost('starting_month'),
                 'starting_year' => $this->request->getPost('starting_year'),
                 'ending_month' => $this->request->getPost('ending_month'),
                 'ending_year' => $this->request->getPost('ending_year'),
                 'currently_working_here' => $this->request->getPost('currently_working_here'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $query = $this->HomeModel->insert_user_experience($data, $id);
@@ -620,7 +618,7 @@ class Home extends BaseController
                 'seeker_id' => session('user_id'),
                 'employer_id' => $this->request->getPost('employer_id'),
                 'job_id' => $this->request->getPost('job_id'),
-                'cover_letter' => $this->request->getPost('cover_letter'),
+                'cover_letter' => ucwords($this->request->getPost('cover_letter')),
                 'applied_date' => date('Y-m-d : h:m:s')
             ];
             $result = $this->HomeModel->apply_job($data);
@@ -729,14 +727,14 @@ class Home extends BaseController
             $user_id = session('user_id');
             $data = [
                 'user_id' => $user_id,
-                'job_title' => $this->request->getPost('job_title'),
-                'company' => $this->request->getPost('company'),
+                'job_title' => ucwords($this->request->getPost('job_title')),
+                'company' => ucwords($this->request->getPost('company')),
                 'country' => $this->request->getPost('country'),
                 'starting_month' => $this->request->getPost('starting_month'),
                 'starting_year' => $this->request->getPost('starting_year'),
                 'ending_month' => $this->request->getPost('ending_month'),
                 'ending_year' => $this->request->getPost('ending_year'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $id = $this->request->getPost('exp_id');
@@ -927,9 +925,9 @@ class Home extends BaseController
             $data = [
                 'user_id' => $user_id,
                 'degree' => $this->request->getPost('level'),
-                'degree_title' => $this->request->getPost('title'),
-                'major_subjects' => $this->request->getPost('majors'),
-                'institution' => $this->request->getPost('institution'),
+                'degree_title' => ucwords($this->request->getPost('title')),
+                'major_subjects' => ucwords($this->request->getPost('majors')),
+                'institution' => ucwords($this->request->getPost('institution')),
                 'country' => $this->request->getPost('country'),
                 'completion_year' => $this->request->getPost('year'),
                 'updated_date' => date('Y-m-d')
@@ -992,9 +990,9 @@ class Home extends BaseController
             $data = [
                 'user_id' => $user_id,
                 'degree' => $this->request->getPost('level'),
-                'degree_title' => $this->request->getPost('title'),
-                'major_subjects' => $this->request->getPost('majors'),
-                'institution' => $this->request->getPost('institution'),
+                'degree_title' => ucwords($this->request->getPost('title')),
+                'major_subjects' => ucwords($this->request->getPost('majors')),
+                'institution' => ucwords($this->request->getPost('institution')),
                 'country' => $this->request->getPost('country'),
                 'completion_year' => $this->request->getPost('year'),
                 'updated_date' => date('Y-m-d')
@@ -1139,17 +1137,17 @@ class Home extends BaseController
                     return redirect()->to(base_url('home/setup/profile'));
                 }
             }
-            $skills = $this->request->getPost('skills');
+            $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",", $skills);
             $update_user_info = array(
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'dob' => $this->request->getPost('dob'),
                 'age' => $this->request->getPost('age'),
                 'category' => $this->request->getPost('category'),
-                'job_title' => $this->request->getPost('job_title'),
+                'job_title' => ucwords($this->request->getPost('job_title')),
                 'experience' => $this->request->getPost('experience'),
                 'skills' => $skill,
                 'current_salary' => $this->request->getPost('current_salary'),
@@ -1157,7 +1155,7 @@ class Home extends BaseController
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
-                'address' => $this->request->getPost('address'),
+                'address' => ucwords($this->request->getPost('address')),
                 'profile_completed' => 1,
             );
             if ($_FILES['profile_picture']['name'] != '') {
@@ -1201,15 +1199,15 @@ class Home extends BaseController
             $id = session('user_id');
             $data = [
                 'user_id' => $id,
-                'job_title' => $this->request->getPost('job_title'),
-                'company' => $this->request->getPost('company'),
+                'job_title' => ucwords($this->request->getPost('job_title')),
+                'company' => ucwords($this->request->getPost('company')),
                 'country' => $this->request->getPost('country'),
                 'starting_month' => $this->request->getPost('starting_month'),
                 'starting_year' => $this->request->getPost('starting_year'),
                 'ending_month' => $this->request->getPost('ending_month'),
                 'ending_year' => $this->request->getPost('ending_year'),
                 'currently_working_here' => $this->request->getPost('currently_working_here'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $query = $this->HomeModel->insert_setup_experience($data, $id);
@@ -1248,9 +1246,9 @@ class Home extends BaseController
             $data = [
                 'user_id' => $user_id,
                 'degree' => $this->request->getPost('level'),
-                'degree_title' => $this->request->getPost('title'),
-                'major_subjects' => $this->request->getPost('majors'),
-                'institution' => $this->request->getPost('institution'),
+                'degree_title' => ucwords($this->request->getPost('title')),
+                'major_subjects' => ucwords($this->request->getPost('majors')),
+                'institution' => ucwords($this->request->getPost('institution')),
                 'country' => $this->request->getPost('country'),
                 'completion_year' => $this->request->getPost('year'),
                 'updated_date' => date('Y-m-d')
@@ -1356,11 +1354,11 @@ class Home extends BaseController
                 return redirect()->to(base_url('home/contactus'));
             } else {
                 $data =[
-                        'username'      => $this->request->getPost('name'),
+                        'username'      => ucwords($this->request->getPost('name')),
                         'email'         => $this->request->getPost('email'),
                         'user_type'     => $this->request->getPost('user_type'),
-                        'subject'       => $this->request->getPost('subject'),
-                        'message'       => $this->request->getPost('message'),
+                        'subject'       => ucwords($this->request->getPost('subject')),
+                        'message'       => ucwords($this->request->getPost('message')),
                         'created_date'  => date('Y-m-d : h:m:s'),
                         'updated_date'  => date('Y-m-d : h:m:s')
                         ];
