@@ -18,16 +18,16 @@
             <?= get_state_name($data['state']) ?>, <?= get_city_name($data['city']) ?>
           </li>
           <li>
-            <i class="far fa-clock"></i>
-            <?= time_ago($data['created_date']) ?>
-          </li>
-          <li>
             <i class="far fa-envelope-open"></i>
             Openings  : <?= $data['total_positions'] ?>
           </li>
           <li>
             <i class="far fa-user"></i>
             Job Applicants : <?= (empty($no_of_count[0]['job_applicants'])) ? '0' : $no_of_count[0]['job_applicants'] ?>
+          </li>
+          <li>
+            <i class="far fa-clock"></i>
+            <?= time_ago($data['created_date']) ?>
           </li>
         </ul>
 
@@ -86,6 +86,11 @@
                   <p><?= get_job_type_name($data['job_type']) ?></p>
                 </li>
                 <li>
+                  <i class="fas fa-briefcase"></i>
+                  <h6>Experience</h6>
+                  <p><?= $data['experience'] ?> years</p>
+                </li>
+                <li>
                   <i class="fas fa-money-bill-alt"></i>
                   <h6>Salary</h6>
                   <p>₹<?= $data['min_salary'] ?> - ₹<?= $data['max_salary'] ?></p>
@@ -94,6 +99,21 @@
                   <i class="far fa-clock"></i>
                   <h6>Date Posted</h6>
                   <p><?= time_ago($data['created_date']) ?></p>
+                </li>
+                <li>
+                  <i class="fas fa-industry"></i>
+                  <h6>Industry Type</h6>
+                  <p><?= get_industry_name($data['industry']) ?></p>
+                </li>
+                <li>
+                  <i class="fas fa-industry"></i>
+                  <h6>Role Category</h6>
+                  <p><?= get_category_name($data['category']) ?></p>
+                </li>
+                <li>
+                  <i class="fas fa-briefcase"></i>
+                  <h6>Education</h6>
+                  <p><?= get_education($data['education']) ?></p>
                 </li>
               </ul>
             </div>

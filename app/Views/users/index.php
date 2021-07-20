@@ -180,9 +180,16 @@
 						</div>
 						<div class="fb_action">
 							<a class="btn btn-third" type="button" href="<?= base_url('home/jobdetails/' . $post['id']) ?>">Details</a>
-							<ul class="tags">
-								<li>Job Applicants : <?= get_no_of_applied_jobs($post['id']) ?></li>
-							</ul>
+							<?php  
+							$skills = explode("," , $post['skills']);
+							?>
+              					<ul class="tags">
+									<?php $i= 1; foreach($skills as $skill){ if($i <= 3){ ?>
+									<li>
+                					<a> <i class="fas fa-hashtag"></i>  <?= $skill; ?></a>
+									</li>
+									<?php } $i++; } ?>
+								</ul>
 						</div>
 					</div>
 				</div>
