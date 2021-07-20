@@ -163,10 +163,10 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $data = [
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
-                'username' => $this->request->getPost('username'),
+                'username' => ucwords($this->request->getPost('username')),
                 'mobile_no' => $this->request->getPost('mobileno'),
             ];
             $id = session('admin_id');
@@ -201,9 +201,9 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/registeradmin'));
             }
             $data = [
-                'username' => $this->request->getPost('username'),
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'username' => ucwords($this->request->getPost('username')),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
@@ -311,9 +311,9 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/editadmin'));
             }
             $data = [
-                'username' => $this->request->getPost('username'),
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'username' => ucwords($this->request->getPost('username')),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
             ];
@@ -357,7 +357,7 @@ class Admin extends BaseController
             }
 
                 $addcategorydata = [
-                    'name' => $this->request->getPost('category'),
+                    'name' => ucwords($this->request->getPost('category')),
                     'slug' => $this->request->getPost('category'),
                     'iconfield' => $this->request->getPost('iconfield'),
                 ];
@@ -394,7 +394,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/edit_category/'.$id));
             }
                 $editcategory = [
-                    'name' => $this->request->getPost('category'),
+                    'name' => ucwords($this->request->getPost('category')),
                     'slug' => $this->request->getPost('category'),
                     'iconfield' => $this->request->getPost('iconfield'),
                     'status' => $this->request->getPost('status'),
@@ -442,7 +442,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/add_industry'));
             }
                 $addindustrydata = [
-                    'name' => $this->request->getPost('industry'),
+                    'name' => ucwords($this->request->getPost('industry')),
                     'slug' => $this->request->getPost('industry')
                 ];
                 $addindustry = $this->adminModel->add_industry($addindustrydata);
@@ -473,7 +473,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/add_industry'));
             }
                 $editindustry = [
-                    'name' => $this->request->getPost('industry'),
+                    'name' => ucwords($this->request->getPost('industry')),
                     'slug' => $this->request->getPost('industry')
                 ];
                 $editindustrydata = $this->adminModel->edit_industry($editindustry, $id);
@@ -521,7 +521,7 @@ class Admin extends BaseController
             ]);
             if ($input == true) {
                 $addpackage = [
-                    'title' => $this->request->getPost('title'),
+                    'title' => ucwords($this->request->getPost('title')),
                     'slug' => $this->request->getPost('title'),
                     'price' => $this->request->getPost('price'),
                     'detail' => $this->request->getPost('detail'),
@@ -628,7 +628,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/job_type'));
             }
-            $data = ['type' => $this->request->getPost('type')];
+            $data = ['type' => ucwords($this->request->getPost('type'))];
             $query = $this->adminModel->addjob($data);
             if ($query->resultID == 1) {
                 $this->session->setFlashdata('success', 'Job successfully added');
@@ -661,7 +661,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/editjob'));
             }
-            $data = ['type' => $this->request->getPost('type')];
+            $data = ['type' => ucwords($this->request->getPost('type'))];
             $query = $this->adminModel->updatejob($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Job successfully updated');
@@ -704,7 +704,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/addeducation'));
             }
-            $data = ['type' => $this->request->getPost('type')];
+            $data = ['type' => ucwords($this->request->getPost('type'))];
             $query = $this->adminModel->addeducation($data);
             if ($query->resultID == 1) {
                 $this->session->setFlashdata('success', 'Education successfully added');
@@ -737,7 +737,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/editeducation'));
             }
-            $data = ['type' => $this->request->getPost('type')];
+            $data = ['type' => ucwords($this->request->getPost('type'))];
             $query = $this->adminModel->updateeducation($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Education successfully updated');
@@ -780,7 +780,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/employment'));
             }
-            $data = ['type' => $this->request->getPost('type')];
+            $data = ['type' => ucwords($this->request->getPost('type'))];
             $query = $this->adminModel->addemployment($data);
             if ($query->resultID == 1) {
                 $this->session->setFlashdata('success', 'Employment successfully added');
@@ -813,7 +813,7 @@ class Admin extends BaseController
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/editemployment'));
             }
-            $data = ['type' => $this->request->getPost('type')];
+            $data = ['type' => ucwords($this->request->getPost('type'))];
             $query = $this->adminModel->updateemployment($id, $data);
             if ($query == 1) {
                 $this->session->setFlashdata('success', 'Employment successfully updated');
@@ -883,13 +883,13 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/addemployers'));
             }
             $emp = [
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
             $cmpny = [
-                'company_name' => $this->request->getPost('company_name'),
+                'company_name' => ucwords($this->request->getPost('company_name')),
                 'category' => $this->request->getPost('category'),
                 'email' => $this->request->getPost('email'),
                 'org_type' => $this->request->getPost('org_type'),
@@ -897,10 +897,10 @@ class Admin extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'postcode' => $this->request->getPost('postcode'),
-                'address' => $this->request->getPost('address'),
+                'address' => ucwords($this->request->getPost('address')),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
             ];
             $cmpny['employer_id'] = $this->adminModel->insertemployer($emp);
             $result = $this->adminModel->insertcmpny($cmpny);
@@ -955,15 +955,15 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/addemployers'));
             }
             $data = [
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
-                'designation' => $this->request->getPost('designation'),
+                'designation' => ucwords($this->request->getPost('designation')),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
-                'address' => $this->request->getPost('address'),
+                'address' => ucwords($this->request->getPost('address')),
             ];
             $query = $this->adminModel->updateemployer($data, $id);
             if ($query == 1) {
@@ -1009,7 +1009,7 @@ class Admin extends BaseController
 
             $cmpny = [
                 'company_logo' => $url,
-                'company_name' => $this->request->getPost('company_name'),
+                'company_name' => ucwords($this->request->getPost('company_name')),
                 'company_email' => $this->request->getPost('company_email'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
@@ -1017,12 +1017,12 @@ class Admin extends BaseController
                 'founded_date' => $this->request->getPost('founded_date'),
                 'org_type' => $this->request->getPost('org_type'),
                 'no_of_employers' => $this->request->getPost('no_of_employers'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'postcode' => $this->request->getPost('postcode'),
-                'full_address' => $this->request->getPost('full_address'),
+                'full_address' => ucwords($this->request->getPost('full_address')),
                 'facebook_link' => $this->request->getPost('facebook_link'),
                 'twitter_link' => $this->request->getPost('twitter_link'),
                 'youtube_link' => $this->request->getPost('youtube_link'),
@@ -1059,12 +1059,12 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/adduser'));
             }
             $data = [
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                'address' => $this->request->getPost('address'),
+                'address' => ucwords($this->request->getPost('address')),
             ];
             $query = $this->adminModel->adduser($data);
             if ($query->resultID == 1) {
@@ -1102,8 +1102,8 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/edituser'));
             }
             $data = [
-                'firstname' => $this->request->getPost('firstname'),
-                'lastname' => $this->request->getPost('lastname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
                 'email' => $this->request->getPost('email'),
                 'mobile_no' => $this->request->getPost('mobile_no'),
                 'is_active' => $this->request->getPost('is_active'),
@@ -1262,7 +1262,7 @@ class Admin extends BaseController
                     'admin_id' => $admin_id,
                     'employer_id' => get_direct_value('companies', 'employer_id', 'id', $this->request->getPost('employer_id')),
                     'company_id' => $this->request->getPost('employer_id'),
-                    'title' => $this->request->getPost('job_title'),
+                    'title' => ucwords($this->request->getPost('job_title')),
                     'job_type' => $this->request->getPost('job_type'),
                     'category' => $this->request->getPost('category'),
                     'industry' => $this->request->getPost('industry'),
@@ -1270,7 +1270,7 @@ class Admin extends BaseController
                     'min_salary' => $this->request->getPost('min_salary'),
                     'max_salary' => $this->request->getPost('max_salary'),
                     'salary_period' => $this->request->getPost('salary_period'),
-                    'description' => $this->request->getPost('description'),
+                    'description' => ucfirst($this->request->getPost('description')),
                     'skills' => $skill,
                     'total_positions' => $this->request->getPost('total_positions'),
                     'gender' => $this->request->getPost('gender'),
@@ -1279,7 +1279,7 @@ class Admin extends BaseController
                     'country' => $this->request->getPost('country'),
                     'state' => $this->request->getPost('state'),
                     'city' => $this->request->getPost('city'),
-                    'location' => $this->request->getPost('location'),
+                    'location' => ucwords($this->request->getPost('location')),
                     'created_date' => date('Y-m-d : H:i:s'),
                     'updated_date' => date('Y-m-d : H:i:s'),
                 );
@@ -1338,7 +1338,7 @@ class Admin extends BaseController
                 $skills = $this->request->getPost('skills');
                 $skill = str_replace(" ", ",",$skills);
                 $data = array(
-                    'title' => $this->request->getPost('job_title'),
+                    'title' => ucwords($this->request->getPost('job_title')),
                     'job_type' => $this->request->getPost('job_type'),
                     'category' => $this->request->getPost('category'),
                     'industry' => $this->request->getPost('industry'),
@@ -1346,7 +1346,7 @@ class Admin extends BaseController
                     'min_salary' => $this->request->getPost('min_salary'),
                     'max_salary' => $this->request->getPost('max_salary'),
                     'salary_period' => $this->request->getPost('salary_period'),
-                    'description' => $this->request->getPost('description'),
+                    'description' => ucfirst($this->request->getPost('description')),
                     'skills' => $skill,
                     'total_positions' => $this->request->getPost('total_positions'),
                     'gender' => $this->request->getPost('gender'),
@@ -1355,7 +1355,7 @@ class Admin extends BaseController
                     'country' => $this->request->getPost('country'),
                     'state' => $this->request->getPost('state'),
                     'city' => $this->request->getPost('city'),
-                    'location' => $this->request->getPost('location'),
+                    'location' => ucwords($this->request->getPost('location')),
                     'updated_date' => date('Y-m-d : H:i:s'),
                 );
 

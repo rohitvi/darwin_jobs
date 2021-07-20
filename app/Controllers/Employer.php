@@ -130,15 +130,15 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/profile'));
             }
             $update_per_info = array(
-                    'firstname' => $this->request->getPost('firstname'),
-                    'lastname' => $this->request->getPost('lastname'),
+                    'firstname' => ucwords($this->request->getPost('firstname')),
+                    'lastname' => ucwords($this->request->getPost('lastname')),
                     'email' => $this->request->getPost('email'),
-                    'designation' => $this->request->getPost('designation'),
+                    'designation' => ucwords($this->request->getPost('designation')),
                     'mobile_no' => $this->request->getPost('mobile_no'),
                     'country' => $this->request->getPost('country'),
                     'state' => $this->request->getPost('state'),
                     'city' => $this->request->getPost('city'),
-                    'address' => $this->request->getPost('address'),
+                    'address' => ucwords($this->request->getPost('address')),
                     'profile_completed' => 1,
                 );
 
@@ -219,7 +219,6 @@ class Employer extends BaseController
         $get['countries'] = $this->adminModel->get_countries_list();
         $get['data'] = $this->EmployerAuthModel->personal_info($id);
         $get['title'] = 'Personal Info';
-        // pre( $get['data'] );
         return view('employer/auth/profile', $get);
     }
 
@@ -282,7 +281,7 @@ class Employer extends BaseController
             }
 
             $cmp_info_update = array(
-                'company_name' => $this->request->getPost('company_name'),
+                'company_name' => ucwords($this->request->getPost('company_name')),
                 'email' => $this->request->getPost('email'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
@@ -290,7 +289,7 @@ class Employer extends BaseController
                 'founded_date' => $this->request->getPost('founded_date'),
                 'org_type' => $this->request->getPost('org_type'),
                 'no_of_employers' => $this->request->getPost('no_of_employers'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucwords($this->request->getPost('description')),
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
@@ -392,7 +391,7 @@ class Employer extends BaseController
                 exit;
             }
             $user_details = [
-                'firstname' => $this->request->getPost('firstname'),
+                'firstname' => ucwords($this->request->getPost('firstname')),
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),'is_verify' => 0,
                 'is_verify' => 0,
@@ -401,7 +400,7 @@ class Employer extends BaseController
                 'updated_date' => date('Y-m-d : h:m:s')
             ];
             $cmpny = [
-                'company_name' => $this->request->getPost('company_name'),
+                'company_name' => ucwords($this->request->getPost('company_name')),
             ];
             $employer_id = $this->EmployerAuthModel->register($user_details);
             if($employer_id == 0){
@@ -658,12 +657,12 @@ class Employer extends BaseController
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
                 'company_id' => $this->request->getPost('company_id'),
-                'title' => $this->request->getPost('job_title'),
+                'title' => ucwords($this->request->getPost('job_title')),
                 'job_type' => $this->request->getPost('job_type'),
                 'category' => $this->request->getPost('category'),
                 'employment_type' => $this->request->getPost('employment_type'),
                 'industry' => $this->request->getPost('industry'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'salary_period' => $this->request->getPost('salary_period'),
                 'min_salary' => $this->request->getPost('min_salary'),
                 'max_salary' => $this->request->getPost('max_salary'),
@@ -675,7 +674,7 @@ class Employer extends BaseController
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
-                'location' => $this->request->getPost('location'),
+                'location' => ucwords($this->request->getPost('location')),
                 'is_featured' => $this->request->getPost('is_featured'),
                 'expiry_date' => $pkg['expire_date'],
                 'created_date' => date('Y-m-d : H:i:s'),
@@ -810,12 +809,12 @@ class Employer extends BaseController
             $data = array(
                 'employer_id' => $this->request->getPost('employer_id'),
                 'company_id' => $this->request->getPost('company_id'),
-                'title' => $this->request->getPost('job_title'),
+                'title' => ucwords($this->request->getPost('job_title')),
                 'job_type' => $this->request->getPost('job_type'),
                 'category' => $this->request->getPost('category'),
                 'employment_type' => $this->request->getPost('employment_type'),
                 'industry' => $this->request->getPost('industry'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'salary_period' => $this->request->getPost('salary_period'),
                 'min_salary' => $this->request->getPost('min_salary'),
                 'max_salary' => $this->request->getPost('max_salary'),
@@ -827,7 +826,7 @@ class Employer extends BaseController
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
-                'location' => $this->request->getPost('location'),
+                'location' => ucwords($this->request->getPost('location')),
                 'is_featured' => $this->request->getPost('is_featured'),
                 'is_status' => $this->request->getPost('is_status'),
                 'updated_date' => date('Y-m-d : H:i:s'),
@@ -1253,15 +1252,15 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/setup/profile'));
             }
             $update_per_info = array(
-                    'firstname' => $this->request->getPost('firstname'),
-                    'lastname' => $this->request->getPost('lastname'),
+                    'firstname' => ucwords($this->request->getPost('firstname')),
+                    'lastname' => ucwords($this->request->getPost('lastname')),
                     'email' => $this->request->getPost('email'),
-                    'designation' => $this->request->getPost('designation'),
+                    'designation' => ucwords($this->request->getPost('designation')),
                     'mobile_no' => $this->request->getPost('mobile_no'),
                     'country' => $this->request->getPost('country'),
                     'state' => $this->request->getPost('state'),
                     'city' => $this->request->getPost('city'),
-                    'address' => $this->request->getPost('address'),
+                    'address' => ucwords($this->request->getPost('address')),
                     'profile_completed' => 1,
                 );
 
@@ -1328,7 +1327,7 @@ class Employer extends BaseController
             }
 
             $cmp_info_update = array(
-                'company_name' => $this->request->getPost('company_name'),
+                'company_name' => ucwords($this->request->getPost('company_name')),
                 'email' => $this->request->getPost('email'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
@@ -1336,12 +1335,12 @@ class Employer extends BaseController
                 'founded_date' => $this->request->getPost('founded_date'),
                 'org_type' => $this->request->getPost('org_type'),
                 'no_of_employers' => $this->request->getPost('no_of_employers'),
-                'description' => $this->request->getPost('description'),
+                'description' => ucfirst($this->request->getPost('description')),
                 'country' => $this->request->getPost('country'),
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'postcode' => $this->request->getPost('postcode'),
-                'address' => $this->request->getPost('address'),
+                'address' => ucwords($this->request->getPost('address')),
                 'facebook_link' => $this->request->getPost('facebook_link'),
                 'twitter_link' => $this->request->getPost('twitter_link'),
                 'youtube_link' => $this->request->getPost('youtube_link'),

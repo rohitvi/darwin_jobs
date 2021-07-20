@@ -23,8 +23,16 @@
                 <?php foreach($data as $value) : ?>
                 <div class="staffBox">
                   <div class="staff_detail">
-                    <h3>Package Name: <?= $value['title']; ?></h3>
-                    <p><?= $value['detail']; ?></p>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <h3>Package Name: <?= $value['title']; ?></h3>
+                        <p><?= $value['detail']; ?></p>
+                      </div>
+                      <div class="col-lg-6 text-right">
+                        <p class="my-0">Purchased Date</p>
+                        <p><?= date_time($value['buy_date']) ?></p>
+                      </div>
+                    </div>
                     <ul>
                       <li>
                         <h6>Number of Posts</h6>
