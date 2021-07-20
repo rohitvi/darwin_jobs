@@ -34,7 +34,11 @@
                                             <li><i class="fas fa-check"></i>Fraud protection</li>
                                             <li><i class="fas fa-check"></i>Featured Listing</li>
                                         </ul>
+                                        <?php if($value['title'] =='Free') {?>
+                                        <a class="btn btn-third" type="button" href="#" <?= ($value['price'] == 0) ? 'disabled' : '' ?>>Free</a>
+                                        <?php } else{?>
                                         <a class="btn btn-third" type="button" href="<?= base_url('employer/package_confirmation/'.$value['id']) ?>" <?= ($value['price'] == 0) ? 'disabled' : '' ?>>Buy Now</a>
+                                        <?php }?>
                                     </div>
                                 </div>
                                 <?php endforeach; ?>
@@ -42,7 +46,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
