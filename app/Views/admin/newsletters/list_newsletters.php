@@ -45,8 +45,8 @@
                     <tr>
                       <td><input type="checkbox" class="subscriber-checkbox" value="<?= $row['id']; ?>"></td>
                       <td><?= $row['email']; ?></td>
-                      <td><?= $row['created_at']; ?></td>
-                      <td><a class="btn btn-danger btn-xs" onclick="return confirm('Are you Sure to Delete ?')" href="<?= base_url('admin/del_newsletters/' . $row['id']); ?>"><i class="fa fa-trash"></i> Delete</a></td>
+                      <td><?= date_time($row['created_at']); ?></td>
+                      <td><a class="btn-sm btn-danger" onclick="return confirm('Are you Sure to Delete ?')" href="<?= base_url('admin/del_newsletters/' . $row['id']); ?>"><i class="fa fa-trash"></i> Delete</a></td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
