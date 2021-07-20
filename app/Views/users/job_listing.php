@@ -112,7 +112,7 @@
             </li>
           </ul>
         </div>
-        <div class=" job_main_right">
+        <div class="job_main_right">
           <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
             <div class="fild-wrap fw-job-title">
               <input class="form-control" value="<?= isset($_GET['title']) ? $_GET['title'] : '' ?>" type="text" name="job_title" placeholder="Job Title">
