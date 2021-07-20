@@ -1371,4 +1371,9 @@ class Employer extends BaseController
         }
         return view('employer/auth/setup_company',$get);
     }
+    public function aboutus()
+    {
+        $data['title'] = 'About Us';
+        return view('employer/aboutus',$data);
+    }
 }

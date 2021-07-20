@@ -1,4 +1,3 @@
-<?php $ap = basename($_SERVER['PHP_SELF'], ".php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,13 +102,13 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Divider -->
             <li class="nav-item">
-              <a href="<?= base_url('admin/dashboard'); ?>" class="nav-link <?= ($ap === 'index' || $ap === 'dashboard') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/dashboard'); ?>" class="nav-link <?= (uri_string(true) == 'admin/dashboard') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Dashboard</p>
               </a>
             </li>
-            <li class="nav-item menu <?= ($ap === 'showadmin' || $ap === 'account' || $ap === 'changepassword' || $ap === 'registeradmin') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'showadmin' || $ap === 'account' || $ap === 'changepassword' || $ap === 'registeradmin') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) === 'admin/showadmin' || uri_string(true) === 'admin/account' || uri_string(true) === 'admin/changepassword' || uri_string(true) === 'admin/registeradmin') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) === 'admin/showadmin' || uri_string(true) === 'admin/account' || uri_string(true) === 'admin/changepassword' || uri_string(true) === 'admin/registeradmin') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa fa-user"></i>
                 <p>
                   Admin
@@ -118,33 +117,33 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/showadmin'); ?>" class="nav-link <?= ($ap === 'showadmin') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/showadmin'); ?>" class="nav-link <?= (uri_string(true) == 'admin/showadmin') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Show Admin</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/account'); ?>" class="nav-link <?= ($ap === 'account') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/account'); ?>" class="nav-link <?= (uri_string(true) == 'admin/account') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Account</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/changepassword'); ?>" class="nav-link <?= ($ap === 'changepassword') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/changepassword'); ?>" class="nav-link <?= (uri_string(true) == 'admin/changepassword') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Change Password</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/registeradmin'); ?>" class="nav-link <?= ($ap === 'registeradmin') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/registeradmin'); ?>" class="nav-link <?= (uri_string(true) == 'admin/registeradmin') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Register Admin</p>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="nav-item menu <?= ($ap === 'post' || $ap === 'list_job') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'post' || $ap === 'list_job') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) == 'admin/post' ||uri_string(true) == 'admin/list_job') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) == 'admin/post' || uri_string(true) == 'admin/list_job') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
                   Job Posting
@@ -153,13 +152,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_job'); ?>" class="nav-link <?= ($ap === 'list_job') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/list_job'); ?>" class="nav-link <?= (uri_string(true) == 'admin/list_job') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>View Jobs</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/post'); ?>" class="nav-link <?= ($ap === 'post') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/post'); ?>" class="nav-link <?= (uri_string(true) == 'admin/post') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Job</p>
                   </a>
@@ -167,8 +166,8 @@
               </ul>
             </li>
             <!-- separator -->
-            <li class="nav-item menu <?= ($ap === 'users' || $ap === 'adduser') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'users' || $ap === 'adduser') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) == 'admin/users' || uri_string(true) == 'admin/adduser') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) == 'admin/users' || uri_string(true) == 'admin/adduser') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa fa-user"></i>
                 <p>
                   Users
@@ -177,13 +176,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/users'); ?>" class="nav-link <?= ($ap === 'users') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/users'); ?>" class="nav-link <?= (uri_string(true) == 'admin/users') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>User List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/adduser'); ?>" class="nav-link <?= ($ap === 'adduser') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/adduser'); ?>" class="nav-link <?= (uri_string(true) == 'admin/adduser') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New User</p>
                   </a>
@@ -191,8 +190,8 @@
               </ul>
             </li>
 
-            <li class="nav-item menu <?= ($ap === 'list_category' || $ap === 'add_category') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'list_category' || $ap === 'add_category') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) == 'admin/list_category' || uri_string(true) == 'admin/add_category') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) == 'admin/list_category' || uri_string(true) == 'admin/add_category') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-bars"></i>
                 <p>
                   Category
@@ -201,21 +200,21 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_category'); ?>" class="nav-link <?= ($ap === 'list_category') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/list_category'); ?>" class="nav-link <?= (uri_string(true) == 'admin/list_category') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Category List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_category'); ?>" class="nav-link <?= ($ap === 'add_category') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/add_category'); ?>" class="nav-link <?= (uri_string(true) == 'admin/add_category') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Category</p>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="nav-item menu <?= ($ap === 'list_industry' || $ap === 'add_industry') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'list_industry' || $ap === 'add_industry') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) == 'admin/list_industry' || uri_string(true) == 'admin/add_industry') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) == 'admin/list_industry' || uri_string(true) == 'admin/add_industry') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-industry "></i>
                 <p>
                   Industry
@@ -224,21 +223,21 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link <?= ($ap === 'list_industry') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/list_industry'); ?>" class="nav-link <?= (uri_string(true) == 'admin/list_industry') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Industry List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_industry'); ?>" class="nav-link <?= ($ap === 'add_industry') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/add_industry'); ?>" class="nav-link <?= (uri_string(true) == 'admin/add_industry') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Industry</p>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="nav-item menu <?= ($ap === 'list_packages' || $ap === 'add_packages') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'list_packages' || $ap === 'add_packages') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) == 'admin/list_packages' || uri_string(true) == 'admin/add_packages') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) == 'admin/list_packages' || uri_string(true) == 'admin/add_packages') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-bars"></i>
                 <p>
                   Packages
@@ -247,13 +246,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link <?= ($ap === 'list_packages') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/list_packages'); ?>" class="nav-link <?= (uri_string(true) == 'admin/list_packages') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Packages List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/add_packages'); ?>" class="nav-link <?= ($ap === 'add_packages') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/add_packages'); ?>" class="nav-link <?= (uri_string(true) == 'admin/add_packages') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Packages</p>
                   </a>
@@ -262,22 +261,22 @@
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url('admin/list_newsletters'); ?>" class="nav-link <?= ($ap === 'list_newsletters') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/list_newsletters'); ?>" class="nav-link <?= (uri_string(true) == 'admin/list_newsletters') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-envelope"></i>
                 <p>Newsletters</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url('admin/list_contact'); ?>" class="nav-link <?= ($ap === 'list_contact') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/list_contact'); ?>" class="nav-link <?= (uri_string(true) == 'admin/list_contact') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-envelope"></i>
                 <p>Contact Queries</p>
               </a>
             </li>
 
             <!-- separator -->
-            <li class="nav-item menu <?= ($ap === 'employer' || $ap === 'addemployer') ? 'menu-open' : '' ?>">
-              <a href="#" class="nav-link <?= ($ap === 'employer' || $ap === 'addemployer') ? 'active' : '' ?>">
+            <li class="nav-item menu <?= (uri_string(true) == 'admin/employer' || uri_string(true) == 'admin/addemployer') ? 'menu-open' : '' ?>">
+              <a href="#" class="nav-link <?= (uri_string(true) == 'admin/employer' || uri_string(true) == 'admin/addemployer') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa fa-user-circle"></i>
                 <p>
                   Employers/Company
@@ -286,13 +285,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/employer'); ?>" class="nav-link <?= ($ap === 'employer') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/employer'); ?>" class="nav-link <?= (uri_string(true) == 'admin/employer') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Employers List</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?= base_url('admin/addemployer'); ?>" class="nav-link <?= ($ap === 'addemployer') ? 'active' : '' ?>">
+                  <a href="<?= base_url('admin/addemployer'); ?>" class="nav-link <?= (uri_string(true) == 'admin/addemployer') ? 'active' : '' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Employer</p>
                   </a>
@@ -301,14 +300,14 @@
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url('admin/payments'); ?>" class="nav-link <?= ($ap === 'payments') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/payments'); ?>" class="nav-link <?= (uri_string(true) == 'admin/payments') ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-book"></i>
                 <p>View Payments</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url('admin/job_type'); ?>" class="nav-link <?= ($ap === 'job_type') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/job_type'); ?>" class="nav-link <?= (uri_string(true) == 'admin/job_type') ? 'active' : '' ?>">
                 <i class="nav-icon far fa fa-industry"></i>
                 <p>
                   Job Type
@@ -316,7 +315,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('admin/education'); ?>" class="nav-link <?= ($ap === 'education') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/education'); ?>" class="nav-link <?= (uri_string(true) == 'admin/education') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-graduation-cap"></i>
                 <p>
                   Education
@@ -324,7 +323,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('admin/employment'); ?>" class="nav-link <?= ($ap === 'employment') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/employment'); ?>" class="nav-link <?= (uri_string(true) == 'admin/employment') ? 'active' : '' ?>">
                 <i class="nav-icon far fa fa-industry"></i>
                 <p>
                   Employment Type
@@ -332,7 +331,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?= base_url('admin/add_general_settings'); ?>" class="nav-link <?= ($ap === 'add_general_settings') ? 'active' : '' ?>">
+              <a href="<?= base_url('admin/add_general_settings'); ?>" class="nav-link <?= (uri_string(true) == 'admin/add_general_settings') ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-cogs"></i>
                 <p>
                 General Settings

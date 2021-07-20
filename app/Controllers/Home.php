@@ -1377,6 +1377,12 @@ class Home extends BaseController
     public function Page404()
     {
         $data['title'] = 'Page Not Found | 404';
-        echo view('users/404', $data);
+        return view('users/404', $data);
+    }
+
+    public function aboutus()
+    {
+        $data['title'] = 'About Us';
+        return view('users/aboutus',$data);
     }
 }

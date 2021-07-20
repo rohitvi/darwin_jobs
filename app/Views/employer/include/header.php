@@ -24,12 +24,12 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
 </head>
 <div id="loader-wrapper">
-			<div id="loader"></div>
+            <div id="loader"></div>
 
-			<div class="loader-section section-left"></div>
+            <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
 
-		</div>
+        </div>
 <body style="overflow-x:hidden;">
 
     <!-- Header 01
@@ -53,26 +53,26 @@
                                 </div>
                                 <ul>
                                     <?php if (!session('employer_logged_in')) : ?>
-                                    <li class="current_page"><a href="<?= base_url('employer') ?>"> HOME </a></li>
-									<li><a href="#">ABOUT US</a> </li>
-                                    <li><a href="<?= base_url('employer/post') ?>"> POST A JOBS </a></li>
+                                    <li class="<?= (uri_string(true) == "employer/dashboard") ? "current_page" : '' ?>"><a href="<?= base_url('employer') ?>"> HOME </a></li>
+                                    <li class="<?= (uri_string(true) == "employer/aboutus") ? "current_page" : '' ?>"><a href="<?= base_url('employer/aboutus') ?>">ABOUT US</a> </li>
+                                    <li class="<?= (uri_string(true) == "employer/post") ? "current_page" : '' ?>"><a href="<?= base_url('employer/post') ?>">POST A JOBS</a></li>
                                     <?php endif; ?>
                                     <?php if (session('employer_logged_in')) : ?>
-                                    <li><a href="<?= base_url('employer/dashboard') ?>"> Dashboard </a></li>
-                                    <li><a href="<?= base_url('employer/list_jobs') ?>"> Manage Jobs</a></li>
-                                    <li><a href="<?= base_url('employer/search') ?>"> Find Candidate</a></li>
-									
+                                    <li class="<?= (uri_string(true) == "employer/dashboard") ? "current_page" : '' ?>"><a href="<?= base_url('employer/dashboard') ?>"> Dashboard </a></li>
+                                    <li class="<?= (uri_string(true) == "employer/list_jobs") ? "current_page" : '' ?>"><a href="<?= base_url('employer/list_jobs') ?>"> Manage Jobs</a></li>
+                                    <li class="<?= (uri_string(true) == "employer/search") ? "current_page" : '' ?>"><a href="<?= base_url('employer/search') ?>"> Find Candidate</a></li>
+                                    
                                     <li class="has-sub-menu login_pop after_login">
                                         <button class="btn btn-primary withdp"><a style="color:#fff;" href="#"><img class="" src="<?= get_employer_profile(session('employer_id')) != '' ? get_employer_profile(session('employer_id')) : base_url('public/users/images/user.png') ?>"><?= session('employer_username'); ?>&nbsp;<i class="fas fa-caret-down"></i></a></button>
                                         <ul class="sub-menu">
-                                            <li><a href="<?= base_url('employer/profile'); ?>">My Profile</a></li>
-                                            <li><a href="<?= base_url('employer/logout') ?>">Logout</a></li>
+                                            <li class="<?= (uri_string(true) == "employer/profile") ? "current_page" : '' ?>"><a href="<?= base_url('employer/profile'); ?>">My Profile</a></li>
+                                            <li class="<?= (uri_string(true) == "employer/logout") ? "current_page" : '' ?>"><a href="<?= base_url('employer/logout') ?>">Logout</a></li>
                                         </ul>
                                     </li>
                                     <?php endif; ?>
                                 </ul>
                             </nav>
-							 <!--<div class="ac_nav">
+                             <!--<div class="ac_nav">
                 
                 <?php if (session('user_logged_in')) : ?>
                 <?php else : ?>
@@ -86,29 +86,29 @@
                 <?php endif; ?>
               </div>-->
                             <div class="ac_nav">
-							<!--Not logedin-->
-							<?php if (session('user_logged_in')) : ?>
-							  <?php elseif (session('employer_logged_in')) : ?>
-							<?php else : ?>
-								<div class="login_pop">
-									<button class="btn btn-primary">Login<i class="fas fa-caret-down ml_5"></i></button>
-									<div class="login_pop_box">
-										<span class="twobtn_cont">
-											<a class=" signjs_btn" href="<?= base_url('login'); ?>">				 
-											<span>Job seekers</span> Sign up
-											<i class="far fa-user"></i>
-											</a>
-										<a class=" signrs_btn" href="<?= base_url('employer/login'); ?>">	<span>EMPLOYERS</span> Sign up
-											<i class="fas fa-landmark"></i>
-										</a>
-										</span>
+                            <!--Not logedin-->
+                            <?php if (session('user_logged_in')) : ?>
+                              <?php elseif (session('employer_logged_in')) : ?>
+                            <?php else : ?>
+                                <div class="login_pop">
+                                    <button class="btn btn-primary">Login<i class="fas fa-caret-down ml_5"></i></button>
+                                    <div class="login_pop_box">
+                                        <span class="twobtn_cont">
+                                            <a class=" signjs_btn" href="<?= base_url('login'); ?>">                 
+                                            <span>Job seekers</span> Sign up
+                                            <i class="far fa-user"></i>
+                                            </a>
+                                        <a class=" signrs_btn" href="<?= base_url('employer/login'); ?>">   <span>EMPLOYERS</span> Sign up
+                                            <i class="fas fa-landmark"></i>
+                                        </a>
+                                        </span>
 
-									</div>
-								</div>
-								<?php endif; ?>
-							<!--end logedin-->
-						</div>
-							
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                            <!--end logedin-->
+                        </div>
+                            
                         </div>
                     </div>
                 </div>
