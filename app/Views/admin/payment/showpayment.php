@@ -58,7 +58,7 @@
                         <?= $row['payment_amount']; ?>
                       </td>
                       <td>
-                        <?= $row['payment_date']; ?>
+                        <?= date_time($row['payment_date']); ?>
                       </td>
                       <td>
                         <?= $row['payment_method']; ?>

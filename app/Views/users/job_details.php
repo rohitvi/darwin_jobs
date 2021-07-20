@@ -26,6 +26,16 @@
             Job Applicants : <?= (empty($no_of_count[0]['job_applicants'])) ? '0' : $no_of_count[0]['job_applicants'] ?>
           </li>
         </ul>
+
+          <?php  $skills = explode("," , $data['skills']);?>
+              <ul class="tags mt-3">
+							<?php foreach($skills as $skill): ?>
+							<li style="background-color:rgb(104 82 136)" >
+                <a class="text-white"> <i class="fas fa-hashtag"></i>  <?= $skill; ?></a>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+
       </div>
       <div class="poster_action">
         <a class="addtofav" title="add to favourite" onclick="save(<?= $data['id']; ?>)" href="#"><i id="save" style="cursor:pointer" class="<?= (in_array($data['id'], $saved_job)) ? 'fas fa-heart' : 'far fa-heart' ?>"></i></a>
@@ -48,11 +58,12 @@
               <p><?= $data['description'] ?></p>
             </div>
             <div class="col-md-12 single_job_main">
-              <h2>Cover Letter</h2>
-              <div class="form-group">
-                <textarea id="cover" class="form-control"></textarea>
-              </div>
+                <h2>Cover Letter</h2>
+                  <div class="form-group">
+                  <textarea id="cover" class="form-control"></textarea>
+                  </div>
             </div>
+
           </div>
         </div>
         <div class="col-md-3 ">
