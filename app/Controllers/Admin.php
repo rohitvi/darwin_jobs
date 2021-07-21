@@ -1461,6 +1461,23 @@ class Admin extends BaseController
                 }
             }
 
+            if ($_FILES['home_banner']['name'] != "") {
+                $rules=[ 'home_banner' =>['uploaded[home_banner]','max_size[home_banner,2048]' ]
+                ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('/admin/add_general_settings'));
+                }
+
+                $result = UploadFile($_FILES['home_banner']);
+                if ($result['status'] == true) {
+                    $home_banner = $result['result']['file_url'];
+                } else {
+                    echo '0~'.$result['message'];
+                    exit;
+                }
+            }
+
             $data = array(
                 'application_name' => $this->request->getPost('application_name'),
                 'copyright' => $this->request->getPost('copyright'),
@@ -1493,6 +1510,10 @@ class Admin extends BaseController
             }
             if ($_FILES['logo']['name'] != "") {
                 $data['logo'] = $logo;
+            }
+
+            if ($_FILES['home_banner']['name'] != "") {
+                $data['home_banner'] = $home_banner;
             }
 
             $result = $this->adminModel->update_general_settings($data);

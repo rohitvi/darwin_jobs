@@ -450,7 +450,7 @@ class Employer extends BaseController
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
         $get['title'] = 'Shortlisted Candidates';
-        // pre($get);
+        
         return view('employer/resume/shortlisted_resume2', $get);
     }
 
@@ -858,6 +858,7 @@ class Employer extends BaseController
     {
         $data['applicants'] = $this->EmployerModel->get_applicants($job_id);
         $data['title'] = 'Job Applicants';
+        //pre($data['applicants']);
         return view('employer/job/view_job_applicants', $data);
     }
 

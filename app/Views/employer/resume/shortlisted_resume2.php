@@ -56,6 +56,9 @@
               </div>
             </div>
             <?php endforeach ?>
+            <?php if (empty($data)) : ?>
+                    <p class="alert alert-danger">Sorry, we could not find any <strong>Shortlisted Resume</strong>.</p>
+            <?php endif; ?>
           </div>      
         </div>         
       </div>
