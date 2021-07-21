@@ -38,7 +38,7 @@
 										<i class="fas fa-map-marker-alt"></i>
 										<select class="js-example-basic-single" name="city">
 											<?php foreach ($cities as $key => $city) : ?>
-												<option value="<?= $city['id'] ?>" <?=  (isset($_POST['city']) && $_POST['city'] == $city['id'] ) ? 'selected' : '' ?>><?= $city['name'] ?></option>
+												<option value="<?= $city['id'] ?>" <?=  ($city['id'] == 2707)  ? 'selected' : '' ?>><?= $city['name'] ?></option>
 											<?php endforeach; ?>
 										</select>
 									</div>

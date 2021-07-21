@@ -391,7 +391,7 @@ form {
 	justify-content: space-between ;
 }
 .logo {
-	max-width: 200px;
+	/* max-width: 200px; */
 	max-height: 51px; 
 }
 .logo img {

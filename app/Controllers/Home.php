@@ -52,7 +52,7 @@ class Home extends BaseController
         $data['posts'] = $this->HomeModel->getLastestPost();
         $data['cities'] = get_country_cities(101);
         $data['title'] = 'Jobs - Recruitment - Jobs Search';
-        //pre($data['posts']);
+        //pre($data['cities']);
         return view('users/index', $data);
     }
 
