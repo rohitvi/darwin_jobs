@@ -51,6 +51,10 @@
             <?php endforeach; ?>
     </tbody>
     </table>
+
+                <?php if (empty($applicants)) : ?>
+                     <div class="alert alert-danger w-100 mt-4">Sorry, we could not find any <strong>Applied Resume.</div>
+                <?php endif; ?> 
     </div>
   </div>
 
