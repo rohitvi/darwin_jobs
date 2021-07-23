@@ -259,28 +259,7 @@ class AdminModel extends Model
     public function updatecompany($id, $data)
     {
         $builder = $this->db->table('companies');
-        $update_row = [
-            'company_logo' => $data['company_logo'],
-            'company_name' => $data['company_name'],
-            'email' => $data['company_email'],
-            'phone_no' => $data['phone_no'],
-            'website' => $data['website'],
-            'category' => $data['category'],
-            'founded_date' => $data['founded_date'],
-            'no_of_employers' => $data['no_of_employers'],
-            'description' => $data['description'],
-            'country' => $data['country'],
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'postcode' => $data['postcode'],
-            'address' => $data['full_address'],
-            'facebook_link' => $data['facebook_link'],
-            'twitter_link' => $data['twitter_link'],
-            'youtube_link' => $data['youtube_link'],
-            'linkedin_link' => $data['linkedin_link'],
-        ];
-        $builder->where('id', $id);
-        if ($query = $builder->update($update_row) == 1) {
+        if($query = $builder->where('id', $id)->update($data) == 1){
             return $query;
         }
     }
@@ -614,5 +593,39 @@ class AdminModel extends Model
 
         $result = $builder->get()->getResultArray();
         return array_column($result, 'email');
+    }
+    public function get_seeker_education($id)
+    {
+        $builder = $this->db->table('seeker_education');
+        $builder->select('*')->join('education', 'education.id = seeker_education.degree');
+        $builder->where('user_id', $id);
+        if($builder->get()->getNumRows() == 0){
+            return 0;
+        }else{
+            return $builder->get()->getRowArray();
+        }
+    }
+
+    public function get_user_experience($id)
+    {
+        $builder = $this->db->table('seeker_experience');
+        $builder->where('user_id', $id);
+        if($builder->get()->getNumRows() == 0){
+            return 0;
+        }else{
+            return $builder->get()->getRowArray();
+        }
+    }
+
+    public function get_user_language($id)
+    {
+        $builder = $this->db->table('seeker_languages');
+        $builder->select('*')->join('languages', 'languages.lang_id = seeker_languages.language');
+        $builder->where('user_id', $id);
+        if($builder->get()->getNumRows() == 0){
+            return 0;
+        }else{
+            return $builder->get()->getRowArray();
+        }
     }
 }
