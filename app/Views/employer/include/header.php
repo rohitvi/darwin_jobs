@@ -41,7 +41,7 @@
                     <div class="header_top">
                         <div class="logo">
                             <a href="<?= base_url('employer/dashboard') ?>">
-                                <img alt="JoDice" class="img-fluid" src="<?= base_url(); ?>/public/users/images/dice-logo.png">
+                                <img alt="JoDice" class="img-fluid" src="<?= get_g_setting_val('logo'); ?>">
                             </a>
                         </div>
                         <div class="navigation">

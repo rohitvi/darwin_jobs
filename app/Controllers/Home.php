@@ -498,8 +498,7 @@ class Home extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'address' => $this->request->getPost('address'),
-                'updated_date' => date('Y-m-d h:i:s'),
-                'profile_completed' => 1,
+                'updated_date' => date('Y-m-d h:i:s')
             );
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_user_info['profile_picture'] = $url;
@@ -1088,7 +1087,6 @@ class Home extends BaseController
         $data['jobs'] = $this->HomeModel->get_jobs_by_companies($company_id);
         $data['saved_job'] = $this->HomeModel->saved_job_search(session('user_id'));
         $data['title'] = 'company_details';
-        //pre($data['company_info'] );
         $data['meta_description'] = 'your meta description here';
         $data['keywords'] = 'meta tags here';
         return view('users/company-details', $data);

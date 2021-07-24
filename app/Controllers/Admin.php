@@ -1580,6 +1580,15 @@ class Admin extends BaseController
                     return redirect()->to(base_url('admin/list_newsletters'));
                 }
         }
+    }
 
+    public function viewuser($id)
+    {
+        $data['title'] = 'User Details';
+        $data['education'] = $this->adminModel->get_seeker_education($id);
+        $data['experience'] = $this->adminModel->get_user_experience($id);
+        $data['language'] = $this->adminModel->get_user_language($id);
+        $data['query'] = $this->adminModel->userdetails($id);
+        return view('admin/users/viewuser',$data);
     }
 }

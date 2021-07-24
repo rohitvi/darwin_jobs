@@ -72,8 +72,9 @@
                         <?= ($row['is_active'] == 1)? '<span class="btn btn-success btn-xs">Active</span>': '<span class="btn btn-danger btn-xs">Inactive</span>'; ?>
                       </td>
                       <td>
-                        <a type="button" class="btn btn-secondary" href="<?= base_url('admin/edituser/'.$row['id']); ?>">Edit</a>
-                        <a type="button" class="btn btn-danger" href="<?= base_url('admin/deleteuser/'.$row['id']); ?>">Delete</a>
+                        <a type="button" class="btn btn-sm btn-dark" href="<?= base_url('admin/viewuser/'.$row['id']); ?>">Details</a>
+                        <a type="button" class="btn btn-secondary btn-sm" href="<?= base_url('admin/edituser/'.$row['id']); ?>">Edit</a>
+                        <a type="button" class="btn btn-danger btn-sm" href="<?= base_url('admin/deleteuser/'.$row['id']); ?>">Delete</a>
                       </td>
                     </tr>
                     <?php endforeach; ?>
@@ -91,5 +92,4 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
 <?php include(VIEWPATH.'admin/include/footer.php'); ?>

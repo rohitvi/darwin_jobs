@@ -299,6 +299,10 @@ class AdminModel extends Model
         if ($builder->delete()) {
             $builder = $this->db->table('companies');
             $builder->where('employer_id', $id);
+            $this->db->table('job_post')->where('employer_id',$id)->delete();
+            $this->db->table('job_post_featured')->where('employer_id',$id)->delete();
+            $this->db->table('packages_bought')->where('employer_id',$id)->delete();
+            $this->db->table('payments')->where('employer_id',$id)->delete();
             return $builder->delete();
         }
     }
@@ -610,5 +614,25 @@ class AdminModel extends Model
 
         $result = $builder->get()->getResultArray();
         return array_column($result, 'email');
+    }
+
+    public function get_seeker_education($id)
+    {
+        return $this->db->table('seeker_education')->select('*')->join('education', 'education.id = seeker_education.degree')->where('user_id', $id)->get()->getRowArray();
+    }
+
+    public function get_user_experience($id)
+    {
+        return $this->db->table('seeker_experience')->where('user_id', $id)->get()->getRowArray();
+    }
+
+    public function get_user_language($id)
+    {
+        return $this->db->table('seeker_languages')->select('*')->join('languages', 'languages.lang_id = seeker_languages.language')->where('user_id', $id)->get()->getRowArray();
+    }
+
+    public function userdetails($id)
+    {
+        return $this->db->table('users')->where('id', $id)->get()->getRowArray();
     }
 }
