@@ -38,7 +38,7 @@
 										<i class="fas fa-map-marker-alt"></i>
 										<select class="js-example-basic-single" name="city">
 											<?php foreach ($cities as $key => $city) : ?>
-												<option value="<?= $city['id'] ?>" <?=  (isset($_POST['city']) && $_POST['city'] == $city['id'] ) ? 'selected' : '' ?>><?= $city['name'] ?></option>
+												<option value="<?= $city['id'] ?>" <?=  ($city['id'] == 2707)  ? 'selected' : '' ?>><?= $city['name'] ?></option>
 											<?php endforeach; ?>
 										</select>
 									</div>
@@ -180,9 +180,16 @@
 						</div>
 						<div class="fb_action">
 							<a class="btn btn-third" type="button" href="<?= base_url('home/jobdetails/' . $post['id']) ?>">Details</a>
-							<ul class="tags">
-								<li>Job Applicants : <?= get_no_of_applied_jobs($post['id']) ?></li>
-							</ul>
+							<?php  
+							$skills = explode("," , $post['skills']);
+							?>
+              					<ul class="tags">
+									<?php $i= 1; foreach($skills as $skill){ if($i <= 3){ ?>
+									<li>
+                					<a> <i class="fas fa-hashtag"></i>  <?= $skill; ?></a>
+									</li>
+									<?php } $i++; } ?>
+								</ul>
 						</div>
 					</div>
 				</div>

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Libraries\Mailer;
 use App\Models\AdminModel;
 use App\Models\auth\AuthModel;
+use App\models\EmployerModel;
 
 class Admin extends BaseController
 {
@@ -12,6 +13,7 @@ class Admin extends BaseController
     {
         $this->adminAuthModel = new AuthModel();
         $this->adminModel = new AdminModel();
+        $this->EmployerModel = new EmployerModel();
         $this->mailer = new Mailer();
         helper(['form']);
     }
@@ -979,9 +981,26 @@ class Admin extends BaseController
     public function updatecompany($id)
     {
         if(!admin_vaidate())  return redirect()->to('/admin/login');
-        if ($this->request->isAJAX()) {
+        if ($this->request->getMethod() == 'post') {
+
+            if ($_FILES['company_logo']['name'] != "") {
+                $rules=[ 'company_logo' =>['uploaded[company_logo]','max_size[company_logo,1024]' ]
+                ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('admin/employer'));
+                }
+
+                $result = UploadFile($_FILES['company_logo']);
+                if ($result['status'] == true) {
+                    $company_logo = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('admin/employer'));
+                }
+            }
+
             $rules = [
-                'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
                 'company_name' => ['label' => 'company_name', 'rules' => 'required'],
                 'company_email' => ['label' => 'company_email', 'rules' => 'required'],
                 'phone_no' => ['label' => 'phone_no', 'rules' => 'required'],
@@ -996,21 +1015,13 @@ class Admin extends BaseController
                 'full_address' => ['label' => 'full_address', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
-                echo '0~' . arrayToList($this->validation->getErrors());
-                exit;
-            }
-            $result = UploadFile($_FILES['company_logo']);
-            if ($result['status'] == true) {
-                $url = $result['result']['file_url'];
-            } else {
-                echo '0~' . $result['message'];
-                exit;
+                $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                return redirect()->to(base_url('admin/employer'));
             }
 
             $cmpny = [
-                'company_logo' => $url,
                 'company_name' => ucwords($this->request->getPost('company_name')),
-                'company_email' => $this->request->getPost('company_email'),
+                'email' => $this->request->getPost('company_email'),
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
                 'category' => $this->request->getPost('category'),
@@ -1022,15 +1033,24 @@ class Admin extends BaseController
                 'state' => $this->request->getPost('state'),
                 'city' => $this->request->getPost('city'),
                 'postcode' => $this->request->getPost('postcode'),
-                'full_address' => ucwords($this->request->getPost('full_address')),
+                'address' => ucwords($this->request->getPost('full_address')),
                 'facebook_link' => $this->request->getPost('facebook_link'),
                 'twitter_link' => $this->request->getPost('twitter_link'),
                 'youtube_link' => $this->request->getPost('youtube_link'),
                 'linkedin_link' => $this->request->getPost('linkedin_link'),
             ];
-            $query = $this->adminModel->updatecompany($id, $cmpny);
+
+            if ($_FILES['company_logo']['name'] != "") {
+                $cmpny['company_logo'] = $company_logo;
+            }
+
+             $query = $this->adminModel->updatecompany($id, $cmpny);
             if ($query == 1) {
-                return 'success';
+                $this->session->setFlashdata('success', 'Company Information Successfully Updated');
+                return redirect()->to(base_url('admin/employer'));
+            } else {
+                $this->session->setFlashdata('error', 'Something Went Wrong, Please Try Again!');
+                return redirect()->to(base_url('admin/employer'));
             }
         }
     }
@@ -1461,6 +1481,23 @@ class Admin extends BaseController
                 }
             }
 
+            if ($_FILES['home_banner']['name'] != "") {
+                $rules=[ 'home_banner' =>['uploaded[home_banner]','max_size[home_banner,2048]' ]
+                ];
+                if ($this->validate($rules) == false) {
+                    $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
+                    return redirect()->to(base_url('/admin/add_general_settings'));
+                }
+
+                $result = UploadFile($_FILES['home_banner']);
+                if ($result['status'] == true) {
+                    $home_banner = $result['result']['file_url'];
+                } else {
+                    echo '0~'.$result['message'];
+                    exit;
+                }
+            }
+
             $data = array(
                 'application_name' => $this->request->getPost('application_name'),
                 'copyright' => $this->request->getPost('copyright'),
@@ -1493,6 +1530,10 @@ class Admin extends BaseController
             }
             if ($_FILES['logo']['name'] != "") {
                 $data['logo'] = $logo;
+            }
+
+            if ($_FILES['home_banner']['name'] != "") {
+                $data['home_banner'] = $home_banner;
             }
 
             $result = $this->adminModel->update_general_settings($data);
@@ -1590,5 +1631,122 @@ class Admin extends BaseController
         $data['language'] = $this->adminModel->get_user_language($id);
         $data['query'] = $this->adminModel->userdetails($id);
         return view('admin/users/viewuser',$data);
+    }
+
+
+    public function userdetails($id)
+    {
+        if ($this->request->isAJAX()) {
+            $education = $this->adminModel->get_seeker_education($id);
+            $experience = $this->adminModel->get_user_experience($id);
+            $language = $this->adminModel->get_user_language($id);
+            $query = $this->EmployerModel->userdetails($id);
+            if(isset($experience[0]['ending_month'])){
+                $end_month = $experience[0]['ending_month'];
+            }
+            if(isset($experience[0]['ending_year'])){
+                $end_year = $experience[0]['ending_year'];
+            }
+            $html = '';
+            $html .= '<div class="row">
+                        <div class="col-6">
+                            <h4>Personal Details</h4>
+                            <hr>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Full Name</td>
+                                        <td>' . $query[0]["firstname"] . ' ' . $query[0]["lastname"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>' . $query[0]["email"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>' . $query[0]["mobile_no"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Of Birth</td>
+                                        <td>' . $query[0]["dob"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>' . get_category_name($query[0]["category"]) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Job Title</td>
+                                        <td>' . ($query[0]["job_title"]) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Experience</td>
+                                        <td>' . $query[0]["experience"] . ' years</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skills</td>
+                                        <td>' . $query[0]["skills"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Salary (INR)</td>
+                                        <td>' . $query[0]["current_salary"] . ' (INR)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nationality</td>
+                                        <td>' . get_country_name($query[0]["nationality"]) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>' . get_country_name($query[0]["country"]) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City / Town</td>
+                                        <td>' . get_city_name($query[0]["city"]) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Postcode</td>
+                                        <td>' . $query[0]["postcode"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>' . $query[0]["address"] . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Objectives</td>
+                                        <td>Objectives</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-6">';
+            if ($education) {
+                $html .=
+                    '<h4>Education</h4>
+                            <hr>
+                            <p>' . $education[0]["type"] . ',' . $education[0]["degree_title"] . '</p>
+                            <p>' . $education[0]["institution"] . '</p>
+                            <p>' . $education[0]["completion_year"] . '</p>
+                            <h4>Experience</h4>';
+            }
+            if ($experience) {
+                $html .= '
+                            <hr>
+                            <p>' . $experience[0]["job_title"] . '</p>
+                            <p>' . $experience[0]["company"] . '</p>
+                            <p>' . get_month($experience[0]["starting_month"]) . ' ' . $experience[0]["starting_year"] . ' - ' . $end_month . ' ' . $end_year . ' | ' . get_country_name($experience[0]["country"]) . '</p>
+                            <p>' . $experience[0]["job_title"] . '</p>
+                            <p>' . $experience[0]["description"] . '</p>
+                            ';
+            }
+            if ($language) {
+                $html .= '
+                            <h4>Languages</h4>
+                            <hr>
+                            <p>' . $language[0]["lang_name"] . '</p>
+                            ';
+            }
+            $html .= '</div>
+                    </div>';
+            return ($html);
+        }
     }
 }

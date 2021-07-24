@@ -259,28 +259,7 @@ class AdminModel extends Model
     public function updatecompany($id, $data)
     {
         $builder = $this->db->table('companies');
-        $update_row = [
-            'company_logo' => $data['company_logo'],
-            'company_name' => $data['company_name'],
-            'email' => $data['company_email'],
-            'phone_no' => $data['phone_no'],
-            'website' => $data['website'],
-            'category' => $data['category'],
-            'founded_date' => $data['founded_date'],
-            'no_of_employers' => $data['no_of_employers'],
-            'description' => $data['description'],
-            'country' => $data['country'],
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'postcode' => $data['postcode'],
-            'address' => $data['full_address'],
-            'facebook_link' => $data['facebook_link'],
-            'twitter_link' => $data['twitter_link'],
-            'youtube_link' => $data['youtube_link'],
-            'linkedin_link' => $data['linkedin_link'],
-        ];
-        $builder->where('id', $id);
-        if ($query = $builder->update($update_row) == 1) {
+        if($query = $builder->where('id', $id)->update($data) == 1){
             return $query;
         }
     }

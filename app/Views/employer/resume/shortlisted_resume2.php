@@ -56,6 +56,11 @@
               </div>
             </div>
             <?php endforeach ?>
+                <div class="container">
+                <?php if (empty($data)) : ?>
+                     <div class="alert alert-danger w-100">Sorry, we could not find any <strong>Shortlisted Resume.</div>
+                <?php endif; ?> 
+                </div>
           </div>      
         </div>         
       </div>

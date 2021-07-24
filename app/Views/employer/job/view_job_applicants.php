@@ -51,6 +51,10 @@
             <?php endforeach; ?>
     </tbody>
     </table>
+
+                <?php if (empty($applicants)) : ?>
+                     <div class="alert alert-danger w-100 mt-4">Sorry, we could not find any <strong>Applied Resume.</div>
+                <?php endif; ?> 
     </div>
   </div>
 
@@ -78,7 +82,7 @@
       <!-- Modal body -->
       <div class="modal-body">
         <?php echo form_open('/', 'class="email-form"') ?>
-	        <input type="hidden" name="email" class="form-control" value="<?= $applicant['email'] ?>" id="email">
+	        <input type="hidden" name="email" class="form-control" value="<?= isset($applicant['email']) ?>" id="email">
 	        <div class="form-group">
 	            <label class="form-control-label">Subject:</label>
 	            <input class="form-control" type="text" name="subject" id="subject">

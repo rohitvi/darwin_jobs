@@ -70,6 +70,15 @@
                     <p><small class="text-success">Allowed Types: gif, jpg, png, jpeg</small></p>
                   </div>
 
+                  <div class="form-group"> 
+                    <label class="control-label">Home Page Banner</label>
+                    <?php if(!empty($gsetting['home_banner'])):?>
+                    <img src="<?= $gsetting['home_banner']; ?>" style="width:300px">
+                  <?php endif; ?>
+                    <input type="file" name="home_banner" class="form-control">
+                    <p><small class="text-success">Allowed Types: jpg, png, jpeg</small></p>
+                  </div>
+
                   <div class="form-group">
                     <label for="exampleInputEmail1">Application Name</label>
                     <input type="text" class="form-control" name="application_name" value="<?= $gsetting['application_name'];?>">

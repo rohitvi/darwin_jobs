@@ -93,3 +93,19 @@
   </div>
   <!-- /.content-wrapper -->
 <?php include(VIEWPATH.'admin/include/footer.php'); ?>
+
+<script>
+  function userdetails(id){
+        event.preventDefault();
+        $('#modal-body').html('');
+        var id = id;
+        $.ajax({
+            type: "GET",
+            url: '<?= base_url();?>/admin/userdetails/'+id,
+            cached: false,
+            success: function(data) {
+                $('#modal-body').html(data);
+            }
+        });
+    }
+</script>
