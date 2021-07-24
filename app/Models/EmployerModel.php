@@ -313,6 +313,7 @@ class EmployerModel extends Model
         $builder->orderBy('created_date', 'desc');
         $builder->groupBy('job_title');
         return $builder->paginate(6);
+
     }
 
     public function candidates_shortlisted($emp_id, $user_id)

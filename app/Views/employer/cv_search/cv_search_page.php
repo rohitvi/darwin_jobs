@@ -51,7 +51,7 @@
                       <div class="form-group">
                         <div class="field">
                           <i class="fa fa-search"></i>
-                          <input type="text" name='job_title' class="form-control" value="<?= isset($_GET['job_title']) ? $_GET['job_title'] : ''; ?>" placeholder='What are you looking for?'>
+                          <input type="text" name='job_title' class="form-control" value="<?= isset($_GET['job_title']) ? $_GET['job_title'] : ''; ?>" placeholder='    Skills, Job title, Keywords'>
                         </div>
                       </div>
                     </div>

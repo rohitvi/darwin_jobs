@@ -1628,9 +1628,9 @@ class Admin extends BaseController
     public function userdetails($id)
     {
         if ($this->request->isAJAX()) {
-            $education = $this->adminModel->get_seeker_education($id);
-            $experience = $this->adminModel->get_user_experience($id);
-            $language = $this->adminModel->get_user_language($id);
+            $education = $this->EmployerModel->get_seeker_education($id);
+            $experience = $this->EmployerModel->get_user_experience($id);
+            $language = $this->EmployerModel->get_user_language($id);
             $query = $this->EmployerModel->userdetails($id);
             if(isset($experience[0]['ending_month'])){
                 $end_month = $experience[0]['ending_month'];
@@ -1734,6 +1734,15 @@ class Admin extends BaseController
                             <hr>
                             <p>' . $language[0]["lang_name"] . '</p>
                             ';
+            }
+            if($query[0]["resume"] != ""){
+                $html .= '<h4>Resume</h4>
+                <a href=" '.$query[0]["resume"].'" class="btn-sm btn-primary"><i class="nav-icon fas fa fa-download"></i> Download CV</a>
+                ';
+            }else{
+                $html .='<h4>Resume</h4>
+                        <p>Not Uploded.</p>
+                ';
             }
             $html .= '</div>
                     </div>';
