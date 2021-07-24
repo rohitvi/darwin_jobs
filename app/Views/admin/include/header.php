@@ -71,7 +71,7 @@
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a href="<?= base_url('admin/logout'); ?>"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
+          <a href="#"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
         </li>
       </ul>
     </nav>

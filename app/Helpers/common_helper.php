@@ -28,6 +28,8 @@ function get_experience_list($type)
 // Get city name by ID
 function get_city_name($id)
 {
+    if($id == '')
+        return null;
     $db      = \Config\Database::connect();
     $builder = $db->table('cities');
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];
@@ -79,6 +81,8 @@ function get_industry_name($id)
 // Get country name by ID
 function get_country_name($id)
 {
+    if($id == '')
+        return null;
     $db      = \Config\Database::connect();
     $builder = $db->table('countries');
     return $builder->getWhere(array('id' => $id))->getRowArray()['name'];

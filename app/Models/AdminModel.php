@@ -594,38 +594,24 @@ class AdminModel extends Model
         $result = $builder->get()->getResultArray();
         return array_column($result, 'email');
     }
+
     public function get_seeker_education($id)
     {
-        $builder = $this->db->table('seeker_education');
-        $builder->select('*')->join('education', 'education.id = seeker_education.degree');
-        $builder->where('user_id', $id);
-        if($builder->get()->getNumRows() == 0){
-            return 0;
-        }else{
-            return $builder->get()->getRowArray();
-        }
+        return $this->db->table('seeker_education')->select('*')->join('education', 'education.id = seeker_education.degree')->where('user_id', $id)->get()->getRowArray();
     }
 
     public function get_user_experience($id)
     {
-        $builder = $this->db->table('seeker_experience');
-        $builder->where('user_id', $id);
-        if($builder->get()->getNumRows() == 0){
-            return 0;
-        }else{
-            return $builder->get()->getRowArray();
-        }
+        return $this->db->table('seeker_experience')->where('user_id', $id)->get()->getRowArray();
     }
 
     public function get_user_language($id)
     {
-        $builder = $this->db->table('seeker_languages');
-        $builder->select('*')->join('languages', 'languages.lang_id = seeker_languages.language');
-        $builder->where('user_id', $id);
-        if($builder->get()->getNumRows() == 0){
-            return 0;
-        }else{
-            return $builder->get()->getRowArray();
-        }
+        return $this->db->table('seeker_languages')->select('*')->join('languages', 'languages.lang_id = seeker_languages.language')->where('user_id', $id)->get()->getRowArray();
+    }
+
+    public function userdetails($id)
+    {
+        return $this->db->table('users')->where('id', $id)->get()->getRowArray();
     }
 }
