@@ -1219,6 +1219,7 @@ class Home extends BaseController
             }
         }
         $get['title'] = 'Complete Experience';
+        //pre($get['countries']);
         return view('users/auth/setup_experience', $get);
     }
 

@@ -597,17 +597,17 @@ class AdminModel extends Model
 
     public function get_seeker_education($id)
     {
-        return $this->db->table('seeker_education')->select('*')->join('education', 'education.id = seeker_education.degree')->where('user_id', $id)->get()->getRowArray();
+        return $this->db->table('seeker_education')->select('*')->join('education', 'education.id = seeker_education.degree')->where('user_id', $id)->get()->getResultArray();
     }
 
     public function get_user_experience($id)
     {
-        return $this->db->table('seeker_experience')->where('user_id', $id)->get()->getRowArray();
+        return $this->db->table('seeker_experience')->where('user_id', $id)->get()->getResultArray();
     }
 
     public function get_user_language($id)
     {
-        return $this->db->table('seeker_languages')->select('*')->join('languages', 'languages.lang_id = seeker_languages.language')->where('user_id', $id)->get()->getRowArray();
+        return $this->db->table('seeker_languages')->select('*')->join('languages', 'languages.lang_id = seeker_languages.language')->where('user_id', $id)->get()->getResultArray();
     }
 
     public function userdetails($id)
