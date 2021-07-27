@@ -19,9 +19,11 @@
     <link href="<?= base_url(); ?>/public/users/css/select2.min.css" rel="stylesheet" />
     <link href="<?= base_url(); ?>/public/users/css/owl.carousel.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/style.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/public/employer/assets/css/custom.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/color-1.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/datatables/datatables.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
 </head>
 <div id="loader-wrapper">
             <div id="loader"></div>

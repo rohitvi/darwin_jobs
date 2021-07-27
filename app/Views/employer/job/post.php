@@ -35,7 +35,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>job Type *</label>
-                <select name="job_type" class="custom-select form-control" required>
+                <select name="job_type" class=" form-control js-example-basic-single" required>
                     <option value="">Select Job Type</option>
                     <?php
                         foreach($job_type as $key => $value) { ?>
@@ -48,7 +48,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Job Category *</label>
-                <select name="category" class="custom-select form-control" required>
+                <select name="category" class="form-control js-example-basic-single" required>
                     <option value="">Select Job Category</option>
                     <?php
                         foreach($job_category as $key => $value) { ?>
@@ -61,7 +61,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Industry *</label>
-                <select name="industry" class="custom-select form-control" required>
+                <select name="industry" class="js-example-basic-single form-control" required>
 	                <option value="">Select Industry</option>
 	                <?php
 	                    foreach($industry as $key => $value) { ?>
@@ -74,7 +74,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Position Avaliable *</label>
-                <select name="total_positions" class="custom-select form-control" required>
+                <select name="total_positions" class="js-example-basic-single form-control" required>
                     <?php for ($i = 1; $i < 30; $i++) : ?>
 						<option value="<?= $i; ?>"><?= $i; ?></option>
 					<?php endfor; ?>
@@ -84,33 +84,46 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Working Experience *</label>
-                <select name="min_experience" class="custom-select form-control" required>
-	                <?php
-	                    foreach(get_experience_list('Minimum') as $key => $value) { ?>
-	                      <option value="<?= $key ?>"><?= $value ?></option>
-	                <?php
-	                } ?>
-	            </select>
-	            <select name="max_experience" class="custom-select form-control" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <select name="min_experience" class="js-example-basic-single form-control" required>
+                          <?php
+                          foreach(get_experience_list('Minimum') as $key => $value) { ?>
+                            <option value="<?= $key ?>"><?= $value ?></option>
+                          <?php
+                          } ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                    <select name="max_experience" class="js-example-basic-single form-control" required>
                     <?php
                         foreach(get_experience_list('Maximum') as $key => $value) { ?>
                           <option value="<?= $key ?>"><?= $value ?></option>
                     <?php
                     } ?>
                 </select>
+                    </div>
+                </div>
+                
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Salary *</label>
-                <input type="number" name="min_salary" class="form-control" placeholder="Minimum Salary" required>
-                <input type="number" name="max_salary" class="form-control" placeholder="Maximum Salary" required>
+                <div class="row">
+                    <div class="col-md-6">
+                      <input type="text" name="min_salary" class="form-control" placeholder="Minimum Salary" required>
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text" name="max_salary" class="form-control" placeholder="Maximum Salary" required>
+                    </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Salary Period *</label>
-                <select name="salary_period" class="custom-select form-control" required>
+                <select name="salary_period" class="js-example-basic-single form-control" required>
 	                <option value="Hourly">Hourly</option>
 	                <option value="Weekly">Weekly</option>
 	                <option value="Monthly">Monthly</option>
@@ -132,7 +145,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Gender Requirement *</label>
-                <select name="gender" class="custom-select form-control" required>
+                <select name="gender" class="js-example-basic-single form-control" required>
                     <option value="No Prefrence">No Prefrence</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -142,7 +155,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Employment Type *</label>
-                <select name="employment_type" class="custom-select form-control" required>
+                <select name="employment_type" class="js-example-basic-single form-control" required>
 	                <option value="">Select Employment Type</option>
 	                <?php foreach ($employment as $key => $value) : ?>
 	                     <option value="<?= $value['id'] ?>"><?= $value['type'] ?></option><?php endforeach; ?>
@@ -152,7 +165,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Education *</label>
-                <select name="education" class="custom-select form-control" required>
+                <select name="education" class="js-example-basic-single form-control" required>
                     <option value="">Select Education Type</option>
                     <?php foreach ($educations as $row) : ?>
 						<option value="<?= $row['id']; ?>"> <?= $row['type']; ?></option>
@@ -163,7 +176,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Country *</label>
-                <select name="country" id="country" class="custom-select form-control" required>
+                <select name="country" id="country" class="js-example-basic-single form-control" required>
                     <option value="">Select Country</option>
                     <?php foreach ($countries as $row) : ?>
 						<option value="<?= $row['id']; ?>"> <?= $row['name']; ?></option>
@@ -174,7 +187,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>State *</label>
-                <select name="state" class="custom-select form-control" id="state" required>
+                <select name="state" class="js-example-basic-single form-control" id="state" required>
                     <option value="">Select State</option>
                 </select>
               </div>
@@ -182,7 +195,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                   <label>City *</label>
-                  <select name="city" class="custom-select form-control" id="city" required>
+                  <select name="city" class="js-example-basic-single form-control" id="city" required>
                       <option value="">Select City</option>
                   </select>
               </div>
@@ -198,7 +211,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Is Featured *</label>
-                <select name="is_featured" class="custom-select form-control">
+                <select name="is_featured" class="js-example-basic-single form-control">
                   <option value="">Select Job Featured</option>
 	                <option value="yes">Yes</option>
 	                <option value="no">No</option>
@@ -269,4 +282,10 @@
         });
       });
     });
+
+    for (const el of document.querySelectorAll('.tagin')) {
+      tagin(el)
+    }
+
+    $('.js-example-basic-single').select2();
 </script>
