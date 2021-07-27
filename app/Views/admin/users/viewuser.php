@@ -66,27 +66,26 @@
                         <hr>
                         <div class="row">
                             <div class="col-lg-12">
+                              <?php foreach($education as $education): ?>
                                 <p><?= (isset($education["type"])) ? $education["type"] : '' ?>  <?= (isset($education["degree_title"])) ? $education["degree_title"] : '' ?></p>
-                                <hr>
                                 <p><?= (isset($education["institution"])) ? $education["institution"] : '' ?></p>
-                                <hr>
                                 <p><?= (isset($education["completion_year"])) ? $education["completion_year"] : '' ?></p> 
                                 <hr>
+                                <?php endforeach?>
                                 <h4>Experience</h4>
                                 <hr>
+                                <?php foreach($experience as $experience): ?>
                                 <p><?= (isset($experience["job_title"])) ? $experience["job_title"] : '' ?></p>
-                                <hr>
                                 <p><?= (isset($experience["company"])) ? $experience["company"] : '' ?></p>
-                                <hr>
                                 <p><?= (isset($experience["starting_month"])) ? get_month($experience["starting_month"]) : '' ?> <?= (isset($experience["starting_year"])) ? $experience["starting_year"] : '' ?> - <?= (isset($experience["ending_month"])) ? get_month($experience["ending_month"]) : '' ?> <?= (isset($experience["ending_year"])) ? $experience["ending_year"] : '' ?> | <?= (isset($experience["country"])) ? get_country_name($experience["country"]) : '' ?></p>
-                                <hr>
-                                <p><?= (isset($experience["job_title"])) ? $experience["job_title"] : '' ?></p>
-                                <hr>
                                 <p><?= (isset($experience["description"])) ? $experience["description"] : '' ?></p>
                                 <hr>
+                                <?php endforeach?>
                                 <h4>Languages</h4>
                                 <hr>
-                                <p><?= (isset($language["lang_name"])) ? $language["lang_name"] : '' ?></p>
+                                <?php foreach($language as $lan): ?>
+                                  <p><?= (isset($lan["lang_name"])) ? $lan["lang_name"] : '' ?></p>
+                                <?php endforeach; ?>
                                 <hr>
                                 <h4>Resume</h4>
                                 <a href="<?= $query["resume"] ?>" class="btn-sm btn-primary"><i class="nav-icon fas fa fa-download"></i> Download CV</a>

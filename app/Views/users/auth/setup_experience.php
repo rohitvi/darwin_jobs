@@ -47,7 +47,7 @@
                                 <select class="form-control select" id="country" name="country">
                                     <option value="">Select Country</option>
                                     <?php foreach($countries as $country):?>
-                                    <?php if($experience['country'] == $country['id']): ?>
+                                    <?php if(isset($experience['country']) == $country['id']): ?>
                                     <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
                                     <?php else: ?>
                                     <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
