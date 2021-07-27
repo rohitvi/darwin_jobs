@@ -260,7 +260,6 @@ class Employer extends BaseController
                 'phone_no'          => ['label' => 'Phone No', 'rules' => 'required'],
                 'website'           => ['label' => 'Company Website', 'rules' => 'required'],
                 'category'          => ['label' => 'Category', 'rules' => 'required'],
-                'founded_date'      => ['label' => 'Founded Date', 'rules' => 'required'],
                 'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
                 'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
                 'description'       => ['label' => 'Comapany Description', 'rules' => 'required'],
@@ -268,11 +267,7 @@ class Employer extends BaseController
                 'state'             => ['label' => 'State', 'rules' => 'required'],
                 'city'              => ['label' => 'City', 'rules' => 'required'],
                 'postcode'          => ['label' => 'Pin Code', 'rules' => 'required'],
-                'address'           => ['label' => 'Address', 'rules' => 'required'],
-                'facebook_link'     => ['label' => 'Facebook', 'rules' => 'trim'],
-                'twitter_link'      => ['label' => 'Twitter', 'rules' => 'trim'],
-                'youtube_link'      => ['label' => 'Youtube', 'rules' => 'trim'],
-                'linkedin_link'     => ['label' => 'LinkedIn', 'rules' => 'trim']
+                'address'           => ['label' => 'Address', 'rules' => 'required']
 
             ];
             if ($this->validate($rules) == false) {
@@ -286,7 +281,6 @@ class Employer extends BaseController
                 'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
                 'category' => $this->request->getPost('category'),
-                'founded_date' => $this->request->getPost('founded_date'),
                 'org_type' => $this->request->getPost('org_type'),
                 'no_of_employers' => $this->request->getPost('no_of_employers'),
                 'description' => ucwords($this->request->getPost('description')),
