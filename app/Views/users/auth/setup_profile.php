@@ -52,7 +52,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>First Name</label>
-                                    <input type="text" name="firstname" value="<?= (isset($data[0]['firstname'])) ? $data[0]['firstname'] : '' ?>" class="form-control">
+                                    <input type="text" name="firstname" value="<?= (isset($_POST['firstname'])) ? $_POST['firstname'] : '' ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
