@@ -331,7 +331,14 @@ class AdminModel extends Model
 
     public function deleteuser($id)
     {
-        return $this->db->table('users')->where('id', $id)->delete();
+        $this->db->table('users')->where('id', $id)->delete();
+        $this->db->table('seeker_applied_job')->where('seeker_id', $id)->delete();
+        $this->db->table('seeker_education')->where('user_id', $id)->delete();
+        $this->db->table('seeker_experience')->where('user_id', $id)->delete();
+        $this->db->table('seeker_languages')->where('user_id', $id)->delete();
+        $this->db->table('cv_shortlisted')->where('user_id', $id)->delete();
+        $this->db->table('saved_jobs')->where('seeker_id', $id)->delete();
+        return true;
     }
 
     public function get_job_type()

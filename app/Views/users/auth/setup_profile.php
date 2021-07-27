@@ -32,7 +32,7 @@
                 <div id="home" class="container tab-pane active">
                     <h3>Profile</h3>
                     <div class="container">
-                        <form action="<?= base_url('home/setup_profile') ?>" method="post" enctype="multipart/form-data">
+                        <form action="<?= base_url('home/setup/profile') ?>" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group ">
@@ -52,7 +52,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>First Name</label>
-                                    <input type="text" name="firstname" value="<?= (isset($data[0]['firstname'])) ? $data[0]['firstname'] : '' ?>" class="form-control">
+                                    <input type="text" name="firstname" value="<?= (isset($_POST['firstname'])) ? $_POST['firstname'] : '' ?>" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">

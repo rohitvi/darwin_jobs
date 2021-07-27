@@ -1301,25 +1301,15 @@ class Employer extends BaseController
                 }
             }
             $rules = [
-                'company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
+                'company_logo'      => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
                 'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
                 'email'             => ['label' => 'Company Email', 'rules' => 'required'],
-                'phone_no'          => ['label' => 'Phone No', 'rules' => 'required'],
                 'website'           => ['label' => 'Company Website', 'rules' => 'required'],
                 'category'          => ['label' => 'Category', 'rules' => 'required'],
                 'founded_date'      => ['label' => 'Founded Date', 'rules' => 'required'],
                 'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
                 'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
-                'description'       => ['label' => 'Comapany Description', 'rules' => 'required'],
-                'country'           => ['label' => 'Country', 'rules' => 'required'],
-                'state'             => ['label' => 'State', 'rules' => 'required'],
-                'city'              => ['label' => 'City', 'rules' => 'required'],
-                'postcode'          => ['label' => 'Pin Code', 'rules' => 'required'],
-                'address'           => ['label' => 'Address', 'rules' => 'required'],
-                'facebook_link'     => ['label' => 'Facebook', 'rules' => 'trim'],
-                'twitter_link'      => ['label' => 'Twitter', 'rules' => 'trim'],
-                'youtube_link'      => ['label' => 'Youtube', 'rules' => 'trim'],
-                'linkedin_link'     => ['label' => 'LinkedIn', 'rules' => 'trim']
+                'description'       => ['label' => 'Comapany Description', 'rules' => 'required']
 
             ];
             if ($this->validate($rules) == false) {
@@ -1330,22 +1320,12 @@ class Employer extends BaseController
             $cmp_info_update = array(
                 'company_name' => ucwords($this->request->getPost('company_name')),
                 'email' => $this->request->getPost('email'),
-                'phone_no' => $this->request->getPost('phone_no'),
                 'website' => $this->request->getPost('website'),
                 'category' => $this->request->getPost('category'),
                 'founded_date' => $this->request->getPost('founded_date'),
                 'org_type' => $this->request->getPost('org_type'),
                 'no_of_employers' => $this->request->getPost('no_of_employers'),
-                'description' => ucfirst($this->request->getPost('description')),
-                'country' => $this->request->getPost('country'),
-                'state' => $this->request->getPost('state'),
-                'city' => $this->request->getPost('city'),
-                'postcode' => $this->request->getPost('postcode'),
-                'address' => ucwords($this->request->getPost('address')),
-                'facebook_link' => $this->request->getPost('facebook_link'),
-                'twitter_link' => $this->request->getPost('twitter_link'),
-                'youtube_link' => $this->request->getPost('youtube_link'),
-                'linkedin_link' => $this->request->getPost('linkedin_link'),
+                'description' => ucfirst($this->request->getPost('description'))
             );
 
             if ($_FILES['company_logo']['name'] != '') {
