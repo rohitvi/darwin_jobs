@@ -449,6 +449,15 @@ class Home extends BaseController
         $get['education'] = $this->HomeModel->get_user_education($id);
         $get['title'] = 'Seeker Profile';
         if ($this->request->getMethod() == 'post') {
+            if ($_FILES['profile_picture']['name'] != '') {
+                $result = UploadFile($_FILES['profile_picture']);
+                if ($result['status'] == true) {
+                    $url = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('home/profile'));
+                }
+            }
             $rules = [
                 'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
                 'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
@@ -467,18 +476,12 @@ class Home extends BaseController
                 'city'              => ['label' => 'City', 'rules' => 'required'],
                 'address'           => ['label' => 'Address', 'rules' => 'required'],
             ];
+            if($get['data'][0]['profile_picture'] == ''){
+                $rules['profile_picture'] = ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'];
+            }
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('home/profile'));
-            }
-            if ($_FILES['profile_picture']['name'] != '') {
-                $result = UploadFile($_FILES['profile_picture']);
-                if ($result['status'] == true) {
-                    $url = $result['result']['file_url'];
-                } else {
-                    $this->session->setFlashdata('error', $result['message']);
-                    return redirect()->to(base_url('home/profile'));
-                }
             }
             $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",", $skills);
@@ -1137,15 +1140,6 @@ class Home extends BaseController
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to('/home/setup/profile');
-            }
-            if ($_FILES['profile_picture']['name'] != '') {
-                $result = UploadFile($_FILES['profile_picture']);
-                if ($result['status'] == true) {
-                    $url = $result['result']['file_url'];
-                } else {
-                    $this->session->setFlashdata('error', $result['message']);
-                    return redirect()->to(base_url('home/setup/profile'));
-                }
             }
             $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",", $skills);

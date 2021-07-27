@@ -1234,10 +1234,8 @@ class Employer extends BaseController
                     $this->session->setFlashdata('error', $result['message']);
                     return redirect()->to(base_url('employer/setup/profile'));
                 }
-                //$rules = [  ];
             }
             $rules = [
-                    'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'],
                     'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
                     'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
                     'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
@@ -1248,7 +1246,10 @@ class Employer extends BaseController
                     'city'              => ['label' => 'City', 'rules' => 'required'],
                     'address'           => ['label' => 'Address', 'rules' => 'required']
                 ];
-            
+            if($get['data'][0]['profile_picture'] == ''){
+                $rules['profile_picture'] = ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'];
+            }
+
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/setup/profile'));
@@ -1302,7 +1303,6 @@ class Employer extends BaseController
                 }
             }
             $rules = [
-                'company_logo'      => ['uploaded[company_logo]', 'max_size[company_logo,1024]'],
                 'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
                 'email'             => ['label' => 'Company Email', 'rules' => 'required'],
                 'website'           => ['label' => 'Company Website', 'rules' => 'required'],
@@ -1311,8 +1311,10 @@ class Employer extends BaseController
                 'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
                 'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
                 'description'       => ['label' => 'Comapany Description', 'rules' => 'required']
-
             ];
+            if($get['data'][0]['company_logo'] == ''){
+                $rules['company_logo'] = ['uploaded[company_logo]', 'max_size[company_logo,1024]|required'];
+            }
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/setup/company'));
@@ -1352,6 +1354,7 @@ class Employer extends BaseController
         }
         return view('employer/auth/setup_company',$get);
     }
+    
     public function aboutus()
     {
         $data['title'] = 'About Us';

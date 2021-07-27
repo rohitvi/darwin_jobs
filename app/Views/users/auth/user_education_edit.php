@@ -6,32 +6,32 @@
             <?php 
             $educations = get_education_list();
             $options = array('' => 'Select Option') + array_column($educations,'type','id');
-            echo form_dropdown('level',$options,$edu['degree'],'class="form-control" ');
+            echo form_dropdown('level',$options,$edu['degree'],'class="form-control" required');
         ?>
         </div>
 
         <div class="col-md-6">
             <label>Degree Title</label>
-            <input class="form-control" name="title" value="<?= $edu['degree_title'] ?>" type="text" placeholder="e.g., Computer Science" >
+            <input class="form-control" name="title" value="<?= $edu['degree_title'] ?>" type="text" placeholder="e.g., Computer Science" required>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label>Major Subjects</label>
-            <input class="form-control" name="majors" value="<?= $edu['major_subjects'] ?>" type="text" placeholder="please specify your major subjects" >
+            <input class="form-control" name="majors" value="<?= $edu['major_subjects'] ?>" type="text" placeholder="please specify your major subjects" required>
         </div>
 
         <div class="col-md-6">
             <label>Institution</label>
-            <input class="form-control" name="institution" value="<?= $edu['institution'] ?>" type="text" placeholder="Institution" >
+            <input class="form-control" name="institution" value="<?= $edu['institution'] ?>" type="text" placeholder="Institution" required>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label>Country</label>
-                    <select class="form-control select" id="country" name="country">
+                    <select class="form-control select" id="country" name="country" required>
                         <option value="">Select Country</option>
                         <?php foreach($countries as $country):?>
                         <?php if($edu['country'] == $country['id']): ?>
