@@ -32,23 +32,23 @@
               </label>
             </div>
             <div class="form-group">
-							<input class="form-control" name="firstname" type="text" size="40" placeholder="Firstname * ">
+							<input class="form-control" name="firstname" type="text" size="40" placeholder="Firstname *" required>
 						</div>
             <div class="form-group">
-              <input class="form-control" name="company_name" type="text"  size="40" placeholder="Company Name * ">
+              <input class="form-control" name="company_name" type="text"  size="40" placeholder="Company Name *" required>
             </div>
 						<div class="form-group">
-							<input class="form-control" name="email" type="email" placeholder="Email * ">
+							<input class="form-control" name="email" type="email" placeholder="Email *" required>
 						</div>
             <div class="form-group">
-              <input class="form-control" name="password" type="password" placeholder="Password * ">
+              <input class="form-control" name="password" type="password" placeholder="Password *" required>
             </div>
             <div class="form-group">
-              <input class="form-control" name="cpassword" type="password" placeholder="Re-enter Password * ">
+              <input class="form-control" name="cpassword" type="password" placeholder="Re-enter Password *" required>
             </div>
             <div class="form-group form-check">
               <label class="form-check-label">
-                <input class="form-check-input" name="termsncondition" type="checkbox"> Terms & Conditions
+                <input class="form-check-input" name="termsncondition" type="checkbox" required> Terms & Conditions
               </label>
             </div>
 
