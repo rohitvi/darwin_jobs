@@ -243,9 +243,6 @@
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 
 <script type="text/javascript">
-  for (const el of document.querySelectorAll('.tagin')) {
-      tagin(el)
-    }
 	$(document).ready(function(){
       $('#country').on('change',function(){
         var country_id = this.value;
