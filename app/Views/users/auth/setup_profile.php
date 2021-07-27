@@ -52,37 +52,37 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>First Name</label>
-                                    <input type="text" name="firstname" value="<?= (isset($_POST['firstname'])) ? $_POST['firstname'] : '' ?>" class="form-control">
+                                    <input type="text" name="firstname" value="<?= (isset($data[0]['firstname'])) ? $data[0]['firstname'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Last Name</label>
-                                    <input type="text" name="lastname" value="<?= (isset($data[0]['lastname'])) ? $data[0]['lastname'] : '' ?>" class="form-control">
+                                    <input type="text" name="lastname" value="<?= (isset($data[0]['lastname'])) ? $data[0]['lastname'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Email</label>
-                                    <input type="email" name="email" value="<?= (isset($data[0]['email'])) ? $data[0]['email'] : '' ?>" class="form-control">
+                                    <input type="email" name="email" value="<?= (isset($data[0]['email'])) ? $data[0]['email'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Phone </label>
-                                    <input type="text" name="mobile_no" value="<?= (isset($data[0]['mobile_no'])) ? $data[0]['mobile_no'] : '' ?>" class="form-control">
+                                    <input type="text" name="mobile_no" value="<?= (isset($data[0]['mobile_no'])) ? $data[0]['mobile_no'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Date of Birth:</label>
-                                    <input type="text" name="dob" id="dob" value="<?= (isset($data[0]['dob'])) ? $data[0]['dob'] : '' ?>" class="form-control">
+                                    <input type="text" name="dob" id="dob" value="<?= (isset($data[0]['dob'])) ? $data[0]['dob'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Age * </label>
-                                    <input type="text" name="age" id="age" value="<?= (isset($data[0]['age'])) ? $data[0]['age'] : '' ?>" class="form-control">
+                                    <input type="text" name="age" id="age" value="<?= (isset($data[0]['age'])) ? $data[0]['age'] : '' ?>" class="form-control" required>
                                     <!-- <select name="age" class="form-control  ">
                                     <?php for ($i = 11; $i < 80; $i++) : ?>
                                         <?php if ($data[0]['age'] == $i) : ?>
@@ -97,7 +97,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Category</label>
-                                    <select class="form-control" name="category">
+                                    <select class="form-control" name="category" required>
                                     <option value="">Select Category</option>
                                     <?php foreach ($categories as $category) : ?>
                                         <?php if ($data[0]['category'] == $category['id']) : ?>
@@ -112,13 +112,13 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Job Title</label>
-                                    <input type="text" name="job_title" value="<?= (isset($data[0]['job_title'])) ? $data[0]['job_title'] : '' ?>" class="form-control">
+                                    <input type="text" name="job_title" value="<?= (isset($data[0]['job_title'])) ? $data[0]['job_title'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Experience</label>
-                                    <select name="experience" class="form-control">
+                                    <select name="experience" class="form-control" required>
                                     <option value="0-1" <?php if ($data[0]['experience'] == '0-1') {
                                         echo "selected";
                                     } ?>>0-1 Years</option>
@@ -143,13 +143,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Skills</label>
-                                    <input type="text" name="skills" value="<?= (isset($data[0]['skills'])) ? $data[0]['skills'] : '' ?>" class="form-control tagin">
+                                    <input type="text" name="skills" value="<?= (isset($data[0]['skills'])) ? $data[0]['skills'] : '' ?>" class="form-control tagin" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Current Salary(INR)</label>
-                                    <select name="current_salary" class="form-control  ">
+                                    <select name="current_salary" class="form-control" required>
                                     <?php for ($i = 500; $i < 10000; $i = $i + 500) : ?>
                                         <?php if ($data[0]['current_salary'] == $i) : ?>
                                         <option value="<?= $i; ?>" selected> <?= $i; ?> </option>
@@ -163,7 +163,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Expected Salary(INR)</label>
-                                    <select name="expected_salary" class="form-control  ">
+                                    <select name="expected_salary" class="form-control" required>
                                     <?php for ($i = 500; $i < 10000; $i = $i + 500) : ?>
                                         <?php if ($data[0]['expected_salary'] == $i) : ?>
                                         <option value="<?= $i; ?>" selected> <?= $i; ?> </option>
@@ -178,7 +178,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Country</label>
-                                    <select class="form-control  " id="country" name="country">
+                                    <select class="form-control" id="country" name="country" required>
                                         <option value="">Select Country</option>
                                         <?php foreach ($countries as $country) : ?>
                                         <?php if ($data[0]['country'] == $country['id']) : ?>
@@ -196,7 +196,7 @@
                                     <?php
                                     $states = get_country_states($data[0]['country']);
                                     $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                                    echo form_dropdown('state', $options, $data[0]['state'], 'class="state form-control  "');
+                                    echo form_dropdown('state', $options, $data[0]['state'], 'class="state form-control" required');
                                     ?>
                                 </div>
                             </div>
@@ -206,14 +206,14 @@
                                     <?php
                                     $cities = get_state_cities($data[0]['state']);
                                     $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                                    echo form_dropdown('city', $options, $data[0]['city'], 'class="city form-control  "');
+                                    echo form_dropdown('city', $options, $data[0]['city'], 'class="city form-control" required');
                                     ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Full Address</label>
-                                    <input type="text" name="address" value="<?= (isset($data[0]['address'])) ? $data[0]['address'] : '' ?>" class="form-control">
+                                    <input type="text" name="address" value="<?= (isset($data[0]['address'])) ? $data[0]['address'] : '' ?>" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-6 text-right mt-3">
