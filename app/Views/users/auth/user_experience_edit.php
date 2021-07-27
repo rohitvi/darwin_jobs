@@ -1,21 +1,21 @@
 <form action="user_experience_update" method="post">
     <div class="row">
-        <input type="hidden" name="exp_id" value="<?= $expedit['id'] ?>">
+        <input type="hidden" name="exp_id" value="<?= $expedit['id'] ?>" required>
         <div class="col-md-6">
             <label>Job Title</label>
-            <input class="form-control valid" name="job_title" type="text" value="<?= $expedit['job_title'] ?>">
+            <input class="form-control valid" name="job_title" type="text" value="<?= $expedit['job_title'] ?>" required>
         </div>
 
         <div class="col-md-6">
             <label>Company</label>         
-            <input class="form-control valid" name="company" value="<?= $expedit['company'] ?>"  type="text">        
+            <input class="form-control valid" name="company" value="<?= $expedit['company'] ?>"  type="text" required>        
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
             <label>Country</label>
-                    <select class="form-control select" id="country" name="country">
+                    <select class="form-control select" id="country" name="country" required>
                         <option value="">Select Country</option>
                         <?php foreach($countries as $country):?>
                         <?php if($expedit['country'] == $country['id']): ?>
@@ -30,14 +30,14 @@
             <label>Start Month</label>         
             <?php 
             $options = get_months_list();
-            echo form_dropdown('starting_month',$options,$expedit['starting_month'],'class="form-control"');
+            echo form_dropdown('starting_month',$options,$expedit['starting_month'],'class="form-control" required');
             ?>    
         </div>
         <div class="col-md-3">
             <label>Start Year</label>         
             <?php 
             $options = get_years_list();
-            echo form_dropdown('starting_year',$options,$expedit['starting_year'],'class="form-control"');
+            echo form_dropdown('starting_year',$options,$expedit['starting_year'],'class="form-control" required');
             ?> 
         </div>
     </div>
@@ -67,7 +67,7 @@
     <div class="row">
         <div class="col-md-12">
         <h5>Description</h5>
-        <textarea name="description" class="form-control" rows="5"><?= $expedit['description'] ?></textarea>
+        <textarea name="description" class="form-control" rows="5" required><?= $expedit['description'] ?></textarea>
         </div>
     </div>
     <div class="row">
