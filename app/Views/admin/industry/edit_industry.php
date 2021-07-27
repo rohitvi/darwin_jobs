@@ -35,7 +35,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Industry Name</label>
-                    <input type="text" name="industry" class="form-control" id="industry" value="<?php echo  $industry_row[0]['name'];?>" placeholder="industry Name">
+                    <input type="text" name="industry" class="form-control" id="industry" value="<?php echo  $industry_row[0]['name'];?>" placeholder="industry Name" required>
                     <?php
                    // print_r($validation);
                       if(isset($validation) && $validation->hasError('industry')){

@@ -36,7 +36,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Job Title*</label>
-                                        <input type="text" name="job_title" value="<?= $job_detail['title']; ?>" class="form-control">
+                                        <input type="text" name="job_title" value="<?= $job_detail['title']; ?>" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Job Type*</label>
@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Job Category*</label>
-                                        <select class="form-control select2bs4" name="category">
+                                        <select class="form-control select2bs4" name="category" required>
                                             <option>Select Category</option>
                                             <?php foreach ($categories as $category) : ?>
                                                 <?php if ($job_detail['category'] == $category['id']) : ?>
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Job Indusry*</label>
-                                        <select class="form-control select2bs4" name="industry">
+                                        <select class="form-control select2bs4" name="industry" required>
                                             <option>Select Indusry</option>
                                             <?php foreach ($industries as $industry) : ?>
                                                 <?php if ($job_detail['industry'] == $industry['id']) : ?>
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Position Available *</label>
-                                        <select name="total_positions" class="form-control">
+                                        <select name="total_positions" class="form-control" required>
                                             <?php for ($i = 1; $i < 30; $i++) : ?>
                                                 <?php if ($job_detail['total_positions'] == $i) : ?>
                                                     <option value="<?= $i; ?>" selected><?= $i; ?></option>
@@ -96,7 +96,7 @@
                                                 <div class="form-group">
                                                     <?php
                                                     $options = get_experience_list('Minimum');
-                                                    echo form_dropdown('min_experience', $options, $min, 'class="form-control"');
+                                                    echo form_dropdown('min_experience', $options, $min, 'class="form-control" required');
                                                     ?>
                                                 </div>
                                             </div>
@@ -104,7 +104,7 @@
                                                 <div class="form-group">
                                                     <?php
                                                     $options = get_experience_list('Maximum');
-                                                    echo form_dropdown('max_experience', $options, $max, 'class="form-control"');
+                                                    echo form_dropdown('max_experience', $options, $max, 'class="form-control" required');
                                                     ?>
                                                 </div>
                                             </div>
@@ -115,19 +115,19 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <input type="number" name="min_salary" class="form-control" placeholder="Minimum" value="<?= $job_detail['min_salary'] ?>">
+                                                    <input type="number" name="min_salary" class="form-control" placeholder="Minimum" value="<?= $job_detail['min_salary'] ?>" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <input type="number" name="max_salary" class="form-control" placeholder="Maximum" value="<?= $job_detail['max_salary'] ?>">
+                                                    <input type="number" name="max_salary" class="form-control" placeholder="Maximum" value="<?= $job_detail['max_salary'] ?>" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Salary Period *</label>
-                                        <select name="salary_period" class="form-control select2bs4">
+                                        <select name="salary_period" class="form-control select2bs4" required>
                                             <option value="Hourly" <?= ($job_detail['salary_period'] == 'Hourly') ? 'selected' : '' ?>>Hourly</option>
                                             <option value="Weekly" <?= ($job_detail['salary_period'] == 'Weekly') ? 'selected' : '' ?>>Weekly</option>
                                             <option value="Monthly" <?= ($job_detail['salary_period'] == 'Monthly') ? 'selected' : '' ?>>Monthly</option>
@@ -135,15 +135,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label> Skills*</label>
-                                        <input type="text" name="skills" value="<?= $job_detail['skills']; ?>" class="form-control" placeholder="e.g. job title, responsibilites">
+                                        <input type="text" name="skills" value="<?= $job_detail['skills']; ?>" class="form-control" placeholder="e.g. job title, responsibilites" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Job Description*</label>
-                                        <textarea name="description" class="textarea form-control" id="exampleFormControlTextarea1" rows="5"><?= $job_detail['description']; ?></textarea>
+                                        <textarea name="description" class="textarea form-control" id="exampleFormControlTextarea1" rows="5" required><?= $job_detail['description']; ?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Gender Requirement*</label>
-                                        <select name="gender" class="form-control">	
+                                        <select name="gender" class="form-control" required>	
                                             <option value="Male" <?php if($job_detail['gender'] == 'Male'){ echo "selected";} ?> >Male</option>
                                             <option value="Female" <?php if($job_detail['gender'] == 'Female'){ echo "selected";} ?> >Female</option>
                                             <option value="No Preference" <?php if($job_detail['gender'] == 'No Preference'){ echo "selected";} ?> >No Preference</option>
@@ -154,12 +154,12 @@
                                         <?php
                                         $types = get_employment_type_list();
                                         $options = array('' => 'Select Employement Type') + array_column($types, 'type', 'id');
-                                        echo form_dropdown('employment_type', $options, $job_detail['employment_type'], 'class="form-control select2bs4"');
+                                        echo form_dropdown('employment_type', $options, $job_detail['employment_type'], 'class="form-control select2bs4" required');
                                         ?>
                                     </div>
                                     <div class="form-group">
                                         <label>Education*</label>
-                                        <select class="form-control select2bs4" name="education">
+                                        <select class="form-control select2bs4" name="education" required>
                                             <option value="">Select Education</option>
                                             <?php foreach ($educations as $education) : ?>
                                                 <?php if ($job_detail['education'] == $education['id']) : ?>
@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Country *</label>
-                                        <select class="country form-control select2bs4" name="country">
+                                        <select class="country form-control select2bs4" name="country" required>
                                             <option>Select Country</option>
                                             <?php foreach ($countries as $country) : ?>
                                                 <?php if ($job_detail['country'] == $country['id']) : ?>
@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Location*</label>
-                                        <input type="text" name="location" value="<?= $job_detail['location']; ?>" class="form-control" placeholder="Type Address">
+                                        <input type="text" name="location" value="<?= $job_detail['location']; ?>" class="form-control" placeholder="Type Address" required>
                                     </div>
                                 </div>
                                 <div class="card-footer">
