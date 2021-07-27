@@ -10,3 +10,10 @@
 	margin: 0!important;
 	padding-bottom: 14px!important;
 }
+.job_main_right .form-control{
+	border: 1px solid #ff6158;
+}
+
+.select2  {
+	border: 1px solid #ff6158;
+}

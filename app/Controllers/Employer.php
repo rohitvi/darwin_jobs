@@ -708,6 +708,7 @@ class Employer extends BaseController
         $get['educations'] = $this->EmployerModel->get_education();
         $get['countries'] = $this->EmployerModel->get_countries_list();
         $get['title'] = 'Post Job';
+        
         return view('employer/job/post', $get);
     }
 

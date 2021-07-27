@@ -688,7 +688,6 @@ $(document).on('click','.currently_working_here',function(){
 for (const el of document.querySelectorAll('.tagin')) {
       tagin(el)
 }
-
 $('.js-example-basic-single').select2();
 
 </script>
