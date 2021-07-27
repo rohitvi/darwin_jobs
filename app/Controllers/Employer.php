@@ -620,9 +620,8 @@ class Employer extends BaseController
 
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "employer_id" => ["label" => "employer_id", "rules" => "trim|required"],
-                "company_id" => ["label" => "company_id", "rules" => "trim|required"],
-                "job_title" => ["label" => "job_title", "rules" => "trim|required"],
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
+                "job_type" => ["label" => "Job Type", "rules" => "trim|required"],
                 "category" => ["label" => "category", "rules" => "trim|required"],
                 "industry" => ["label" => "industry", "rules" => "trim|required"],
                 "min_experience" => ["label" => "min_experience", "rules" => "trim|required"],
@@ -649,8 +648,8 @@ class Employer extends BaseController
             $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",",$skills);
             $data = array(
-                'employer_id' => $this->request->getPost('employer_id'),
-                'company_id' => $this->request->getPost('company_id'),
+                'employer_id' => session('employer_id'),
+                'company_id' => get_direct_value('companies','id','employer_id',session('employer_id')),
                 'title' => ucwords($this->request->getPost('job_title')),
                 'job_type' => $this->request->getPost('job_type'),
                 'category' => $this->request->getPost('category'),
@@ -772,11 +771,10 @@ class Employer extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                "employer_id" => ["label" => "employer_id", "rules" => "trim|required"],
-                "company_id" => ["label" => "company_id", "rules" => "trim|required"],
-                "job_title" => ["label" => "job_title", "rules" => "trim|required"],
-                "category" => ["label" => "category", "rules" => "trim|required"],
-                "industry" => ["label" => "industry", "rules" => "trim|required"],
+                "job_title" => ["label" => "job Title", "rules" => "trim|required"],
+                "job_type" => ["label" => "Job Type", "rules" => "trim|required"],
+                "category" => ["label" => "Category", "rules" => "trim|required"],
+                "industry" => ["label" => "Industry", "rules" => "trim|required"],
                 "min_experience" => ["label" => "min_experience", "rules" => "trim|required"],
                 "max_experience" => ["label" => "max_experience", "rules" => "trim|required"],
                 "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
@@ -802,8 +800,6 @@ class Employer extends BaseController
             $skills = ucwords($this->request->getPost('skills'));
             $skill = str_replace(" ", ",",$skills);
             $data = array(
-                'employer_id' => $this->request->getPost('employer_id'),
-                'company_id' => $this->request->getPost('company_id'),
                 'title' => ucwords($this->request->getPost('job_title')),
                 'job_type' => $this->request->getPost('job_type'),
                 'category' => $this->request->getPost('category'),

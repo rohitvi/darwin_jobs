@@ -1,4 +1,9 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
+<style>
+.ck-editor__editable_inline {
+    min-height: 200px;
+}
+</style>
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Post Job</h2>
@@ -130,16 +135,16 @@
 	            </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group ">
                 <label>Skills *</label>
                 <input type="text" name="skills" class="form-control tagin" placeholder="Skills" required>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>Job Description *</label>
-                <textarea name="description" class="form-control" placeholder="Type your message here ..." required></textarea>
+                <textarea name="description" id="description" class="textarea" placeholder="Type your message here ..." required></textarea>
               </div>
             </div>
             <div class="col-md-6">
@@ -218,7 +223,6 @@
                 </select>
               </div>
             </div>
-
           </div>
 
           </div>
@@ -241,48 +245,57 @@
 </main>
 	
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
-
 <script type="text/javascript">
+ClassicEditor.create( document.querySelector('#description'))
+  .then( editor => {
+          // console.log( editor );
+  } )
+  .catch( error => {
+          // console.error( error );
+  } );
+
 	$(document).ready(function(){
-      $('#country').on('change',function(){
-        var country_id = this.value;
-        $.ajax({
-          url: '<?= base_url('employer/getstates'); ?>',
-          type: 'POST',
-          data: {
-            country_id: country_id
-          },
-          cached: false,
-          success: function(result){
-            var json = JSON.parse(result);
-            var $state = $('#state');
-            for (var i = 0; i < json.length; i++) {
-              $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
-            }
+    $('#country').on('change',function(){
+      var country_id = this.value;
+      $.ajax({
+        url: '<?= base_url('employer/getstates'); ?>',
+        type: 'POST',
+        data: {
+          country_id: country_id
+        },
+        cached: false,
+        success: function(result){
+          var json = JSON.parse(result);
+          var $state = $('#state');
+          for (var i = 0; i < json.length; i++) {
+            $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
           }
-        });
-      });
-      $('#state').on('change',function(){
-        var state_id = this.value;
-        $.ajax({
-          url: '<?= base_url('employer/getcities'); ?>',
-          type: 'POST',
-          data: {state_id:state_id},
-          cached: false,
-          success: function(result){
-            var json = JSON.parse(result);
-            var $cities = $('#city');
-            for (var i = 0; i < json.length; i++) {
-              $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
-            }
-          }
-        });
+        }
       });
     });
+    $('#state').on('change',function(){
+      var state_id = this.value;
+      $.ajax({
+        url: '<?= base_url('employer/getcities'); ?>',
+        type: 'POST',
+        data: {state_id:state_id},
+        cached: false,
+        success: function(result){
+          var json = JSON.parse(result);
+          var $cities = $('#city');
+          for (var i = 0; i < json.length; i++) {
+            $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
+          }
+        }
+      });
+    });
+  });
 
-    for (const el of document.querySelectorAll('.tagin')) {
-      tagin(el)
-    }
+  for (const el of document.querySelectorAll('.tagin')) {
+    tagin(el)
+  }
 
-    $('.js-example-basic-single').select2();
+  $('.js-example-basic-single').select2();
+
+
 </script>
