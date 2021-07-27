@@ -22,8 +22,8 @@
       <div class="section-divider">
       </div>
       <form action="<?= base_url('employer/post'); ?>" method="post">
-        <input type="hidden" name="employer_id" value="<?= session('employer_id') ?>">
-	    <input type="hidden" name="company_id" value="<?= session('employer_id') ?>">
+        <input type="hidden" name="employer_id" value="<?= session('employer_id') ?>" required>
+	    <input type="hidden" name="company_id" value="<?= session('employer_id') ?>" required>
         <div class="big_form_group">
           <div class="row">
             <div class="col-md-6">
@@ -211,7 +211,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Is Featured *</label>
-                <select name="is_featured" class="js-example-basic-single form-control">
+                <select name="is_featured" class="js-example-basic-single form-control" required>
                   <option value="">Select Job Featured</option>
 	                <option value="yes">Yes</option>
 	                <option value="no">No</option>

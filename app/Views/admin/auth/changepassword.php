@@ -36,11 +36,11 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" placeholder="Enter Password" required>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Confirm Password</label>
-                    <input type="password" name="cpassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <input type="password" name="cpassword" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
                   </div>
                 </div>
                 <!-- /.card-body -->

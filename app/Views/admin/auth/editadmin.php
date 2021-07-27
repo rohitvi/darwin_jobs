@@ -36,23 +36,23 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name='username' value="<?= set_value('username', $data[0]['username']) ?>" placeholder="Enter email">
+                    <input type="text" class="form-control" id="username" name='username' value="<?= set_value('username', $data[0]['username']) ?>" placeholder="Enter Username" required>
                   </div>
                   <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstname" value="<?= set_value('firstname', $data[0]['firstname']) ?>" name="firstname" placeholder="Password">
+                    <input type="text" class="form-control" id="firstname" value="<?= set_value('firstname', $data[0]['firstname']) ?>" name="firstname" placeholder="Firstname" required>
                   </div>
                   <div class="form-group">
                    <label for="lastname">Last Name</label>
-                   <input type="text" class="form-control" id="lastname" value="<?= set_value('lastname', $data[0]['lastname']) ?>" name="lastname" placeholder="Password">
+                   <input type="text" class="form-control" id="lastname" value="<?= set_value('lastname', $data[0]['lastname']) ?>" name="lastname" placeholder="Lastname" required>
                   </div>
                   <div class="form-group">
                    <label for="email">Email</label>
-                   <input type="email" class="form-control" id="email" value="<?= set_value('email', $data[0]['email']) ?>" name="email" placeholder="Password">
+                   <input type="email" class="form-control" id="email" value="<?= set_value('email', $data[0]['email']) ?>" name="email" placeholder="Email" required>
                   </div>
                   <div class="form-group">
                    <label for="mobile_no">Mobile Number</label>
-                   <input type="number" class="form-control" id="mobile_no" value="<?= set_value('mobile_no', $data[0]['mobile_no']) ?>" name="mobile_no" placeholder="Password">
+                   <input type="number" class="form-control" id="mobile_no" value="<?= set_value('mobile_no', $data[0]['mobile_no']) ?>" name="mobile_no" placeholder="Mobile No" required>
                   </div>
                 </div>
                 <!-- /.card-body -->

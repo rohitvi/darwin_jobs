@@ -36,27 +36,27 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name='username' placeholder="Username">
+                    <input type="text" class="form-control" id="username" name='username' placeholder="Username" required>
                   </div>
                   <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name">
+                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name" required>
                   </div>
                   <div class="form-group">
                    <label for="lastname">Last Name</label>
-                   <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+                   <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
                   </div>
                   <div class="form-group">
                    <label for="email">Email</label>
-                   <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                   </div>
                   <div class="form-group">
                    <label for="mobile_no">Mobile Number</label>
-                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile Number">
+                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile Number" required>
                   </div>
                   <div class="form-group">
                    <label for="password">Password</label>
-                   <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                   <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                   </div>
                 </div>
                 <!-- /.card-body -->
