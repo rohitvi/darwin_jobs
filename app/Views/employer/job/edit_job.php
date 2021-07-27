@@ -37,7 +37,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Job Type *</label>
-               	<select name="job_type" class="custom-select form-control" required>
+               	<select name="job_type" class="js-example-basic-single form-control" required>
                     <option>Select Job Type</option>
                     	<?php foreach ($job_type as $value) : 
                     		if ($data[0]['job_type'] == $value['id']) : ?>
@@ -52,7 +52,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Job Category *</label>
-                <select name="category" class="custom-select form-control" required>
+                <select name="category" class="js-example-basic-single form-control" required>
                     <option value="">Select Job Category</option>
                     	<?php foreach ($job_category as $category) : ?>
                         	<?php if ($data[0]['category'] == $category['id']) : ?>
@@ -67,7 +67,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Industry *</label>
-                <select name="industry" class="custom-select form-control" required>
+                <select name="industry" class="js-example-basic-single form-control" required>
                     <option value="">Select Industry</option>
                     <?php foreach ($industry as $value) : ?>
                         	<?php if ($data[0]['industry'] == $value['id']) : ?>
@@ -82,7 +82,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Position Avaliable *</label>
-                <select name="total_positions" class="custom-select form-control" required>
+                <select name="total_positions" class="js-example-basic-single form-control" required>
                     <?php for ($i = 1; $i < 30; $i++) : ?>
                         <?php if ($data[0]['total_positions'] == $i) : ?>
                             <option value="<?= $i; ?>" selected><?= $i; ?></option>
@@ -101,27 +101,39 @@
 	                $min = $exp[0];
 	                $max = $exp[1];
 	            ?>
-	            <?php
-	                $options = get_experience_list('Minimum');
-	                echo form_dropdown('min_experience', $options, $min, 'class="form-control"');
-	            ?>
-	            <?php
-                    $options = get_experience_list('Maximum');
-                    echo form_dropdown('max_experience', $options, $max, 'class="form-control"');
-                ?>
+                  <div class="row">
+                        <div class="col-md-6">
+                        <?php
+                            $options = get_experience_list('Minimum');
+                            echo form_dropdown('min_experience', $options, $min, 'class="form-control js-example-basic-single"');
+                        ?>
+                        </div>
+                        <div class="col-md-6">
+                        <?php
+                              $options = get_experience_list('Maximum');
+                              echo form_dropdown('max_experience', $options, $max, 'class="form-control js-example-basic-single"');
+                          ?>
+                        </div>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Salary *</label>
-                <input type="number" name="min_salary" class="form-control" placeholder="Minimum Salary" value="<?= set_value('min_salary',$data[0]['min_salary']) ?>" required>
-                <input type="number" name="max_salary" class="form-control" placeholder="Maximum Salary" value="<?= set_value('max_salary',$data[0]['max_salary']) ?>" required>
+                <div class="row">
+                    <div class="col-md-6">
+                    <input type="text" name="min_salary" class="form-control" placeholder="Minimum Salary" value="<?= set_value('min_salary',$data[0]['min_salary']) ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                    <input type="text" name="max_salary" class="form-control" placeholder="Maximum Salary" value="<?= set_value('max_salary',$data[0]['max_salary']) ?>" required>
+                    </div>
+                    </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Salary Period *</label>
-                <select name="salary_period" class="custom-select form-control" required>
+                <select name="salary_period" class="js-example-basic-single form-control" required>
                     <option value="Hourly" <?= ($data[0]['salary_period'] == 'Hourly') ? 'selected' : '' ?>>Hourly</option>
                     <option value="Weekly" <?= ($data[0]['salary_period'] == 'Weekly') ? 'selected' : '' ?>>Weekly</option>
                     <option value="Monthly" <?= ($data[0]['salary_period'] == 'Monthly') ? 'selected' : '' ?>>Monthly</option>
@@ -131,7 +143,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Skill *</label>
-                <input type="text" name="skills" class="form-control" value="<?= set_value('skills',$data[0]['skills']); ?>" placeholder="Skills" required>
+                <input type="text" name="skills" class="form-control tagin" value="<?= set_value('skills',$data[0]['skills']); ?>" placeholder="Skills" required>
               </div>
             </div>
             <div class="col-md-6">
@@ -143,7 +155,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Gender Prefrence *</label>
-                <select name="gender" class="custom-select form-control" required>
+                <select name="gender" class="js-example-basic-single form-control" required>
                     <option value="No Prefrence" <?= ($data[0]['gender'] == 'No Prefrence') ? 'selected' : '' ?>>No Prefrence</option>
                     <option value="Male" <?= ($data[0]['gender'] == 'Male') ? 'selected' : '' ?>>Male</option>
                     <option value="Female" <?= ($data[0]['gender'] == 'Female') ? 'selected' : '' ?>>Female</option>
@@ -153,7 +165,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Employment Type *</label>
-                <select name="employment_type" class="custom-select form-control" required>
+                <select name="employment_type" class="js-example-basic-single form-control" required>
 	                <option value="">Select Employment Type</option>
 	                <?php foreach ($employment as $key => $value) : ?>
 	                	<?php if ($data[0]['employment_type'] == $value['id']) : ?>
@@ -168,7 +180,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Education Type *</label>
-                <select name="education" class="custom-select form-control" required>
+                <select name="education" class="js-example-basic-single form-control" required>
                     <option value="">Select Education Type</option>
                     <?php foreach ($educations as $row) : ?>
                     	<?php if ($data[0]['education'] == $row['id']) : ?>						<option value="<?= $row['id']; ?>" selected> <?= $row['type']; ?></option>
@@ -182,7 +194,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Country *</label>
-                <select name="country" id="country" class="custom-select form-control" required>
+                <select name="country" id="country" class="js-example-basic-single form-control" required>
                     <option value="">Select Country</option>
                     <?php foreach ($countries as $row) : 
                     	if ($data[0]['country'] == $row['id']) : ?>
@@ -200,7 +212,7 @@
                 <?php
                     $states = get_country_states($data[0]['country']);
                         $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                        echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state" required');
+                        echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state js-example-basic-single" required');
                     ?>
               </div>
             </div>
@@ -210,7 +222,7 @@
                 <?php
                     $cities = get_state_cities($data[0]['state']);
                     $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                    echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city" required');
+                    echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city js-example-basic-single" required');
                 ?>
               </div>
             </div>
@@ -223,7 +235,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Is Featured *</label>
-                <select name="is_featured" class="custom-select form-control">
+                <select name="is_featured" class="js-example-basic-single form-control">
                   <option value="">Select Job Featured</option>
 	                <option value="yes" <?= ($data[0]['is_featured'] == 'yes') ? 'selected' : '' ?>>Yes</option>
 	                <option value="no" <?= ($data[0]['is_featured'] == 'no') ? 'selected' : '' ?>>No</option>
@@ -233,7 +245,7 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Status *</label>
-                <select name="is_status" class="custom-select form-control">
+                <select name="is_status" class="js-example-basic-single form-control">
                   <option value="">Select Job Status</option>
 	                <option value="active" <?= ($data[0]['is_status'] == 'active') ? 'selected' : '' ?>>Active</option>
 	                <option value="inactive" <?= ($data[0]['is_status'] == 'inactive') ? 'selected' : '' ?>>InActive</option>
@@ -243,10 +255,6 @@
               </div>
             </div>
         </div>
-
-
-
-      
 
         <div class="form-group row">
           <div class="col-md-12 text-right">
@@ -301,4 +309,10 @@
         });
       });
     });
+
+    for (const el of document.querySelectorAll('.tagin')) {
+      tagin(el)
+    }
+
+    $('.js-example-basic-single').select2();
 </script>
