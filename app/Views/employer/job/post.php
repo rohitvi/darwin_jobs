@@ -120,11 +120,11 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Skills *</label>
-                <input type="text" name="skills" class="form-control" placeholder="Skills" required>
+                <input type="text" name="skills" class="form-control tagin" placeholder="Skills" required>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group ">
+              <div class="form-group">
                 <label>Job Description *</label>
                 <textarea name="description" class="form-control" placeholder="Type your message here ..." required></textarea>
               </div>
@@ -230,6 +230,9 @@
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 
 <script type="text/javascript">
+  for (const el of document.querySelectorAll('.tagin')) {
+      tagin(el)
+    }
 	$(document).ready(function(){
       $('#country').on('change',function(){
         var country_id = this.value;

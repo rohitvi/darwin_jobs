@@ -231,9 +231,8 @@
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
 <script>
     for (const el of document.querySelectorAll('.tagin')) {
-      tagin(el)
+        tagin(el)
     }
-
     var csfr_token_name = '<?= csrf_token() ?>';
     var csfr_token_value = '<?= csrf_hash() ?>';
     $(document).ready(function() {
