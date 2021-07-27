@@ -1630,7 +1630,6 @@ class Admin extends BaseController
         $data['experience'] = $this->adminModel->get_user_experience($id);
         $data['language'] = $this->adminModel->get_user_language($id);
         $data['query'] = $this->adminModel->userdetails($id);
-        //pre($data['language']);
         return view('admin/users/viewuser',$data);
     }
 
