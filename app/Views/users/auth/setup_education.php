@@ -39,24 +39,24 @@
                                 <?php 
                                     $educations = get_education_list();
                                     $options = array('' => 'Select Option') + array_column($educations,'type','id');
-                                    echo form_dropdown('level',$options,(isset($edu['degree'])) ? $edu['degree'] : '','class="form-control"');
+                                    echo form_dropdown('level',$options,(isset($edu['degree'])) ? $edu['degree'] : '','class="form-control" required');
                                 ?>
                             </div>
                             <div class="col-md-6">
                                 <label>Degree Title</label>
-                                <input class="form-control" name="title" type="text" value="<?= (isset($edu['degree_title'])) ? $edu['degree_title'] : '' ?>" placeholder="e.g., Computer Science">
+                                <input class="form-control" name="title" type="text" value="<?= (isset($edu['degree_title'])) ? $edu['degree_title'] : '' ?>" placeholder="e.g., Computer Science" required>
                             </div>
                             <div class="col-md-6">
                                 <label>Major Subjects</label>
-                                <input class="form-control" name="majors" type="text" value="<?= (isset($edu['major_subjects'])) ? $edu['major_subjects'] : '' ?>" placeholder="please specify your major subjects">
+                                <input class="form-control" name="majors" type="text" value="<?= (isset($edu['major_subjects'])) ? $edu['major_subjects'] : '' ?>" placeholder="please specify your major subjects" required>
                             </div>
                             <div class="col-md-6">
                                 <label>Institution</label>
-                                <input class="form-control" name="institution" type="text" value="<?= (isset($edu['institution'])) ? $edu['institution'] : '' ?>" placeholder="Institution">
+                                <input class="form-control" name="institution" type="text" value="<?= (isset($edu['institution'])) ? $edu['institution'] : '' ?>" placeholder="Institution" required>
                             </div>
                             <div class="col-md-6">
                                 <label>Country</label>
-                                <select class="form-control select" id="country" name="country">
+                                <select class="form-control select" id="country" name="country" required>
                                     <option value="">Select Country</option>
                                     <?php foreach($countries as $country):?>
                                     <?php if(isset($edu['country']) == $country['id']): ?>

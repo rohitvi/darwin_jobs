@@ -1104,6 +1104,15 @@ class Home extends BaseController
         $get['education'] = $this->HomeModel->get_user_education($id);
         $get['title'] = 'Complete Profile';
         if ($this->request->getMethod() == 'post') {
+            if ($_FILES['profile_picture']['name'] != '') {
+                $result = UploadFile($_FILES['profile_picture']);
+                if ($result['status'] == true) {
+                    $url = $result['result']['file_url'];
+                } else {
+                    $this->session->setFlashdata('error', $result['message']);
+                    return redirect()->to(base_url('home/setup/profile'));
+                }
+            }
             $rules = [
                 'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
                 'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
@@ -1121,8 +1130,10 @@ class Home extends BaseController
                 'state'             => ['label' => 'State', 'rules' => 'required'],
                 'city'              => ['label' => 'City', 'rules' => 'required'],
                 'address'           => ['label' => 'Address', 'rules' => 'required'],
-                'profile_picture'   => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]'],
             ];
+            if($get['data'][0]['profile_picture'] == ''){
+                $rules['profile_picture'] = ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'];
+            }
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to('/home/setup/profile');

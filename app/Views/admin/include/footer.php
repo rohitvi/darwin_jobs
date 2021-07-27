@@ -56,6 +56,7 @@
   <script src="<?= base_url('public/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
   <script src="<?= base_url('public/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
   <script src="<?= base_url('public/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
+  <script src="<?= base_url('public/users/js/tagin.min.js') ?>"></script>
 	<script>
 		$(function() {
 			$("#basic_filter").DataTable({

@@ -46,6 +46,8 @@
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
+  <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
+
   <!-- Jquery -->
   <script src="<?= base_url('./public/admin/plugins/jquery/jquery.min.js') ?>"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

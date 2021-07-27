@@ -127,7 +127,7 @@
 									</div>
 									<div class="form-group">
 										<label> Skills*</label>
-										<input type="text" name="skills" class="form-control" placeholder="e.g. job title, responsibilites">
+										<input type="text" name="skills" class="form-control tagin" placeholder="e.g. job title, responsibilites">
 									</div>
 									<div class="form-group">
 										<label>Job Description*</label>
@@ -204,6 +204,9 @@
 	</div>
 	<?php include(VIEWPATH . 'admin/include/footer.php'); ?>
 	<script type="text/javascript">
+		for (const el of document.querySelectorAll('.tagin')) {
+			tagin(el)
+		}
 		var base_url = '<?= base_url(); ?>';
 		var csfr_token_name = '<?= csrf_token() ?>';
 		var csfr_token_value = '<?= csrf_hash() ?>';
