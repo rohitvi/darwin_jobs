@@ -239,10 +239,18 @@ function get_company_name($company_id)
 {
     $db      = \Config\Database::connect();
     $builder = $db->table('companies');
-    return $builder->getWhere(array('employer_id' => $company_id))->getRowArray()['company_name'];
+    return $builder->getWhere(array('company_id' => $company_id))->getRowArray()['company_name'];
 }
-// Get Company Logo by id
+// Get Company Logo by company id
 function get_company_logo($company_id)
+{
+    $db      = \Config\Database::connect();
+    $builder = $db->table('companies');
+    return $builder->getWhere(array('id' => $company_id))->getRowArray()['company_logo'];
+}
+
+// Get Company Logo by employer id
+function get_company_logo_empid($company_id)
 {
     $db      = \Config\Database::connect();
     $builder = $db->table('companies');

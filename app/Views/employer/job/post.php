@@ -3,6 +3,9 @@
 .ck-editor__editable_inline {
     min-height: 200px;
 }
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+    border: 1px solid #ff6158;
+}
 </style>
 <div class='header_inner '>
   <div class="header_btm">
@@ -227,9 +230,9 @@
 
           </div>
         </div>
-        <div class="form-group row">
-          <div class="col-md-12 text-right">
-            <button type="submit" class="btn btn-primary">Update</button>
+        <div class="col-md-12 text-right">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Post</button>
           </div>
         </div>
 

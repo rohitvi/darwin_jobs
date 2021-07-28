@@ -142,7 +142,7 @@
               <div class="col-sm-12">
                 <div class="featured_box ">
                   <div class="fb_image">
-                    <img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($job['employer_id']) ?>">
+                    <img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($job['company_id']) ?>">
                   </div>
                   <div class="fb_content">
                     <h4><?= $job['title']; ?></h4>
@@ -150,7 +150,7 @@
                       <li>
                         <a href="#">
                           <i class="fas fa-landmark"></i>
-                          <?= get_company_name($job['company_id']); ?>
+                          <?= get_company_name($job['employer_id']); ?>
                         </a>
                       </li>
                       <li>

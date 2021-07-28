@@ -58,7 +58,7 @@ class HomeModel extends Model
     {
         $builder = $this->table('job_post');
 
-        $builder->select('id, title, company_id, job_slug, job_type, description, state, city, expiry_date, created_date, industry');
+        $builder->select('id, title, company_id, employer_id, job_slug, job_type, description, state, city, expiry_date, created_date, industry');
 
         if (!empty($search['title'])) {
             $search_text = explode('-', $search['title']);
