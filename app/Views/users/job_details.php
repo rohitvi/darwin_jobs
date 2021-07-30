@@ -174,9 +174,11 @@
       success: function(responses) {
         var response = responses.split('~');
         if ($.trim(response[0]) == 0) {
+          $('#cover').val("");
           toastr.error(response[1]);
         }
         if ($.trim(response[0]) == 1) {
+          $('#cover').val("");
           toastr.success(response[1]);
         }
       }

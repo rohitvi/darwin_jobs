@@ -147,7 +147,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Job Description *</label>
-                <textarea name="description" id="description" class="textarea" placeholder="Type your message here ..." required></textarea>
+                <textarea name="description" id="description" class="textarea" placeholder="Type your message here ..."></textarea>
               </div>
             </div>
             <div class="col-md-6">

@@ -131,7 +131,13 @@ class HomeModel extends Model
 
     public function apply_job($data)
     {
-        return $this->db->table('seeker_applied_job')->insert($data);
+        $builder = $this->db->table('seeker_applied_job');
+        $builder->where(array('seeker_id'=>$data['seeker_id'] , 'employer_id'=>$data['employer_id'] , 'job_id'=>$data['job_id']));
+        if ($builder->countAllResults() > 0) {
+            return 2;
+        }else{
+            return $this->db->table('seeker_applied_job')->insert($data);
+        }
     }
 
     public function delete_experience($id,$user_id)

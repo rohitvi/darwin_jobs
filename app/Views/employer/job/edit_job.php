@@ -1,5 +1,12 @@
 <?php include(VIEWPATH.'employer/include/header.php'); ?>
-
+<style>
+.ck-editor__editable_inline {
+    min-height: 200px;
+}
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+    border: 1px solid #ff6158;
+}
+</style>
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Edit Job</h2>
@@ -140,16 +147,16 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group ">
                 <label>Skill *</label>
                 <input type="text" name="skills" class="form-control tagin" value="<?= set_value('skills',$data[0]['skills']); ?>" placeholder="Skills" required>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group ">
+            <div class="col-md-12">
+              <div class="form-group">
                 <label>Job Description *</label>
-                <input name="description" class="form-control" placeholder="Type your message here ..." value="<?= $data[0]['description']; ?>" required>
+                <textarea name="description" id="description" class="textarea" placeholder="Type your message here ..."><?= $data[0]['description'] ?></textarea>
               </div>
             </div>
             <div class="col-md-6">
@@ -277,6 +284,13 @@
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
 
 <script type="text/javascript">
+   ClassicEditor.create( document.querySelector('#description'))
+  .then( editor => {
+          // console.log( editor );
+  } )
+  .catch( error => {
+          // console.error( error );
+  } );
 	var csfr_token_name = '<?= csrf_token() ?>';
     var csfr_token_value = '<?= csrf_hash() ?>';
 	$(document).ready(function(){

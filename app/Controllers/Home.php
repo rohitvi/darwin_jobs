@@ -625,7 +625,11 @@ class Home extends BaseController
                 'applied_date' => date('Y-m-d : h:m:s')
             ];
             $result = $this->HomeModel->apply_job($data);
-            if ($result->resultID == 1) {
+            if ($result == 2)
+            {
+                echo '1~ You Have Already Applied For This Job';
+                exit;
+            }elseif ($result->resultID == 1) {
                 $emp = get_employer_by_id($data['employer_id']);
                 $job = get_job_detail($data['job_id']);
                 $emp_to = $emp['email'];
