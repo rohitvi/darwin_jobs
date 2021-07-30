@@ -37,7 +37,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Education Name</label>
-                        <input type="text" name="type" class="form-control">
+                        <input type="text" name="type" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary">

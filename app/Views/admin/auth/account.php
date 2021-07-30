@@ -36,23 +36,23 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" value="<?= $data[0]['username'] ?>" class="form-control">
+                        <input type="text" name="username" value="<?= $data[0]['username'] ?>" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" value="<?= set_value('firstname', $data[0]['firstname']); ?>" name="firstname" class="form-control">
+                        <input type="text" value="<?= set_value('firstname', $data[0]['firstname']); ?>" name="firstname" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" value="<?= set_value('lastname', $data[0]['lastname']); ?>" name="lastname" class="form-control">
+                        <input type="text" value="<?= set_value('lastname', $data[0]['lastname']); ?>" name="lastname" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" value="<?= set_value('email', $data[0]['email']); ?>" name="email" class="form-control">
+                        <input type="text" value="<?= set_value('email', $data[0]['email']); ?>" name="email" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Mobile No</label>
-                        <input type="text" value="<?= set_value('mobileno', $data[0]['mobile_no']); ?>" name="mobileno" class="form-control">
+                        <input type="text" value="<?= set_value('mobileno', $data[0]['mobile_no']); ?>" name="mobileno" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary">

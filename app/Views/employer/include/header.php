@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/datatables/datatables.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/toastr/toastr.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
+    <script src="<?= base_url(); ?>/public/users/js/ckeditor.js"></script>
 </head>
 <div id="loader-wrapper">
             <div id="loader"></div>

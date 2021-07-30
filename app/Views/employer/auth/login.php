@@ -24,11 +24,11 @@
               <div class="com_class_form">
                 <div class="form-group">
               
-                  <input class="form-control" type="text" name="email" size="40" placeholder="Email address * ">
+                  <input class="form-control" type="text" name="email" size="40" placeholder="Email address *" required>
                 </div>
                 <div class="form-group">
                   
-                  <input class="form-control" type="password" name="password" placeholder=" Password * ">
+                  <input class="form-control" type="password" name="password" placeholder=" Password *" required>
                 </div>
                 
                 

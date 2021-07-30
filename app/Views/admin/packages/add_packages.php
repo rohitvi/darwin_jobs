@@ -38,7 +38,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Package Title</label>
-                    <input type="title" name="title" class="form-control <?php echo (isset($validation) && $validation->hasError('title')) ? 'is-invalid' : '';?>"  placeholder="eg. basic, premium">
+                    <input type="title" name="title" class="form-control <?php echo (isset($validation) && $validation->hasError('title')) ? 'is-invalid' : '';?>"  placeholder="eg. basic, premium" required>
                     <?php
                       if(isset($validation) && $validation->hasError('title')){
                         echo '<p class="invalid-feedback">'.$validation->getError('title').'</p>';
@@ -47,7 +47,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Price</label>
-                    <input type="price" name="price" class="form-control  <?php echo (isset($validation) && $validation->hasError('price')) ? 'is-invalid' : '';?>" id="exampleInputPassword1">
+                    <input type="price" name="price" class="form-control  <?php echo (isset($validation) && $validation->hasError('price')) ? 'is-invalid' : '';?>" id="exampleInputPassword1" required>
                     <?php
                       if(isset($validation) && $validation->hasError('price')){
                         echo '<p class="invalid-feedback">'.$validation->getError('price').'</p>';
@@ -56,7 +56,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">No of Days</label>
-                    <input type="number" name='no_of_days' class="form-control  <?php echo (isset($validation) && $validation->hasError('no_of_days')) ? 'is-invalid' : '';?>" id="exampleInputPassword1">
+                    <input type="number" name='no_of_days' class="form-control  <?php echo (isset($validation) && $validation->hasError('no_of_days')) ? 'is-invalid' : '';?>" id="exampleInputPassword1" required>
                     <?php
                       if(isset($validation) && $validation->hasError('no_of_days')){
                         echo '<p class="invalid-feedback">'.$validation->getError('no_of_days').'</p>';
@@ -65,7 +65,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">No of Posts</label>
-                    <input type="number" name='no_of_posts' class="form-control <?php echo (isset($validation) && $validation->hasError('no_of_posts')) ? 'is-invalid' : '';?>" id="exampleInputPassword1">
+                    <input type="number" name='no_of_posts' class="form-control <?php echo (isset($validation) && $validation->hasError('no_of_posts')) ? 'is-invalid' : '';?>" id="exampleInputPassword1" required>
                     <?php
                       if(isset($validation) && $validation->hasError('no_of_posts')){
                         echo '<p class="invalid-feedback">'.$validation->getError('no_of_posts').'</p>';
@@ -74,7 +74,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Package Detail</label>
-                    <input type="text" name='detail' class="form-control  <?php echo (isset($validation) && $validation->hasError('detail')) ? 'is-invalid' : '';?>" id="exampleInputPassword1">
+                    <input type="text" name='detail' class="form-control  <?php echo (isset($validation) && $validation->hasError('detail')) ? 'is-invalid' : '';?>" id="exampleInputPassword1" required>
                     <?php
                       if(isset($validation) && $validation->hasError('detail')){
                         echo '<p class="invalid-feedback">'.$validation->getError('detail').'</p>';
@@ -83,7 +83,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Sort Order</label>
-                    <input type="number" name='sort_order' class="form-control  <?php echo (isset($validation) && $validation->hasError('sort_order')) ? 'is-invalid' : '';?>" id="exampleInputPassword1">
+                    <input type="number" name='sort_order' class="form-control  <?php echo (isset($validation) && $validation->hasError('sort_order')) ? 'is-invalid' : '';?>" id="exampleInputPassword1" required>
                     <?php
                       if(isset($validation) && $validation->hasError('sort_order')){
                         echo '<p class="invalid-feedback">'.$validation->getError('sort_order').'</p>';

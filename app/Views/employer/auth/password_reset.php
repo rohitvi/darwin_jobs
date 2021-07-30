@@ -24,7 +24,7 @@
             <form method="post" id="reset">
               <div class="com_class_form">
                 <div class="form-group">
-                  <input class="form-control" type="email" name="email" size="40" placeholder="Email address * ">
+                  <input class="form-control" type="email" name="email" size="40" placeholder="Email address *" required>
                 </div>
                 <div class="form-group">
                   <input class="btn btn-primary reset-pass" type="submit" value="Reset Password">

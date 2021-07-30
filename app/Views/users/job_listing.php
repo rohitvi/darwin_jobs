@@ -150,7 +150,7 @@
                       <li>
                         <a href="#">
                           <i class="fas fa-landmark"></i>
-                          <?= get_company_name($job['company_id']); ?>
+                          <?= get_company_name($job['employer_id']); ?>
                         </a>
                       </li>
                       <li>

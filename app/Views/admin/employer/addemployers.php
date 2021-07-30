@@ -36,23 +36,23 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstname" name='firstname' placeholder="First name">
+                    <input type="text" class="form-control" id="firstname" name='firstname' placeholder="First name" required>
                   </div>
                   <div class="form-group">
                     <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
                   </div>
                   <div class="form-group">
                    <label for="email">Email</label>
-                   <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                   </div>
                   <div class="form-group">
                    <label for="password">Password</label>
-                   <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                   <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                   </div>
                   <div class="form-group">
                    <label for="cpassword">Confirm Password</label>
-                   <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password">
+                   <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" required>
                   </div>
                 </div>
                 <!-- /.card-body -->

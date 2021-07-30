@@ -37,23 +37,23 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstname" name='firstname' placeholder="First Name" value="<?= set_value('firstname', $data[0]['firstname']) ?>">
+                    <input type="text" class="form-control" id="firstname" name='firstname' placeholder="First Name" value="<?= set_value('firstname', $data[0]['firstname']) ?>" required>
                   </div>
                   <div class="form-group">
                     <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?= set_value('lastname', $data[0]['lastname']) ?>">
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?= set_value('lastname', $data[0]['lastname']) ?>" required>
                   </div>
                   <div class="form-group">
                    <label for="email">Email</label>
-                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email', $data[0]['email']) ?>">
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email', $data[0]['email']) ?>" required>
                   </div>
                   <div class="form-group">
                    <label for="mobile_no">Mobile Number</label>
-                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile Number" value="<?= set_value('mobile_no', $data[0]['mobile_no']) ?>">
+                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile Number" value="<?= set_value('mobile_no', $data[0]['mobile_no']) ?>" required>
                   </div>
                   <div class="form-group">
                    <label for="is_active">Select Status</label>
-                   <select class="form-control" id="country" name="is_active">
+                   <select class="form-control" id="country" name="is_active" required>
                       <option>Select Status</option>
                       <option value="1">Active</option>
                       <option value="0">Deactivate</option>

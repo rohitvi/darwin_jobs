@@ -37,27 +37,27 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="firstname">First Name *</label>
-                    <input type="text" class="form-control" id="firstname" name='firstname' placeholder="First name" value="<?= set_value('firstname', $data[0]['firstname']) ?>">
+                    <input type="text" class="form-control" id="firstname" name='firstname' placeholder="First name" value="<?= set_value('firstname', $data[0]['firstname']) ?>" required>
                   </div>
                   <div class="form-group">
                     <label for="lastname">Last Name *</label>
-                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?= set_value('lastname', $data[0]['lastname']) ?>">
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?= set_value('lastname', $data[0]['lastname']) ?>" required>
                   </div>
                   <div class="form-group">
                    <label for="email">Email *</label>
-                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email', $data[0]['eemail']) ?>">
+                   <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= set_value('email', $data[0]['eemail']) ?>" required>
                   </div>
                   <div class="form-group">
                    <label for="designation">Designation *</label>
-                   <input type="text" class="form-control" id="designation" name="designation" placeholder="Designation" value="<?= set_value('designation', $data[0]['designation']) ?>">
+                   <input type="text" class="form-control" id="designation" name="designation" placeholder="Designation" value="<?= set_value('designation', $data[0]['designation']) ?>" required>
                   </div>
                   <div class="form-group">
                    <label for="mobile_no">Mobile Number *</label>
-                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number" value="<?= set_value('mobile_no', $data[0]['mobile_no']) ?>">
+                   <input type="number" class="form-control" id="mobile_no" name="mobile_no" placeholder="Enter Mobile Number" value="<?= set_value('mobile_no', $data[0]['mobile_no']) ?>" required>
                   </div>
                   <div class="form-group">
                     <label for="country">Country *</label>
-                    <select class="form-control" id="country" name="country">
+                    <select class="form-control" id="country" name="country" required>
                       <option selected="selected">Select Country</option>
                       <?php foreach($countries as $value) : 
                         if ($data[0]['ecountry'] == $value['id']) : ?>
@@ -85,7 +85,7 @@
                   </div>
                   <div class="form-group">
                     <label for="address">Address *</label>
-                    <input type="text" class="form-control" id="address" name='address' placeholder="Address" value="<?= $data[0]['caddress'] ?>">
+                    <input type="text" class="form-control" id="address" name='address' placeholder="Address" value="<?= $data[0]['caddress'] ?>" required>
                   </div>
                   <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Update">
@@ -115,29 +115,29 @@
               <form id="companyForm" action="<?= base_url('admin/updatecompany/'.$data[0]['id']); ?>" method="post" enctype="multipart/form-data" >
                 <div class="card-body">
                   <div class="form-group">
-                            <label for="company_logo">Company Logo *  <?php if(!empty($data[0]['company_logo'])):?>
-                            <img src="<?= $data[0]['company_logo']; ?>" class="company_logo" style="width:50px"><?php endif; ?></label>
-                            <input type="file" class="form-control" id="company_logo" name='company_logo'>
+                    <label for="company_logo">Company Logo *  <?php if(!empty($data[0]['company_logo'])):?>
+                    <img src="<?= $data[0]['company_logo']; ?>" class="company_logo" style="width:50px"><?php endif; ?></label>
+                    <input type="file" class="form-control" id="company_logo" name='company_logo'>
                   </div>
                   <div class="form-group">
                     <label for="company_name">Company Name *</label>
-                    <input type="text" class="form-control" id="company_name" value="<?= set_value('company_name', $data[0]['company_name']) ?>" name='company_name' placeholder="Enter Company Name">
+                    <input type="text" class="form-control" id="company_name" value="<?= set_value('company_name', $data[0]['company_name']) ?>" name='company_name' placeholder="Enter Company Name" required>
                   </div>
                   <div class="form-group">
                     <label for="company_email">Company Email *</label>
-                    <input type="email" class="form-control" id="company_email" name='company_email' value="<?= set_value('email', $data[0]['eemail']) ?>" placeholder="Enter Company Email">
+                    <input type="email" class="form-control" id="company_email" name='company_email' value="<?= set_value('email', $data[0]['eemail']) ?>" placeholder="Enter Company Email" required>
                   </div>
                   <div class="form-group">
                     <label for="phone_no">Phone No. *</label>
-                    <input type="text" class="form-control" id="phone_no" name='phone_no' value="<?= set_value('phone_no', $data[0]['phone_no']) ?>" placeholder="Phone Number">
+                    <input type="text" class="form-control" id="phone_no" name='phone_no' value="<?= set_value('phone_no', $data[0]['phone_no']) ?>" placeholder="Phone Number" required>
                   </div>
                   <div class="form-group">
                     <label for="website">Website *</label>
-                    <input type="text" class="form-control" id="website" name='website' value="<?= set_value('website', $data[0]['website']) ?>" placeholder="Website">
+                    <input type="text" class="form-control" id="website" name='website' value="<?= set_value('website', $data[0]['website']) ?>" placeholder="Website" required>
                   </div>
                   <div class="form-group">
                     <label for="category">Category *</label>
-                    <select class="form-control" id="category" name="category">
+                    <select class="form-control" id="category" name="category" required>
                       <option selected="selected">Select Category</option>
                       <?php
                         foreach($categories as $key => $value) : 
@@ -150,12 +150,8 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="founded_date">Founded Date</label>
-                    <input type="date" class="form-control" id="founded_date" name='founded_date'>
-                  </div>
-                  <div class="form-group">
                     <label for="org_type">Organization Type*</label>
-                    <select class="form-control" id="org_type" name="org_type">
+                    <select class="form-control" id="org_type" name="org_type" required>
                       <option value="private">Private</option>
                       <option value="public">Public</option>
                       <option value="government">Government</option>
@@ -164,7 +160,7 @@
                   </div>
                   <div class="form-group">
                     <label for="no_of_employers">No. of Employers *</label>
-                    <select class="form-control" id="no_of_employers" name="no_of_employers">
+                    <select class="form-control" id="no_of_employers" name="no_of_employers" required>
                       <option value="1-10">1-10</option>
                       <option value="10-20">10-20</option>
                       <option value="20-30">20-30</option>
@@ -175,11 +171,11 @@
                   </div>
                   <div class="form-group">
                     <label for="description">Company Description *</label>
-                    <textarea class="form-control" id="description" name='description'><?= $data[0]['description'] ?></textarea>
+                    <textarea class="form-control" id="description" name='description' required><?= $data[0]['description'] ?></textarea>
                   </div>
                   <div class="form-group">
                     <label for="ccountry">Country *</label>
-                    <select class="form-control" id="ccountry" name="country">
+                    <select class="form-control" id="ccountry" name="country" required>
                       <option selected="selected">Select Country</option>
                       <?php foreach($countries as $value) : 
                         if ($data[0]['ccountry'] == $value['id']) : ?>
@@ -207,11 +203,11 @@
                   </div>
                   <div class="form-group">
                     <label for="postcode">Pin Code *</label>
-                    <input type="text" class="form-control" id="postcode" name='postcode' value="<?= set_value('postcode', $data[0]['postcode']) ?>" placeholder="Pin Code">
+                    <input type="text" class="form-control" id="postcode" name='postcode' value="<?= set_value('postcode', $data[0]['postcode']) ?>" placeholder="Pin Code" required>
                   </div>
                   <div class="form-group">
                     <label for="full_address">Full Address *</label>
-                    <input type="text" class="form-control" id="full_address" name='full_address' value="<?= $data[0]['eaddress'] ?>" placeholder="Full Address">
+                    <input type="text" class="form-control" id="full_address" name='full_address' value="<?= $data[0]['eaddress'] ?>" placeholder="Full Address" required>
                   </div>
                   <div class="form-group">
                     <label for="facebook_link">Facebook</label>

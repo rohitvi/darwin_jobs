@@ -159,7 +159,7 @@ class EmployerModel extends Model
 
     public function updatejob($id, $data)
     {
-        return $this->db->table('job_post')->where('id', $id)->update($data);
+        return $this->db->table('job_post')->where(array('id'=> $id,'employer_id'=>session('employer_id')))->update($data);
     }
 
     public function delete_job($id)

@@ -58,7 +58,7 @@ class HomeModel extends Model
     {
         $builder = $this->table('job_post');
 
-        $builder->select('id, title, company_id, job_slug, job_type, description, state, city, expiry_date, created_date, industry');
+        $builder->select('id, title, company_id, employer_id, job_slug, job_type, description, state, city, expiry_date, created_date, industry');
 
         if (!empty($search['title'])) {
             $search_text = explode('-', $search['title']);
@@ -131,7 +131,13 @@ class HomeModel extends Model
 
     public function apply_job($data)
     {
-        return $this->db->table('seeker_applied_job')->insert($data);
+        $builder = $this->db->table('seeker_applied_job');
+        $builder->where(array('seeker_id'=>$data['seeker_id'] , 'employer_id'=>$data['employer_id'] , 'job_id'=>$data['job_id']));
+        if ($builder->countAllResults() > 0) {
+            return 2;
+        }else{
+            return $this->db->table('seeker_applied_job')->insert($data);
+        }
     }
 
     public function delete_experience($id,$user_id)

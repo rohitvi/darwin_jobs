@@ -34,12 +34,12 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Category Name</label>
-                    <input type="text" name="category" class="form-control" placeholder="Category Name">
+                    <input type="text" name="category" class="form-control" placeholder="Category Name" required>
                   </div>
 
                   <div class='form-group'>
                       <label for="iconfield">Add Icon Field</label>
-                      <input type="text" name="iconfield" class="form-control" placeholder="Add Icon Field">
+                      <input type="text" name="iconfield" class="form-control" placeholder="Add Icon Field" required>
                   </div>
                 </div>
 

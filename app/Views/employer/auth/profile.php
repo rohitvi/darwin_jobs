@@ -34,7 +34,6 @@
       <div class="section-divider">
       </div>
       <form action="<?= base_url('employer/personal_info_update') ?>" method="post" enctype="multipart/form-data">
-        <!-- <input type="hidden" name="_method" value="PUT" /> -->
         <div class="big_form_group">
           <div class="row">
             <div class="col-md-6">
@@ -55,37 +54,37 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>First Name</label>
-                <input name="firstname" type="text" class="form-control" placeholder="Enter First Name" value="<?= $data[0]['firstname'] ?>">
+                <input name="firstname" type="text" class="form-control" placeholder="Enter First Name" value="<?= $data[0]['firstname'] ?>" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Last Name</label>
-                <input name="lastname" type="text" class="form-control" placeholder="Enter Last Name" value="<?= $data[0]['lastname'] ?>">
+                <input name="lastname" type="text" class="form-control" placeholder="Enter Last Name" value="<?= $data[0]['lastname'] ?>" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Email</label>
-                <input name="email" type="email" class="form-control" placeholder="Enter Email" value="<?= $data[0]['email'] ?>">
+                <input name="email" type="email" class="form-control" placeholder="Enter Email" value="<?= $data[0]['email'] ?>" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Designation</label>
-                <input name="designation" type="text" class="form-control" placeholder="Enter Designation" value="<?= $data[0]['designation'] ?>" >
+                <input name="designation" type="text" class="form-control" placeholder="Enter Designation" value="<?= $data[0]['designation'] ?>" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Phone Number</label>
-                <input name="mobile_no" type="number" class="form-control" placeholder="Enter phone Number" value="<?= $data[0]['mobile_no'] ?>">
+                <input name="mobile_no" type="number" class="form-control" placeholder="Enter phone Number" value="<?= $data[0]['mobile_no'] ?>" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Country</label>
-                <select id="country" name="country" class="form-control js-example-basic-single">
+                <select id="country" name="country" class="form-control js-example-basic-single" required>
                   <?php foreach($countries as $value) : 
                     if ($value['id'] == $data[0]['country']) : ?>
                     <option value="<?= $value['id'] ?>" selected><?= $value['name'] ?></option>
@@ -102,7 +101,7 @@
                 <?php
                   $states = get_country_states($data[0]['country']);
                   $options = array('' => 'Select State') + array_column($states, 'name', 'id');
-                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state js-example-basic-single"');
+                  echo form_dropdown('state', $options, $data[0]['state'], 'class="form-control select2bs4 state js-example-basic-single" required');
                 ?>
               </div>
             </div>
@@ -112,14 +111,14 @@
                 <?php
                   $cities = get_state_cities($data[0]['state']);
                   $options = array('' => 'Select City') + array_column($cities, 'name', 'id');
-                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city js-example-basic-single"');
+                  echo form_dropdown('city', $options, $data[0]['city'], 'class="form-control select2bs4 city js-example-basic-single" required');
                 ?>
               </div>
             </div>
             <div class="col-md-12">
               <div class="form-group ">
                 <label>Address</label>
-                <input name="address" type="text" class="form-control" placeholder="Enter Adress" value="<?= $data[0]['address'] ?>">
+                <input name="address" type="text" class="form-control" placeholder="Enter Adress" value="<?= $data[0]['address'] ?>" required>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@
         <ul>
           <li>
             <i class="fas fa-landmark"></i>
-            <?= get_company_name($data['company_id']) ?>
+            <?= get_company_name($data['employer_id']) ?>
           </li>
           <li>
             <i class="fas fa-map-marker-alt"></i>
@@ -21,11 +21,12 @@
             <i class="far fa-envelope-open"></i>
             Openings  : <?= $data['total_positions'] ?>
           </li>
-          <li>
+          <br>
+          <li class="mt-2">
             <i class="far fa-user"></i>
             Job Applicants : <?= (empty($no_of_count[0]['job_applicants'])) ? '0' : $no_of_count[0]['job_applicants'] ?>
           </li>
-          <li>
+          <li class="mt-2">
             <i class="far fa-clock"></i>
             <?= time_ago($data['created_date']) ?>
           </li>
@@ -173,9 +174,11 @@
       success: function(responses) {
         var response = responses.split('~');
         if ($.trim(response[0]) == 0) {
+          $('#cover').val("");
           toastr.error(response[1]);
         }
         if ($.trim(response[0]) == 1) {
+          $('#cover').val("");
           toastr.success(response[1]);
         }
       }

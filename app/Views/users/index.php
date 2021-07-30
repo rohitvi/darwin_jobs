@@ -150,7 +150,7 @@
 					<div class="featured_box ">
 						<div class="fb_image">
 							<a href="<?= base_url('home/jobdetails/' . $post['id']) ?>">
-								<img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= (isset($post['company_id'])) ? get_company_logo($post['company_id']) : base_url('public/users/images/ava.jpg') ?>">
+								<img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= (isset($post['employer_id'])) ? get_company_logo_empid($post['employer_id']) : base_url('public/users/images/ava.jpg') ?>">
 							</a>
 						</div>
 						<div class='fb_content'>
@@ -161,7 +161,7 @@
 								<li>
 									<a href="#">
 										<i class="fas fa-landmark"></i>
-										<?= get_company_name($post['company_id']) ?>
+										<?= get_company_name($post['employer_id']) ?>
 									</a>
 								</li>
 								<li>
