@@ -130,18 +130,13 @@
 	            </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group ">
                 <label>Skills *</label>
                 <input type="text" name="skills" class="form-control tagin" placeholder="Skills" required>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Job Description *</label>
-                <textarea name="description" class="form-control" placeholder="Type your message here ..." required></textarea>
-              </div>
-            </div>
+            
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Gender Requirement *</label>
@@ -219,6 +214,13 @@
               </div>
             </div>
 
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Job Description *</label>
+                <textarea name="description" class="form-control" placeholder="Type your message here ..." required></textarea>
+              </div>
+            </div>
+
           </div>
 
           </div>
@@ -285,4 +287,6 @@
     }
 
     $('.js-example-basic-single').select2();
+
+    CKEDITOR.replace( 'description' );
 </script>
