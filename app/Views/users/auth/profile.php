@@ -126,9 +126,9 @@
                       <div class="form-group ">
                         <label>Experience</label>
                         <select name="experience" class="form-control js-example-basic-single" required>
-                          <option value="0-1" <?php if ($data[0]['experience'] == '0-1') {
-                              echo "selected";
-                          } ?>>0-1 Years</option>
+                            <option value="0-1" <?php if ($data[0]['experience'] == '0-1') {
+                                echo "selected";
+                            } ?>>0-1 Years</option>
                           <option value="1-2" <?php if ($data[0]['experience'] == '1-2') {
                               echo "selected";
                           } ?>>1-2 Years</option>

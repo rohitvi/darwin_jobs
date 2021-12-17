@@ -219,7 +219,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/registeradmin'));
             }
         }
-        $data['title'] = 'Register Admin';
+        
         return view('admin/auth/register', $data);
     }
 
@@ -277,7 +277,7 @@ class Admin extends BaseController
                 return redirect()->to('/');
             }
         }
-        $data['title'] = 'Change Password';
+            $data['title'] = 'Change Password';
         return view('admin/auth/changepassword', $data);
     }
 
@@ -390,7 +390,7 @@ class Admin extends BaseController
             'iconfield' => ['label' =>'Add Icon', 'rules' => 'required'],
             'status' => ['label' =>'Status', 'rules' => 'required']
                 ];
-
+                
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/edit_category/'.$id));

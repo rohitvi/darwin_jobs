@@ -30,7 +30,7 @@ class BaseController extends Controller
 	protected $helpers = ["function","common","form","date","url"];
 
 	/**
-	 * Constructor.
+	 * Constructor.	
 	 *
 	 * @param RequestInterface  $request
 	 * @param ResponseInterface $response
