@@ -204,7 +204,7 @@
 	</div>
 	<?php include(VIEWPATH . 'admin/include/footer.php'); ?>
 	<script type="text/javascript">
-		for (const el of document.querySelectorAll('.tagin')) {
+	    for (const el of document.querySelectorAll('.tagin')) {
 			tagin(el)
 		}
 		var base_url = '<?= base_url(); ?>';

@@ -39,18 +39,18 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
-        
+
         $id = session('employer_id');
         $data['total_posted_jobs'] = $this->EmployerModel->total_posted_job($id);
         $data['job_seekers_applied'] = $this->EmployerModel->job_seekers_applied($id);
         $data['current_package'] = $this->EmployerModel->get_active_package($id);
         $data['total_featured_jobs'] = $this->EmployerModel->count_posted_jobs($data['current_package']['package_id'], 1, $data['current_package']['payment_id']);
         $data['title'] = 'Employer Dashboard';
-        $data['result'] = $this->EmployerModel->set_expired_time($id,$data['current_package']['package_id']);
-        if($data['result'] == 1 ){
+        $data['result'] = $this->EmployerModel->set_expired_time($id, $data['current_package']['package_id']);
+        if ($data['result'] == 1) {
             $this->session->setFlashdata('error', 'Package Days Expired');
         }
         return view('employer/dashboard', $data);
@@ -89,7 +89,7 @@ class Employer extends BaseController
                     'employer_username' => $logindata['username'],
                     'profile_completed' => $logindata['profile_completed'],
                     'company_completed' => $logindata['company_completed'],
-                    'is_verify' =>  $logindata['is_verify']
+                    'is_verify' => $logindata['is_verify'],
                 ];
                 $this->session->set($employerdata);
                 echo '1~ You Have Successfully Logged in';
@@ -111,36 +111,36 @@ class Employer extends BaseController
                     $this->session->setFlashdata('error', $result['message']);
                     return redirect()->to(base_url('employer/profile'));
                 }
-                $rules = [ 'profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'] ];
+                $rules = ['profile_picture' => ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required']];
             }
             $rules = [
-                    'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
-                    'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
-                    'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
-                    'designation'       => ['label' => 'Designation', 'rules' => 'required'],
-                    'mobile_no'         => ['label' => 'Mobile No.', 'rules' => 'required'],
-                    'country'           => ['label' => 'Country', 'rules' => 'required'],
-                    'state'             => ['label' => 'State', 'rules' => 'required'],
-                    'city'              => ['label' => 'City', 'rules' => 'required'],
-                    'address'           => ['label' => 'Address', 'rules' => 'required']
-                ];
-            
+                'firstname' => ['label' => 'First Name', 'rules' => 'required'],
+                'lastname' => ['label' => 'Last Name', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'designation' => ['label' => 'Designation', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No.', 'rules' => 'required'],
+                'country' => ['label' => 'Country', 'rules' => 'required'],
+                'state' => ['label' => 'State', 'rules' => 'required'],
+                'city' => ['label' => 'City', 'rules' => 'required'],
+                'address' => ['label' => 'Address', 'rules' => 'required'],
+            ];
+
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('employer/profile'));
             }
             $update_per_info = array(
-                    'firstname' => ucwords($this->request->getPost('firstname')),
-                    'lastname' => ucwords($this->request->getPost('lastname')),
-                    'email' => $this->request->getPost('email'),
-                    'designation' => ucwords($this->request->getPost('designation')),
-                    'mobile_no' => $this->request->getPost('mobile_no'),
-                    'country' => $this->request->getPost('country'),
-                    'state' => $this->request->getPost('state'),
-                    'city' => $this->request->getPost('city'),
-                    'address' => ucwords($this->request->getPost('address')),
-                    'profile_completed' => 1,
-                );
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
+                'email' => $this->request->getPost('email'),
+                'designation' => ucwords($this->request->getPost('designation')),
+                'mobile_no' => $this->request->getPost('mobile_no'),
+                'country' => $this->request->getPost('country'),
+                'state' => $this->request->getPost('state'),
+                'city' => $this->request->getPost('city'),
+                'address' => ucwords($this->request->getPost('address')),
+                'profile_completed' => 1,
+            );
 
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_per_info['profile_picture'] = $url;
@@ -168,14 +168,14 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->getMethod() == 'put') {
             $rules = [
                 'currentpassword' => ['label' => 'Current password', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]']
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'Confirm password', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . $this->validation->listErrors();
@@ -185,7 +185,7 @@ class Employer extends BaseController
             $data = array(
                 'id' => $id,
                 'old_password' => $this->request->getPost('currentpassword'),
-                'new_password' =>  password_hash($this->request->getPost('cpassword'), PASSWORD_DEFAULT)
+                'new_password' => password_hash($this->request->getPost('cpassword'), PASSWORD_DEFAULT),
             );
 
             $query = $this->EmployerAuthModel->changepassword($id, $data);
@@ -205,7 +205,7 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->isAJAX()) {
@@ -236,12 +236,12 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         if ($this->request->getMethod() == 'post') {
             if ($_FILES['company_logo']['name'] != '') {
-                $rules = ['company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]'] ];
+                $rules = ['company_logo' => ['uploaded[company_logo]', 'max_size[company_logo,1024]']];
                 if ($this->validate($rules) == false) {
                     $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                     return redirect()->to(base_url('employer/profile'));
@@ -255,19 +255,19 @@ class Employer extends BaseController
                 }
             }
             $rules = [
-                'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
-                'email'             => ['label' => 'Company Email', 'rules' => 'required'],
-                'phone_no'          => ['label' => 'Phone No', 'rules' => 'required'],
-                'website'           => ['label' => 'Company Website', 'rules' => 'required'],
-                'category'          => ['label' => 'Category', 'rules' => 'required'],
-                'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
-                'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
-                'description'       => ['label' => 'Comapany Description', 'rules' => 'required'],
-                'country'           => ['label' => 'Country', 'rules' => 'required'],
-                'state'             => ['label' => 'State', 'rules' => 'required'],
-                'city'              => ['label' => 'City', 'rules' => 'required'],
-                'postcode'          => ['label' => 'Pin Code', 'rules' => 'required'],
-                'address'           => ['label' => 'Address', 'rules' => 'required']
+                'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
+                'email' => ['label' => 'Company Email', 'rules' => 'required'],
+                'phone_no' => ['label' => 'Phone No', 'rules' => 'required'],
+                'website' => ['label' => 'Company Website', 'rules' => 'required'],
+                'category' => ['label' => 'Category', 'rules' => 'required'],
+                'org_type' => ['label' => 'Organization Type', 'rules' => 'required'],
+                'no_of_employers' => ['label' => 'No. of Employers', 'rules' => 'required'],
+                'description' => ['label' => 'Comapany Description', 'rules' => 'required'],
+                'country' => ['label' => 'Country', 'rules' => 'required'],
+                'state' => ['label' => 'State', 'rules' => 'required'],
+                'city' => ['label' => 'City', 'rules' => 'required'],
+                'postcode' => ['label' => 'Pin Code', 'rules' => 'required'],
+                'address' => ['label' => 'Address', 'rules' => 'required'],
 
             ];
             if ($this->validate($rules) == false) {
@@ -329,7 +329,7 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         $get['data'] = $this->EmployerModel->getpackages();
@@ -353,7 +353,7 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
@@ -378,7 +378,7 @@ class Employer extends BaseController
                 'email' => ['label' => 'Email', 'rules' => 'required|is_unique[employers.email]|valid_email'],
                 'password' => ['label' => 'Password', 'rules' => 'required|min_length[8]'],
                 'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
-                'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required']
+                'termsncondition' => ['label' => 'Terms & Conditions', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -387,28 +387,30 @@ class Employer extends BaseController
             $user_details = [
                 'firstname' => ucwords($this->request->getPost('firstname')),
                 'email' => $this->request->getPost('email'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),'is_verify' => 0,
+                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT), 'is_verify' => 0,
                 'is_verify' => 0,
                 'token' => md5(rand(0, 1000)),
                 'created_date' => date('Y-m-d : h:m:s'),
-                'updated_date' => date('Y-m-d : h:m:s')
+                'updated_date' => date('Y-m-d : h:m:s'),
             ];
             $cmpny = [
                 'company_name' => ucwords($this->request->getPost('company_name')),
             ];
             $employer_id = $this->EmployerAuthModel->register($user_details);
-            if($employer_id == 0){
-                    echo '0~Error';exit;
+            if ($employer_id == 0) {
+                echo '0~Error';
+                exit;
             }
             $cmpny['employer_id'] = $employer_id;
             $result = $this->EmployerAuthModel->registercmpny($cmpny);
-            if($result->resultID != 1){
+            if ($result->resultID != 1) {
                 $this->EmployerAuthModel->delete_emp_cmpy();
-                echo '0~Error';exit;
+                echo '0~Error';
+                exit;
             }
             // Add Free Packages
             $package_details = $this->EmployerModel->get_free_package();
-            if($package_details != 0){
+            if ($package_details != 0) {
                 $buyer_array = [
                     'employer_id' => $cmpny['employer_id'],
                     'package_id' => $package_details['id'],
@@ -425,7 +427,7 @@ class Employer extends BaseController
                     echo '0~Something Went Wrong, Please Try Again';
                     exit;
                 }
-            }else{
+            } else {
                 echo '0~Something Went Wrong, Please Try Again';
                 exit;
             }
@@ -438,13 +440,13 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         $id = session('employer_id');
         $get['data'] = $this->EmployerModel->shortlisted($id);
         $get['title'] = 'Shortlisted Candidates';
-        
+        // pre($get);
         return view('employer/resume/shortlisted_resume2', $get);
     }
 
@@ -456,10 +458,10 @@ class Employer extends BaseController
             $experience = $this->EmployerModel->get_user_experience($id);
             $language = $this->EmployerModel->get_user_language($id);
             $query = $this->EmployerModel->userdetails($id);
-            if(isset($experience[0]['ending_month'])){
+            if (isset($experience[0]['ending_month'])) {
                 $end_month = $experience[0]['ending_month'];
             }
-            if(isset($experience[0]['ending_year'])){
+            if (isset($experience[0]['ending_year'])) {
                 $end_year = $experience[0]['ending_year'];
             }
             $html = '';
@@ -592,14 +594,14 @@ class Employer extends BaseController
         $pkg_id = $pkg['package_id'];
         if (empty($pkg['package_id'])) {
             $this->session->setFlashdata('error', 'Package is Expired');
-            $this->EmployerModel->set_expired_time(session('employer_id'),$pkg_id);
+            $this->EmployerModel->set_expired_time(session('employer_id'), $pkg_id);
             return redirect()->to(base_url('employer/packages'));
         }
 
         // Free Job post
         $total_free_jobs = $this->EmployerModel->count_posted_jobs($pkg_id, 0, $pkg['payment_id']);
-            if ($total_free_jobs >= $pkg['no_of_posts']) {
-            $this->EmployerModel->set_expired(session('employer_id'),$pkg_id);
+        if ($total_free_jobs >= $pkg['no_of_posts']) {
+            $this->EmployerModel->set_expired(session('employer_id'), $pkg_id);
             $this->session->setFlashdata('error', 'Post Limit Exceeded');
             return redirect()->to(base_url('employer/packages'));
         }
@@ -607,13 +609,13 @@ class Employer extends BaseController
         //Featured Job Post
         $total_featured_jobs = $this->EmployerModel->count_posted_jobs($pkg_id, 1, $pkg['payment_id']);
         if ($total_featured_jobs >= $pkg['no_of_posts']) {
-            $this->EmployerModel->set_expired(session('employer_id'),$pkg_id);
+            $this->EmployerModel->set_expired(session('employer_id'), $pkg_id);
             $this->session->setFlashdata('error', 'Package Expired');
             return redirect()->to(base_url('employer/packages'));
         }
 
-        $result = $this->EmployerModel->set_expired_time(session('employer_id'),$pkg_id);
-        if($result == 1 ){
+        $result = $this->EmployerModel->set_expired_time(session('employer_id'), $pkg_id);
+        if ($result == 1) {
             $this->session->setFlashdata('error', 'Time Expired');
             return redirect()->to(base_url('employer/packages'));
         }
@@ -622,23 +624,23 @@ class Employer extends BaseController
             $rules = [
                 "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
                 "job_type" => ["label" => "Job Type", "rules" => "trim|required"],
-                "category" => ["label" => "category", "rules" => "trim|required"],
-                "industry" => ["label" => "industry", "rules" => "trim|required"],
-                "min_experience" => ["label" => "min_experience", "rules" => "trim|required"],
-                "max_experience" => ["label" => "max_experience", "rules" => "trim|required"],
-                "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
-                "min_salary" => ["label" => "min_salary", "rules" => "trim|required"],
-                "max_salary" => ["label" => "max_salary", "rules" => "trim|required"],
-                "skills" => ["label" => "skills", "rules" => "trim|required"],
-                "description" => ["label" => "description", "rules" => "trim|required|min_length[3]"],
-                "total_positions" => ["label" => "total_positions", "rules" => "trim|required"],
-                "gender" => ["label" => "gender", "rules" => "trim|required"],
-                "employment_type" => ["label" => "employment type", "rules" => "trim|required"],
-                "education" => ["label" => "education", "rules" => "trim|required"],
-                "country" => ["label" => "country", "rules" => "trim|required"],
-                "state" => ["label" => "state", "rules" => "trim|required"],
-                "city" => ["label" => "city", "rules" => "trim|required"],
-                "location" => ["label" => "location", "rules" => "trim|required"],
+                "category" => ["label" => "Category", "rules" => "trim|required"],
+                "industry" => ["label" => "Industry", "rules" => "trim|required"],
+                "min_experience" => ["label" => "Minimum Experience", "rules" => "trim|required"],
+                "max_experience" => ["label" => "Maximum Experience", "rules" => "trim|required"],
+                "salary_period" => ["label" => "Salary Period", "rules" => "trim|required"],
+                "min_salary" => ["label" => "Minimum Salary", "rules" => "trim|required"],
+                "max_salary" => ["label" => "Maximum Salary", "rules" => "trim|required"],
+                "skills" => ["label" => "Skills", "rules" => "trim|required"],
+                "description" => ["label" => "Description", "rules" => "trim|required|min_length[3]"],
+                "total_positions" => ["label" => "Total Positions", "rules" => "trim|required"],
+                "gender" => ["label" => "Gender", "rules" => "trim|required"],
+                "employment_type" => ["label" => "Employment Type", "rules" => "trim|required"],
+                "education" => ["label" => "Education", "rules" => "trim|required"],
+                "country" => ["label" => "Country", "rules" => "trim|required"],
+                "state" => ["label" => "State", "rules" => "trim|required"],
+                "city" => ["label" => "City", "rules" => "trim|required"],
+                "location" => ["label" => "Location", "rules" => "trim|required"],
                 "is_featured" => ["label" => "Featured", "rules" => "required"],
             ];
             if ($this->validate($rules) == false) {
@@ -646,10 +648,10 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/post'));
             }
             $skills = ucwords($this->request->getPost('skills'));
-            $skill = str_replace(" ", ",",$skills);
+            $skill = str_replace(" ", ",", $skills);
             $data = array(
                 'employer_id' => session('employer_id'),
-                'company_id' => get_direct_value('companies','id','employer_id',session('employer_id')),
+                'company_id' => get_direct_value('companies', 'id', 'employer_id', session('employer_id')),
                 'title' => ucwords($this->request->getPost('job_title')),
                 'job_type' => $this->request->getPost('job_type'),
                 'category' => $this->request->getPost('category'),
@@ -673,6 +675,7 @@ class Employer extends BaseController
                 'created_date' => date('Y-m-d : H:i:s'),
                 'updated_date' => date('Y-m-d : H:i:s'),
             );
+
             $data['job_slug'] = $this->make_job_slug($this->request->getPost('job_title'), $this->request->getPost('city'));
             $job_id = $this->EmployerModel->postjob($data);
             // Featured Job Details
@@ -701,7 +704,6 @@ class Employer extends BaseController
         $get['educations'] = $this->EmployerModel->get_education();
         $get['countries'] = $this->EmployerModel->get_countries_list();
         $get['title'] = 'Post Job';
-        
         return view('employer/job/post', $get);
     }
 
@@ -709,7 +711,7 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         $data['title'] = 'Job List';
@@ -749,7 +751,7 @@ class Employer extends BaseController
             );
         }
         $records['data'] = $data;
-        
+
         echo json_encode($records);
     }
 
@@ -771,34 +773,34 @@ class Employer extends BaseController
     {
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                "job_title" => ["label" => "job Title", "rules" => "trim|required"],
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
                 "job_type" => ["label" => "Job Type", "rules" => "trim|required"],
                 "category" => ["label" => "Category", "rules" => "trim|required"],
                 "industry" => ["label" => "Industry", "rules" => "trim|required"],
-                "min_experience" => ["label" => "min_experience", "rules" => "trim|required"],
-                "max_experience" => ["label" => "max_experience", "rules" => "trim|required"],
-                "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
-                "min_salary" => ["label" => "min_salary", "rules" => "trim|required"],
-                "max_salary" => ["label" => "max_salary", "rules" => "trim|required"],
-                "skills" => ["label" => "skills", "rules" => "trim|required"],
-                "description" => ["label" => "description", "rules" => "trim|required|min_length[3]"],
-                "total_positions" => ["label" => "total_positions", "rules" => "trim|required"],
-                "gender" => ["label" => "gender", "rules" => "trim|required"],
-                "employment_type" => ["label" => "employment type", "rules" => "trim|required"],
-                "education" => ["label" => "education", "rules" => "trim|required"],
-                "country" => ["label" => "country", "rules" => "trim|required"],
-                "state" => ["label" => "state", "rules" => "trim|required"],
-                "city" => ["label" => "city", "rules" => "trim|required"],
+                "min_experience" => ["label" => "Minimum Experience", "rules" => "trim|required"],
+                "max_experience" => ["label" => "Maximum Experience", "rules" => "trim|required"],
+                "salary_period" => ["label" => "Salary Period", "rules" => "trim|required"],
+                "min_salary" => ["label" => "Minimum Salary", "rules" => "trim|required"],
+                "max_salary" => ["label" => "Maximum Salary", "rules" => "trim|required"],
+                "skills" => ["label" => "Skills", "rules" => "trim|required"],
+                "description" => ["label" => "Description", "rules" => "trim|required|min_length[3]"],
+                "total_positions" => ["label" => "Total Positions", "rules" => "trim|required"],
+                "gender" => ["label" => "Gender", "rules" => "trim|required"],
+                "employment_type" => ["label" => "Employment Type", "rules" => "trim|required"],
+                "education" => ["label" => "Education", "rules" => "trim|required"],
+                "country" => ["label" => "Country", "rules" => "trim|required"],
+                "state" => ["label" => "State", "rules" => "trim|required"],
+                "city" => ["label" => "City", "rules" => "trim|required"],
                 "location" => ["label" => "Location", "rules" => "trim|required"],
                 "is_featured" => ["label" => "Is Featured", "rules" => "required"],
                 "is_status" => ["label" => "Status", "rules" => "required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
-                return redirect()->to(base_url('employer/edit_job/'.$id));
+                return redirect()->to(base_url('employer/edit_job/' . $id));
             }
             $skills = ucwords($this->request->getPost('skills'));
-            $skill = str_replace(" ", ",",$skills);
+            $skill = str_replace(" ", ",", $skills);
             $data = array(
                 'title' => ucwords($this->request->getPost('job_title')),
                 'job_type' => $this->request->getPost('job_type'),
@@ -849,7 +851,6 @@ class Employer extends BaseController
     {
         $data['applicants'] = $this->EmployerModel->get_applicants($job_id);
         $data['title'] = 'Job Applicants';
-        //pre($data['applicants']);
         return view('employer/job/view_job_applicants', $data);
     }
 
@@ -857,7 +858,7 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         $is_verify = get_direct_value('employers', 'is_verify', 'id', session('employer_id'));
@@ -874,7 +875,7 @@ class Employer extends BaseController
     {
         if (!employer_vaidate()) {
             return redirect()->to(base_url('/employer/login'));
-        }elseif (!employer_vaidate('check_profile')) {
+        } elseif (!employer_vaidate('check_profile')) {
             return redirect()->to(base_url('employer/setup/profile'));
         }
         $search = array();
@@ -885,7 +886,7 @@ class Employer extends BaseController
 
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "job_title" => ["label" => "Job Title", "rules" => "trim|required"]
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -934,7 +935,6 @@ class Employer extends BaseController
         $get['pager'] = $Users->pager;
 
         $get['title'] = 'Find Candidates';
-        //pre($get['pager']); 
         return view('employer/cv_search/cv_search_page', $get);
     }
 
@@ -1039,7 +1039,7 @@ class Employer extends BaseController
             }
         }
         $data['title'] = 'Password Recovery';
-        return view('employer/auth/password_reset',$data);
+        return view('employer/auth/password_reset', $data);
     }
 
     public function reset_password($reset_code)
@@ -1054,8 +1054,8 @@ class Employer extends BaseController
         if ($this->request->isAJAX()) {
             $rules = [
                 'id' => ['label' => 'id', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -1120,10 +1120,10 @@ class Employer extends BaseController
             $razorpay_secret = get_g_setting_val('razorpay_secret');
             $api = new Api($razorpay_key, $razorpay_secret);
             $razorpay_payment_id = $this->request->getPost("razorpay_payment_id");
-            $payment  = $api->payment->fetch($razorpay_payment_id);
-            $capture_amount = $payment_amount['price']*100;
+            $payment = $api->payment->fetch($razorpay_payment_id);
+            $capture_amount = $payment_amount['price'] * 100;
             if ($payment['status'] == 'authorized' || $payment['status'] == 'captured' || $payment['status'] == 'created') {
-                $payment  =  $api->payment->fetch($razorpay_payment_id)->capture(array('amount' => $capture_amount));
+                $payment = $api->payment->fetch($razorpay_payment_id)->capture(array('amount' => $capture_amount));
                 $data = [
                     'payment_method' => 'Razorpay',
                     'txn_id' => $razorpay_payment_id,
@@ -1133,7 +1133,7 @@ class Employer extends BaseController
                     'payer_email' => $this->request->getPost('payer_email'),
                     'payment_status' => 'succeeded',
                     'purchased_plan' => $this->request->getPost("package_id"),
-                    'payment_date' => date('Y-m-d H:i:s')
+                    'payment_date' => date('Y-m-d H:i:s'),
                 ];
                 $insert_id = $this->EmployerModel->payment($data);
                 $this->session->set('payment_id', $insert_id);
@@ -1144,25 +1144,24 @@ class Employer extends BaseController
         }
     }
 
-
     public function razorpay_success()
     {
         if (session('payment_id')) {
             $date = date("y-m-d G.i:s");
             $package_info = $this->EmployerModel->getPackageInfo($this->request->getPost("package_id"));
             $package_days = $package_info['no_of_days'];
-            $exp_date = date('y-m-d G.i:s', strtotime(' + '.$package_days.' days'));
+            $exp_date = date('y-m-d G.i:s', strtotime(' + ' . $package_days . ' days'));
             $package_info = [
-                        'payment_id' => session('payment_id'),
-                        'employer_id' => session('employer_id'),
-                        'user_id' => 0,
-                        'package_id' => $this->request->getPost('package_id'),
-                        'is_renewal' => 0,
-                        'is_upgrade' => 0,
-                        'buy_date' => $date,
-                        'expire_date' => $exp_date,
-                        'is_active' => 1,
-                    ];
+                'payment_id' => session('payment_id'),
+                'employer_id' => session('employer_id'),
+                'user_id' => 0,
+                'package_id' => $this->request->getPost('package_id'),
+                'is_renewal' => 0,
+                'is_upgrade' => 0,
+                'buy_date' => $date,
+                'expire_date' => $exp_date,
+                'is_active' => 1,
+            ];
             $pay_query = $this->EmployerModel->packages_bought($package_info);
             session()->remove('payment_id');
             if ($pay_query->resultID == 1) {
@@ -1208,7 +1207,7 @@ class Employer extends BaseController
     }
 
     public function setup_profile()
-    {  
+    {
         $id = session('employer_id');
         $get['categories'] = $this->adminModel->get_all_categories();
         $get['countries'] = $this->adminModel->get_countries_list();
@@ -1226,17 +1225,17 @@ class Employer extends BaseController
                 }
             }
             $rules = [
-                    'firstname'         => ['label' => 'First Name', 'rules' => 'required'],
-                    'lastname'          => ['label' => 'Last Name', 'rules' => 'required'],
-                    'email'             => ['label' => 'Email', 'rules' => 'required|valid_email'],
-                    'designation'       => ['label' => 'Designation', 'rules' => 'required'],
-                    'mobile_no'         => ['label' => 'Mobile No.', 'rules' => 'required'],
-                    'country'           => ['label' => 'Country', 'rules' => 'required'],
-                    'state'             => ['label' => 'State', 'rules' => 'required'],
-                    'city'              => ['label' => 'City', 'rules' => 'required'],
-                    'address'           => ['label' => 'Address', 'rules' => 'required']
-                ];
-            if($get['data'][0]['profile_picture'] == ''){
+                'firstname' => ['label' => 'First Name', 'rules' => 'required'],
+                'lastname' => ['label' => 'Last Name', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+                'designation' => ['label' => 'Designation', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No.', 'rules' => 'required'],
+                'country' => ['label' => 'Country', 'rules' => 'required'],
+                'state' => ['label' => 'State', 'rules' => 'required'],
+                'city' => ['label' => 'City', 'rules' => 'required'],
+                'address' => ['label' => 'Address', 'rules' => 'required'],
+            ];
+            if ($get['data'][0]['profile_picture'] == '') {
                 $rules['profile_picture'] = ['uploaded[profile_picture]', 'max_size[profile_picture,1024]|required'];
             }
 
@@ -1245,17 +1244,17 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/setup/profile'));
             }
             $update_per_info = array(
-                    'firstname' => ucwords($this->request->getPost('firstname')),
-                    'lastname' => ucwords($this->request->getPost('lastname')),
-                    'email' => $this->request->getPost('email'),
-                    'designation' => ucwords($this->request->getPost('designation')),
-                    'mobile_no' => $this->request->getPost('mobile_no'),
-                    'country' => $this->request->getPost('country'),
-                    'state' => $this->request->getPost('state'),
-                    'city' => $this->request->getPost('city'),
-                    'address' => ucwords($this->request->getPost('address')),
-                    'profile_completed' => 1,
-                );
+                'firstname' => ucwords($this->request->getPost('firstname')),
+                'lastname' => ucwords($this->request->getPost('lastname')),
+                'email' => $this->request->getPost('email'),
+                'designation' => ucwords($this->request->getPost('designation')),
+                'mobile_no' => $this->request->getPost('mobile_no'),
+                'country' => $this->request->getPost('country'),
+                'state' => $this->request->getPost('state'),
+                'city' => $this->request->getPost('city'),
+                'address' => ucwords($this->request->getPost('address')),
+                'profile_completed' => 1,
+            );
 
             if ($_FILES['profile_picture']['name'] != '') {
                 $update_per_info['profile_picture'] = $url;
@@ -1271,7 +1270,7 @@ class Employer extends BaseController
                 return redirect()->to(base_url('employer/setup/profile'));
             }
         }
-        return view('employer/auth/setup_profile',$get);
+        return view('employer/auth/setup_profile', $get);
     }
 
     public function setup_company()
@@ -1293,16 +1292,16 @@ class Employer extends BaseController
                 }
             }
             $rules = [
-                'company_name'      => ['label' => 'Company Name', 'rules' => 'required'],
-                'email'             => ['label' => 'Company Email', 'rules' => 'required'],
-                'website'           => ['label' => 'Company Website', 'rules' => 'required'],
-                'category'          => ['label' => 'Category', 'rules' => 'required'],
-                'founded_date'      => ['label' => 'Founded Date', 'rules' => 'required'],
-                'org_type'          => ['label' => 'Organization Type', 'rules' => 'required'],
-                'no_of_employers'   => ['label' => 'No. of Employers', 'rules' => 'required'],
-                'description'       => ['label' => 'Comapany Description', 'rules' => 'required']
+                'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
+                'email' => ['label' => 'Company Email', 'rules' => 'required'],
+                'website' => ['label' => 'Company Website', 'rules' => 'required'],
+                'category' => ['label' => 'Category', 'rules' => 'required'],
+                'founded_date' => ['label' => 'Founded Date', 'rules' => 'required'],
+                'org_type' => ['label' => 'Organization Type', 'rules' => 'required'],
+                'no_of_employers' => ['label' => 'No. of Employers', 'rules' => 'required'],
+                'description' => ['label' => 'Comapany Description', 'rules' => 'required'],
             ];
-            if($get['data'][0]['company_logo'] == ''){
+            if ($get['data'][0]['company_logo'] == '') {
                 $rules['company_logo'] = ['uploaded[company_logo]', 'max_size[company_logo,1024]|required'];
             }
             if ($this->validate($rules) == false) {
@@ -1318,7 +1317,7 @@ class Employer extends BaseController
                 'founded_date' => $this->request->getPost('founded_date'),
                 'org_type' => $this->request->getPost('org_type'),
                 'no_of_employers' => $this->request->getPost('no_of_employers'),
-                'description' => ucfirst($this->request->getPost('description'))
+                'description' => ucfirst($this->request->getPost('description')),
             );
 
             if ($_FILES['company_logo']['name'] != '') {
@@ -1342,12 +1341,12 @@ class Employer extends BaseController
             return json_encode($states);
             exit();
         }
-        return view('employer/auth/setup_company',$get);
+        return view('employer/auth/setup_company', $get);
     }
-    
+
     public function aboutus()
     {
         $data['title'] = 'About Us';
-        return view('employer/aboutus',$data);
+        return view('employer/aboutus', $data);
     }
 }

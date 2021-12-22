@@ -34,6 +34,7 @@
       <div class="section-divider">
       </div>
       <form action="<?= base_url('employer/personal_info_update') ?>" method="post" enctype="multipart/form-data">
+        <!-- <input type="hidden" name="_method" value="PUT" /> -->
         <div class="big_form_group">
           <div class="row">
             <div class="col-md-6">

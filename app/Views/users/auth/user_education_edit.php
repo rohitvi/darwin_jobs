@@ -36,7 +36,7 @@
                         <?php foreach($countries as $country):?>
                         <?php if($edu['country'] == $country['id']): ?>
                         <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
-                        <?php else: ?>  
+                        <?php else: ?>
                         <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
                         <?php endif; endforeach; ?>
                     </select>

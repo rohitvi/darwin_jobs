@@ -1,4 +1,9 @@
 <?php include(VIEWPATH . 'users/include/header.php'); ?>
+<style>
+  .featured_box {
+    padding: 20px;
+}
+</style>
 <div class='header_inner '>
   <div class="header_btm">
     <h2>Matching Jobs</h2>
@@ -20,7 +25,7 @@
             <!-- single-job-content -->
             <?php if(!empty($jobs)) : ?>
             <?php foreach ($jobs as $key => $value) : ?>
-              <div class="col-sm-12">
+              <div class="col-sm-12 mb_5">
                 <div class="featured_box ">
                   <div class="fb_image">
                     <img alt="brand logo" src="<?= $value['company_logo']; ?>">

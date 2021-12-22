@@ -32,10 +32,10 @@ class Database extends Config
 	 */
 	public $default = [
 		'DSN'      => '',
-		'hostname' => '216.10.244.195',
+		'hostname' => '162.241.87.23',
 		'username' => 'darwinde_user',
-		'password' => 'o+BlxI{.Qykq',
-		'database' => 'darwinde_jobs',
+		'password' => 'c_{~@8rSc%J#',
+		'database' => 'darwindevs_jobs',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,

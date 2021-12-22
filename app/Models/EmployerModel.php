@@ -20,7 +20,7 @@ class EmployerModel extends Model
 
     public function getpackages()
     {
-        return $this->db->table('packages')->where('is_active',1)->get()->getResultArray();
+        return $this->db->table('packages')->getWhere(array('is_active'=>1))->getResultArray();
     }
 
     public function package_confirmation($id)
@@ -164,12 +164,12 @@ class EmployerModel extends Model
 
     public function delete_job($id)
     {
-        return $this->db->table('job_post')->where('id', $id)->delete();
+        return $this->db->table('job_post')->where(array('id'=> $id,'employer_id'=>session('employer_id')))->delete();
     }
 
     public function get_applicants($job_id)
     {
-        $array = array('seeker_applied_job.job_id' => $job_id, 'employer_id' => get_companies_empid(session('employer_id')));
+        $array = array('seeker_applied_job.job_id' => $job_id, 'seeker_applied_job.employer_id' => session('employer_id'));
         $builder = $this->db->table('seeker_applied_job');
         $builder->select('seeker_applied_job.id,
         seeker_applied_job.job_id,
@@ -311,9 +311,9 @@ class EmployerModel extends Model
         $builder->where('is_active', '1');
         $builder->where('profile_completed', '1');
         $builder->orderBy('created_date', 'desc');
-        $builder->groupBy('job_title');
+        //$builder->groupBy('job_title');
         return $builder->paginate(6);
-
+        //echo $this->db->getLastQuery();
     }
 
     public function candidates_shortlisted($emp_id, $user_id)
@@ -354,7 +354,7 @@ class EmployerModel extends Model
     public function set_expired_time($emp_id,$pkg_id)
     {
         $builder = $this->db->table('packages_bought');
-        $where = ['curdate() >' => 'expire_date','employer_id' => $emp_id,'package_id' => $pkg_id];
+        $where = ['expire_date' => date('Y-m-d'),'employer_id' => $emp_id,'package_id' => $pkg_id];
         $builder->where($where)->get()->getRowArray();
         if($builder->where($where)->get()->getRowArray() > 0){
             return $builder->update(array('is_active'=>0));

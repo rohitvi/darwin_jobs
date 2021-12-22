@@ -112,7 +112,7 @@
                 <h3 class="card-title">Company Information</h3>
               </div>
               <!-- /.card-header -->
-              <form id="companyForm" action="<?= base_url('admin/updatecompany/'.$data[0]['id']); ?>" method="post" enctype="multipart/form-data" >
+              <form id="companyForm" action="" method="post" enctype="multipart/form-data" >
                 <div class="card-body">
                   <div class="form-group">
                     <label for="company_logo">Company Logo *  <?php if(!empty($data[0]['company_logo'])):?>
@@ -303,23 +303,23 @@
           }
         });
       });
-      // $('#companyForm').on('submit',function(){
-      //   event.preventDefault();
-      //   var formData = new FormData($(this)[0]);
-      //   $.ajax({
-      //     url: '<?= base_url("admin/updatecompany/".$data[0]['id']); ?>',
-      //     method: 'POST',
-      //     data: formData,
-      //     mimeType: "multipart/form-data",
-      //     contentType: false,
-      //     cache: false,
-      //     dataType: false,
-      //     processData: false,
-      //     success: function(response){
-      //       alert(response);
-      //     }
-      //   });
-      // });
+      $('#companyForm').on('submit',function(){
+        event.preventDefault();
+        var formData = new FormData($(this)[0]);
+        $.ajax({
+          url: '<?= base_url("admin/updatecompany/".$data[0]['id']); ?>',
+          method: 'POST',
+          data: formData,
+          mimeType: "multipart/form-data",
+          contentType: false,
+          cache: false,
+          dataType: false,
+          processData: false,
+          success: function(response){
+            alert(response);
+          }
+        });
+      });
     });
   </script>
 

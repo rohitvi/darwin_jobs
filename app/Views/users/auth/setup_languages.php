@@ -39,7 +39,7 @@
                                 <?php
                                     $educations = get_languages_list();
                                     $options = array('' => 'Select Option') + array_column($educations, 'lang_name', 'lang_id');
-                                    echo form_dropdown('language', $options, (isset($userlang['language'])) ? $userlang['language'] : '' , 'class="form-control" required');
+                                    echo form_dropdown('language', $options, (isset($userlang['language'])) ? $userlang['language'] : '' , 'class="form-control js-example-basic-single" required');
                                 ?>
                             </div>
 
@@ -47,7 +47,7 @@
                                 <label for="Language">Proficiency with this language</label>
                                 <?php
                                     $options = get_language_levels();
-                                    echo form_dropdown('lang_level', $options, (isset($userlang['proficiency'])) ? $userlang['proficiency'] : '' , 'class="form-control" required');
+                                    echo form_dropdown('lang_level', $options, (isset($userlang['proficiency'])) ? $userlang['proficiency'] : '' , 'class="form-control js-example-basic-single" required');
                                 ?>
                             </div>
                             <div class='col-md-12'>
@@ -63,3 +63,6 @@
 </main>
 
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
+<script>
+    $('.js-example-basic-single').select2();
+</script>

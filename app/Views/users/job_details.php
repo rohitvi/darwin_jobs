@@ -65,13 +65,13 @@
             <div class="col-md-12 single_job_main">
                 <h2>Cover Letter</h2>
                   <div class="form-group">
-                  <textarea id="cover" rows="5" class="form-control"></textarea>
+                  <textarea id="cover" class="form-control"></textarea>
                   </div>
             </div>
 
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 ">
           <div class="single-job-sidebar">
             <div class="sjs_box">
               <h3>Job Summary</h3>
@@ -87,18 +87,9 @@
                   <p><?= get_job_type_name($data['job_type']) ?></p>
                 </li>
                 <li>
-                  <i class="fas fa-briefcase"></i>
-                  <h6>Experience</h6>
-                  <p><?= $data['experience'] ?> years</p>
-                </li>
-                <li>
                   <i class="fas fa-money-bill-alt"></i>
                   <h6>Salary</h6>
-                    <?php if($data['min_salary'] == "0" || $data['max_salary'] == "0"){ ?>
-                    <p>Not Disclosed</p>
-                    <?php }else{?>
-                    <p>₹<?= $data['min_salary'] ?> - ₹<?= $data['max_salary'] ?></p>
-                    <?php }?>
+                  <p>₹<?= $data['min_salary'] ?> - ₹<?= $data['max_salary'] ?></p>
                 </li>
                 <li>
                   <i class="far fa-clock"></i>

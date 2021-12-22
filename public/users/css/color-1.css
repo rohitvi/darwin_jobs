@@ -67,14 +67,6 @@ a:hover {
   color: #fff;
 }
 
-
-.btn-primary:hover, button:hover,   .btn-primary:focus, button:focus , 
-.btn-secondary:hover, button:hover,   .btn-secondary:focus, button:focus {
-  background-color: var(--thm-color-1-2);
-  border-color: var(--thm-color-1-2);
-}
-
-
 .form-control:focus{
   box-shadow: 0 0 0 3px var(--very-light-1);
   border-color: inherit;
@@ -225,7 +217,7 @@ a:hover {
 
 .custom_footer.dark_footer, .custom_footer {
 /*  background: var(--thm-color-1-2);*/
-  background: #3b3951;
+  background-color: #2e3339;
 }
 
 .custom_footer.dark_footer .footer_widget_box h2 {

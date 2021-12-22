@@ -8,15 +8,17 @@
     line-height: 45px!important;
   }
   .btn, button {
-    padding: 9px 20px!important;
+    padding: 13px 20px;
   }
   .page-item.active .page-link{
     background-color: #ff6158;
     border: #ff6158;
   }
+  
   .page-link{
     color: #ff6158;
   }
+  .featured_box{padding:20px;}
 </style>
 
 <div class='header_inner '>
@@ -112,7 +114,7 @@
             </li>
           </ul>
         </div>
-        <div class="job_main_right">
+        <div class=" job_main_right">
           <div class="banerSearch" data-aos="fade-up" data-aos-delay="200">
             <div class="fild-wrap fw-job-title">
               <input class="form-control" value="<?= isset($_GET['title']) ? $_GET['title'] : '' ?>" type="text" name="job_title" placeholder="Job Title">
@@ -122,12 +124,12 @@
               <select class="js-example-basic-single" name="city">
                 <option value=''>Select City</option>
                 <?php foreach ($cities as $key => $city) : ?>
-                  <option value="<?= $city['id'] ?>" <?= (isset($_GET['city']) && $_GET['city'] == $city['id']) ? 'selected' : '' ?>><?= $city['name'] ?></option>
+                  <option value="<?= $city['id'] ?>" <?= (isset($_GET['city']) && $_GET['city'] == $city['id']) || ($city['id'] == 2707) ? 'selected' : '' ?>><?= $city['name'] ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
             <div class="fild-wrap ml-1 fw-submit">
-              <button type="submit" class="btn btn-primary">
+              <button  type="submit" class="btn btn-primary butn_padd search_button">
                 <i class="material-icons">search</i> SEARCH JOBS
               </button>
             </div>
@@ -139,7 +141,7 @@
           <div class="row full_width featured_box_outer">
             <?php if (count($jobs) > 0) : ?>
              <?php foreach ($jobs as $job) : ?>
-              <div class="col-sm-12">
+              <div class="col-sm-12 mb_5">
                 <div class="featured_box ">
                   <div class="fb_image">
                     <img class="img img-fluid" height="50" width="50" alt="brand logo" src="<?= get_company_logo($job['company_id']) ?>">
@@ -180,13 +182,17 @@
               </div>
             <?php endif; ?>
           </div>
-          <div class="section-divider">
-            <?php if ($pager) : ?>
-              <?php $pagi_path = 'search' ?>
-              <?php $pager->setPath($pagi_path); ?>
-              <?= $pager->links() ?>
-            <?php endif ?>
-          </div>
+		  <nav aria-label="Page navigation example" class="mt_20">
+              <ul class="pagination">
+                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                 <?php if ($pager) : ?>
+                 <?php $pagi_path = 'search' ?>
+                 <?php $pager->setPath($pagi_path); ?>
+                 <?= $pager->links() ?>
+                 <?php endif ?>
+                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
+               </ul>
+          </nav>
         </div>
       </div>
     </div>

@@ -55,7 +55,7 @@
                   <div class="form-group">
                   <label class="control-label">Favicon (25*25)</label>
                   <?php if(!empty($gsetting['favicon'])):?>
-                    <img src="<?= $gsetting['favicon']; ?>" class="favicon">
+                    <img src="<?= $gsetting['favicon']; ?>" class="favicon" style="height:100px;">
                   <?php endif; ?>
                     <input type="file" name="favicon" class="form-control">
                     <p><small class="text-success">Allowed Types: gif, jpg, png, jpeg</small></p>
@@ -64,13 +64,13 @@
                   <div class="form-group">
                   <label class="control-label">Logo</label>
                   <?php if(!empty($gsetting['logo'])):?>
-                    <img src="<?= $gsetting['logo']; ?>" class="favicon">
+                    <img src="<?= $gsetting['logo']; ?>" class="favicon" style="height:100px;">
                   <?php endif; ?>
                     <input type="file" name="logo" class="form-control">
                     <p><small class="text-success">Allowed Types: gif, jpg, png, jpeg</small></p>
                   </div>
-
-                  <div class="form-group"> 
+                  
+                   <div class="form-group"> 
                     <label class="control-label">Home Page Banner</label>
                     <?php if(!empty($gsetting['home_banner'])):?>
                     <img src="<?= $gsetting['home_banner']; ?>" style="width:300px">

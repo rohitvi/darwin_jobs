@@ -19,13 +19,13 @@ class AdminModel extends Model
     {
         $builder = $this->db->table('users');
         $builder->where('is_active', 1);
-        return $builder->countAll();
+        return count($builder->get()->getResultArray());
     }
     public function get_deactive_users()
     {
         $builder = $this->db->table('users');
         $builder->where('is_active', 0);
-        return $builder->countAll();
+        return count($builder->get()->getResultArray());
     }
 
     public function get_all_employers()
@@ -37,13 +37,13 @@ class AdminModel extends Model
     {
         $builder = $this->db->table('employers');
         $builder->where('is_active', 1);
-        return $builder->countAll();
+        return count($builder->get()->getResultArray());
     }
     public function get_deactive_employers()
     {
         $builder = $this->db->table('employers');
         $builder->where('is_active', 0);
-        return $builder->countAll();
+        return count($builder->get()->getResultArray());
     }
 
     public function get_latest_users()
@@ -214,7 +214,7 @@ class AdminModel extends Model
     {
         $builder = $this->db->table('employers');
         $builder->select('*');
-        return $builder->join('companies', 'companies.employer_id = employers.id')->orderBy('employers.id', 'ASC')->get()->getResultArray();
+        return $builder->join('companies', 'companies.employer_id = employers.id','INNER')->orderBy('employers.id', 'ASC')->get()->getResultArray();
     }
 
     public function insertemployer($emp)
@@ -259,7 +259,28 @@ class AdminModel extends Model
     public function updatecompany($id, $data)
     {
         $builder = $this->db->table('companies');
-        if($query = $builder->where('id', $id)->update($data) == 1){
+        $update_row = [
+            'company_logo' => $data['company_logo'],
+            'company_name' => $data['company_name'],
+            'email' => $data['company_email'],
+            'phone_no' => $data['phone_no'],
+            'website' => $data['website'],
+            'category' => $data['category'],
+            'founded_date' => $data['founded_date'],
+            'no_of_employers' => $data['no_of_employers'],
+            'description' => $data['description'],
+            'country' => $data['country'],
+            'state' => $data['state'],
+            'city' => $data['city'],
+            'postcode' => $data['postcode'],
+            'address' => $data['full_address'],
+            'facebook_link' => $data['facebook_link'],
+            'twitter_link' => $data['twitter_link'],
+            'youtube_link' => $data['youtube_link'],
+            'linkedin_link' => $data['linkedin_link'],
+        ];
+        $builder->where('id', $id);
+        if ($query = $builder->update($update_row) == 1) {
             return $query;
         }
     }
@@ -337,8 +358,7 @@ class AdminModel extends Model
         $this->db->table('seeker_experience')->where('user_id', $id)->delete();
         $this->db->table('seeker_languages')->where('user_id', $id)->delete();
         $this->db->table('cv_shortlisted')->where('user_id', $id)->delete();
-        $this->db->table('saved_jobs')->where('seeker_id', $id)->delete();
-        return true;
+        return $this->db->table('saved_jobs')->where('seeker_id', $id)->delete();
     }
 
     public function get_job_type()
@@ -621,4 +641,5 @@ class AdminModel extends Model
     {
         return $this->db->table('users')->where('id', $id)->get()->getRowArray();
     }
+
 }

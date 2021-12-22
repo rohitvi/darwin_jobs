@@ -73,7 +73,7 @@
                       </td>
                       <td>
                         <a href="<?= base_url('admin/employer/'.$row['employer_id']); ?>" class="btn btn-dark" type="button">Edit</a>
-                        <a href="<?= base_url('admin/deleteemployer/'.$row['employer_id']); ?>" class="btn btn-danger" onclick="return confirm('Are you Sure to Delete ?')" type="button">Delete</a>
+                        <a href="<?= base_url('admin/deleteemployer/'.$row['employer_id']); ?>" class="btn btn-danger" type="button">Delete</a>
                       </td>
                     </tr>
                     <?php endforeach; ?>

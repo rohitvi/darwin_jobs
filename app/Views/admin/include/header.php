@@ -45,7 +45,7 @@
   <link rel="stylesheet" href="<?= base_url('public/admin/plugins/toastr/toastr.min.css') ?>">
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
+  
   <link rel="stylesheet" href="<?= base_url(); ?>/public/users/css/tagin.min.css">
 
   <!-- Jquery -->
@@ -56,9 +56,9 @@
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
     <!-- Preloader -->
-    <!-- <div class="preloader flex-column justify-content-center align-items-center">
+    <div class="preloader flex-column justify-content-center align-items-center">
       <img class="animation__shake" src="<?= base_url('./public/admin/dist/img/AdminLTELogo.png'); ?>" alt="AdminLTELogo" height="60" width="60">
-    </div> -->
+    </div>
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -73,7 +73,7 @@
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
-          <a href="#"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
+          <a href="<?= base_url('admin/logout'); ?>"><i class="fas fa-sign-out-alt fa-lg"></i></i></a>
         </li>
       </ul>
     </nav>

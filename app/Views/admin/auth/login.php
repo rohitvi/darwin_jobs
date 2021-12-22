@@ -58,7 +58,7 @@
             </div>
             <!-- /.col -->
           </div>
-        </form> 
+        </form>
         <!-- /.social-auth-links -->
       </div>
       <!-- /.card-body -->
@@ -93,7 +93,7 @@
           if ($.trim(response[0]) == 1) {
             $('#sign_in').trigger("reset");
             setTimeout(function() {
-              window.location.href =  
+              window.location.href = 'dashboard';
             }, 500);
             toastr.success(response[1]);
           }
@@ -101,7 +101,7 @@
             toastr.error(response[1]);
           }
           $('.sign-in').html("Sign In");
-        },  
+        },
         beforeSend: function() {
           $('.sign-in').html("Validating...");
         },

@@ -39,7 +39,7 @@
                                 <?php 
                                     $educations = get_education_list();
                                     $options = array('' => 'Select Option') + array_column($educations,'type','id');
-                                    echo form_dropdown('level',$options,(isset($edu['degree'])) ? $edu['degree'] : '','class="form-control" required');
+                                    echo form_dropdown('level',$options,'','class="form-control js-example-basic-single" required');
                                 ?>
                             </div>
                             <div class="col-md-6">
@@ -56,14 +56,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label>Country</label>
-                                <select class="form-control select" id="country" name="country" required>
-                                    <option value="">Select Country</option>
-                                    <?php foreach($countries as $country):?>
-                                    <?php if(isset($edu['country']) == $country['id']): ?>
-                                    <option value="<?= $country['id']; ?>" selected> <?= $country['name']; ?> </option>
-                                    <?php else: ?>
+                                <select class="form-control js-example-basic-single select" name="country" required>
+                                <option value="">Select Country</option>
+                                <?php foreach ($countries as $country) : ?>
                                     <option value="<?= $country['id']; ?>"> <?= $country['name']; ?> </option>
-                                    <?php endif; endforeach; ?>
+                                <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -83,3 +80,6 @@
 </main>
 
 <?php include(VIEWPATH . 'users/include/footer.php'); ?>
+<script>
+    $('.js-example-basic-single').select2();
+</script>

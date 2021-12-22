@@ -30,8 +30,6 @@
       <div class="section-divider">
       </div>
       <form action="<?= base_url('employer/post'); ?>" method="post">
-        <input type="hidden" name="employer_id" value="<?= session('employer_id') ?>" required>
-	    <input type="hidden" name="company_id" value="<?= session('employer_id') ?>" required>
         <div class="big_form_group">
           <div class="row">
             <div class="col-md-6">
@@ -147,7 +145,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Job Description *</label>
-                <textarea name="description" id="description" class="textarea" placeholder="Type your message here ..."></textarea>
+                <textarea name="description" id="description" placeholder="Type your message here ..."></textarea>
               </div>
             </div>
             <div class="col-md-6">
@@ -219,13 +217,14 @@
             <div class="col-md-6">
               <div class="form-group ">
                 <label>Is Featured *</label>
-                <select name="is_featured" class="js-example-basic-single form-control" required>
+                <select name="is_featured" class="js-example-basic-single form-control">
                   <option value="">Select Job Featured</option>
 	                <option value="yes">Yes</option>
 	                <option value="no">No</option>
                 </select>
               </div>
             </div>
+
           </div>
 
           </div>
@@ -248,55 +247,55 @@
 </main>
 	
 <?php include(VIEWPATH.'employer/include/footer.php'); ?>
+
 <script type="text/javascript">
-ClassicEditor.create( document.querySelector('#description'))
-  .then( editor => {
-          // console.log( editor );
-  } )
-  .catch( error => {
-          // console.error( error );
-  } );
-
+    ClassicEditor.create( document.querySelector('#description'))
+      .then( editor => {
+              // console.log( editor );
+      } )
+      .catch( error => {
+            //   console.error( error );
+      } );
 	$(document).ready(function(){
-    $('#country').on('change',function(){
-      var country_id = this.value;
-      $.ajax({
-        url: '<?= base_url('employer/getstates'); ?>',
-        type: 'POST',
-        data: {
-          country_id: country_id
-        },
-        cached: false,
-        success: function(result){
-          var json = JSON.parse(result);
-          var $state = $('#state');
-          for (var i = 0; i < json.length; i++) {
-            $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
+      $('#country').on('change',function(){
+        var country_id = this.value;
+        $.ajax({
+          url: '<?= base_url('employer/getstates'); ?>',
+          type: 'POST',
+          data: {
+            country_id: country_id
+          },
+          cached: false,
+          success: function(result){
+            var json = JSON.parse(result);
+            var $state = $('#state');
+            for (var i = 0; i < json.length; i++) {
+              $state.append('<option value=' + json[i].id + '>' + json[i].name + '</option>')
+            }
           }
-        }
+        });
+      });
+      $('#state').on('change',function(){
+        var state_id = this.value;
+        $.ajax({
+          url: '<?= base_url('employer/getcities'); ?>',
+          type: 'POST',
+          data: {state_id:state_id},
+          cached: false,
+          success: function(result){
+            var json = JSON.parse(result);
+            var $cities = $('#city');
+            for (var i = 0; i < json.length; i++) {
+              $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
+            }
+          }
+        });
       });
     });
-    $('#state').on('change',function(){
-      var state_id = this.value;
-      $.ajax({
-        url: '<?= base_url('employer/getcities'); ?>',
-        type: 'POST',
-        data: {state_id:state_id},
-        cached: false,
-        success: function(result){
-          var json = JSON.parse(result);
-          var $cities = $('#city');
-          for (var i = 0; i < json.length; i++) {
-            $cities.append('<option value=' + json[i].id + '>' + json[i].name + '</option>');
-          }
-        }
-      });
-    });
-  });
 
-  for (const el of document.querySelectorAll('.tagin')) {
-    tagin(el)
-  }
+    for (const el of document.querySelectorAll('.tagin')) {
+      tagin(el)
+    }
 
-  $('.js-example-basic-single').select2();
+    $('.js-example-basic-single').select2();
 </script>

@@ -32,6 +32,12 @@
                         <hr>
                         <div class="row">
                             <div class="col-lg-12">
+                                <?php if($query['profile_picture'] == "")  :?>
+                                <img src="<?= base_url('/public/users/images/ava.jpg') ?>" alt="No Image" width='80px'>
+                                <?php else :?>
+                                <img src="<?= $query['profile_picture']; ?>" alt="No Image" width='80px'>
+                                <?php endif ;?>
+                                <hr>
                                 <p>Full Name : <?= $query["firstname"] ?> <?= $query["lastname"] ?></p>
                                 <hr>
                                 <p>Email : <?= $query["email"] ?></p>
@@ -52,7 +58,7 @@
                                 <hr>
                                 <p>Country : <?= (isset($query["country"])) ? get_country_name($query["country"]) : '' ?></p>
                                 <hr>
-                                <p>City / Town : <?= get_city_name($query["city"]) ?></p>
+                                <p>City / Town : <?= (isset($query["city"])) ? get_city_name($query["city"]) : '' ?></p>
                                 <hr>
                                 <p>Postcode : <?= $query["postcode"] ?></p>
                                 <hr>
@@ -60,13 +66,13 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (isset($education)) : ?>
+                    <?php if (isset($edu)) : ?>
                     <div class="col-lg-6">
                         <h4>Education</h4>
                         <hr>
                         <div class="row">
                             <div class="col-lg-12">
-                              <?php foreach($education as $education): ?>
+                                <?php foreach($edu as $education): ?>
                                 <p><?= (isset($education["type"])) ? $education["type"] : '' ?>  <?= (isset($education["degree_title"])) ? $education["degree_title"] : '' ?></p>
                                 <p><?= (isset($education["institution"])) ? $education["institution"] : '' ?></p>
                                 <p><?= (isset($education["completion_year"])) ? $education["completion_year"] : '' ?></p> 
@@ -74,7 +80,7 @@
                                 <?php endforeach?>
                                 <h4>Experience</h4>
                                 <hr>
-                                <?php foreach($experience as $experience): ?>
+                                <?php foreach($exper as $experience): ?>
                                 <p><?= (isset($experience["job_title"])) ? $experience["job_title"] : '' ?></p>
                                 <p><?= (isset($experience["company"])) ? $experience["company"] : '' ?></p>
                                 <p><?= (isset($experience["starting_month"])) ? get_month($experience["starting_month"]) : '' ?> <?= (isset($experience["starting_year"])) ? $experience["starting_year"] : '' ?> - <?= (isset($experience["ending_month"])) ? get_month($experience["ending_month"]) : '' ?> <?= (isset($experience["ending_year"])) ? $experience["ending_year"] : '' ?> | <?= (isset($experience["country"])) ? get_country_name($experience["country"]) : '' ?></p>

@@ -3,7 +3,9 @@
   .form-control {
     padding-left: 27px;
   }
-
+  .modal-footer {
+     padding: 0rem;
+}
   #big_form_group {
     box-shadow: 2px 14px 14px 12px rgb(14 13 13 / 11%);
     padding-left: 20px;
@@ -13,9 +15,6 @@
     overflow-x: hidden;
   }
 
-  .pagination {
-    margin-top: 1.5rem!important;
-  }
   .select2-container .select2-selection--single .select2-selection__rendered {
 	  height: 45px!important;
 }
@@ -41,7 +40,7 @@
                 <h5>Search Candidates</h5>
               </div>
               <?php if (empty($profiles)) : ?>
-                <p class="alert alert-danger">Sorry, we could not find any profile for the keywords that you entered.</p>
+                <p class="alert alert-danger">Sorry, we could not find any profile for the keywords that you entered</p>
               <?php endif; ?>
               <form action='search' method='post'>
                 <div class="big_form_group">
@@ -51,7 +50,7 @@
                       <div class="form-group">
                         <div class="field">
                           <i class="fa fa-search"></i>
-                          <input type="text" name='job_title' class="form-control" value="<?= isset($_GET['job_title']) ? $_GET['job_title'] : ''; ?>" placeholder='    Skills, Job title, Keywords'>
+                          <input type="text" name='job_title' class="form-control" value="<?= isset($_GET['job_title']) ? $_GET['job_title'] : ''; ?>" placeholder='What are you looking for?'>
                         </div>
                       </div>
                     </div>
@@ -179,11 +178,21 @@
               </div>
             <?php endforeach; ?>
           </div>
-          <?php if ($pager) : ?>
-            <?php $pagi_path = 'employer/search' ?>
-            <?php $pager->setPath($pagi_path); ?>
-            <?= $pager->links() ?>
-          <?php endif ?>
+
+
+           <nav aria-label="Page navigation example" class="mt_20">
+              <ul class="pagination">
+                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                 <?php if ($pager) : ?>
+                 <?php $pagi_path = 'employer/search' ?>
+                 <?php $pager->setPath($pagi_path); ?>
+                 <?= $pager->links() ?>
+                 <?php endif ?>
+                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
+               </ul>
+          </nav>
+
+
         </div>
       </div>
     </div>

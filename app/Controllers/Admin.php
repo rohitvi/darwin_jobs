@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Libraries\Mailer;
 use App\Models\AdminModel;
 use App\Models\auth\AuthModel;
-use App\models\EmployerModel;
 
 class Admin extends BaseController
 {
@@ -13,7 +12,6 @@ class Admin extends BaseController
     {
         $this->adminAuthModel = new AuthModel();
         $this->adminModel = new AdminModel();
-        $this->EmployerModel = new EmployerModel();
         $this->mailer = new Mailer();
         helper(['form']);
     }
@@ -49,8 +47,8 @@ class Admin extends BaseController
     {
         if ($this->request->isAJAX()) {
             $rules = [
-                'username' => ['label' => 'username', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
+                'username' => ['label' => 'Username', 'rules' => 'required'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == false) {
                 echo '0~' . arrayToList($this->validation->getErrors());
@@ -60,7 +58,7 @@ class Admin extends BaseController
             $password = $this->request->getPost('password');
             $logindata = $this->adminAuthModel->login_validate($username, $password);
             if ($logindata == 0) {
-                echo '0~Invalid email or password';
+                echo '0~Invalid Username or Password';
                 exit;
             } elseif ($logindata['status'] == 1) {
                 $admindata = [
@@ -191,12 +189,12 @@ class Admin extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'username' => ['label' => 'username', 'rules' => 'required'],
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
+                'username' => ['label' => 'Username', 'rules' => 'required'],
+                'firstname' => ['label' => 'Firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'Lastname', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No', 'rules' => 'required'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -219,7 +217,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url('admin/registeradmin'));
             }
         }
-        
+        $data['title'] = 'Register Admin';
         return view('admin/auth/register', $data);
     }
 
@@ -259,8 +257,8 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'password', 'rules' => 'required|matches[password]'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -277,7 +275,7 @@ class Admin extends BaseController
                 return redirect()->to('/');
             }
         }
-            $data['title'] = 'Change Password';
+        $data['title'] = 'Change Password';
         return view('admin/auth/changepassword', $data);
     }
 
@@ -302,11 +300,11 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'username' => ['label' => 'username', 'rules' => 'required'],
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
+                'username' => ['label' => 'Username', 'rules' => 'required'],
+                'firstname' => ['label' => 'Firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'Lastname', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -390,7 +388,7 @@ class Admin extends BaseController
             'iconfield' => ['label' =>'Add Icon', 'rules' => 'required'],
             'status' => ['label' =>'Status', 'rules' => 'required']
                 ];
-                
+
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/edit_category/'.$id));
@@ -625,7 +623,7 @@ class Admin extends BaseController
     {
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
-            $rules = ['type' => ['label' => 'type', 'rules' => 'required']];
+            $rules = ['type' => ['label' => 'Type', 'rules' => 'required']];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/job_type'));
@@ -657,7 +655,7 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'type' => ['label' => 'type', 'rules' => 'required'],
+                'type' => ['label' => 'Type', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -733,7 +731,7 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'type' => ['label' => 'type', 'rules' => 'required'],
+                'type' => ['label' => 'Type', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -809,7 +807,7 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'type' => ['label' => 'type', 'rules' => 'required'],
+                'type' => ['label' => 'Type', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -863,22 +861,22 @@ class Admin extends BaseController
         $data['countries'] = $this->adminModel->get_countries_list();
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'cpassword' => ['label' => 'cpassword', 'rules' => 'required|matches[password]'],
-                'company_name' => ['label' => 'company_name', 'rules' => 'required'],
-                'category' => ['label' => 'category', 'rules' => 'required'],
-                'org_type' => ['label' => 'org_type', 'rules' => 'required'],
-                'country' => ['label' => 'country', 'rules' => 'required'],
-                'state' => ['label' => 'state', 'rules' => 'required'],
-                'city' => ['label' => 'city', 'rules' => 'required'],
-                'postcode' => ['label' => 'postcode', 'rules' => 'required'],
-                'address' => ['label' => 'address', 'rules' => 'required'],
-                'phone_no' => ['label' => 'phone_no', 'rules' => 'required'],
-                'website' => ['label' => 'website', 'rules' => 'required'],
-                'description' => ['label' => 'description', 'rules' => 'required|min_length[10]'],
+                'firstname' => ['label' => 'Firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'Lastname', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'cpassword' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]'],
+                'company_name' => ['label' => 'Company Name', 'rules' => 'required'],
+                'category' => ['label' => 'Category', 'rules' => 'required'],
+                'org_type' => ['label' => 'Organization Type', 'rules' => 'required'],
+                'country' => ['label' => 'Country', 'rules' => 'required'],
+                'state' => ['label' => 'State', 'rules' => 'required'],
+                'city' => ['label' => 'City', 'rules' => 'required'],
+                'postcode' => ['label' => 'Postcode', 'rules' => 'required'],
+                'address' => ['label' => 'Address', 'rules' => 'required'],
+                'phone_no' => ['label' => 'Phone_no', 'rules' => 'required'],
+                'website' => ['label' => 'Website', 'rules' => 'required'],
+                'description' => ['label' => 'Description', 'rules' => 'required|min_length[10]'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -942,15 +940,15 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'designation' => ['label' => 'designation', 'rules' => 'required'],
-                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
-                'country' => ['label' => 'country', 'rules' => 'required'],
-                'state' => ['label' => 'state', 'rules' => 'required'],
-                'city' => ['label' => 'city', 'rules' => 'required'],
-                'address' => ['label' => 'address', 'rules' => 'required'],
+                'firstname' => ['label' => 'Firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'Lastname', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'designation' => ['label' => 'Designation', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No', 'rules' => 'required'],
+                'country' => ['label' => 'Country', 'rules' => 'required'],
+                'state' => ['label' => 'State', 'rules' => 'required'],
+                'city' => ['label' => 'City', 'rules' => 'required'],
+                'address' => ['label' => 'Address', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -1066,12 +1064,12 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
-                'password' => ['label' => 'password', 'rules' => 'required'],
-                'address' => ['label' => 'address', 'rules' => 'required'],
+                'firstname' => ['label' => 'Firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'Lastname', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No', 'rules' => 'required'],
+                'password' => ['label' => 'Password', 'rules' => 'required'],
+                'address' => ['label' => 'Address', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -1110,11 +1108,11 @@ class Admin extends BaseController
         if(!admin_vaidate())  return redirect()->to('/admin/login');
         if ($this->request->getMethod() == 'put') {
             $rules = [
-                'firstname' => ['label' => 'firstname', 'rules' => 'required'],
-                'lastname' => ['label' => 'lastname', 'rules' => 'required'],
-                'email' => ['label' => 'email', 'rules' => 'required'],
-                'mobile_no' => ['label' => 'mobile_no', 'rules' => 'required'],
-                'is_active' => ['label' => 'is_active', 'rules' => 'required'],
+                'firstname' => ['label' => 'Firstname', 'rules' => 'required'],
+                'lastname' => ['label' => 'Lastname', 'rules' => 'required'],
+                'email' => ['label' => 'Email', 'rules' => 'required'],
+                'mobile_no' => ['label' => 'Mobile No', 'rules' => 'required'],
+                'is_active' => ['label' => 'Status', 'rules' => 'required'],
             ];
             if ($this->validate($rules) == FALSE) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -1251,27 +1249,26 @@ class Admin extends BaseController
         $data['companies'] = $this->adminModel->getemployer();
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "employer_id" => ["label" => "employer id", "rules" => "trim|required|min_length[3]"],
-                "job_title" => ["label" => "job title", "rules" => "trim|required"],
-                "category" => ["label" => "category", "rules" => "trim|required"],
-                "industry" => ["label" => "industry", "rules" => "trim|required"],
-                "min_experience" => ["label" => "min experience", "rules" => "trim|required"],
-                "max_experience" => ["label" => "max experience", "rules" => "trim|required"],
-                "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
-                "min_salary" => ["label" => "min salary", "rules" => "trim|required"],
-                "max_salary" => ["label" => "max salary", "rules" => "trim|required"],
-                "skills" => ["label" => "skills", "rules" => "trim|required"],
-                "description" => ["label" => "description", "rules" => "trim|required|min_length[3]"],
-                "total_positions" => ["label" => "total positions", "rules" => "trim|required"],
-                "gender" => ["label" => "gender", "rules" => "trim|required"],
-                "employment_type" => ["label" => "employment type", "rules" => "trim|required"],
-                "education" => ["label" => "education", "rules" => "trim|required"],
-                "country" => ["label" => "country", "rules" => "trim|required"],
-                "city" => ["label" => "city", "rules" => "trim|required"],
-                "location" => ["label" => "location", "rules" => "trim|required"],
+                "employer_id" => ["label" => "Employer Id", "rules" => "trim|required"],
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required"],
+                "category" => ["label" => "Category", "rules" => "trim|required"],
+                "industry" => ["label" => "Industry", "rules" => "trim|required"],
+                "min_experience" => ["label" => "Minimum Experience", "rules" => "trim|required"],
+                "max_experience" => ["label" => "Maximum Experience", "rules" => "trim|required"],
+                "salary_period" => ["label" => "Salary Period", "rules" => "trim|required"],
+                "min_salary" => ["label" => "Minimum Salary", "rules" => "trim|required"],
+                "max_salary" => ["label" => "Maximum Salary", "rules" => "trim|required"],
+                "skills" => ["label" => "Skills", "rules" => "trim|required"],
+                "description" => ["label" => "Description", "rules" => "trim|required|min_length[3]"],
+                "total_positions" => ["label" => "Total Positions", "rules" => "trim|required"],
+                "gender" => ["label" => "Gender", "rules" => "trim|required"],
+                "employment_type" => ["label" => "Employment Type", "rules" => "trim|required"],
+                "education" => ["label" => "Education", "rules" => "trim|required"],
+                "country" => ["label" => "Country", "rules" => "trim|required"],
+                "city" => ["label" => "City", "rules" => "trim|required"],
+                "location" => ["label" => "Location", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
-                // $this->session->setFlashdata('error', $this->validation->listErrors());
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
                 return redirect()->to(base_url('admin/post'));
             } else {
@@ -1308,7 +1305,7 @@ class Admin extends BaseController
                 $result = $this->adminModel->add_job($data);
                 if ($result) {
                     $this->session->setFlashdata('success', 'Congratulation! Job has been Posted successfully');
-                    return redirect()->to(base_url('admin/view_jobs'));
+                    return redirect()->to(base_url('admin/list_job'));
                 } else {
                     $this->session->setFlashdata('error', 'Oops Somthing went wrong, please try gain letter');
                     return redirect()->to(base_url('admin/post'));
@@ -1332,23 +1329,23 @@ class Admin extends BaseController
         $data['companies'] = $this->adminModel->getemployer();
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                "job_title" => ["label" => "job title", "rules" => "trim|required|min_length[3]"],
-                "category" => ["label" => "category", "rules" => "trim|required"],
-                "industry" => ["label" => "industry", "rules" => "trim|required"],
-                "min_experience" => ["label" => "min experience", "rules" => "trim|required"],
-                "max_experience" => ["label" => "max experience", "rules" => "trim|required"],
-                "salary_period" => ["label" => "salary period", "rules" => "trim|required"],
-                "min_salary" => ["label" => "min salary", "rules" => "trim|required"],
-                "max_salary" => ["label" => "max salary", "rules" => "trim|required"],
-                "skills" => ["label" => "skills", "rules" => "trim|required"],
-                "description" => ["label" => "description", "rules" => "trim|required|min_length[3]"],
-                "total_positions" => ["label" => "total positions", "rules" => "trim|required"],
-                "gender" => ["label" => "gender", "rules" => "trim|required"],
-                "employment_type" => ["label" => "employment type", "rules" => "trim|required"],
-                "education" => ["label" => "education", "rules" => "trim|required"],
-                "country" => ["label" => "country", "rules" => "trim|required"],
-                "city" => ["label" => "city", "rules" => "trim|required"],
-                "location" => ["label" => "location", "rules" => "trim|required"],
+                "job_title" => ["label" => "Job Title", "rules" => "trim|required|min_length[3]"],
+                "category" => ["label" => "Category", "rules" => "trim|required"],
+                "industry" => ["label" => "Industry", "rules" => "trim|required"],
+                "min_experience" => ["label" => "Minimum Experience", "rules" => "trim|required"],
+                "max_experience" => ["label" => "Maximum Experience", "rules" => "trim|required"],
+                "salary_period" => ["label" => "Salary Period", "rules" => "trim|required"],
+                "min_salary" => ["label" => "Minimum Salary", "rules" => "trim|required"],
+                "max_salary" => ["label" => "Maximum Salary", "rules" => "trim|required"],
+                "skills" => ["label" => "Skills", "rules" => "trim|required"],
+                "description" => ["label" => "Description", "rules" => "trim|required|min_length[3]"],
+                "total_positions" => ["label" => "Total Positions", "rules" => "trim|required"],
+                "gender" => ["label" => "Gender", "rules" => "trim|required"],
+                "employment_type" => ["label" => "Employment Type", "rules" => "trim|required"],
+                "education" => ["label" => "Education", "rules" => "trim|required"],
+                "country" => ["label" => "Country", "rules" => "trim|required"],
+                "city" => ["label" => "City", "rules" => "trim|required"],
+                "location" => ["label" => "Location", "rules" => "trim|required"],
             ];
             if ($this->validate($rules) == false) {
                 $this->session->setFlashdata('error', arrayToList($this->validation->getErrors()));
@@ -1479,7 +1476,7 @@ class Admin extends BaseController
                     exit;
                 }
             }
-
+            
             if ($_FILES['home_banner']['name'] != "") {
                 $rules=[ 'home_banner' =>['uploaded[home_banner]','max_size[home_banner,2048]' ]
                 ];
@@ -1530,7 +1527,7 @@ class Admin extends BaseController
             if ($_FILES['logo']['name'] != "") {
                 $data['logo'] = $logo;
             }
-
+            
             if ($_FILES['home_banner']['name'] != "") {
                 $data['home_banner'] = $home_banner;
             }
@@ -1620,141 +1617,17 @@ class Admin extends BaseController
                     return redirect()->to(base_url('admin/list_newsletters'));
                 }
         }
+
     }
 
     public function viewuser($id)
     {
         $data['title'] = 'User Details';
-        $data['education'] = $this->adminModel->get_seeker_education($id);
-        $data['experience'] = $this->adminModel->get_user_experience($id);
+        $data['edu'] = $this->adminModel->get_seeker_education($id);
+        $data['exper'] = $this->adminModel->get_user_experience($id);
         $data['language'] = $this->adminModel->get_user_language($id);
         $data['query'] = $this->adminModel->userdetails($id);
         return view('admin/users/viewuser',$data);
     }
 
-
-    public function userdetails($id)
-    {
-        if ($this->request->isAJAX()) {
-            $education = $this->EmployerModel->get_seeker_education($id);
-            $experience = $this->EmployerModel->get_user_experience($id);
-            $language = $this->EmployerModel->get_user_language($id);
-            $query = $this->EmployerModel->userdetails($id);
-            if(isset($experience[0]['ending_month'])){
-                $end_month = $experience[0]['ending_month'];
-            }
-            if(isset($experience[0]['ending_year'])){
-                $end_year = $experience[0]['ending_year'];
-            }
-            $html = '';
-            $html .= '<div class="row">
-                        <div class="col-6">
-                            <h4>Personal Details</h4>
-                            <hr>
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>Full Name</td>
-                                        <td>' . $query[0]["firstname"] . ' ' . $query[0]["lastname"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email</td>
-                                        <td>' . $query[0]["email"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone</td>
-                                        <td>' . $query[0]["mobile_no"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date Of Birth</td>
-                                        <td>' . $query[0]["dob"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Category</td>
-                                        <td>' . get_category_name($query[0]["category"]) . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>User Job Title</td>
-                                        <td>' . ($query[0]["job_title"]) . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Experience</td>
-                                        <td>' . $query[0]["experience"] . ' years</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Skills</td>
-                                        <td>' . $query[0]["skills"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Current Salary (INR)</td>
-                                        <td>' . $query[0]["current_salary"] . ' (INR)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nationality</td>
-                                        <td>' . get_country_name($query[0]["nationality"]) . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Country</td>
-                                        <td>' . get_country_name($query[0]["country"]) . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>City / Town</td>
-                                        <td>' . get_city_name($query[0]["city"]) . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Postcode</td>
-                                        <td>' . $query[0]["postcode"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Address</td>
-                                        <td>' . $query[0]["address"] . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Objectives</td>
-                                        <td>Objectives</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-6">';
-            if ($education) {
-                $html .=
-                    '<h4>Education</h4>
-                            <hr>
-                            <p>' . $education[0]["type"] . ',' . $education[0]["degree_title"] . '</p>
-                            <p>' . $education[0]["institution"] . '</p>
-                            <p>' . $education[0]["completion_year"] . '</p>
-                            <h4>Experience</h4>';
-            }
-            if ($experience) {
-                $html .= '
-                            <hr>
-                            <p>' . $experience[0]["job_title"] . '</p>
-                            <p>' . $experience[0]["company"] . '</p>
-                            <p>' . get_month($experience[0]["starting_month"]) . ' ' . $experience[0]["starting_year"] . ' - ' . $end_month . ' ' . $end_year . ' | ' . get_country_name($experience[0]["country"]) . '</p>
-                            <p>' . $experience[0]["job_title"] . '</p>
-                            <p>' . $experience[0]["description"] . '</p>
-                            ';
-            }
-            if ($language) {
-                $html .= '
-                            <h4>Languages</h4>
-                            <hr>
-                            <p>' . $language[0]["lang_name"] . '</p>
-                            ';
-            }
-            if($query[0]["resume"] != ""){
-                $html .= '<h4>Resume</h4>
-                <a href=" '.$query[0]["resume"].'" class="btn-sm btn-primary"><i class="nav-icon fas fa fa-download"></i> Download CV</a>
-                ';
-            }else{
-                $html .='<h4>Resume</h4>
-                        <p>Not Uploded.</p>
-                ';
-            }
-            $html .= '</div>
-                    </div>';
-            return ($html);
-        }
-    }
 }
